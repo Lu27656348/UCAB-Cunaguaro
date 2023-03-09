@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS Jurados (
 );
 /* Entidades particulares */
 CREATE TABLE IF NOT EXISTS Administradores (
-	id_usuario SERIAL,
+	id_usuario SERIAL NOT NULL,
 	cedula_administrador TEXT NOT NULL,
 	nombres TEXT NOT NULL,
 	apellidos TEXT NOT NULL,
