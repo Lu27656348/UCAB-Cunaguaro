@@ -15,7 +15,8 @@ const crearSolicitudForm = reactive(new PlanillaCrearSolicitud());
 let dataEmpresas = reactive([]);
 let dataProfesionalesExternos = reactive([]);
 let idEmpresaSeleccionada = ref(null);
-
+crearSolicitudForm.trabajoDeGrado.tituloTG='Franklin ¿Heroe o Villano?'
+/*
 async function buscarEstudiante() {
   const resEstudiante = await api.obtenerIdEstudiante(
     crearSolicitudForm.alumnos[0].cedula
@@ -118,7 +119,17 @@ onMounted(async () => {
   dataEmpresas = await api.obtenerEmpresas();
   //dataProfesionalesExternos = await api.obtenerProfesionalesExternos();
 });
+*/
 
+let textarea = ref( '' );
+
+const mostrarTextArea = ()=>{
+  console.log(textarea.value);
+}
+
+onMounted(()=>{
+  crearSolicitudForm.crearSolicitud();
+})
 //------------------------------------------------------>
 </script>
 <template>
@@ -137,12 +148,21 @@ onMounted(async () => {
         >
           <div class="request__container__preview__form__inputs">
             <!-- Trabajo de grado -->
-            <p for="">Titulo del Trabajo</p>
-            <input
-              type="text"
+            <p @click="mostrarTextArea()" for="">Titulo del Trabajo</p>
+            <textarea
+              maxlength="200"
+              class="request__container__preview__form__inputs--titulo-tg"
               placeholder="Tutilo de Propuesta TG"
-              v-model="crearSolicitudForm.trabajoDeGrado.tituloTG"
-            />
+            ></textarea>
+            <p>muestra</p>
+            <!-- Falso y edita el usuario -->
+            <div maxlength="200" contenteditable class="fake-textarea" oninput="document.querySelector('#description').textContent = this.innerText"></div>
+            <!-- Real y oculto -->
+            <textarea 
+              v-model="textarea"
+              maxlength="200"   
+              id="description"
+             ></textarea>
             <p for="">Modalidad</p>
             <select
               name="modalidad"
@@ -156,19 +176,21 @@ onMounted(async () => {
             <p for="">Cedula Alumno</p>
             <input
               type="number"
-              placeholder="98765432"
+              placeholder="V27301846"
               v-model="crearSolicitudForm.alumnos[0].cedula"
             />
-            <p for="">Nombres</p>
+            <!--<p for="">Nombres</p>-->
             <input
               disabled
               type="text"
+              placeholder="Nombres"
               v-model="crearSolicitudForm.alumnos[0].nombres"
             />
-            <p for="">Apellidos</p>
+            <!--<p for="">Apellidos</p>-->
             <input
               disabled
               type="text"
+              placeholder="Apellidos"
               v-model="crearSolicitudForm.alumnos[0].apellidos"
             />
           </div>
@@ -178,7 +200,7 @@ onMounted(async () => {
               type="submit "
               @click="buscarEstudiante()"
             ></button>
-
+            <!--/*
             <button
               :disabled="
                 crearSolicitudForm.alumnos[0].nombres == '' ||
@@ -191,10 +213,17 @@ onMounted(async () => {
             >
               Siguiente
             </button>
+            */-->
+            <button
+            :disabled=" crearSolicitudForm.trabajoDeGrado.modalidad == ''? true : false " 
+              @click="crearSolicitudForm.tituloAlumnoCompletado()"
+            >
+              Siguiente
+            </button>
           </div>
         </form>
       </div>
-      <div class="tutor" v-show="crearSolicitudForm.showTutor">
+      <div class="tutor" v-show="crearSolicitudForm.showTutor && crearSolicitudForm.trabajoDeGrado.modalidad == 'E'">
         <form
           class="request__container__preview__form"
           @submit.prevent="submit"
@@ -209,22 +238,24 @@ onMounted(async () => {
             <p for="">Cédula del Posible Tutor Académico</p>
             <input
               type="number"
-              placeholder="98765432"
+              placeholder="V27301846"
               v-model="crearSolicitudForm.tutor.cedula"
             />
-            <p for="">Nombres</p>
+            <!--<p for="">Nombres</p>-->
             <input
               disabled
               type="text"
+              placeholder="Nombres"
               v-model="crearSolicitudForm.tutor.nombres"
             />
-            <p for="">Apellidos</p>
+            <!--<p for="">Apellidos</p>-->
             <input
               disabled
               type="text"
+              placeholder="Apellidos"
               v-model="crearSolicitudForm.tutor.apellidos"
             />
-            <p for="">Años de Experienci a</p>
+            <!--<p for="">Años de Experienci a</p>-->
             <input disabled type="number" placeholder="4 años" />
           </div>
           <div class="actions">
@@ -233,8 +264,59 @@ onMounted(async () => {
               type="submit "
               @click="buscarTutor()"
             ></button>
-            <button
+            <!--<button
               :disabled="crearSolicitudForm.tutor.nombres == '' ? true : false"
+              @click="crearSolicitudForm.tutorCompletado()"
+            >
+              Siguiente
+            </button>-->
+            <button
+              @click="crearSolicitudForm.tutorCompletado()"
+            >
+              Siguiente
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="external-profesional"
+        v-show="crearSolicitudForm.showTutor && crearSolicitudForm.trabajoDeGrado.modalidad == 'I'"
+      >
+        <form
+          class="request__container__preview__form"
+          @submit.prevent="submit"
+        >
+          <img
+            src="../assets/imgs/arrow-back-circle-outline.svg"
+            alt=""
+            @click="crearSolicitudForm.volverATituloAlumno"
+          />
+          <!-- Tutor Empresarial -->
+          <div class="request__container__preview__form__inputs">
+            <p>Cédula de Tutor Empresarial</p>
+            <input
+              type="number"
+              placeholder="V27301846"
+              v-model="crearSolicitudForm.tutorEmpresarial.cedula"
+            />
+            <!--<p for="">Nombres</p>-->
+            <input
+              disabled
+              type="text"
+              placeholder="Nombres"
+              v-model="crearSolicitudForm.tutorEmpresarial.nombres"
+            />
+            <!--<p for="">Apellidos</p>-->
+            <input
+              disabled
+              type="text"
+              placeholder="Apellidos"
+              v-model="crearSolicitudForm.tutorEmpresarial.apellidos"
+            />
+            <!--<p for="">Años de Experienci a</p>-->
+            <input disabled type="number" placeholder="4 años" />
+          </div>
+          <div class="actions">
+            <button
               @click="crearSolicitudForm.tutorCompletado()"
             >
               Siguiente
@@ -284,77 +366,10 @@ onMounted(async () => {
             />
           </div>
           <div class="actions">
-            <button
-              class="succes"
-              v-if="
-                crearSolicitudForm.trabajoDeGrado.modalidad == 'E'
-                  ? true
-                  : false
-              "
+            <button class="succes"
               :disabled="
                 crearSolicitudForm.empresa.idEmpresa == -1 ? true : false
               "
-              @click="insertarPlanilla()"
-            >
-              Completado!
-            </button>
-            <button
-              v-else
-              :disabled="
-                crearSolicitudForm.empresa.idEmpresa == -1 ? true : false
-              "
-              @click="crearSolicitudForm.empresaCompletada()"
-            >
-              Siguiente
-            </button>
-          </div>
-        </form>
-      </div>
-      <div
-        class="external-profesional"
-        v-show="crearSolicitudForm.showTutorEmpresarial"
-      >
-        <form
-          class="request__container__preview__form"
-          @submit.prevent="submit"
-        >
-          <img
-            src="../assets/imgs/arrow-back-circle-outline.svg"
-            alt=""
-            @click="crearSolicitudForm.volverAEmpresa()"
-          />
-          <!-- Tutor Academico -->
-          <div class="request__container__preview__form__inputs">
-            <p>Cédula de Tutor Empresarial</p>
-            <input
-              type="number"
-              placeholder="98765432"
-              v-model="crearSolicitudForm.tutorEmpresarial.cedula"
-            />
-            <p for="">Nombres</p>
-            <input
-              disabled
-              type="text"
-              v-model="crearSolicitudForm.tutorEmpresarial.nombres"
-            />
-            <p for="">Apellidos</p>
-            <input
-              disabled
-              type="text"
-              v-model="crearSolicitudForm.tutorEmpresarial.apellidos"
-            />
-            <p for="">Años de Experienci a</p>
-            <input disabled type="number" placeholder="4 años" />
-          </div>
-          <div class="actions">
-            <button
-              style="display: none"
-              type="submit"
-              @click="buscarTutorEmpresarial()"
-            ></button>
-            <button
-              class="succes"
-              :disabled="crearSolicitudForm.tutor.nombres == '' ? true : false"
               @click="insertarPlanilla()"
             >
               Completado!
