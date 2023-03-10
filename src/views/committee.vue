@@ -14,7 +14,8 @@ let formularioPropuesta = ref( new PropuestaTg() );
 console.log(formularioPropuesta);
 
 const clickenComponente = async (id) => {
-  formularioPropuesta.value = await api.obtenerPropuestaById(id);
+  console.log(id)
+  formularioPropuesta.value = await api.obtenerTGById(id);
   console.log(formularioPropuesta.value);
 };
 
@@ -31,13 +32,13 @@ const aprobarPropuestaComite = async () =>{
   api.aprobarPropuestaComite( formularioPropuesta.value.id_propuesta, formularioPropuesta.value.comite_evaluador.id )
   console.log(formularioPropuesta.value);
   alert('Propusta aprobada con exito por comite: ' + formularioPropuesta.value.comite_evaluador.id);
-  dataPropuestas.value = await api.obtenerPropuestas();
+  dataPropuestas.value = await api.obtenerPropuestas('PC');
 };
 
 onMounted(async () => {
-  dataPropuestas.value = await api.obtenerPropuestas();
-  comites = await api.obtenerComites();
-  console.log(comites);
+  dataPropuestas.value = await api.obtenerPropuestas('PC');
+  //comites = await api.obtenerComites();
+ // console.log(comites);
 });
 </script>
 <template>
@@ -56,11 +57,11 @@ onMounted(async () => {
           <div
             class="request__container__display__list__record"
             v-for="t in dataPropuestas.value"
-            :key="t.id_ptg"
-            @click="clickenComponente(t.id_ptg)"
+            :key="t.id_tg"
+            @click="clickenComponente(t.id_tg)"
           >
-            <p>{{ t.id_ptg }}</p>
-            <p>{{ t.fecha_entrega }}</p>
+            <p>{{ t.id_tg }}</p>
+            <p>{{ t.fecha_solicitud }}</p>
             <p>{{ t.estatus }}</p>
           </div>
         </div>
