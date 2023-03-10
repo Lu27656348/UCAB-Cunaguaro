@@ -85,3 +85,17 @@ export const buscarExterno = async (req, res) => {
         return res.status(404).json("Externo no encontrado");
     }
 }
+
+export const buscarExternoByCedula = async (req, res) => {
+    const id = req.params.id;
+    try {
+        const buscar = await Externos.findOne({
+            where: {
+                cedula: id
+            }
+        });
+        return res.json(buscar);
+    } catch (error) {
+        return res.status(404).json("Externo no encontrado");
+    }
+}

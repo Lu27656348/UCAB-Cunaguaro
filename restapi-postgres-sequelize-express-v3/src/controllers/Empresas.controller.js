@@ -1,7 +1,7 @@
 import {Empresas} from '../models/Empresas.js'
 export const obtenerEmpresas = async (req,res) => {
-    const Empresas = await Empresas.findAll();
-    res.json(Empresas);
+    const empresas = await Empresas.findAll();
+    res.json(empresas);
 };
 export const crearEmpresas = async (req,res) => {
     try {

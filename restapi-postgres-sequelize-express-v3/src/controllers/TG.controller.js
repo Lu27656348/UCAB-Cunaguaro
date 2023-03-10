@@ -194,3 +194,18 @@ export const asignarTutorEmpresarial = async (req, res) => {
         return res.status(404).json("Error en asignacion de tutor empresarial");
     }
 }
+
+export const buscarTGByEstatus = async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        const buscar = await TG.findAll({
+            where: {
+                estatus: id
+            }
+        });
+        return res.json(buscar);
+    } catch (error) {
+        return res.status(404).json("Error en busqueda por estatus");
+    }
+}
