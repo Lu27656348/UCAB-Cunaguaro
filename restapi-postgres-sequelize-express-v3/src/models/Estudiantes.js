@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from '../database/database.js';
+import { Realiza_tg } from './realiza_PT.js'
 
 export const Estudiantes = sequelize.define('estudiantes', {
     cedula: {

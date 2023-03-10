@@ -1,6 +1,8 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from '../database/database.js';
 
+import { TG } from './TG.js'
+
 export const Externos = sequelize.define('externos', {
     id_externo: {
         type: DataTypes.INTEGER,
