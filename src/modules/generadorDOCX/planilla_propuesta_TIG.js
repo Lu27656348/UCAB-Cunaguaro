@@ -775,6 +775,7 @@ const generarTablaDatosAlumno = (object) => {
 
 }
 export const generarPlanillaPropuestaTIG = (planilla_propuesta_TIG) => {
+    console.log(planilla_propuesta_TIG)
     const doc = new Document({
         creator: "Luis C. Somoza & Wladimir SanVicente",
         title: "Planilla de propuesta de TIG",
@@ -1198,7 +1199,7 @@ export const generarPlanillaPropuestaTIG = (planilla_propuesta_TIG) => {
                                             style: "aside",
                                             children: [
                                                 new TextRun({
-                                                    text: planilla_propuesta_TIG.tutor_empresarial.cedula,
+                                                    text: planilla_propuesta_TIG.tutor_empresarial.cedula.toString(),
                                                 })
                                             ],
                                             alignment: AlignmentType.LEFT
@@ -1735,7 +1736,7 @@ export const generarPlanillaPropuestaTIG = (planilla_propuesta_TIG) => {
                                             style: "aside",
                                             children: [
                                                 new TextRun({
-                                                    text: planilla_propuesta_TIG.tutor_empresarial.cedula,
+                                                    text: planilla_propuesta_TIG.tutor_empresarial.cedula.toString(),
                                                 })
                                             ],
                                             alignment: AlignmentType.LEFT
@@ -2175,7 +2176,7 @@ export const generarPlanillaPropuestaTIG = (planilla_propuesta_TIG) => {
                                         new Paragraph({
                                             children: [
                                                 new TextRun({
-                                                    text: planilla_propuesta_TIG.tutor_empresarial.cedula,
+                                                    text: planilla_propuesta_TIG.tutor_empresarial.cedula.toString(),
                                                 })
                                             ],
                                             style: "aside",
