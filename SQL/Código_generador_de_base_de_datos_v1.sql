@@ -120,11 +120,15 @@ CREATE TABLE IF NOT EXISTS Jurados (
 );
 /* Entidades particulares */
 CREATE TABLE IF NOT EXISTS Administradores (
-	cedula TEXT NOT NULL,
+	id_usuario SERIAL,
+	cedula_administrador TEXT NOT NULL,
 	nombres TEXT NOT NULL,
 	apellidos TEXT NOT NULL,
 	contrasena TEXT NOT NULL,
-	PRIMARY KEY (cedula)
+	PRIMARY KEY (id_usuario),
+	FOREIGN KEY (cedula_Administrador) REFERENCES Profesores(cedula)
+		ON DELETE RESTRICT
+		ON UPDATE RESTRICT
 );
 
 CREATE TABLE IF NOT EXISTS Controladores (
