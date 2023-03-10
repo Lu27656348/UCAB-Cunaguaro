@@ -1,3 +1,4 @@
+import { dateTimeValue } from 'docx';
 import { PlantillaDatosPersonales } from './plantillasDatosPersonales.js';
 export class PlanillaCrearSolicitud {
 
@@ -10,8 +11,9 @@ export class PlanillaCrearSolicitud {
     this.progressbarState = 0;
 
     this.trabajoDeGrado = {
-      tituloTG: "",
+      titulo: "titulo carrero",
       modalidad: "",
+      id_tg: (new Date()).toDateString()
     };
     
     this.alumnos = [

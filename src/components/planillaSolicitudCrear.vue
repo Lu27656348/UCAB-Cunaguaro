@@ -13,12 +13,12 @@ const emit = defineEmits(["actualizarData"]);
 const crearSolicitudForm = reactive(new PlanillaCrearSolicitud());
 
 let dataEmpresas = reactive([]);
-let dataProfesionalesExternos = reactive([]);
+//let dataProfesionalesExternos = reactive([]);
 let idEmpresaSeleccionada = ref(null);
 crearSolicitudForm.trabajoDeGrado.tituloTG='Franklin ¿Heroe o Villano?'
-/*
+
 async function buscarEstudiante() {
-  const resEstudiante = await api.obtenerIdEstudiante(
+  const resEstudiante = await api.obtenerEstudianteByCedula(
     crearSolicitudForm.alumnos[0].cedula
   );
   crearSolicitudForm.alumnos[0].apellidos = resEstudiante.apellidos;
@@ -27,7 +27,7 @@ async function buscarEstudiante() {
 }
 
 async function buscarTutor() {
-  const resTutor = await api.obtenerIdTutorAcademico(
+  const resTutor = await api.obtenerProfesorByCedula(
     crearSolicitudForm.tutor.cedula
   );
   crearSolicitudForm.tutor.apellidos = resTutor.apellidos;
@@ -36,15 +36,15 @@ async function buscarTutor() {
 }
 
 async function buscarTutorEmpresarial() {
-  const resTutorEmpresarial = await api.obtenerIdTutorEmpresarialByCedula(
+  const resTutorEmpresarial = await api.obtenerExternoByCedula(
     crearSolicitudForm.tutorEmpresarial.cedula
   );
   crearSolicitudForm.tutorEmpresarial.nombres =
-    resTutorEmpresarial.usuario.nombres;
+    resTutorEmpresarial.nombres;
   crearSolicitudForm.tutorEmpresarial.apellidos =
-    resTutorEmpresarial.usuario.apellidos;
-  crearSolicitudForm.tutorEmpresarial.cedula =
-    resTutorEmpresarial.usuario.cedula;
+    resTutorEmpresarial.apellidos;
+  crearSolicitudForm.cedula =
+    resTutorEmpresarial.cedula;
 }
 
 crearSolicitudForm.empresa.idEmpresa = computed(() => {
@@ -63,12 +63,8 @@ crearSolicitudForm.empresa.idEmpresa = computed(() => {
   return "";
 });
 
-crearSolicitudForm.progressValue = computed(() => {
-  return crearSolicitudForm.trabajoDeGrado.modalidad == "E" ? 33.3 : 25;
-});
-
 async function insertarPlanilla() {
-  await api.insertarSolicitudTg(crearSolicitudForm);
+  await api.crearTrabajoGrado(crearSolicitudForm.trabajoDeGrado);
   let planillaGenerada;
   if (crearSolicitudForm.trabajoDeGrado.modalidad == "E") {
     planillaGenerada = new PlanillaPropuestaTEG(
@@ -90,8 +86,8 @@ async function insertarPlanilla() {
       crearSolicitudForm.empresa.nombre,
       crearSolicitudForm.empresa,
       {
-        nombre: `${crearSolicitudForm.tutor.nombres} ${crearSolicitudForm.tutor.apellidos}`,
-        cedula: crearSolicitudForm.tutor.cedula,
+        nombre: `${crearSolicitudForm.tutorEmpresarial.nombres} ${crearSolicitudForm.tutorEmpresarial.apellidos}`,
+        cedula: crearSolicitudForm.tutorEmpresarial.cedula,
         email: "franklinBelloBellisimo@ucab.edu.ve",
         telefono: "04121598764",
         profesion: "Ingeniero Informatico",
@@ -111,15 +107,8 @@ async function insertarPlanilla() {
   });
 
   planillaGenerada.imprimir();
-  crearSolicitudForm.progressbarState += crearSolicitudForm.progressValue;
+  //crearSolicitudForm.progressbarState += crearSolicitudForm.progressValue;
 }
-
-onMounted(async () => {
-  crearSolicitudForm.crearSolicitud();
-  dataEmpresas = await api.obtenerEmpresas();
-  //dataProfesionalesExternos = await api.obtenerProfesionalesExternos();
-});
-*/
 
 let textarea = ref( '' );
 
@@ -127,7 +116,8 @@ const mostrarTextArea = ()=>{
   console.log(textarea.value);
 }
 
-onMounted(()=>{
+onMounted( async ()=>{
+  dataEmpresas = await api.obtenerEmpresas();
   crearSolicitudForm.crearSolicitud();
 })
 //------------------------------------------------------>
@@ -150,6 +140,7 @@ onMounted(()=>{
             <!-- Trabajo de grado -->
             <p @click="mostrarTextArea()" for="">Titulo del Trabajo</p>
             <textarea
+            v-model="crearSolicitudForm.trabajoDeGrado.tituloTG"
               maxlength="200"
               class="request__container__preview__form__inputs--titulo-tg"
               placeholder="Tutilo de Propuesta TG"
@@ -292,10 +283,10 @@ onMounted(()=>{
           />
           <!-- Tutor Empresarial -->
           <div class="request__container__preview__form__inputs">
-            <p>Cédula de Tutor Empresarial</p>
+            <p>Id de Tutor Empresarial</p>
             <input
               type="number"
-              placeholder="V27301846"
+              placeholder="59885-VNL"
               v-model="crearSolicitudForm.tutorEmpresarial.cedula"
             />
             <!--<p for="">Nombres</p>-->
@@ -316,6 +307,11 @@ onMounted(()=>{
             <input disabled type="number" placeholder="4 años" />
           </div>
           <div class="actions">
+            <button
+              style="display: none"
+              type="submit "
+              @click="buscarTutorEmpresarial()"
+            ></button>
             <button
               @click="crearSolicitudForm.tutorCompletado()"
             >
