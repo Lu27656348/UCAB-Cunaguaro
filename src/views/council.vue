@@ -1,5 +1,4 @@
 <script setup>
-  import PlanillaRespuestaRevisor from '../components/planillaRespuestaRevisor.vue'
 </script>
 <template>
   <div class="request">

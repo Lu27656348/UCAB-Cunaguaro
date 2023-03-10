@@ -11,7 +11,7 @@ export class PlanillaCrearSolicitud {
 
     this.trabajoDeGrado = {
       tituloTG: "",
-      modalidad: "E",
+      modalidad: "",
     };
     
     this.alumnos = [
@@ -35,7 +35,7 @@ export class PlanillaCrearSolicitud {
     this.trabajoDeGrado.modalidad = "";
     this.cedulaAlumno = "";
     this.cedulaTutor = "";
-    this.nombreEmpresa = "";
+    this.empresa.nombre = "";
 
     this.showTituloAlumno = true;
     this.showTutor = false;

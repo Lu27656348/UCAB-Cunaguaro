@@ -12,7 +12,6 @@ const router = createRouter({
     { path: '/reviewers_evaluation', name: 'reviewers_evaluation', component: import('../views/reviewers_evaluation.vue') },
     { path: '/council', name: 'council', component: import('../views/council.vue') },
     { path: '/assignment', name: 'assignment', component: import('../views/assignment.vue') },
-    { path: '/upload-propouse', name: 'upload-propouse', component: import('../views/upload-propouse.vue') }
   ]
 })
 

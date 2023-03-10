@@ -29,6 +29,7 @@ function actionShowPlanillaUpDe() {
   showPlanillaUpDe.value = true;
   showPlanillaCreate.value = false;
 }
+/*
 const clickenComponente = async (id) => {
   actionShowPlanillaUpDe();
   const respuesta = await api.obtenerSolicitudById(id)
@@ -56,6 +57,7 @@ actualizarLista.value = computed( async () =>{
 onMounted(async () => {
   data.value = await api.obtenerSolicitudes();
 });
+*/
 //------------------------------------------------------>
 </script>
 

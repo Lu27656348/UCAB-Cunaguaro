@@ -14,6 +14,7 @@ let revisor = ref('');
 let profesoresADesignar = ref([]);
 let formularioPropuesta = ref(new PropuestaTg());
 
+/*
 const clickenComponente = async (id) => {
   formularioPropuesta.value = await api.obtenerPropuestaById(id);
   console.log(formularioPropuesta.value);
@@ -40,6 +41,7 @@ const hola = ()=>{
 onMounted(async () => {
   dataPropuestasConRevisorAsignado.value = await api.obtenerPropuestaConRevisorAsignado();
 });
+*/
 </script>
 <template>
   <div class="request">
@@ -78,11 +80,10 @@ onMounted(async () => {
             <div class="request__container__preview__form up-de">
               <div class="request__container__preview__form__inputs">
                 <p>Titulo del Trabajo</p>
-                <input
+                <textarea
                   disabled
-                  type="text"
                   v-model="formularioPropuesta.titulo"
-                />
+                ></textarea>
                 <p>Modalidad</p>
                 <input
                   disabled
