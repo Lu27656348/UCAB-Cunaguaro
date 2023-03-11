@@ -1,6 +1,5 @@
 <script setup>
 
-  import PlanillaComite from '../components/planillaComite.vue'
 
 </script>
 

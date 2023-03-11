@@ -1,45 +1,42 @@
 <script setup>
-  import PlanillaRespuestaRevisor from '../components/planillaRespuestaRevisor.vue'
+
+import { reactive } from 'vue';
+import * as api from '../modules/apiTools.js';
+
+
+let estudiante = reactive({
+  cedula: '',
+  nombres: '',
+  apellidos: '',
+  email: '',
+  telefono: '',
+  oficina: '',
+  habitacion: ''
+});
+
+const insertarEstudiante = () =>{
+  api.insertarEstudiantes(estudiante);
+};
+
 </script>
 <template>
   <div class="request">
     <h1>Designacion de tutor academico ( Consejo )</h1>
-    <div class="council__container">
-      <div class="council__container__display">
-        <div class="council__container__display__controllers">
-          <button>
-            <img src="../assets/imgs/search-circle-outline.svg" />Buscar
-            Solicitud
-          </button>
-          <button>
-            <img src="../assets/imgs/cloud-upload-outline.svg" />Cargar
-            Solicitud
-          </button>
-          <button>
-            <img src="../assets/imgs/add-circle-outline.svg" alt="" />Crear
-            Planilla
-          </button>
-        </div>
-        <div class="council__container__display__list">
-          <!-- Aqui va el registro para las propuestas de trabajo de grado -->
-          <h3>hdkjshdkhajksdh</h3>
-          <h3>eñlwñelñwelñwelñwl</h3>
-        </div>
-      </div>
-      <div class="council__container__preview">
-        <h2>Visualización del documento de solicitud</h2>
-        <form action="" class="committe__container__preview__form">
-
+    <form
+          class="request__container__preview__form up-de"
+          @submit.prevent="submit"
+        >
+          <div class="request__container__preview__form__inputs">
+            <p for="">Titulo del Trabajo</p>
+            <input v-model="estudiante.cedula" type="text" placeholder="Cedula del estudiante">
+            <input v-model="estudiante.nombres" type="text" placeholder="Nombres del estudiante">
+            <input v-model="estudiante.apellidos" type="text" placeholder="Apellido del estudiante">
+            <input v-model="estudiante.email" type="text" placeholder="Email del estudiante">
+            <input v-model="estudiante.telefono" type="text" placeholder="Telefono del estudiante">
+            <input v-model="estudiante.oficina" type="text" placeholder="Oficina del estudiante">
+            <input v-model="estudiante.habitacion" type="text" placeholder="habitacion del estudiante">
+            <button @click="insertarEstudiante()" class="succes"> Insertar Estudiante </button>
+          </div>
         </form>
-        <div class="create-state">
-          <div class="progressbar">
-            <div class="progressbar--content"></div>
-          </div>
-          <div class="create-carousel">
-            <!-- aqui van los formularios necesarios para el proceso de crear una asignacion de revisor a la propuesta -->
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>

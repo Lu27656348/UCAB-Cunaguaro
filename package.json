@@ -11,6 +11,8 @@
     "test:e2e:dev": "start-server-and-test 'vite dev --port 4173' http://localhost:4173 'cypress open --e2e'"
   },
   "dependencies": {
+    "docx": "^7.8.2",
+    "file-saver": "^2.0.5",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6"
   },
