@@ -8,13 +8,12 @@ let data = reactive([]);
 
 // Objeto para guardar los datos de la planilla que se esta leyendo
 let planilla = reactive({
-  id_sptg: "",
+  id_tg: "",
   titulo: "",
   modalidad: "",
-  fechaenvio: "",
   estatus: "",
-  id_ta: "",
-  id_admin_evaluador: "",
+  id_tutor_academico: "",
+  id_tutor_empresarial: "",
 });
 
 const showPlanillaUpDe = ref(false);
@@ -29,35 +28,43 @@ function actionShowPlanillaUpDe() {
   showPlanillaUpDe.value = true;
   showPlanillaCreate.value = false;
 }
-/*
+
 const clickenComponente = async (id) => {
   actionShowPlanillaUpDe();
-  const respuesta = await api.obtenerSolicitudById(id)
-  planilla.id_sptg = respuesta.id_sptg;
+  const respuesta = await api.obtenerTGById(id)
+  console.log("clickenComponente()");
+  console.log("planilla");
+  planilla.id_tg = respuesta.id_tg;
   planilla.titulo = respuesta.titulo;
   planilla.modalidad = respuesta.modalidad;
-  planilla.fechaenvio = respuesta.fechaenvio;
   planilla.estatus = respuesta.estatus;
-  planilla.id_ta = respuesta.id_ta;
-  planilla.id_admin_evaluador = respuesta.id_admin_evaluador;
+  planilla.id_tutor_academico = respuesta.id_tutor_academico;
+  planilla.id_tutor_empresarial = respuesta.id_tutor_empresarial;
+  console.log(planilla);
 };
 
 async function actualizarPlanilla(){
-  await api.actualizarPlanilla(planilla, data.value);
-  data.value = await api.obtenerSolicitudes();
+  await api.actualizarPlanilla(planilla);
+  data.value = await api.obtenerPropuestas('PC');
 }
 
+async function eliminarPlanilla(){
+  console.log(planilla)
+  await api.eliminarPlanilla(planilla.id_tg);
+  data.value = await api.obtenerPropuestas('PC');
+}
+/*
 actualizarLista.value = computed( async () =>{
   let falso = actualizarLista.value
   console.log(actualizarLista.value);
   await actualizarPlanilla();
   return actualizarLista.value = false; 
 });
-
-onMounted(async () => {
-  data.value = await api.obtenerSolicitudes();
-});
 */
+onMounted(async () => {
+  data.value = await api.obtenerPropuestas('PC');
+});
+
 //------------------------------------------------------>
 </script>
 
@@ -84,12 +91,12 @@ onMounted(async () => {
           <Record
             class="request__container__display__list__record"
             v-for="e in data.value"
-            :key="e.id_sptg"
+            :key="e.id_tg"
             :titulo="e.titulo"
             :modalidad="e.modalidad"
             :estatus="e.estatus"
             :fechaenvio="e.fechaenvio"
-            @click="clickenComponente(e.id_sptg)"
+            @click="clickenComponente(e.id_tg)"
           />
         </div>
       </div>
@@ -109,22 +116,16 @@ onMounted(async () => {
               <option value="E">Experimental</option>
               <option value="I">Instrumental</option>
             </select>
-            <p for="">Fecha de envio</p>
-            <input type="date" v-model="planilla.fechaenvio" />
-            <p for="">Id del tutor</p>
-            <input type="text" v-model="planilla.id_ta" />
-            <p for="">Id del evaluador</p>
-            <input type="text" v-model="planilla.id_admin_evaluador" />
           </div>
           <div class="actions">
             <button
               type="submit"
-              @click=" actualizarPlanilla()"
+              @click=" actualizarPlanilla(planilla.id_tg)"
             >
               Actualizar planilla
             </button>
             <button
-              @click="api.eliminarPlanilla(planilla.id_sptg)"
+              @click="eliminarPlanilla(planilla.id_tg)"
             >
               Eliminar planilla
             </button>

@@ -12,32 +12,41 @@ let showDesignarTutor = ref(false);
 //Lista de comites en bdd
 let profesoresADesignar = ref([]);
 let formularioPropuesta = ref(new PropuestaTg());
-console.log(formularioPropuesta);
 
 const clickenComponente = async (id) => {
-  formularioPropuesta.value = await api.obtenerPropuestaById(id);
-  console.log(formularioPropuesta.value);
+  formularioPropuesta.value = await api.obtenerTGById(id);
+  console.log( formularioPropuesta.value)
 };
 
 const designarTutor = async () => {
-  console.log(formularioPropuesta.value);
+  console.log("formularioPropuesta");
+  console.log(formularioPropuesta.value.id_profesor_revisor);
+  console.log(formularioPropuesta.value.id_tg);
+  
   await api.designarRevisor( 
-    formularioPropuesta.value.id_propuesta, 
-    formularioPropuesta.value.revisor 
+    formularioPropuesta.value.id_tg, 
+    formularioPropuesta.value.id_profesor_revisor 
   );
-  let revisor =  await api.obtenerProfesorById(formularioPropuesta.value.revisor);
-  console.log(revisor);
-  console.log(formularioPropuesta.value.tutor_academico)
-  let planillaDesignacionDeTutor = new PlanillaDesignacionRevisor(
+  
+  
+  let revisor =  await api.obtenerProfesorByCedula(formularioPropuesta.value.id_profesor_revisor );
+  let tutor_academico =  await api.obtenerProfesorByCedula(formularioPropuesta.value.id_tutor_academico );
+  let alumnos = await api.obtenerEstudianteDeTG(formularioPropuesta.value.id_tg);
+  //console.log("alumnos")
+  //console.log(alumnos)
+  let planillaDesignacionDeRevisor = new PlanillaDesignacionRevisor(
     formularioPropuesta.value.titulo,
-    formularioPropuesta.value.tutor_academico,
+    tutor_academico,
     new Date(),
     { nombre: 'Luz Medina', correo_administrador: 'lamedina@wlaluchocorp.com' },
     formularioPropuesta.value.modalidad,
-    `${revisor.nombres} ${revisor.apellidos}`
+    `${revisor.nombres} ${revisor.apellidos}`,
+    "Agregar organizacion"
   );
-  planillaDesignacionDeTutor.añadirAlumno(formularioPropuesta.value.alumnos[0])
-  planillaDesignacionDeTutor.imprimir();
+  planillaDesignacionDeRevisor.añadirAlumno(alumnos[0])
+  console.log("planillaDesignacionDeRevisor")
+  console.log(planillaDesignacionDeRevisor)
+  planillaDesignacionDeRevisor.imprimir();
 };
 
 const rechazarPropuesta = async () => {
@@ -50,15 +59,9 @@ const aprobarPropuesta = async () => {
   dataPropuestasPorRevisor.value = await api.obtenerPropuestaSinRevisor();
   alert("Aprobada por Revisor");
 };
-
-const hola = ()=>{ 
-  console.log(formularioPropuesta.value.revisor);  
-};
-
 onMounted(async () => {
   dataPropuestasPorRevisor.value = await api.obtenerPropuestaSinRevisor();
   profesoresADesignar.value = await api.obtenerProfesores();
-  console.log(profesoresADesignar.value);
 });
 </script>
 <template>
@@ -77,11 +80,12 @@ onMounted(async () => {
           <div
             class="request__container__display__list__record"
             v-for="t in dataPropuestasPorRevisor.value"
-            :key="t.id_ptg"
-            @click="clickenComponente(t.id_ptg)"
+            :key="t.id_tg"
+            @click="clickenComponente(t.id_tg)"
           >
-            <p>{{ t.id_ptg }}</p>
-            <p>{{ t.fecha_entrega }}</p>
+            <p>{{ t.titulo }}</p>
+            <p>{{ t.id_tg }}</p>
+            <p>{{ t.fecha_ctg }}</p>
             <p>{{ t.estatus }}</p>
           </div>
         </div>
@@ -112,14 +116,14 @@ onMounted(async () => {
                 <select
                   name="profesoresADesignar"
                   id=""
-                  v-model="formularioPropuesta.revisor"
+                  v-model="formularioPropuesta.id_profesor_revisor"
                 >
                   <option
                     v-for="p in profesoresADesignar"
-                    :key="p.usuario.nombres"
-                    :value="p.id_profesor"
+                    :key="p.nombres"
+                    :value="p.cedula"
                   >
-                    {{ p.usuario.nombres + ' ' + p.usuario.apellidos }}
+                    {{ p.nombres + ' ' + p.apellidos }}
                   </option>
                 </select>
               </div>

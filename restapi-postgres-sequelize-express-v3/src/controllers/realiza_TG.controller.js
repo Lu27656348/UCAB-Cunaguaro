@@ -1,4 +1,5 @@
-import { Realiza_tg } from '../models/realiza_PT.js'
+import { Realiza_tg } from '../models/realiza_PT.js';
+import { TG } from '../models/TG.js';
 export const obtenerRealiza_tg = async (req,res) => {
     const Realiza_tg = await Realiza_tg.findAll();
     res.json(Realiza_tg);
@@ -6,7 +7,7 @@ export const obtenerRealiza_tg = async (req,res) => {
 export const crearRealiza_tg = async (req,res) => {
     try {
         const { cedula_estudiante, id_tg } = req.body;
-        const nuevo = await TG.create({
+        const nuevo = await Realiza_tg.create({
             cedula_estudiante,
             id_tg
         },

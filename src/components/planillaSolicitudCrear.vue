@@ -15,7 +15,6 @@ const crearSolicitudForm = reactive(new PlanillaCrearSolicitud());
 let dataEmpresas = reactive([]);
 //let dataProfesionalesExternos = reactive([]);
 let idEmpresaSeleccionada = ref(null);
-crearSolicitudForm.trabajoDeGrado.tituloTG='Franklin ¿Heroe o Villano?'
 
 async function buscarEstudiante() {
   const resEstudiante = await api.obtenerEstudianteByCedula(
@@ -64,11 +63,11 @@ crearSolicitudForm.empresa.idEmpresa = computed(() => {
 });
 
 async function insertarPlanilla() {
-  await api.crearTrabajoGrado(crearSolicitudForm.trabajoDeGrado);
   let planillaGenerada;
   if (crearSolicitudForm.trabajoDeGrado.modalidad == "E") {
+    await api.crearTrabajoGradoExperimental(crearSolicitudForm.trabajoDeGrado, crearSolicitudForm.alumnos[0].cedula,crearSolicitudForm.tutor.cedula);
     planillaGenerada = new PlanillaPropuestaTEG(
-      crearSolicitudForm.trabajoDeGrado.tituloTG,
+      crearSolicitudForm.trabajoDeGrado.titulo,
       crearSolicitudForm.empresa.nombre,
       crearSolicitudForm.empresa,
       {
@@ -81,8 +80,12 @@ async function insertarPlanilla() {
       }
     );
   } else {
+    const cedulatutorempresarial = await api.obtenerExternoByCedula(crearSolicitudForm.tutorEmpresarial.cedula);
+    console.log("cedulatutorempresarial")
+    console.log(cedulatutorempresarial)
+    await api.crearTrabajoGradoInstrumental(crearSolicitudForm.trabajoDeGrado, crearSolicitudForm.alumnos[0].cedula,cedulatutorempresarial.id_externo);
     planillaGenerada = new PlanillaPropuestaTIG(
-      crearSolicitudForm.trabajoDeGrado.tituloTG,
+      crearSolicitudForm.trabajoDeGrado.titulo,
       crearSolicitudForm.empresa.nombre,
       crearSolicitudForm.empresa,
       {
@@ -140,7 +143,7 @@ onMounted( async ()=>{
             <!-- Trabajo de grado -->
             <p @click="mostrarTextArea()" for="">Titulo del Trabajo</p>
             <textarea
-            v-model="crearSolicitudForm.trabajoDeGrado.tituloTG"
+            v-model="crearSolicitudForm.trabajoDeGrado.titulo"
               maxlength="200"
               class="request__container__preview__form__inputs--titulo-tg"
               placeholder="Tutilo de Propuesta TG"

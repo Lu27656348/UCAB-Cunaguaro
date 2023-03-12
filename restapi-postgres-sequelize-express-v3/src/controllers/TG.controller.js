@@ -1,22 +1,29 @@
-import { TG } from '../models/TG.js'
+import { TG } from '../models/TG.js';
+import { Op } from 'sequelize'
+import { Realiza_tg } from '../models/realiza_PT.js';
+import { Estudiantes } from '../models/Estudiantes.js';
 export const obtenerTG = async (req,res) => {
-    const TG = await TG.findAll();
-    res.json(TG);
+    const tg = await TG.findAll();
+    res.json(tg);
 };
 export const crearTG = async (req,res) => {
+    console.log("crearTG")
     try {
-        const { id_tg, titulo,modalidad } = req.body;
+        const {titulo,modalidad,id_tutor_academico,id_tutor_empresarial } = req.body;
+        console.log(titulo)
+        console.log(modalidad)
         const nuevo = await TG.create({
-            id_tg,
             titulo,
-            modalidad
+            modalidad,
+            id_tutor_academico,
+            id_tutor_empresarial
         },
         {
-            fields: ["id_tg","titulo","modalidad"]
+            fields: ["titulo","modalidad","id_tutor_academico","id_tutor_empresarial"]
         });
         res.json(nuevo);
     } catch (error) {
-        return res.status(500).json( { mensaje: "Error en creación de TG", error: error.message })
+        return res.status(500).json( { mensaje: "Error en creación de TG", error: error })
     }
 };
 export const actualizarTG = async (req,res) => {
@@ -89,9 +96,9 @@ export const evaluacionComite = async (req, res) => {
             }
         });
 
-            buscar.estatus = desicion_comite;
-            buscar.fecha_ctg = new Date()
-
+        buscar.estatus = desicion_comite;
+        buscar.fecha_ctg = new Date()
+        const actualizar = await buscar.save();
         return res.json(buscar);
     } catch (error) {
         return res.status(404).json("Error en evaluación de comite");
@@ -109,9 +116,9 @@ export const evaluacionRevisor = async (req, res) => {
             }
         });
 
-        buscar.estatus = desicion_comite;
+        buscar.estatus = desicion_revisor;
         buscar.fecha_revision = new Date()
-
+        const actualizar = await buscar.save();
         return res.json(buscar);
     } catch (error) {
         return res.status(404).json("Error en evaluación de revisor");
@@ -131,7 +138,7 @@ export const evaluacionCDE = async (req, res) => {
 
         buscar.estatus = desicion_cde;
         buscar.fecha_cde = new Date()
-
+        const actualizar = await buscar.save();
         return res.json(buscar);
     } catch (error) {
         return res.status(404).json("Error en evaluación de consejo de escuela");
@@ -169,7 +176,7 @@ export const asignarRevisor = async (req, res) => {
         });
 
         buscar.id_profesor_revisor = id_profesor_revisor;
-
+        const actualizar = await buscar.save();
         return res.json(buscar);
     } catch (error) {
         return res.status(404).json("Error en asignacion de revisor");
@@ -204,6 +211,62 @@ export const buscarTGByEstatus = async (req, res) => {
                 estatus: id
             }
         });
+        return res.json(buscar);
+    } catch (error) {
+        return res.status(404).json("Error en busqueda por estatus");
+    }
+}
+
+export const obtenerTGSinRevisor = async (req, res) => {
+    try {
+        const buscar = await TG.findAll({
+            where: {
+                estatus: 'PR',
+                id_profesor_revisor: {
+                    [Op.eq]: null
+                }
+            }
+        });
+        console.log(buscar)
+        return res.json(buscar);
+    } catch (error) {
+        return res.status(404).json("Error en busqueda por estatus");
+    }
+}
+
+export const obtenerTGConRevisor = async (req, res) => {
+    try {
+        const buscar = await TG.findAll({
+            where: {
+                estatus: 'PR',
+                id_profesor_revisor: {
+                    [Op.ne]: null
+                }
+            }
+        });
+        console.log(buscar)
+        return res.json(buscar);
+    } catch (error) {
+        return res.status(404).json("Error en busqueda por estatus");
+    }
+}
+
+export const obtenerEstudiantesDeTG = async (req, res) => {
+    const id = req.params.id
+    try {
+        const buscar = await TG.findAll({
+            include: {
+                model: Realiza_tg,
+                include: {
+                    model: Estudiantes
+                },
+    
+            },
+            where: {
+                id_tg: id
+            }
+        });
+        console.log(buscar)
         return res.json(buscar);
     } catch (error) {
         return res.status(404).json("Error en busqueda por estatus");

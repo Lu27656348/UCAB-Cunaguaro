@@ -44,6 +44,7 @@ const Carta_designacion = {
 }
 */
 export const generarCartaDesignacionRevisor = (Carta_designacion) => {
+    console.log("Carta_designacion");
     console.log(Carta_designacion);
     const doc = new Document({
         creator: "Luis C. Somoza & Wladimir SanVicente ",

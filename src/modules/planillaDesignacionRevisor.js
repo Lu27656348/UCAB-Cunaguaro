@@ -8,13 +8,15 @@ export class PlanillaDesignacionRevisor {
     fecha_designacion,
     administrador,
     modalidad,
-    revisor
+    revisor,
+    organizacion
   ) {
     this.propuesta = {
       titulo: titulo,
       alumno: [],
       tutor_academico: tutor
     };
+    this.organizacion = organizacion
     this.fecha_designacion = fecha_designacion;
     this.administrador = administrador.nombre;
     this.correo_administrador = administrador.correo_administrador
@@ -29,5 +31,6 @@ export class PlanillaDesignacionRevisor {
   }
   imprimir() {
    generarPE_revisor_teg(this);
+   generarCartaDesignacionRevisor(this)
   };
 }
