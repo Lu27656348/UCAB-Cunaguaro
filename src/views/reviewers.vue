@@ -29,17 +29,12 @@ const designarTutor = async () => {
   );
 
   let alumnos = await api.obtenerEstudianteDeTG(formularioPropuesta.value.id_tg);
-<<<<<<< HEAD
-  //console.log("alumnos")
-  //console.log(alumnos)
-  console.log(tutor_academico)
-  let planillaDesignacionDeRevisor = new PlanillaDesignacionRevisor(
-=======
+
   let revisor =  await api.obtenerProfesorByCedula(formularioPropuesta.value.id_profesor_revisor );
   if(formularioPropuesta.value.modalidad === 'E'){
     let tutor_academico =  await api.obtenerProfesorByCedula(formularioPropuesta.value.id_tutor_academico );
     let planillaDesignacionDeRevisor = new PlanillaDesignacionRevisor(
->>>>>>> Middleware
+
     formularioPropuesta.value.titulo,
     tutor_academico,
     new Date(),

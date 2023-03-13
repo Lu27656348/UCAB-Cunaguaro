@@ -7,19 +7,11 @@ import { ref, reactive, onMounted, computed } from "vue";
 import * as api from "../modules/apiTools.js";
 import { generarCartaDesignacionTutorTEG } from '../modules/generadorDOCX/carta_designacion_tutor_teg.js';
 import { generarCartaDesignacionTutorTIG } from '../modules/generadorDOCX/carta_designacion_tutor_tig.js';
+import { FormularioCartaDesigancion } from '../modules/formularioCartaDesignacion.js'
 
-let revisor = ref('');
 let data = reactive([]);
-let tutor_academico = reactive('');
-let planilla = reactive({
-  cedula: '',
-  nombres: '',
-  apellidos: '',
-  email: '',
-  telefono: '',
-  oficina: '',
-  habitacion: ''
-});
+let dataConsejo = reactive([]);
+
 let tutor = reactive({
   apellidos: '',
   cargo: '',
@@ -32,11 +24,12 @@ let tutor = reactive({
   oficina: '',
   telefono: ''
 });
-let tutor_empresarial= reactive('');
+
 let cde = reactive({
   id_cde: '',
   fecha_conformacion: ''
 });
+
 let formularioPropuesta = ref(new PropuestaTg());
 
 const clickenComponente = async (id) => {
@@ -61,42 +54,22 @@ const aceptarTG = async (id) =>{
  //await api.asignarTutorAcademico(id,tutor.value.cedula)
   alert("aceptado");
   const estudiante = await api.obtenerEstudianteDeTG(id);
-  console.log("estudiante")
-  console.log(estudiante)
-  /*
-  const tutor = await api.obtenerProfesorByCedula(formularioPropuesta.value.id_tutor_academico)
-  console.log("tutor")
-  console.log(tutor)
-  */
+  const tutor_academico = await api.obtenerProfesorByCedula(formularioPropuesta.value.id_tutor_academico)
   const tutor_empresarial = await api.obtenerExternosById(formularioPropuesta.value.id_tutor_empresarial)
-  console.log("tutor empresarial")
-  console.log(tutor_empresarial)
-  //Generar cartas de designacion de tutor aqui
-  const Carta_designacion = {
-    propuesta: {
-        titulo: formularioPropuesta.value.titulo,
-        modalidad: formularioPropuesta.value.modalidad,
-        alumnno: estudiante,
-        tutor: tutor.apellidos + ', ' + tutor.nombres
-    },
-    fecha_designacion: new Date(),
-    CDE: cde.id_cde,
-    administrador: "Luz E. Medina"
-  }
-  const Carta_designacion_tig = {
-    propuesta: {
-        titulo: formularioPropuesta.value.titulo,
-        modalidad: formularioPropuesta.value.modalidad,
-        alumnno: estudiante,
-        tutor: tutor_empresarial
-    },
-    fecha_designacion: new Date(),
-    CDE: cde.id_cde,
-    administrador: 'Luz E. Medina',
-    empresa: 'CorpoElect'
-  }   
-  generarCartaDesignacionTutorTIG(Carta_designacion_tig)
-  //generarCartaDesignacionTutorTEG(Carta_designacion)
+  
+  const cartaDesignacion = new FormularioCartaDesigancion(
+    formularioPropuesta.value.titulo,
+    formularioPropuesta.value.modalidad,
+    estudiante,
+    tutor_academico,
+    tutor_empresarial,
+    '001-2022-2023',
+    'Wladimir J. Sanvicente',
+    'WlaLuchoCorp C.A'
+  );
+
+  cartaDesignacion.imprimirPlanilla();
+
   data.value = await api.obtenerPropuestas('PE');
 };
 
@@ -120,6 +93,7 @@ const buscarCDE = async (id) =>{
 
 onMounted(async () => {
   data.value = await api.obtenerPropuestas('PE');
+  dataConsejo.value = await api.obtenerCDE();
   //console.log("data.value")
   //console.log(data.value)
 });
@@ -171,13 +145,20 @@ onMounted(async () => {
                 <input disabled type="date" v-model="formularioPropuesta.fecha_solicitud"/>
                 <p>Estatus</p>
                 <input disabled type="text" v-model="formularioPropuesta.estatus"/>
+                <select name="CDE" id="">
+                  <option 
+                    v-for="c in dataConsejo.value"
+                    :key="c.id_cde"
+                    :value="c.id_cde"
+                  >{{ c.id_cde }}</option>
+                </select>
               </div>
               <div class="actions">
                 <button class="cancel"
-                @click="aceptarTG()"
+                @click="rechazarTG(formularioPropuesta.id_tg)"
                 >Rechazar</button>
                 <button class="login__form__btn succes"
-                @click="rechazarTG()"
+                @click="aceptarTG(formularioPropuesta.id_tg)"
                 >
                   Aceptar
                 </button>
@@ -190,3 +171,6 @@ onMounted(async () => {
     </div>
   </div>
 </template>
+<style>
+/*Esta etiqueta esta vacia*/
+</style>
