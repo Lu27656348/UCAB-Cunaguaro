@@ -45,6 +45,7 @@ export const obtenerProfesorByCedula = async (cedulaProfesor) => {
   const resProfesor = await fetch('http://localhost:3000/Profesores/' + cedulaProfesor );
   const profesor = await resProfesor.json();
   console.log("obtenerProfesorByCedula()");
+  console.log(cedulaProfesor)
   console.log(profesor);
   return profesor;
 }
@@ -52,6 +53,14 @@ export const obtenerExternos = async () => {
   const resExternos = await fetch('http://localhost:3000/Externos/');
   const externos = await resExternos.json();
   console.log("obtenerExternos()");
+  console.log(externos);
+  return externos;
+}
+
+export const obtenerExternosById = async ( idExterno) => {
+  const resExternos = await fetch('http://localhost:3000/Externos/' + idExterno);
+  const externos = await resExternos.json();
+  console.log("obtenerExternosById()");
   console.log(externos);
   return externos;
 }
@@ -94,7 +103,7 @@ export const obtenerTGById = async (idTG) => {
   return tg;
 }
 
-export const crearTrabajoGrado = async ( TG, cedulaEstudiante ) => {
+export const crearTrabajoGradoExperimental = async ( TG, cedulaEstudiante,cedulaTutorAcademico) => {
   console.log("crearTrabajoGrado")
   fetch('http://localhost:3000/TG',{
     method: 'POST',
@@ -102,39 +111,296 @@ export const crearTrabajoGrado = async ( TG, cedulaEstudiante ) => {
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(TG)
+    body: JSON.stringify({
+      titulo: TG.titulo,
+      modalidad: TG.modalidad,
+      id_tutor_academico: cedulaTutorAcademico,
+      id_tutor_empresarial: null
+    })
   })
   .then( (response) =>{
+    console.log("response")
     console.log(response)
     return response.json()
   })
   .then( (data) => {
+    console.log("data")
     console.log(data)
+    console.log(data.id_tg)
+    const objeto = {
+      cedula_estudiante: cedulaEstudiante,
+      id_tg: data.id_tg
+    }
     fetch('http://localhost:3000/realiza_TG',{
       method: 'POST',
       mode: 'cors',
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({
-        cedula_estudiante: cedulaEstudiante,
-        id_tg: data.id_tg
-      })
+      body: JSON.stringify(objeto)
     })
     .then( (response) => {
+      console.log(response)
       return response.json()
     })
     .then( (data) => {
       console.log(data)
     })
+    .catch( (error) => {
+      console.log("Error en creacion de realiza");
+      console.log(error);
+    })
+  })
+  .catch( (error) => {
+    console.log("Error en creacion de TG desde la api");
+    console.log(error)
+  })
+}
+export const crearTrabajoGradoInstrumental = async ( TG, cedulaEstudiante,cedulaTutorExperimental ) => {
+  console.log("crearTrabajoGrado")
+  fetch('http://localhost:3000/TG',{
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      titulo: TG.titulo,
+      modalidad: TG.modalidad,
+      id_tutor_academico: null,
+      id_tutor_empresarial: cedulaTutorExperimental
+    })
+  })
+  .then( (response) =>{
+    console.log("response")
+    console.log(response)
+    return response.json()
+  })
+  .then( (data) => {
+    console.log("data")
+    console.log(data)
+    console.log(data.id_tg)
+    const objeto = {
+      cedula_estudiante: cedulaEstudiante,
+      id_tg: data.id_tg
+    }
+    fetch('http://localhost:3000/realiza_TG',{
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(objeto)
+    })
+    .then( (response) => {
+      console.log(response)
+      return response.json()
+    })
+    .then( (data) => {
+      console.log(data)
+    })
+    .catch( (error) => {
+      console.log("Error en creacion de realiza");
+      console.log(error);
+    })
+  })
+  .catch( (error) => {
+    console.log("Error en creacion de TG desde la api");
+    console.log(error)
   })
 }
 
 export const obtenerPropuestas = async ( estatus ) => {
   const resTG = await fetch('http://localhost:3000/TG/estatus/'+estatus);
   const tg = await resTG.json();
-  console.log("obtenerTG()");
-  console.log(tg);
+  //console.log("obtenerTG()");
+  //console.log(tg);
   return tg;
 
 }
+
+export const obtenerComites = async ( estatus ) => {
+  const resCDE = await fetch('http://localhost:3000/CDE');
+  const cde = await resCDE.json();
+  console.log("obtenerComites()");
+  console.log(cde);
+  return cde;
+
+}
+
+export const eliminarPlanilla = async ( idTg ) => {
+  await fetch('http://localhost:3000/TG/' + idTg,{method: 'DELETE'});
+}
+
+export const actualizarPlanilla = async ( planilla ) => {
+  await fetch('http://localhost:3000/TG/' + planilla.id_tg,{
+    method: 'PUT',
+    mode: 'cors',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      titulo: planilla.titulo,
+      modalidad: planilla.modalidad,
+    })
+  });
+}
+
+export const rechazarPropuestaComite = async ( id_tg ) => {
+  console.log(id_tg);
+  await fetch('http://localhost:3000/TG/evaluacionComite/' + id_tg,{
+    method: 'PUT',
+    mode: 'cors',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      desicion_comite: 'R'
+    })
+  });
+}
+export const aprobarPropuestaComite = async ( id_tg ) => {
+  console.log(id_tg);
+  await fetch('http://localhost:3000/TG/evaluacionComite/' + id_tg,{
+    method: 'PUT',
+    mode: 'cors',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      desicion_comite: 'PR'
+  })
+  })
+}
+
+export const obtenerPropuestaSinRevisor = async ( ) => {
+  const resTG = await fetch('http://localhost:3000/sin_revisor/');
+  const tg_sin_revisor = await resTG.json();
+  return tg_sin_revisor
+}
+
+export const designarRevisor = async ( id_tg, id_profesor_revisor) => {
+  const resTG = await fetch('http://localhost:3000/asignarRevisor/'+id_tg,{
+    method: 'PUT',
+    mode: 'cors',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      id_profesor_revisor: id_profesor_revisor
+    })
+  });
+  
+  const tg_revisor = await resTG.json();
+  return tg_revisor
+}
+
+export const obtenerEstudianteDeTG = async ( id_tg ) => {
+   const resEstudiantes = await fetch("http://localhost:3000/alumnosTG/" + id_tg);
+   const estudiantes = await resEstudiantes.json();
+   console.log("estudiantes")
+   console.log(estudiantes)
+   let lista = [];
+   estudiantes.forEach(element => {
+    lista.push(element.realiza_tg.estudiante)
+   });
+   console.log("lista");
+   return lista;
+}
+
+export const obtenerPropuestaConRevisorAsignado = async ( ) => {
+  const resTG = await fetch('http://localhost:3000/con_revisor/');
+  const tg_con_revisor = await resTG.json();
+  return tg_con_revisor
+
+}
+
+export const aprobarPropuestaRevisor = async ( id_tg ) => {
+  const resTG = await fetch('http://localhost:3000/TG/evaluacionRevisor/' + id_tg, {
+    method: 'PUT',
+    mode: 'cors',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      desicion_revisor: 'PE'
+    })
+  });
+  const tg_con_revisor = await resTG.json();
+  return tg_con_revisor
+
+}
+
+export const rechazarPropuestaRevisor = async ( id_tg ) => {
+  const resTG = await fetch('http://localhost:3000/TG/evaluacionRevisor/' + id_tg, {
+    method: 'PUT',
+    mode: 'cors',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      desicion_revisor: 'R'
+    })
+  });
+  const tg_con_revisor = await resTG.json();
+  return tg_con_revisor
+}
+
+
+export const rechazarPropuestaCDE = async ( id_tg ) => {
+  const resTG = await fetch('http://localhost:3000/TG/evaluacionCDE/' + id_tg, {
+    method: 'PUT',
+    mode: 'cors',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      desicion_cde: 'R'
+    })
+  });
+  const tg_con_revisor = await resTG.json();
+  return tg_con_revisor
+}
+
+export const aprobarPropuestaCDE = async ( id_tg ) => {
+  const resTG = await fetch('http://localhost:3000/TG/evaluacionCDE/' + id_tg, {
+    method: 'PUT',
+    mode: 'cors',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      desicion_cde: 'A'
+    })
+  });
+  const tg_con_revisor = await resTG.json();
+  return tg_con_revisor
+}
+
+export const asignarTutorAcademico = async ( id_tg, id_tutor_academico ) => {
+  const resTG = await fetch('http://localhost:3000/TG/asignarTutorAcademico/' + id_tg, {
+    method: 'PUT',
+    mode: 'cors',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      id_tutor_academico: id_tutor_academico
+    })
+  });
+  const tg_con_revisor = await resTG.json();
+  return tg_con_revisor
+}
+
+export const obtenerCDE = async ( ) => {
+  const resCDE = await fetch('http://localhost:3000/CDE');
+  const CDE = await resCDE.json()
+  return CDE;
+}
+
+export const obtenerCDEById = async ( id_cde ) => {
+  const resCDE = await fetch('http://localhost:3000/CDE/'+id_cde);
+  const CDE = await resCDE.json()
+  return CDE;
+}
+

@@ -1,7 +1,7 @@
 import {CDE} from '../models/CDE.js'
 export const obtenerCDE = async (req,res) => {
-    const CDE = await CDE.findAll();
-    res.json(CDE);
+    const cde = await CDE.findAll();
+    res.json(cde);
 };
 export const crearCDE = async (req,res) => {
     try {
