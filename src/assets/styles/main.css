@@ -204,6 +204,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   height: 30px;
+  word-break: break-all;
 }
 .create-state .create-carousel button.succes:hover {
   background-color: rgba(77, 235, 90, 0.4666666667);

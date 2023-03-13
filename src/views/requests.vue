@@ -7,7 +7,7 @@ import * as api from "../modules/apiTools.js";
 let data = reactive([]);
 
 // Objeto para guardar los datos de la planilla que se esta leyendo
-let planilla = reactive({
+let planilla = ref({
   id_tg: "",
   titulo: "",
   modalidad: "",
@@ -34,23 +34,23 @@ const clickenComponente = async (id) => {
   const respuesta = await api.obtenerTGById(id)
   console.log("clickenComponente()");
   console.log("planilla");
-  planilla.id_tg = respuesta.id_tg;
-  planilla.titulo = respuesta.titulo;
-  planilla.modalidad = respuesta.modalidad;
-  planilla.estatus = respuesta.estatus;
-  planilla.id_tutor_academico = respuesta.id_tutor_academico;
-  planilla.id_tutor_empresarial = respuesta.id_tutor_empresarial;
-  console.log(planilla);
+  planilla.value.id_tg = respuesta.id_tg;
+  planilla.value.titulo = respuesta.titulo;
+  planilla.value.modalidad = respuesta.modalidad;
+  planilla.value.estatus = respuesta.estatus;
+  planilla.value.id_tutor_academico = respuesta.id_tutor_academico;
+  planilla.value.id_tutor_empresarial = respuesta.id_tutor_empresarial;
+  console.log(planilla.value);
 };
 
 async function actualizarPlanilla(){
-  await api.actualizarPlanilla(planilla);
+  await api.actualizarPlanilla(planilla.value);
   data.value = await api.obtenerPropuestas('PC');
 }
 
 async function eliminarPlanilla(){
-  console.log(planilla)
-  await api.eliminarPlanilla(planilla.id_tg);
+  console.log(planilla.value)
+  await api.eliminarPlanilla(planilla.value.id_tg);
   data.value = await api.obtenerPropuestas('PC');
 }
 /*
@@ -63,6 +63,7 @@ actualizarLista.value = computed( async () =>{
 */
 onMounted(async () => {
   data.value = await api.obtenerPropuestas('PC');
+  console.log(data.value);
 });
 
 //------------------------------------------------------>
@@ -95,7 +96,6 @@ onMounted(async () => {
             :titulo="e.titulo"
             :modalidad="e.modalidad"
             :estatus="e.estatus"
-            :fechaenvio="e.fechaenvio"
             @click="clickenComponente(e.id_tg)"
           />
         </div>
