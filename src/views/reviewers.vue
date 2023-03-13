@@ -27,15 +27,14 @@ const designarTutor = async () => {
     formularioPropuesta.value.id_tg, 
     formularioPropuesta.value.id_profesor_revisor 
   );
-  
-  
-  let revisor =  await api.obtenerProfesorByCedula(formularioPropuesta.value.id_profesor_revisor );
-  let tutor_academico =  await api.obtenerProfesorByCedula(formularioPropuesta.value.id_tutor_academico );
+
   let alumnos = await api.obtenerEstudianteDeTG(formularioPropuesta.value.id_tg);
-  //console.log("alumnos")
-  //console.log(alumnos)
-  console.log(tutor_academico)
-  let planillaDesignacionDeRevisor = new PlanillaDesignacionRevisor(
+
+  let revisor =  await api.obtenerProfesorByCedula(formularioPropuesta.value.id_profesor_revisor );
+  if(formularioPropuesta.value.modalidad === 'E'){
+    let tutor_academico =  await api.obtenerProfesorByCedula(formularioPropuesta.value.id_tutor_academico );
+    let planillaDesignacionDeRevisor = new PlanillaDesignacionRevisor(
+
     formularioPropuesta.value.titulo,
     tutor_academico,
     new Date(),
@@ -43,11 +42,26 @@ const designarTutor = async () => {
     formularioPropuesta.value.modalidad,
     `${revisor.nombres} ${revisor.apellidos}`,
     "Agregar organizacion"
-  );
-  planillaDesignacionDeRevisor.añadirAlumno(alumnos[0])
-  console.log("planillaDesignacionDeRevisor")
-  console.log(planillaDesignacionDeRevisor)
-  planillaDesignacionDeRevisor.imprimir();
+    );
+    planillaDesignacionDeRevisor.añadirAlumno(alumnos[0])
+    console.log("planillaDesignacionDeRevisor")
+    console.log(planillaDesignacionDeRevisor)
+    planillaDesignacionDeRevisor.imprimir();
+  }else{
+    let tutor_empresarial =  await api.obtenerExternosById(formularioPropuesta.value.id_tutor_empresarial );
+    let planillaDesignacionDeRevisor = new PlanillaDesignacionRevisor(
+    formularioPropuesta.value.titulo,
+    tutor_empresarial,
+    new Date(),
+    { nombre: 'Luz Medina', correo_administrador: 'lamedina@wlaluchocorp.com' },
+    formularioPropuesta.value.modalidad,
+    `${revisor.nombres} ${revisor.apellidos}`,
+    "Agregar organizacion"
+    );
+    planillaDesignacionDeRevisor.añadirAlumno(alumnos[0])
+    planillaDesignacionDeRevisor.imprimir();
+  }
+  
 };
 
 const rechazarPropuesta = async () => {
