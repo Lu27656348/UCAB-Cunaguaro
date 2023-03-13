@@ -38,10 +38,6 @@ const clickenComponente = async (id) => {
   console.log(formularioPropuesta)
 };
 
-const insertarEstudiante = () =>{
-  api.insertarEstudiantes(estudiante);
-};
-
 const rechazarTG = async (id) =>{
 
   await api.rechazarPropuestaCDE(id)
@@ -50,8 +46,8 @@ const rechazarTG = async (id) =>{
 };
 
 const aceptarTG = async (id) =>{
-  //await api.aprobarPropuestaCDE(id)
- //await api.asignarTutorAcademico(id,tutor.value.cedula)
+  await api.aprobarPropuestaCDE(id)
+  //await api.asignarTutorAcademico(id,tutor.value.cedula)
   alert("aceptado");
   const estudiante = await api.obtenerEstudianteDeTG(id);
   const tutor_academico = await api.obtenerProfesorByCedula(formularioPropuesta.value.id_tutor_academico)
