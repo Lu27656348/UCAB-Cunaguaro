@@ -6,7 +6,7 @@ import { PropuestaTg } from "../modules/planillaPropuesta.js";
 let dataPropuestas = reactive([]);
 let dataPorRevisores = reactive([]);
 let dataProfesores = reactive([]);
-
+let datosProfesor = null;
 //Lista de comites en bdd
 let comites;
 
@@ -16,29 +16,34 @@ console.log(formularioPropuesta);
 const clickenComponente = async (id) => {
   console.log(id)
   formularioPropuesta.value = await api.obtenerTGById(id);
+  console.log("formularioPropuesta.value");
   console.log(formularioPropuesta.value);
+  if(formularioPropuesta.value.modalidad === 'E'){
+    const resdatosProfesor = await api.obtenerProfesorByCedula(formularioPropuesta.value.id_tutor_academico);
+    datosProfesor = resdatosProfesor;
+  }else{
+    const resdatosProfesor = await api.obtenerProfesorByCedula(formularioPropuesta.value.id_tutor_empresarial);
+    datosProfesor = resdatosProfesor
+  }
+  
 };
 
 const rechazarPropuestaComite = async() =>{
-  api.rechazarPropuesta( formularioPropuesta.value.id_propuesta, formularioPropuesta.value.comite_evaluador.id );
-  console.log(formularioPropuesta.value);
-  //console.log(formularioPropuesta.value.setPropuestaRechazada());
-  //formularioPropuesta.value.setPropuestaRechazada();
+  api.rechazarPropuestaComite(formularioPropuesta.value.id_tg);
   alert('Rechazado con tristeza');
-  dataPropuestas.value = await api.obtenerPropuestas();
+  dataPropuestas.value = await api.obtenerPropuestas('PC');
 };
 
 const aprobarPropuestaComite = async () =>{
-  api.aprobarPropuestaComite( formularioPropuesta.value.id_propuesta, formularioPropuesta.value.comite_evaluador.id )
-  console.log(formularioPropuesta.value);
-  alert('Propusta aprobada con exito por comite: ' + formularioPropuesta.value.comite_evaluador.id);
+  api.aprobarPropuestaComite(formularioPropuesta.value.id_tg);
+  alert('Aprobado por comite');
   dataPropuestas.value = await api.obtenerPropuestas('PC');
 };
 
 onMounted(async () => {
   dataPropuestas.value = await api.obtenerPropuestas('PC');
-  //comites = await api.obtenerComites();
- // console.log(comites);
+  comites = await api.obtenerComites();
+  console.log(comites);
 });
 </script>
 <template>
@@ -83,22 +88,13 @@ onMounted(async () => {
                 <input disabled type="text" v-model="formularioPropuesta.titulo" />
                 <p>Modalidad</p>
                 <input disabled type="text" v-model="formularioPropuesta.modalidad">
-                <p>Fecha de envio</p>
-                <input disabled type="date" v-model="formularioPropuesta.fecha" />
+                <p>Fecha de solicitud</p>
+                <input disabled type="date"  v-model="formularioPropuesta.fecha_solicitud"/>
                 <p>Estatus</p>
-                <input disabled type="text" v-model="formularioPropuesta.estatus" />
+                <input disabled type="text" v-model="formularioPropuesta.estatus"/>
                 <p>tutor</p>
-                <input disabled type="text" v-model="formularioPropuesta.tutor_academico.nombres"/>
-                <input disabled type="text" v-model="formularioPropuesta.tutor_academico.apellidos"/>
-                <select name="comites" id="" v-model="formularioPropuesta.comite_evaluador.id">
-                  <option
-                  v-for="c in comites"
-                  :key="c.id_ctg" 
-                  :value="c.id_ctg"
-                >
-                {{ c.id_ctg }}
-                </option>
-                </select>
+                <input disabled type="text" v-model="formularioPropuesta.estatus" />
+                <input disabled type="text" v-model="formularioPropuesta.estatus"/>
               </div>
               <div class="actions">
                 <button class="cancel"

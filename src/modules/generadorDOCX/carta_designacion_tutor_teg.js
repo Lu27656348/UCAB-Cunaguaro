@@ -1,6 +1,21 @@
+import * as docx from 'docx';
+import file_saver from 'file-saver'
+const { saveAs } = file_saver
+// Load the full build.
+import lodash from 'lodash';
+const { _ } =  lodash;
+const { TableRow,BorderStyle } = docx;
+const { WidthType,Paragraph } = docx;
+const { VerticalAlign, Document } = docx;
+const { TextRun, AlignmentType } = docx;
+const { SectionType, Header } = docx;
+const { HeightRule,TableCell } = docx;
+const { Footer, LineRuleType } = docx;
+const { Table, PageBreak } = docx;
+const { HeadingLevel,Packer } = docx;
+//const { TableRow,BorderStyle } = docx;
+
 import * as fs from 'fs'
-import docx from 'docx'
-const { Paragraph } = docx
 //Modelo de los datos de la carta de designación para inserción de datos
 const Carta_designacion = {
     propuesta: {
@@ -34,11 +49,11 @@ let flag = 1;
 const generaTitulo = (titulo) => {
     if(flag === 1){
         flag = 0;
-        const fila = new docx.TableCell({
+        const fila = new TableCell({
             children: [
                 new Paragraph({
                     children: [
-                        new docx.TextRun({
+                        new  TextRun({
                             text: titulo
                         })
                     ]
@@ -50,60 +65,60 @@ const generaTitulo = (titulo) => {
     }
     return;
 }
-const encabezadoTablaAlumno = new docx.TableRow({
+const encabezadoTablaAlumno = new  TableRow({
     children : [
-        new docx.TableCell({
+        new  TableCell({
             width: {
                 size: 3505,
-                type: docx.WidthType.DXA
+                type:  WidthType.DXA
             },
             children: [
-                new docx.Paragraph({
+                new  Paragraph({
                     children: [
-                        new docx.TextRun({
+                        new  TextRun({
                             text: "Estudiante",
                             bold: true,
                         })
                     ],
-                    alignment: docx.AlignmentType.CENTER
+                    alignment:  AlignmentType.CENTER
                 })
             ],
-            verticalAlign: docx.VerticalAlign.CENTER,
+            verticalAlign:  VerticalAlign.CENTER,
         }),
-        new docx.TableCell({
+        new  TableCell({
             width: {
                 size: 3505,
-                type: docx.WidthType.DXA
+                type:  WidthType.DXA
             },
             children: [
-                new docx.Paragraph({
+                new  Paragraph({
                     children: [
-                        new docx.TextRun({
+                        new  TextRun({
                             text: "Cedula",
                             bold: true,
                         })
                     ],
-                    alignment: docx.AlignmentType.CENTER
+                    alignment:  AlignmentType.CENTER
                 })
             ]
         }),
-        new docx.TableCell({
+        new  TableCell({
             width: {
                 size: 3505,
-                type: docx.WidthType.DXA
+                type:  WidthType.DXA
             },
             children: [
-                new docx.Paragraph({
+                new  Paragraph({
                     children: [
-                        new docx.TextRun({
+                        new  TextRun({
                             text: "Titulo Trabajo de Grado",
                             bold: true,
                         })
                     ],
-                    alignment: docx.AlignmentType.CENTER
+                    alignment:  AlignmentType.CENTER
                 })
             ],
-            verticalAlign: docx.VerticalAlign.CENTER,
+            verticalAlign:  VerticalAlign.CENTER,
         })
     ]
 });
@@ -114,24 +129,24 @@ const generarTablaAlumno = (alumnos,titulo) => {
     //filas.push(encabezadoTablaAlumno)
     
     alumnos.forEach(alumno => {
-        let fila = new docx.TableRow({
+        let fila = new  TableRow({
             children: [
-                new docx.TableCell({
+                new  TableCell({
                     children: [
                         new Paragraph({
                             children: [
-                                new docx.TextRun({
+                                new  TextRun({
                                     text: alumno.apellidos + ', ' + alumno.nombres
                                 })
                             ]
                         })
                     ]
                 }),
-                new docx.TableCell({
+                new  TableCell({
                     children: [
                         new Paragraph({
                             children: [
-                                new docx.TextRun({
+                                new  TextRun({
                                     text: alumno.cedula
                                 })
                             ]
@@ -149,7 +164,7 @@ const generarTablaAlumno = (alumnos,titulo) => {
 
 }
 export const generarCartaDesignacionTutorTEG = (Carta_designacion) => {
-    const doc = new docx.Document({
+    const doc = new  Document({
         creator: "Luis C. Somoza & Wladimir San Vicente",
         title: "Carta de designación - Tutor de propuesta de trabajo de grado experimental",
         description: "Carta de designación - Tutor de propuesta de trabajo de grado experimental",
@@ -202,7 +217,7 @@ export const generarCartaDesignacionTutorTEG = (Carta_designacion) => {
         },
         sections: [{
             properties: {
-                type: docx.SectionType.CONTINUOUS,
+                type:  SectionType.CONTINUOUS,
                 margin: {
                     top: 150,
                     right: 150,
@@ -211,97 +226,101 @@ export const generarCartaDesignacionTutorTEG = (Carta_designacion) => {
                 }
             },
             headers: {
-                default: new docx.Header({
-                    children: [new docx.Paragraph({
+                default: new  Header({
+                    children: [new  Paragraph({
                         children: [
-                            new docx.ImageRun({
+                            /*
+                            new  ImageRun({
                                 data: fs.readFileSync('logo.png'),
                                 transformation: {
                                     width: 400,
                                     height: 100,
                                 },
                             }),
+                            */
                         ],
-                        alignment: docx.AlignmentType.LEFT
+                        alignment:  AlignmentType.LEFT
                     })],
                 }),
             },
             footers: {
-                default: new docx.Footer({
+                default: new  Footer({
                     children: [
-                        new docx.Paragraph({
+                        new  Paragraph({
                             children: [
-                                new docx.ImageRun({
+                                /*
+                                new  ImageRun({
                                     data: fs.readFileSync('Untitled.png'),
                                     transformation: {
                                         width: 600,
                                         height: 15,
                                     },
-                                    alignment: docx.AlignmentType.CENTER
+                                    alignment:  AlignmentType.CENTER
                                 }),
+                                */
                             ],
-                            alignment: docx.AlignmentType.CENTER
+                            alignment:  AlignmentType.CENTER
                         }),
-                        new docx.Paragraph({
+                        new  Paragraph({
                             children: [
-                                new docx.TextRun({
+                                new  TextRun({
                                     text: "UNIVERSIDAD CATÓLICA ANDRÉS BELLO – Extensión Guayana",
                                 })
                             ],
-                            alignment: docx.AlignmentType.CENTER
+                            alignment:  AlignmentType.CENTER
                         }),
-                        new docx.Paragraph({
+                        new  Paragraph({
                             children: [
-                                new docx.TextRun({
+                                new  TextRun({
                                     text: "Avenida Atlántico, Ciudad Guayana 8050",
                                 })
                             ],
-                            alignment: docx.AlignmentType.CENTER
+                            alignment:  AlignmentType.CENTER
                         }),
-                        new docx.Paragraph({
+                        new  Paragraph({
                             children: [
-                                new docx.TextRun({
+                                new  TextRun({
                                     text: "Bolívar, Venezuela. Teléfono: +58-286-6000111"
                                 })
                             ],
-                            alignment: docx.AlignmentType.CENTER
+                            alignment:  AlignmentType.CENTER
                         }),
-                        new docx.Paragraph({
+                        new  Paragraph({
                             children: [
-                                new docx.TextRun({
+                                new  TextRun({
                                     text: "URL: http://www.guayanaweb.ucab.edu.ve/escuela-de-ingenieria-informatica.html"
                                 })
                             ],
-                            alignment: docx.AlignmentType.CENTER
+                            alignment:  AlignmentType.CENTER
                         })
                     ],
                 }),
             },
             children: [
-                new docx.Paragraph({
+                new  Paragraph({
                     style: "aside",
                     children: [
-                        new docx.TextRun({
+                        new  TextRun({
                             text: Carta_designacion.fecha_designacion,
                             font: "Trebuchet MS",
                         })
                     ],
-                    alignment: docx.AlignmentType.RIGHT,
+                    alignment:  AlignmentType.RIGHT,
                     spacing: {
                         after: 200,
                         line: 355,
-                        lineRule: docx.LineRuleType.AUTO,
+                        lineRule:  LineRuleType.AUTO,
                     },
                 }),
-                new docx.Paragraph({
+                new  Paragraph({
                     style: "aside",
                     children: [
-                        new docx.TextRun({
+                        new  TextRun({
                             text: 'Profesor(a):',
                             bold: true,
                             font: "Trebuchet MS"
                         }),
-                        new docx.TextRun({
+                        new  TextRun({
                             text: ' ' + Carta_designacion.propuesta.tutor,
                             bold: true,
                             font: "Trebuchet MS"
@@ -310,49 +329,49 @@ export const generarCartaDesignacionTutorTEG = (Carta_designacion) => {
                     spacing: {
                         after: 200,
                         line: 355,
-                        lineRule: docx.LineRuleType.AUTO,
+                        lineRule:  LineRuleType.AUTO,
                     }
                 }),    
-                new docx.Paragraph({
+                new  Paragraph({
                     style: "aside",
                     children: [
-                        new docx.TextRun({
+                        new  TextRun({
                             text: 'Me es grato dirigirme a Usted en oportunidad de informarle que en Consejo de Escuela CE No ' + Carta_designacion.CDE,
                             font: "Trebuchet MS"
                         }),
-                        new docx.TextRun({
+                        new  TextRun({
                             text: " Fecha: " + Carta_designacion.fecha_designacion,
                             bold: true,
                             font: "Trebuchet MS"
                         }),
-                        new docx.TextRun({
+                        new  TextRun({
                             text: ', ha sido confirmado como Tutor Académico del Trabajo Experimental de Grado: ',
                             font: "Trebuchet MS"
                         }),
                     ],
-                    alignment: docx.AlignmentType.JUSTIFIED,
+                    alignment:  AlignmentType.JUSTIFIED,
                     indent: {
                         firstLine: 400
                     },
                     spacing: {
                         after: 200,
                         line: 355,
-                        lineRule: docx.LineRuleType.AUTO,
+                        lineRule:  LineRuleType.AUTO,
                     }
                 }),
-                new docx.Table({
+                new  Table({
                     columnWidths: [3505, 5505],
                     rows: generarTablaAlumno(alumnos,Carta_designacion.propuesta.titulo)
                 }),
-                new docx.Paragraph({
+                new  Paragraph({
                     style: "aside",
                     children: [
-                        new docx.TextRun({
+                        new  TextRun({
                             text: "Para la realización de la tutoría se anexan los siguientes documentos: ",
                             font: "Trebuchet MS"
                         })
                     ],
-                    alignment: docx.AlignmentType.JUSTIFIED,
+                    alignment:  AlignmentType.JUSTIFIED,
                     indent: {
                         firstLine: 400
                     },
@@ -360,100 +379,100 @@ export const generarCartaDesignacionTutorTEG = (Carta_designacion) => {
                         before: 200,
                         after: 200,
                         line: 355,
-                        lineRule: docx.LineRuleType.AUTO,
+                        lineRule:  LineRuleType.AUTO,
                     }
                 }),
-                new docx.Paragraph({
+                new  Paragraph({
                     style: "aside",
                     bullet: {
                         level: 0
                     },
                     children: [
-                        new docx.TextRun({
+                        new  TextRun({
                             text: "Propuesta de Trabajo de Grado aprobada ",
                             font: "Trebuchet MS"
                         })
                     ],
-                    alignment: docx.AlignmentType.JUSTIFIED,
+                    alignment:  AlignmentType.JUSTIFIED,
                     spacing: {
                         after: 50,
                         line: 355,
-                        lineRule: docx.LineRuleType.AUTO,
+                        lineRule:  LineRuleType.AUTO,
                     }
                 }),
-                new docx.Paragraph({
+                new  Paragraph({
                     style: "aside",
                     bullet: {
                         level: 0
                     },
                     children: [
-                        new docx.TextRun({
+                        new  TextRun({
                             text: "Guía Informe Trabajo Grado IINF Gy, donde se detalla el contenido y formato que debe tener el Informe de Trabajo Grado, el cual usted debe garantizar al emitir la Carta Culminación TG. ",
                             font: "Trebuchet MS"
                         })
                     ],
-                    alignment: docx.AlignmentType.JUSTIFIED,
+                    alignment:  AlignmentType.JUSTIFIED,
                     spacing: {
                         after: 50,
                         line: 355,
-                        lineRule: docx.LineRuleType.AUTO,
+                        lineRule:  LineRuleType.AUTO,
                     }
                 }),
-                new docx.Paragraph({
+                new  Paragraph({
                     style: "aside",
                     bullet: {
                         level: 0
                     },
                     children: [
-                        new docx.TextRun({
+                        new  TextRun({
                             text: "Reglamento Trabajo de Grado de la Facultad de Ingeniería, vigente y que rige lo relativo a la elaboración y presentación del Trabajo de Grado en la Facultad. ",
                             font: "Trebuchet MS"
                         })
                     ],
-                    alignment: docx.AlignmentType.JUSTIFIED,
+                    alignment:  AlignmentType.JUSTIFIED,
                     spacing: {
                         after: 50,
                         line: 355,
-                        lineRule: docx.LineRuleType.AUTO,
+                        lineRule:  LineRuleType.AUTO,
                     }
                 }),
-                new docx.Paragraph({
+                new  Paragraph({
                     style: "aside",
                     bullet: {
                         level: 0
                     },
                     children: [
-                        new docx.TextRun({
+                        new  TextRun({
                             text: "Modelo Carta Culminación TG Tutor Académico, en la cual el Tutor Académico, certifica que tanto el Trabajo de Grado como el Informe del mismo, están terminados y listos para su defensa. ",
                             font: "Trebuchet MS"
                         })
                     ],
-                    alignment: docx.AlignmentType.JUSTIFIED,
+                    alignment:  AlignmentType.JUSTIFIED,
                     spacing: {
                         after: 50,
                         line: 355,
-                        lineRule: docx.LineRuleType.AUTO,
+                        lineRule:  LineRuleType.AUTO,
                     }
                 }),
-                new docx.Paragraph({
+                new  Paragraph({
                     style: "aside",
                     children: [
-                        new docx.TextRun({
+                        new  TextRun({
                             text: "Para la entrega formal del Trabajo Experimental de Grado, usted, como Tutor Académico, debe enviar a la Escuela el informe después de revisado, junto a la Carta Culminación TG.",
                             font: "Trebuchet MS"
                         })
                     ],
-                    alignment: docx.AlignmentType.JUSTIFIED,
+                    alignment:  AlignmentType.JUSTIFIED,
                     spacing: {
                         after: 200,
                         line: 355,
-                        lineRule: docx.LineRuleType.AUTO,
+                        lineRule:  LineRuleType.AUTO,
                     }
                 }),
-                new docx.Paragraph({
+                new  Paragraph({
                     style: "aside",
                     children: [
-                        new docx.TextRun({
+                        new  TextRun({
                             text: "Le informo que, en el marco de la política de investigación de la Facultad de Ingeniería, se espera que este trabajo, que corresponde con un proyecto de investigación, genere un producto de publicación, bien en algunas de las revistas de la Universidad como: Guayana Sustentable, TEKHNÉ, Educab, otra de la UCAB, alguna revista nacional o Internacional del área del trabajo o en la plataforma SABER-UCAB.",
                             font: "Trebuchet MS"
                         })
@@ -464,13 +483,13 @@ export const generarCartaDesignacionTutorTEG = (Carta_designacion) => {
                     spacing: {
                         after: 200,
                         line: 355,
-                        lineRule: docx.LineRuleType.AUTO,
+                        lineRule:  LineRuleType.AUTO,
                     }
                 }),
-                new docx.Paragraph({
+                new  Paragraph({
                     style: "aside",
                     children: [
-                        new docx.TextRun({
+                        new  TextRun({
                             text: "Para que el alumno pueda participar en el Acto de Grado de abril 2023, debe realizar la entrega formal del informe de TG con fecha tope el 14/10/2022",
                             font: "Trebuchet MS"
                         })
@@ -481,13 +500,13 @@ export const generarCartaDesignacionTutorTEG = (Carta_designacion) => {
                     spacing: {
                         after: 200,
                         line: 355,
-                        lineRule: docx.LineRuleType.AUTO,
+                        lineRule:  LineRuleType.AUTO,
                     }
                 }),
-                new docx.Paragraph({
+                new  Paragraph({
                     style: "aside",
                     children: [
-                        new docx.TextRun({
+                        new  TextRun({
                             text: "Agradezco confirme la recepción de la presente comunicación",
                             font: "Trebuchet MS",
                             italics: true
@@ -499,13 +518,13 @@ export const generarCartaDesignacionTutorTEG = (Carta_designacion) => {
                     spacing: {
                         after: 200,
                         line: 355,
-                        lineRule: docx.LineRuleType.AUTO,
+                        lineRule:  LineRuleType.AUTO,
                     }
                 }),
-                new docx.Paragraph({
+                new  Paragraph({
                     style: "aside",
                     children: [
-                        new docx.TextRun({
+                        new  TextRun({
                             text: "Saludandole cordialmente",
                             font: "Trebuchet MS",
                             italics: true
@@ -517,13 +536,13 @@ export const generarCartaDesignacionTutorTEG = (Carta_designacion) => {
                     spacing: {
                         after: 200,
                         line: 355,
-                        lineRule: docx.LineRuleType.AUTO,
+                        lineRule:  LineRuleType.AUTO,
                     }
                 }),
-                new docx.Paragraph({
+                new  Paragraph({
                     style: "aside",
                     children: [
-                        new docx.TextRun({
+                        new  TextRun({
                             text: "Atentamente,",
                             font: "Trebuchet MS",
                             italics: true
@@ -535,13 +554,13 @@ export const generarCartaDesignacionTutorTEG = (Carta_designacion) => {
                     spacing: {
                         after: 200,
                         line: 355,
-                        lineRule: docx.LineRuleType.AUTO,
+                        lineRule:  LineRuleType.AUTO,
                     }
                 }),
-                new docx.Paragraph({
+                new  Paragraph({
                     style: "despedida",
                     children: [
-                        new docx.TextRun({
+                        new  TextRun({
                             text: Carta_designacion.administrador,
                             italics: true,
                             bold: true,
@@ -551,14 +570,21 @@ export const generarCartaDesignacionTutorTEG = (Carta_designacion) => {
                     spacing: {
                         after: 200,
                         line: 355,
-                        lineRule: docx.LineRuleType.AUTO,
+                        lineRule:  LineRuleType.AUTO,
                     }
                 })
             ],
         }]
     });
-    docx.Packer.toBuffer(doc).then((buffer) => {
+    const nombre_archivo = "Carta Designacion Tutor Academico"
+    Packer.toBlob(doc).then(blob => {
+        saveAs(blob, nombre_archivo+".docx");
+        //console.log("Documento creado de forma exitosa en el navegador");
+    });
+    /*
+     Packer.toBuffer(doc).then((buffer) => {
         fs.writeFileSync("Carta Modelo Designacion Tutor Academico TEG.docx", buffer);
     });
+    */
 }
 

@@ -1,7 +1,7 @@
 import {Externos} from '../models/Externos.js'
 export const obtenerExternos = async (req,res) => {
-    const Externos = await Externos.findAll();
-    res.json(Externos);
+    const externos = await Externos.findAll();
+    res.json(externos);
 };
 export const crearExternos = async (req,res) => {
     try {

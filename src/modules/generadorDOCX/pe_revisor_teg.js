@@ -109,7 +109,7 @@ const generarDesicion = (text) => {
                 new Paragraph({
                     children: [
                         new TextRun({
-                            text: "PE_REVISOR_TEG.revisor.fecha_revisado"
+                            text: ""
                         })
                     ]
                 })
@@ -177,30 +177,56 @@ const generarCriterio = (text) => {
     }));
 }
 
-const generarCelda = (text, width, after, before) => {
-    console.log(text);
-    console.log(width);
-    console.log(after);
-    console.log(before);
-    return (new TableCell({
+const generarDatosAlumno = (alumno)  => {
+    const datos = new TableRow({
         children: [
-            new Paragraph({
+            new TableCell({
                 children: [
-                    new TextRun({
-                        text: text
+                    new Paragraph({
+                        children: [
+                            new TextRun({
+                                text: alumno.nombres
+                            })
+                        ]
                     })
-                ],
-                spacing: {
-                    after: after,
-                    before: before
-                }
-            })
-        ],
-        width: {
-            value: width,
-            type: WidthType.DXA
-        }
-    }));
+                ]
+            }),
+            new TableCell({
+                children: [
+                    new Paragraph({
+                        children: [
+                            new TextRun({
+                                text: alumno.cedula
+                            })
+                        ]
+                    })
+                ]
+            }),
+            new TableCell({
+                children: [
+                    new Paragraph({
+                        children: [
+                            new TextRun({
+                                text: alumno.telefono
+                            })
+                        ]
+                    })
+                ]
+            }),
+            new TableCell({
+                children: [
+                    new Paragraph({
+                        children: [
+                            new TextRun({
+                                text: alumno.email
+                            })
+                        ]
+                    })
+                ]
+            }),
+        ]
+    })
+    return datos
 }
 /*
 
@@ -437,7 +463,7 @@ export const generarPE_revisor_teg = (PE_REVISOR_TEG) => {
                                         new Paragraph({
                                             children: [
                                                 new TextRun({
-                                                    text: PE_REVISOR_TEG.propuesta.organizacion
+                                                    text: PE_REVISOR_TEG.organizacion
                                                 })
                                             ],
                                         })
@@ -531,12 +557,12 @@ export const generarPE_revisor_teg = (PE_REVISOR_TEG) => {
                                 }),
                             ]
                         }),
-                        generarCriterio("Criterio de revisor para evaluar PTG Experimental"),
-                        generarCriterio("Criterio de revisor para evaluar PTG Experimental"),
-                        generarCriterio("Criterio de revisor para evaluar PTG Experimental"),
-                        generarCriterio("Criterio de revisor para evaluar PTG Experimental"),
-                        generarCriterio("Criterio de revisor para evaluar PTG Experimental"),
-                        generarCriterio("Criterio de revisor para evaluar PTG Experimental"),
+                        generarCriterio("El tema planteado tiene estrecha relación con Ingeniería Informática."),
+                        generarCriterio("Los Objetivos planteados son claros y medibles."),
+                        generarCriterio("La metodología del proyecto está claramente definida."),
+                        generarCriterio("El marco referencial y las referencias bibliográficas presentadas demuestran sustentación y dominio del tema."),
+                        generarCriterio("Existe una clara justificación para el desarrollo del proyecto, en función de aporte, originalidad y/o innovación."),
+                        generarCriterio("El proyecto es factible de realizarse en un mínimo de 20 semanas y máximo un año"),
                     ]
                 }),
                 new Paragraph({
@@ -652,83 +678,8 @@ export const generarPE_revisor_teg = (PE_REVISOR_TEG) => {
                                 }),
                             ]
                         }),
-                        new TableRow({
-                            height: {
-                                value: 300,
-                                rule: HeightRule.EXACT
-                            },
-                            children: [
-                                new TableCell({
-                                    width: {
-                                        size: 500,
-                                        type: WidthType.DXA
-                                    },
-                                    children: [
-                                        new Paragraph({
-                                            style: "aside",
-                                            children: [
-                                                new TextRun({
-                                                    text: "Luis Carlos Somoza"
-                                                }),
-                                            ]
-                                        })
-                                    ],
-                                    verticalAlign: VerticalAlign.CENTER,
-                                }),
-                                new TableCell({
-                                    width: {
-                                        size: 500,
-                                        type: WidthType.DXA
-                                    },
-                                    children: [
-                                        new Paragraph({
-                                            style: "aside",
-                                            children: [
-                                                new TextRun({
-                                                    text: "27656348"
-                                                }),
-                                            ]
-                                        })
-                                    ],
-                                    verticalAlign: VerticalAlign.CENTER,
-                                }),
-                                new TableCell({
-                                    width: {
-                                        size: 500,
-                                        type: WidthType.DXA
-                                    },
-                                    children: [
-                                        new Paragraph({
-                                            style: "aside",
-                                            children: [
-                                                new TextRun({
-                                                    text: "04122155879"
-                                                }),
-                                            ]
-                                        })
-                                    ],
-                                    verticalAlign: VerticalAlign.CENTER,
-                                }),
-                                new TableCell({
-                                    width: {
-                                        size: 500,
-                                        type: WidthType.DXA
-                                    },
-                                    children: [
-                                        new Paragraph({
-                                            style: "aside",
-                                            children: [
-                                                new TextRun({
-                                                    text: "luiscarlossomoza@gmail.com"
-                                                }),
-                                            ]
-                                        })
-                                    ],
-                                    verticalAlign: VerticalAlign.CENTER,
-                                })
-                            ]
-                        }),
-
+                        //generarDatosalumno aqui
+                        generarDatosAlumno(PE_REVISOR_TEG.propuesta.alumno[0])
                     ],
                 }),
                 new Paragraph({

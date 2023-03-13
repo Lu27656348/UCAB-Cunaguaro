@@ -11,9 +11,9 @@ export class PlanillaCrearSolicitud {
     this.progressbarState = 0;
 
     this.trabajoDeGrado = {
-      titulo: "titulo carrero",
+      titulo: "",
       modalidad: "",
-      id_tg: (new Date()).toDateString()
+      id_tg: ""
     };
     
     this.alumnos = [
@@ -33,7 +33,7 @@ export class PlanillaCrearSolicitud {
   crearSolicitud() {
     this.progressbarState = 0;
 
-    this.trabajoDeGrado.tituloTG = "";
+    this.trabajoDeGrado.titulo = "";
     this.trabajoDeGrado.modalidad = "";
     this.cedulaAlumno = "";
     this.cedulaTutor = "";

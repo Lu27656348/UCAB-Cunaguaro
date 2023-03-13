@@ -5,8 +5,12 @@ import { Jurados } from "./Jurados.js";
 
 export const TG = sequelize.define('tg', {
     id_tg: {
-        type: DataTypes.TEXT,
+        type: DataTypes.INTEGER,
         primaryKey: true,
+    },
+    id_tg_formateado: {
+        type: DataTypes.TEXT,
+        defaultValue: null
     },
     titulo: {
         type: DataTypes.TEXT,
@@ -20,7 +24,7 @@ export const TG = sequelize.define('tg', {
     estatus: {
         type: DataTypes.STRING(2),
         allowNull: false,
-        defaultValue: 'PA'
+        defaultValue: 'PC'
     },
     fecha_solicitud: {
         type: DataTypes.DATE,

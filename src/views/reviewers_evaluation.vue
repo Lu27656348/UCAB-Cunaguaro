@@ -14,34 +14,30 @@ let revisor = ref('');
 let profesoresADesignar = ref([]);
 let formularioPropuesta = ref(new PropuestaTg());
 
-/*
+
 const clickenComponente = async (id) => {
-  formularioPropuesta.value = await api.obtenerPropuestaById(id);
-  console.log(formularioPropuesta.value);
-  revisor.value = await api.obtenerProfesorById(formularioPropuesta.value.id_profesor_revisor)
-  console.log(revisor.value);
+  console.log(id)
+  formularioPropuesta.value = await api.obtenerTGById(id)
+  console.log(formularioPropuesta.value)
+  revisor.value = await api.obtenerProfesorByCedula(formularioPropuesta.value.id_profesor_revisor)
 };
 
 const rechazarPropuesta = async () => {
-  await api.rechazarPropuestaRevisor( formularioPropuesta.value.id_propuesta )
-  dataPropuestasConRevisorAsignado.value = await api.obtenerPropuestaConRevisorAsignado();
+  await api.rechazarPropuestaRevisor(formularioPropuesta.value.id_tg)
   alert("Rechazada por Revisor");
+  dataPropuestasConRevisorAsignado.value = await api.obtenerPropuestaConRevisorAsignado();
 };
 
 const aprobarPropuesta = async () => {
-  await api.aprobarPropuestaRevisor( formularioPropuesta.value.id_propuesta );
-  dataPropuestasConRevisorAsignado.value = await api.obtenerPropuestaConRevisorAsignado();
+  await api.aprobarPropuestaRevisor(formularioPropuesta.value.id_tg)
   alert("Aprobada por Revisor");
-};
-
-const hola = ()=>{ 
-  console.log(formularioPropuesta.value.revisor);  
+  dataPropuestasConRevisorAsignado.value = await api.obtenerPropuestaConRevisorAsignado();
 };
 
 onMounted(async () => {
   dataPropuestasConRevisorAsignado.value = await api.obtenerPropuestaConRevisorAsignado();
 });
-*/
+
 </script>
 <template>
   <div class="request">
@@ -60,10 +56,11 @@ onMounted(async () => {
             class="request__container__display__list__record"
             v-for="t in dataPropuestasConRevisorAsignado.value"
             :key="t.id_ptg"
-            @click="clickenComponente(t.id_ptg)"
+            @click="clickenComponente(t.id_tg)"
           >
-            <p>{{ t.id_ptg }}</p>
-            <p>{{ t.fecha_entrega }}</p>
+            <p>{{ t.titulo }}</p>
+            <p>{{ t.id_tg }}</p>
+            <p>{{ t.fecha_ctg }}</p>
             <p>{{ t.estatus }}</p>
           </div>
         </div>

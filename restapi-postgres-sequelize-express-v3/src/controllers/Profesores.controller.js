@@ -1,7 +1,7 @@
 import {Profesores} from '../models/Profesores.js'
 export const obtenerProfesores = async (req,res) => {
-    const Profesores = await Profesores.findAll();
-    res.json(Profesores);
+    const profesores = await Profesores.findAll();
+    res.json(profesores);
 };
 export const crearProfesores = async (req,res) => {
     try {
