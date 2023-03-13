@@ -1,4 +1,6 @@
 /* Lista para limpieza en la base de datos */
+DROP TABLE IF EXISTS Planillas;
+DROP TABLE IF EXISTS tiene_especialidades;
 DROP TABLE IF EXISTS realiza_TG;
 DROP TABLE IF EXISTS Administradores;
 DROP TABLE IF EXISTS Jurados;
@@ -62,7 +64,8 @@ CREATE TABLE IF NOT EXISTS Empresas (
 );
 
 CREATE TABLE IF NOT EXISTS CDE (
-	id_cde TEXT NOT NULL,
+	id_cde SERIAL NOT NULL,
+	id_cde_formateado TEXT GENERATED ALWAYS AS ( formato_de_id_cde(id_cde)) STORED,
 	fecha_conformacion DATE DEFAULT CURRENT_DATE,
 	PRIMARY KEY (id_cde)
 );
@@ -85,9 +88,12 @@ CREATE TABLE IF NOT EXISTS TG (
 	fecha_revision DATE DEFAULT NULL,
 	fecha_defensa DATE DEFAULT NULL,
 	id_profesor_revisor VARCHAR(10) DEFAULT NULL,
+	observaciones_revisor TEXT DEFAULT NULL,
 	id_tutor_academico VARCHAR(10) DEFAULT NULL,
 	id_tutor_empresarial INTEGER DEFAULT NULL,
 	id_cde TEXT DEFAULT NULL,
+	observaciones_cde TEXT DEFAULT NULL,
+	id_empresa INTEGER DEFAULT NULL,
 	FOREIGN KEY (id_profesor_revisor) REFERENCES Profesores(cedula)
 		ON UPDATE RESTRICT
 		ON DELETE RESTRICT,
@@ -98,6 +104,9 @@ CREATE TABLE IF NOT EXISTS TG (
 		ON UPDATE RESTRICT
 		ON DELETE RESTRICT,
 	FOREIGN KEY (id_cde) REFERENCES CDE(id_cde)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT,
+	FOREIGN KEY (id_empresa) REFERENCES Empresas(id_empresa)
 		ON UPDATE RESTRICT
 		ON DELETE RESTRICT
 );
@@ -156,4 +165,25 @@ CREATE TABLE IF NOT EXISTS realiza_TG (
 	FOREIGN KEY (id_tg) REFERENCES TG(id_tg)
 		ON UPDATE CASCADE
 		ON DELETE CASCADE
+);
+CREATE TABLE IF NOT EXISTS tiene_especialidades (
+	cedula_profesor VARCHAR(10),
+	nombre_especialidad TEXT,
+	PRIMARY KEY(cedula_profesor,nombre_especialidad),
+	FOREIGN KEY (cedula_profesor) REFERENCES Profesores(cedula)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT,
+	FOREIGN KEY (nombre_especialidad) REFERENCES Especialidades(nombre_especialidad)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS Planillas (
+	id_tg VARCHAR(10),
+	nombre_planilla TEXT,
+	documento BYTEA DEFAULT NULL,
+	PRIMARY KEY(id_tg,nombre_planilla),
+	FOREIGN KEY (id_tg) REFERENCES TG(id_tg)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT
 );
