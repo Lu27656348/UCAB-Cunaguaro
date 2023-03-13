@@ -32,7 +32,7 @@ const Carta_designacion = {
     CDE: '',
     administrador: ''
 }
-
+/*
 const alumnos = [ 
     {
         cedula: '27656348',
@@ -45,6 +45,7 @@ const alumnos = [
         apellidos: 'SanVicente Suarez'
     }
 ]
+*/
 let flag = 1;
 const generaTitulo = (titulo) => {
     if(flag === 1){
@@ -322,7 +323,7 @@ export const generarCartaDesignacionTutorTEG = (Carta_designacion) => {
                             font: "Trebuchet MS"
                         }),
                         new  TextRun({
-                            text: ' ' + Carta_designacion.propuesta.tutor,
+                            text: ' ' + Carta_designacion.propuesta.tutor_academico.apellidos + ', ' + Carta_designacion.propuesta.tutor_academico.nombres,
                             bold: true,
                             font: "Trebuchet MS"
                         }),
@@ -362,7 +363,7 @@ export const generarCartaDesignacionTutorTEG = (Carta_designacion) => {
                 }),
                 new  Table({
                     columnWidths: [3505, 5505],
-                    rows: generarTablaAlumno(alumnos,Carta_designacion.propuesta.titulo)
+                    rows: generarTablaAlumno(Carta_designacion.propuesta.alumno,Carta_designacion.propuesta.titulo)
                 }),
                 new  Paragraph({
                     style: "aside",

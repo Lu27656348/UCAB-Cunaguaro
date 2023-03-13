@@ -180,6 +180,7 @@ const encabezadoTablaAlumno = new  TableRow({
 const generarTablaAlumno = (alumnos,titulo,empresa,tutor_empresarial) => {
     console.log("Ejecutando generarTablaAlumno()")
     const filas = [];
+    console.log(alumnos)
     filas.push(encabezadoTablaAlumno)
     alumnos.forEach(alumno => {
         let fila = new  TableRow({
@@ -378,7 +379,7 @@ export const generarCartaDesignacionTutorTIG = (Carta_designacion) => {
                             font: "Trebuchet MS"
                         }),
                         new  TextRun({
-                            text: ' ' + Carta_designacion.propuesta.tutor,
+                            text: ' ' + Carta_designacion.propuesta.tutor_empresarial.apellidos + ', ' + Carta_designacion.propuesta.tutor_empresarial.nombres,
                             bold: true,
                             font: "Trebuchet MS"
                         }),
@@ -419,7 +420,7 @@ export const generarCartaDesignacionTutorTIG = (Carta_designacion) => {
                 new  Table({
                     columnWidths: [3000, 4500],
                     //Insertamos la tabla de datos del estudiante
-                    rows: generarTablaAlumno(Carta_designacion.propuesta.alumnno,Carta_designacion.propuesta.titulo,Carta_designacion.empresa,Carta_designacion.propuesta.tutor)
+                    rows: generarTablaAlumno(Carta_designacion.propuesta.alumno,Carta_designacion.propuesta.titulo,Carta_designacion.empresa,Carta_designacion.propuesta.tutor_empresarial)
                 }),
                 new  Paragraph({
                     style: "aside",
