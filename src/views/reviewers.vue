@@ -43,9 +43,9 @@ const designarTutor = async () => {
     `${revisor.nombres} ${revisor.apellidos}`,
     "Agregar organizacion"
     );
-    planillaDesignacionDeRevisor.añadirAlumno(alumnos[0])
-    console.log("planillaDesignacionDeRevisor")
-    console.log(planillaDesignacionDeRevisor)
+    planillaDesignacionDeRevisor.añadirAlumno(alumnos[0]);
+    console.log("planillaDesignacionDeRevisor");
+    console.log(planillaDesignacionDeRevisor);
     planillaDesignacionDeRevisor.imprimir();
   }else{
     let tutor_empresarial =  await api.obtenerExternosById(formularioPropuesta.value.id_tutor_empresarial );
@@ -60,7 +60,7 @@ const designarTutor = async () => {
     );
     planillaDesignacionDeRevisor.añadirAlumno(alumnos[0])
     planillaDesignacionDeRevisor.imprimir();
-  }
+  };
   
 };
 
