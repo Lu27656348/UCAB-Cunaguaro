@@ -87,13 +87,10 @@ onMounted(async () => {
                 <p>Titulo del Trabajo</p>
                 <input disabled type="text" v-model="formularioPropuesta.titulo" />
                 <p>Modalidad</p>
-                <input disabled type="text" v-model="formularioPropuesta.modalidad">
+                <input disabled type="text" v-model="formularioPropuesta.modalidad"/>
                 <p>Fecha de solicitud</p>
                 <input disabled type="date"  v-model="formularioPropuesta.fecha_solicitud"/>
                 <p>Estatus</p>
-                <input disabled type="text" v-model="formularioPropuesta.estatus"/>
-                <p>tutor</p>
-                <input disabled type="text" v-model="formularioPropuesta.estatus" />
                 <input disabled type="text" v-model="formularioPropuesta.estatus"/>
               </div>
               <div class="actions">
