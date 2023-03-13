@@ -38,20 +38,24 @@ let cde = reactive({
   fecha_conformacion: ''
 });
 let formularioPropuesta = ref(new PropuestaTg());
+
 const clickenComponente = async (id) => {
   console.log(id)
   formularioPropuesta.value = await api.obtenerTGById(id)
-  console.log(formularioPropuesta.value)
+  console.log(formularioPropuesta)
 };
+
 const insertarEstudiante = () =>{
   api.insertarEstudiantes(estudiante);
 };
-const RechazarTG = async (id) =>{
+
+const rechazarTG = async (id) =>{
 
   await api.rechazarPropuestaCDE(id)
   alert("rechazado")
   data.value = await api.obtenerPropuestas('PE');
 };
+
 const aceptarTG = async (id) =>{
   //await api.aprobarPropuestaCDE(id)
  //await api.asignarTutorAcademico(id,tutor.value.cedula)
@@ -95,21 +99,25 @@ const aceptarTG = async (id) =>{
   //generarCartaDesignacionTutorTEG(Carta_designacion)
   data.value = await api.obtenerPropuestas('PE');
 };
+
 const buscarTutorAcademico = async (id) =>{
   console.log(id)
   tutor.value = await api.obtenerProfesorByCedula(id)
   console.log(tutor.value)
 };
+
 const buscarTutorEmpresarial = async (id) =>{
   console.log(id)
   tutor.value = await api.obtenerExternoByCedula(id)
   console.log(tutor.value)
 };
+
 const buscarCDE = async (id) =>{
   console.log(id)
   cde.value = await api.obtenerCDEById(id)
   console.log(cde.value)
 };
+
 onMounted(async () => {
   data.value = await api.obtenerPropuestas('PE');
   //console.log("data.value")
@@ -118,50 +126,67 @@ onMounted(async () => {
 
 </script>
 <template>
-  <div>
-    <Record
-            v-for="e in data.value"
-            :key="e.id_tg"
-            :titulo="e.titulo"
-            :modalidad="e.modalidad"
-            :estatus="e.estatus"
-            @click="clickenComponente(e.id_tg)"
-      />
-      <p for="">Tutor academico</p>
+  <div class="request">
+    <h1>Consejo de escuela</h1>
+    <div class="committe__container">
+      <div class="committe__container__display">
+        <div class="committe__container__display__controllers">
+          <button>
+            <img src="../assets/imgs/search-circle-outline.svg" />Buscar
+            Solicitud
+          </button>
+        </div>
+        <div class="committe__container__display__list">
+          <!-- Aqui va el registro para las propuestas de trabajo de grado -->
+          <div
+            class="request__container__display__list__record"
+            v-for="p in data.value"
+            :key="p.id_tg"
+            @click="clickenComponente(p.id_tg)"
+          >
+            <p>{{ p.id_tg }}</p>
+            <p>{{ p.titulo }}</p>
+            <p>{{ p.modalidad }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="committe__container__preview">
+        <h2>Visualización del documento de solicitud</h2>
+        <form action="" class="committe__container__preview__form"></form>
+        <div class="create-state">
+          <div class="progressbar">
+            <div class="progressbar--content"></div>
+          </div>
+          <div class="create-carousel">
+            <h2>Visualización del documento de solicitud</h2>
+            <div
+              class="request__container__preview__form up-de"
+            >
+              <div class="request__container__preview__form__inputs">
+                <p>Titulo del Trabajo</p>
+                <input disabled type="text" v-model="formularioPropuesta.titulo"/>
+                <p>Modalidad</p>
+                <input disabled type="text" v-model="formularioPropuesta.modalidad"/>
+                <p>Fecha de solicitud</p>
+                <input disabled type="date" v-model="formularioPropuesta.fecha_solicitud"/>
+                <p>Estatus</p>
+                <input disabled type="text" v-model="formularioPropuesta.estatus"/>
+              </div>
+              <div class="actions">
+                <button class="cancel"
+                @click="aceptarTG()"
+                >Rechazar</button>
+                <button class="login__form__btn succes"
+                @click="rechazarTG()"
+                >
+                  Aceptar
+                </button>
+              </div>
+            </div>
+            <!-- aqui van los formularios necesarios para el proceso de crear una asignacion de revisor a la propuesta -->
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div>
-          <input type="text" v-model="tutor_academico" />
-          <button
-              @click="buscarTutorAcademico(tutor_academico)"
-            >
-              Buscar Tutor
-          </button>
-          <input type="text" v-model="tutor_empresarial" />
-          <button
-              @click="buscarTutorEmpresarial(tutor_empresarial)"
-            >
-              Buscar Tutor Empresarial
-          </button>
-          <input type="text" v-model="cde.id_cde" />
-          <button
-              @click="buscarCDE(cde.id_cde)"
-            >
-              Buscar CDE
-          </button>
-          <button
-              type="submit"
-              @click=" aceptarTG(formularioPropuesta.id_tg)"
-            >
-              Aceptar planilla
-            </button>
-          <button
-              @click="RechazarTG(formularioPropuesta.id_tg)"
-            >
-              Rechazar planilla
-          </button>
-  </div>
-          
-         
-          
-
 </template>

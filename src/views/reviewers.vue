@@ -34,6 +34,7 @@ const designarTutor = async () => {
   let alumnos = await api.obtenerEstudianteDeTG(formularioPropuesta.value.id_tg);
   //console.log("alumnos")
   //console.log(alumnos)
+  console.log(tutor_academico)
   let planillaDesignacionDeRevisor = new PlanillaDesignacionRevisor(
     formularioPropuesta.value.titulo,
     tutor_academico,

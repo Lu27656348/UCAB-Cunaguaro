@@ -10,7 +10,7 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["actualizarData"]);
-const crearSolicitudForm = reactive(new PlanillaCrearSolicitud());
+const crearSolicitudForm = ref(new PlanillaCrearSolicitud());
 
 let dataEmpresas = reactive([]);
 //let dataProfesionalesExternos = reactive([]);
@@ -18,44 +18,44 @@ let idEmpresaSeleccionada = ref(null);
 
 async function buscarEstudiante() {
   const resEstudiante = await api.obtenerEstudianteByCedula(
-    crearSolicitudForm.alumnos[0].cedula
+    crearSolicitudForm.value.alumnos[0].cedula
   );
-  crearSolicitudForm.alumnos[0].apellidos = resEstudiante.apellidos;
-  crearSolicitudForm.alumnos[0].nombres = resEstudiante.nombres;
-  crearSolicitudForm.alumnos[0].cedula = resEstudiante.cedula;
+  crearSolicitudForm.value.alumnos[0].apellidos = resEstudiante.apellidos;
+  crearSolicitudForm.value.alumnos[0].nombres = resEstudiante.nombres;
+  crearSolicitudForm.value.alumnos[0].cedula = resEstudiante.cedula;
 }
 
 async function buscarTutor() {
   const resTutor = await api.obtenerProfesorByCedula(
-    crearSolicitudForm.tutor.cedula
+    crearSolicitudForm.value.tutor.cedula
   );
-  crearSolicitudForm.tutor.apellidos = resTutor.apellidos;
-  crearSolicitudForm.tutor.nombres = resTutor.nombres;
-  crearSolicitudForm.tutor.cedula = resTutor.cedula;
+  crearSolicitudForm.value.tutor.apellidos = resTutor.apellidos;
+  crearSolicitudForm.value.tutor.nombres = resTutor.nombres;
+  crearSolicitudForm.value.tutor.cedula = resTutor.cedula;
 }
 
 async function buscarTutorEmpresarial() {
   const resTutorEmpresarial = await api.obtenerExternoByCedula(
-    crearSolicitudForm.tutorEmpresarial.cedula
+    crearSolicitudForm.value.tutorEmpresarial.cedula
   );
-  crearSolicitudForm.tutorEmpresarial.nombres =
+  crearSolicitudForm.value.tutorEmpresarial.nombres =
     resTutorEmpresarial.nombres;
-  crearSolicitudForm.tutorEmpresarial.apellidos =
+  crearSolicitudForm.value.tutorEmpresarial.apellidos =
     resTutorEmpresarial.apellidos;
-  crearSolicitudForm.cedula =
+  crearSolicitudForm.value.cedula =
     resTutorEmpresarial.cedula;
 }
 
-crearSolicitudForm.empresa.idEmpresa = computed(() => {
+crearSolicitudForm.value.empresa.idEmpresa = computed(() => {
   if (idEmpresaSeleccionada.value != null) {
     let arregloEmpresa = dataEmpresas.filter(
       (t) => t.id_empresa == idEmpresaSeleccionada.value
     );
 
-    crearSolicitudForm.empresa.nombre = arregloEmpresa[0].nombre;
-    crearSolicitudForm.empresa.rif = arregloEmpresa[0].rif;
-    crearSolicitudForm.empresa.direccion = arregloEmpresa[0].direccion;
-    crearSolicitudForm.empresa.telefono = arregloEmpresa[0].telefono;
+    crearSolicitudForm.value.empresa.nombre = arregloEmpresa[0].nombre;
+    crearSolicitudForm.value.empresa.rif = arregloEmpresa[0].rif;
+    crearSolicitudForm.value.empresa.direccion = arregloEmpresa[0].direccion;
+    crearSolicitudForm.value.empresa.telefono = arregloEmpresa[0].telefono;
 
     return arregloEmpresa[0].id_empresa;
   }
@@ -64,15 +64,15 @@ crearSolicitudForm.empresa.idEmpresa = computed(() => {
 
 async function insertarPlanilla() {
   let planillaGenerada;
-  if (crearSolicitudForm.trabajoDeGrado.modalidad == "E") {
-    await api.crearTrabajoGradoExperimental(crearSolicitudForm.trabajoDeGrado, crearSolicitudForm.alumnos[0].cedula,crearSolicitudForm.tutor.cedula);
+  if (crearSolicitudForm.value.trabajoDeGrado.modalidad == "E") {
+    await api.crearTrabajoGradoExperimental(crearSolicitudForm.value.trabajoDeGrado, crearSolicitudForm.value.alumnos[0].cedula,crearSolicitudForm.value.tutor.cedula);
     planillaGenerada = new PlanillaPropuestaTEG(
-      crearSolicitudForm.trabajoDeGrado.titulo,
-      crearSolicitudForm.empresa.nombre,
-      crearSolicitudForm.empresa,
+      crearSolicitudForm.value.trabajoDeGrado.titulo,
+      crearSolicitudForm.value.empresa.nombre,
+      crearSolicitudForm.value.empresa,
       {
-        nombre: `${crearSolicitudForm.tutor.nombres} ${crearSolicitudForm.tutor.apellidos}`,
-        cedula: crearSolicitudForm.tutor.cedula,
+        nombre: `${crearSolicitudForm.value.tutor.nombres} ${crearSolicitudForm.value.tutor.apellidos}`,
+        cedula: crearSolicitudForm.value.tutor.cedula,
         email: "franklinBelloBellisimo@ucab.edu.ve",
         telefono: "04121598764",
         profesion: "Ingeniero Informatico",
@@ -80,17 +80,17 @@ async function insertarPlanilla() {
       }
     );
   } else {
-    const cedulatutorempresarial = await api.obtenerExternoByCedula(crearSolicitudForm.tutorEmpresarial.cedula);
+    const cedulatutorempresarial = await api.obtenerExternoByCedula(crearSolicitudForm.value.tutorEmpresarial.cedula);
     console.log("cedulatutorempresarial")
     console.log(cedulatutorempresarial)
-    await api.crearTrabajoGradoInstrumental(crearSolicitudForm.trabajoDeGrado, crearSolicitudForm.alumnos[0].cedula,cedulatutorempresarial.id_externo);
+    await api.crearTrabajoGradoInstrumental(crearSolicitudForm.value.trabajoDeGrado, crearSolicitudForm.value.alumnos[0].cedula,cedulatutorempresarial.id_externo);
     planillaGenerada = new PlanillaPropuestaTIG(
-      crearSolicitudForm.trabajoDeGrado.titulo,
-      crearSolicitudForm.empresa.nombre,
-      crearSolicitudForm.empresa,
+      crearSolicitudForm.value.trabajoDeGrado.titulo,
+      crearSolicitudForm.value.empresa.nombre,
+      crearSolicitudForm.value.empresa,
       {
-        nombre: `${crearSolicitudForm.tutorEmpresarial.nombres} ${crearSolicitudForm.tutorEmpresarial.apellidos}`,
-        cedula: crearSolicitudForm.tutorEmpresarial.cedula,
+        nombre: `${crearSolicitudForm.value.tutorEmpresarial.nombres} ${crearSolicitudForm.value.tutorEmpresarial.apellidos}`,
+        cedula: crearSolicitudForm.value.tutorEmpresarial.cedula,
         email: "franklinBelloBellisimo@ucab.edu.ve",
         telefono: "04121598764",
         profesion: "Ingeniero Informatico",
@@ -99,8 +99,8 @@ async function insertarPlanilla() {
     );
   }
   planillaGenerada.añadirAlumno({
-    nombre: `${crearSolicitudForm.alumnos[0].nombres} ${crearSolicitudForm.alumnos[0].apellidos}`,
-    cedula: crearSolicitudForm.alumnos[0].cedula,
+    nombre: `${crearSolicitudForm.value.alumnos[0].nombres} ${crearSolicitudForm.value.alumnos[0].apellidos}`,
+    cedula: crearSolicitudForm.value.alumnos[0].cedula,
     telefono: "04147723811",
     email: "wladimirSanvicente@wlachoCorp C.A",
     oficina: "#33",
@@ -110,10 +110,17 @@ async function insertarPlanilla() {
   });
 
   planillaGenerada.imprimir();
-  //crearSolicitudForm.progressbarState += crearSolicitudForm.progressValue;
+  //crearSolicitudForm.value.progressbarState += crearSolicitudForm.value.progressValue;
 }
 
 let textarea = ref( '' );
+
+textarea.value = computed(()=>{
+  if (textarea == undefined){
+    console.log(textarea.value);
+  return '';
+  }
+});
 
 const mostrarTextArea = ()=>{
   console.log(textarea.value);
@@ -121,7 +128,7 @@ const mostrarTextArea = ()=>{
 
 onMounted( async ()=>{
   dataEmpresas = await api.obtenerEmpresas();
-  crearSolicitudForm.crearSolicitud();
+  crearSolicitudForm.value.crearSolicitud();
 })
 //------------------------------------------------------>
 </script>
@@ -143,20 +150,21 @@ onMounted( async ()=>{
             <!-- Trabajo de grado -->
             <p @click="mostrarTextArea()" for="">Titulo del Trabajo</p>
             <textarea
-            v-model="crearSolicitudForm.trabajoDeGrado.titulo"
-              maxlength="200"
+            maxlength="200"
+              v-model="crearSolicitudForm.trabajoDeGrado.titulo"
               class="request__container__preview__form__inputs--titulo-tg"
               placeholder="Tutilo de Propuesta TG"
+              style="
+                resize: none;
+                padding: 10px;
+                width: 80%;
+                height: 70px;
+                line-height: 1.5;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+                box-shadow: 1px 1px 1px #999;
+              "
             ></textarea>
-            <p>muestra</p>
-            <!-- Falso y edita el usuario -->
-            <div maxlength="200" contenteditable class="fake-textarea" oninput="document.querySelector('#description').textContent = this.innerText"></div>
-            <!-- Real y oculto -->
-            <textarea 
-              v-model="textarea"
-              maxlength="200"   
-              id="description"
-             ></textarea>
             <p for="">Modalidad</p>
             <select
               name="modalidad"
