@@ -302,7 +302,11 @@ export const obtenerEstudianteDeTG = async ( id_tg ) => {
    console.log(estudiantes)
    let lista = [];
    estudiantes.forEach(element => {
-    lista.push(element.realiza_tg.estudiante)
+    if(element.realiza_tg!=null){
+      lista.push(element.realiza_tg.estudiante)
+    }else{
+      console.log("No se puede agregar alumno")
+    }
    });
    console.log("lista");
    return lista;

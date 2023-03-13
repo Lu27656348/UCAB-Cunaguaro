@@ -1,5 +1,6 @@
 import { generarCartaDesignacionRevisor } from './generadorDOCX/carta_designacion_revisor';
 import { generarPE_revisor_teg } from './generadorDOCX/pe_revisor_teg.js';
+import { generarPE_revisor_tig } from './generadorDOCX/pe_revisor_tig.js';
 import { _ } from 'lodash';
 export class PlanillaDesignacionRevisor {
   constructor(
@@ -30,7 +31,13 @@ export class PlanillaDesignacionRevisor {
     alert('No se pueden añadir mas de 2 alumnos por Trabajo de Grado');
   }
   imprimir() {
-   generarPE_revisor_teg(this);
-   generarCartaDesignacionRevisor(this)
+    generarCartaDesignacionRevisor(this)
+    if(this.modalidad == 'E'){
+      console.log("Generar planillas de revisor experimental");
+      generarPE_revisor_teg(this);
+    }else{
+      console.log("Generar planillas de revisor instrumental");
+      generarPE_revisor_tig(this)
+    }
   };
 }

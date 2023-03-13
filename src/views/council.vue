@@ -88,7 +88,7 @@ const aceptarTG = async (id) =>{
         titulo: formularioPropuesta.value.titulo,
         modalidad: formularioPropuesta.value.modalidad,
         alumnno: estudiante,
-        tutor: tutor_empresarial.apellidos + ', ' + tutor_empresarial.nombres
+        tutor: tutor_empresarial
     },
     fecha_designacion: new Date(),
     CDE: cde.id_cde,
