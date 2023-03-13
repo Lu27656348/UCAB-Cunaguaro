@@ -221,6 +221,7 @@ const generarTablaAlumno = (alumnos,titulo,empresa,tutor_empresarial) => {
 
 export const generarCartaDesignacionTutorTIG = (Carta_designacion) => {
     console.log('generarCartaDesignacionTutorTIG')
+    console.log(Carta_designacion)
     const doc = new  Document({
         creator: "Luis C. Somoza & Wladimir SanVicente",
         title: "Carta de designación - Tutor de propuesta de trabajo de grado instrumental",
@@ -418,7 +419,7 @@ export const generarCartaDesignacionTutorTIG = (Carta_designacion) => {
                 new  Table({
                     columnWidths: [3000, 4500],
                     //Insertamos la tabla de datos del estudiante
-                    rows: generarTablaAlumno(Carta_designacion.propuesta.alumnno,Carta_designacion.propuesta.titulo,Carta_designacion.empresa,Carta_designacion.propuesta.tutor_empresarial)
+                    rows: generarTablaAlumno(Carta_designacion.propuesta.alumnno,Carta_designacion.propuesta.titulo,Carta_designacion.empresa,Carta_designacion.propuesta.tutor)
                 }),
                 new  Paragraph({
                     style: "aside",

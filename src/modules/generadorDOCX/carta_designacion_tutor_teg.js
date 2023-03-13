@@ -164,6 +164,7 @@ const generarTablaAlumno = (alumnos,titulo) => {
 
 }
 export const generarCartaDesignacionTutorTEG = (Carta_designacion) => {
+    console.log(Carta_designacion)
     const doc = new  Document({
         creator: "Luis C. Somoza & Wladimir San Vicente",
         title: "Carta de designación - Tutor de propuesta de trabajo de grado experimental",
