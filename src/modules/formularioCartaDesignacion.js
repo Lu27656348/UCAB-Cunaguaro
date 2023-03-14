@@ -25,10 +25,10 @@ export class FormularioCartaDesigancion{
     this.administrador = administrador;
     this.empresa = empresa;
   };
-  imprimirPlanilla(){
+  imprimirPlanilla(id){
     this.propuesta.modalidad == 'E'?
-    generarCartaDesignacionTutorTEG(this)
+    generarCartaDesignacionTutorTEG(this,id)
     :
-    generarCartaDesignacionTutorTIG(this);
+    generarCartaDesignacionTutorTIG(this,id);
   }
 };
