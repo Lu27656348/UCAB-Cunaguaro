@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS TG (
 	observaciones_revisor TEXT DEFAULT NULL,
 	id_tutor_academico VARCHAR(10) DEFAULT NULL,
 	id_tutor_empresarial INTEGER DEFAULT NULL,
-	id_cde TEXT DEFAULT NULL,
+	id_cde INTEGER DEFAULT NULL,
 	observaciones_cde TEXT DEFAULT NULL,
 	id_empresa INTEGER DEFAULT NULL,
 	FOREIGN KEY (id_profesor_revisor) REFERENCES Profesores(cedula)
@@ -179,7 +179,7 @@ CREATE TABLE IF NOT EXISTS tiene_especialidades (
 );
 
 CREATE TABLE IF NOT EXISTS Planillas (
-	id_tg VARCHAR(10),
+	id_tg INTEGER NOT NULL,
 	nombre_planilla TEXT,
 	documento BYTEA DEFAULT NULL,
 	PRIMARY KEY(id_tg,nombre_planilla),

@@ -2,6 +2,7 @@ import { DataTypes, TEXT } from "sequelize";
 import { sequelize } from '../database/database.js';
 import { Realiza_tg } from "./realiza_PT.js";
 import { Jurados } from "./Jurados.js";
+import { Planillas } from "./Planillas.js";
 
 export const TG = sequelize.define('tg', {
     id_tg: {
@@ -86,6 +87,16 @@ TG.hasOne(Realiza_tg, {
 });
 
 Realiza_tg.belongsTo(TG, {
+    foreignKey: 'id_tg',
+    targetId: 'id_tg'
+});
+
+TG.hasOne(Planillas, {
+    foreignKey: 'id_tg',
+    sourceKey: 'id_tg'
+});
+
+Planillas.belongsTo(TG, {
     foreignKey: 'id_tg',
     targetId: 'id_tg'
 });

@@ -1,3 +1,8 @@
+import * as docx from 'docx';
+import file_saver from 'file-saver'
+const { saveAs } = file_saver
+const { HeadingLevel,Packer } = docx;
+
 export const hola = async () => {
   console.log("Hola desde la api");
 }
@@ -408,3 +413,36 @@ export const obtenerCDEById = async ( id_cde ) => {
   return CDE;
 }
 
+export const anexarPlanilla = async ( id_tg, nombre_planilla, documento) => {
+  const resPlanilla = await fetch('http://localhost:3000/anexarPlanilla/',{
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      id_tg: id_tg,
+      nombre_planilla: nombre_planilla,
+      documento: documento
+    })
+  });
+  const planilla = await resPlanilla.json()
+  return planilla;
+}
+
+export const descargarPlanilla = async ( id_tg, nombre_planilla) => {
+  const resPlanilla = await fetch('http://localhost:3000/descargarPlanilla/',{
+    method: 'PUT',
+    mode: 'cors',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      id_tg: id_tg,
+      nombre_planilla: nombre_planilla
+    })
+  });
+  console.log(resPlanilla)
+  const planilla = await resPlanilla.json()
+  return planilla;
+}

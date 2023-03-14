@@ -2,6 +2,7 @@ import { TG } from '../models/TG.js';
 import { Op } from 'sequelize'
 import { Realiza_tg } from '../models/realiza_PT.js';
 import { Estudiantes } from '../models/Estudiantes.js';
+import { Planillas } from '../models/Planillas.js';
 export const obtenerTG = async (req,res) => {
     const tg = await TG.findAll();
     res.json(tg);
@@ -267,6 +268,39 @@ export const obtenerEstudiantesDeTG = async (req, res) => {
             }
         });
         console.log(buscar)
+        return res.json(buscar);
+    } catch (error) {
+        return res.status(404).json("Error en busqueda por estatus");
+    }
+}
+
+export const anexarPlanilla = (req, res) => {
+    const{ id_tg, nombre_planilla,documento } = req.body
+    try {
+        const nuevo = Planillas.create({
+            id_tg,
+            nombre_planilla,
+            documento
+        },
+        {
+            fields: ["id_tg","nombre_planilla","documento"]
+        });
+        return res.json({mensaje: "Planilla anexada"});
+    } catch (error) {
+        return res.status(404).json("Error en busqueda por estatus");
+    }
+}
+
+export const descargarPlanilla = async (req, res) => {
+    const{ id_tg, nombre_planilla } = req.body
+    try {
+        const buscar = await Planillas.findOne({
+            where: {
+                id_tg: id_tg,
+                nombre_planilla: nombre_planilla
+            }
+        });
+        //console.log(buscar)
         return res.json(buscar);
     } catch (error) {
         return res.status(404).json("Error en busqueda por estatus");
