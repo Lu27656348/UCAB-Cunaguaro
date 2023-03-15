@@ -23,7 +23,7 @@ onMounted(async () => {
 </script>
 <template>
   <div class="request">
-    <h1>Crear Consejo de Escuela</h1>
+    <h1>Cargado de Notas</h1>
     <div class="committe__container">
       <div class="committe__container__display">
         <div class="committe__container__display__controllers">

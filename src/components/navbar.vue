@@ -30,6 +30,12 @@
       <li class="navbar__list__element">
         <router-link to="/crearConsejoEscuela">Crear Consejo Escuela</router-link>
       </li>
+      <li class="navbar__list__element">
+        <router-link to="/designarJurado">Designar Jurado</router-link>
+      </li>
+      <li class="navbar__list__element">
+        <router-link to="/evaluacionNotas">Defensa Trabajo de Grado</router-link>
+      </li>
     </ul>
   </div>
 </template>

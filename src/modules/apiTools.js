@@ -427,7 +427,6 @@ export const obtenerCDEById = async ( id_cde ) => {
   const CDE = await resCDE.json()
   return CDE;
 };
-}
 
 export const anexarPlanilla = async ( id_tg, nombre_planilla, documento) => {
   const resPlanilla = await fetch('http://localhost:3000/anexarPlanilla/',{
@@ -445,7 +444,7 @@ export const anexarPlanilla = async ( id_tg, nombre_planilla, documento) => {
   const planilla = await resPlanilla.json()
   return planilla;
 }
-
+/*
 export const descargarPlanilla = async ( id_tg, nombre_planilla) => {
   const resPlanilla = await fetch('http://localhost:3000/descargarPlanilla/',{
     method: 'PUT',
@@ -462,3 +461,21 @@ export const descargarPlanilla = async ( id_tg, nombre_planilla) => {
   const planilla = await resPlanilla.json()
   return planilla;
 }
+*/
+
+export const crearCDE = async (id_cde) =>{
+  const insertar = await fetch('http://localhost:3000/CDE',{
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        id_cde: id_cde
+      })
+  });
+  const respuesta = await insertar.json();
+  console.log("crearCDE()");
+  console.log(respuesta)
+  return respuesta;
+};
