@@ -4,17 +4,26 @@ import * as api from "../modules/apiTools.js";
 import { PlanillaCrearSolicitud } from "../modules/planillaCrearSolicitud.js";
 import { PlanillaPropuestaTEG } from "../modules/planillaPropuestaTEG.js";
 import { PlanillaPropuestaTIG } from "../modules/planillaPropuestaTIG.js";
+import { FormularioEmpresa } from '../modules/formularioEmpresa.js';
 
 const props = defineProps({
   showPlanillaCreate: Boolean,
 });
 
-const emit = defineEmits(["actualizarData"]);
+//const emit = defineEmits(["actualizarData"]);
 const crearSolicitudForm = ref(new PlanillaCrearSolicitud());
+let crearEmpresa = new FormularioEmpresa();
 
 let dataEmpresas = reactive([]);
 //let dataProfesionalesExternos = reactive([]);
 let idEmpresaSeleccionada = ref(null);
+
+const añadirEmpresa = async () => {
+  await api.crearEmpresa(crearEmpresa);
+  console.log(crearEmpresa);
+  dataEmpresas.value = await api.obtenerEmpresas();
+  crearSolicitudForm.value.ocultarAddEmpresa();
+};
 
 async function buscarEstudiante() {
   const resEstudiante = await api.obtenerEstudianteByCedula(
@@ -162,8 +171,7 @@ onMounted( async ()=>{
                 line-height: 1.5;
                 border-radius: 5px;
                 border: 1px solid #ccc;
-                box-shadow: 1px 1px 1px #999;
-              "
+                box-shadow: 1px 1px 1px #999;"
             ></textarea>
             <p for="">Modalidad</p>
             <select
@@ -344,15 +352,20 @@ onMounted( async ()=>{
           <div class="request__container__preview__form__inputs">
             <!-- Empresa-->
             <p>Seleccione la empresa:</p>
-            <select name="Empresa" id="" v-model="idEmpresaSeleccionada">
-              <option
-                v-for="t in dataEmpresas"
-                :key="t.id_empresa"
-                :value="t.id_empresa"
-              >
-                {{ t.nombre }}
-              </option>
-            </select>
+            <div
+            style="display: flex; align-items: center; justify-content: center;"
+            >
+              <select name="Empresa" id="" v-model="idEmpresaSeleccionada">
+                <option
+                  v-for="t in dataEmpresas"
+                  :key="t.id_empresa"
+                  :value="t.id_empresa"
+                >
+                  {{ t.nombre }}
+                </option>
+              </select>
+              <button @click="crearSolicitudForm.mostrarAddEmpresa()">+</button>
+            </div>
             <input
               type="text"
               disabled
@@ -383,6 +396,41 @@ onMounted( async ()=>{
             </button>
           </div>
         </form>
+      </div>
+      <div class="company plus" v-show="crearSolicitudForm.showAddEmpresa">
+        <div action="" class="request__container__preview__form">
+          <img
+            src="../assets/imgs/arrow-back-circle-outline.svg"
+            alt=""
+            @click="crearSolicitudForm.ocultarAddEmpresa"
+          />
+          <div class="request__container__preview__form__inputs">
+            <p>Nombre Empresa</p>
+            <input
+              type="text"
+              placeholder="Nombre Empresa"
+              v-model="crearEmpresa.nombre"
+            />
+            <p>Direccion</p>
+            <input
+              type="text"
+              placeholder="Direccion"
+              v-model="crearEmpresa.direccion"
+            />
+            <p>Telefono</p>
+            <input
+              type="number"
+              placeholder="Telefono"
+              v-model="crearEmpresa.telefono"
+            />
+          </div>
+          <button
+            class="login__form__btn succes"
+            @click="añadirEmpresa()"
+          >
+            Añadir Empresa
+          </button>
+        </div>
       </div>
     </div>
   </div>

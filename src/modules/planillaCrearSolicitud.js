@@ -6,6 +6,7 @@ export class PlanillaCrearSolicitud {
     this.showTituloAlumno = false;
     this.showTutor = false;
     this.showEmpresa = false;
+    this.showAddEmpresa = false;
     
     this.progressValue = 33.3;
     this.progressbarState = 0;
@@ -73,5 +74,13 @@ export class PlanillaCrearSolicitud {
     this.showEmpresa = true;
     this.showTutorEmpresarial = false;
     this.progressbarState -= this.progressValue;
+  };
+  mostrarAddEmpresa(){
+    this.showEmpresa = false;
+    this.showAddEmpresa = true;
+  };
+  ocultarAddEmpresa(){
+    this.showAddEmpresa = false;
+    this.showEmpresa = true;
   };
 }
