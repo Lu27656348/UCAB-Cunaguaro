@@ -24,6 +24,29 @@
 
     margin-top: 20px;
     list-style: none;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      appearance: none;
+    }
+
+    &::-webkit-scrollbar:vertical {
+      width: 10px;
+    }
+
+    &::-webkit-scrollbar:horizontal {
+      height: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #797979;
+      border-radius: 20px;
+      border: 2px solid #f1f2f3;
+    }
+
+    &::-webkit-scrollbar-track {
+      border-radius: 10px;
+    }
 
     &__element {
       display: flex;
