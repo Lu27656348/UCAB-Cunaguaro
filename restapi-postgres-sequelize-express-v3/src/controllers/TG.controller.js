@@ -3,6 +3,7 @@ import { Op } from 'sequelize'
 import { Realiza_tg } from '../models/realiza_PT.js';
 import { Estudiantes } from '../models/Estudiantes.js';
 import { Planillas } from '../models/Planillas.js';
+import { Jurados } from '../models/Jurados.js';
 export const obtenerTG = async (req,res) => {
     const tg = await TG.findAll();
     res.json(tg);
@@ -205,7 +206,6 @@ export const asignarTutorEmpresarial = async (req, res) => {
 
 export const buscarTGByEstatus = async (req, res) => {
     const id = req.params.id;
-
     try {
         const buscar = await TG.findAll({
             where: {
@@ -214,7 +214,7 @@ export const buscarTGByEstatus = async (req, res) => {
         });
         return res.json(buscar);
     } catch (error) {
-        return res.status(404).json("Error en busqueda por estatus");
+        return res.status(404).json({mensaje: "Error en busqueda por estatus", error: error.message});
     }
 }
 
@@ -299,6 +299,42 @@ export const descargarPlanilla = async (req, res) => {
                 id_tg: id_tg,
                 nombre_planilla: nombre_planilla
             }
+        });
+        //console.log(buscar)
+        return res.json(buscar);
+    } catch (error) {
+        return res.status(404).json("Error en busqueda por estatus");
+    }
+}
+
+export const obtenerTGsinJurado = async (req, res) => {
+    try {
+        const buscar = await TG.findAll({
+            include: [
+                {
+                    model: Jurados
+                }
+            ],
+            required: false
+        });
+        //console.log(buscar)
+        return res.json(buscar);
+    } catch (error) {
+        return res.status(404).json("Error en busqueda de TG sin jurado");
+    }
+}
+
+export const obtenerTGconJurado = async (req, res) => {
+    const{ id_tg, nombre_planilla } = req.body
+    try {
+        const buscar = await TG.findAll({
+            include: [
+                {
+                    model: Jurados,
+                    right: true
+                }
+            ],
+            required: true
         });
         //console.log(buscar)
         return res.json(buscar);

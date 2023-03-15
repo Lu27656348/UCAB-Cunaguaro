@@ -32,11 +32,6 @@ export const TG = sequelize.define('tg', {
         allowNull: true,
         defaultValue: null
     },
-    fecha_ctg: {
-        type: DataTypes.DATE,
-        allowNull: true,
-        defaultValue: null
-    },
     fecha_cde: {
         type: DataTypes.DATE,
         allowNull: true,

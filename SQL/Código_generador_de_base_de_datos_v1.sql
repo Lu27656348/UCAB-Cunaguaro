@@ -25,7 +25,13 @@ CREATE TABLE IF NOT EXISTS Estudiantes (
 	habitacion TEXT DEFAULT NULL,
 	PRIMARY KEY (cedula)
 );
-
+CREATE TABLE IF NOT EXISTS Empresas (
+	id_empresa SERIAL NOT NULL,
+	nombre TEXT NOT NULL,
+	direccion TEXT NOT NULL,
+	telefono TEXT NOT NULL,
+	PRIMARY KEY (id_empresa)
+);
 CREATE TABLE IF NOT EXISTS Profesores (
 	cedula VARCHAR(10) NOT NULL,
 	nombres TEXT NOT NULL,
@@ -35,7 +41,7 @@ CREATE TABLE IF NOT EXISTS Profesores (
 	oficina TEXT DEFAULT NULL,
 	experiencia INTEGER DEFAULT NULL,
 	habitacion TEXT DEFAULT NULL,
-	graduado INTEGER DEFAULT NULL,
+	fecha_graduado DATE DEFAULT NULL,
 	cargo TEXT DEFAULT NULL,
 	PRIMARY KEY (cedula)
 );
@@ -50,24 +56,39 @@ CREATE TABLE IF NOT EXISTS Externos (
 	oficina TEXT DEFAULT NULL,
 	experiencia INTEGER DEFAULT NULL,
 	habitacion TEXT DEFAULT NULL,
-	graduado INTEGER DEFAULT NULL,
+	fecha_graduado DATE DEFAULT NULL,
 	cargo TEXT DEFAULT NULL,
-	PRIMARY KEY (id_externo)
+	id_empresa INTEGER NOT NULL,
+	PRIMARY KEY (id_externo),
+	FOREIGN KEY (id_empresa) REFERENCES Empresas( id_empresa )
+		ON DELETE SET NULL
+		ON UPDATE RESTRICT
 );
 
-CREATE TABLE IF NOT EXISTS Empresas (
-	id_empresa SERIAL NOT NULL,
-	nombre TEXT NOT NULL,
-	direccion TEXT NOT NULL,
-	telefono TEXT NOT NULL,
-	PRIMARY KEY (id_empresa)
-);
+
 
 CREATE TABLE IF NOT EXISTS CDE (
 	id_cde SERIAL NOT NULL,
 	id_cde_formateado TEXT GENERATED ALWAYS AS ( formato_de_id_cde(id_cde)) STORED,
 	fecha_conformacion DATE DEFAULT CURRENT_DATE,
+	resumen_CDE TEXT DEFAULT NULL,
 	PRIMARY KEY (id_cde)
+);
+
+CREATE TABLE IF NOT EXISTS CTG (
+	id_ctg SERIAL NOT NULL,
+	id_ctg_formateado TEXT GENERATED ALWAYS AS ( formato_de_id_cde(id_ctg)) STORED,
+	fecha_conformacion DATE DEFAULT CURRENT_DATE,
+	resumen_CTG TEXT DEFAULT NULL,
+	PRIMARY KEY (id_ctg)
+);
+
+CREATE TABLE IF NOT EXISTS revisa_CTG (
+	id_ctg INTEGER NOT NULL,
+	id_tg INTEGER NOT NULL,
+	decision_ctg CHAR CHECK (decision_ctg IN ('A','R','D')) DEFAULT NULL,
+	comentario TEXT DEFAULT NULL,
+	PRIMARY KEY (id_ctg)
 );
 
 CREATE TABLE IF NOT EXISTS Areas (
@@ -83,16 +104,19 @@ CREATE TABLE IF NOT EXISTS TG (
 	modalidad CHAR NOT NULL DEFAULT 'E' CHECK (modalidad IN('E','I')),
 	estatus TEXT NOT NULL DEFAULT 'PC' CHECK (estatus IN ('PA','PC','PR','R','PE','A')),
 	fecha_solicitud DATE DEFAULT CURRENT_DATE,
-	fecha_ctg DATE DEFAULT NULL,
 	fecha_cde DATE DEFAULT NULL,
 	fecha_revision DATE DEFAULT NULL,
 	fecha_defensa DATE DEFAULT NULL,
 	id_profesor_revisor VARCHAR(10) DEFAULT NULL,
 	observaciones_revisor TEXT DEFAULT NULL,
+	decision_revisor CHAR DEFAULT NULL CHECK (decision_revisor IN ('R','A')),
 	id_tutor_academico VARCHAR(10) DEFAULT NULL,
 	id_tutor_empresarial INTEGER DEFAULT NULL,
-	id_cde INTEGER DEFAULT NULL,
-	observaciones_cde TEXT DEFAULT NULL,
+	id_cde_tutor INTEGER DEFAULT NULL,
+	observaciones_cde_t TEXT DEFAULT NULL,
+	evaluacion_cde CHAR DEFAULT NULL CHECK(evaluacion_cde IN ('A','R')),
+	id_cde_jurado INTEGER DEFAULT NULL,
+	observaciones_cde_j TEXT DEFAULT NULL,
 	id_empresa INTEGER DEFAULT NULL,
 	FOREIGN KEY (id_profesor_revisor) REFERENCES Profesores(cedula)
 		ON UPDATE RESTRICT
@@ -103,7 +127,10 @@ CREATE TABLE IF NOT EXISTS TG (
 	FOREIGN KEY (id_tutor_empresarial) REFERENCES Externos(id_externo)
 		ON UPDATE RESTRICT
 		ON DELETE RESTRICT,
-	FOREIGN KEY (id_cde) REFERENCES CDE(id_cde)
+	FOREIGN KEY (id_cde_tutor) REFERENCES CDE(id_cde)
+		ON UPDATE RESTRICT
+		ON DELETE RESTRICT,
+	FOREIGN KEY (id_cde_jurado) REFERENCES CDE(id_cde)
 		ON UPDATE RESTRICT
 		ON DELETE RESTRICT,
 	FOREIGN KEY (id_empresa) REFERENCES Empresas(id_empresa)
@@ -158,6 +185,7 @@ CREATE TABLE IF NOT EXISTS realiza_TG (
 	cedula_estudiante TEXT,
 	id_tg INTEGER,
 	fecha_entrega_informe DATE DEFAULT NULL,
+	nota INTEGER DEFAULT NULL,
 	PRIMARY KEY(cedula_estudiante,id_tg),
 	FOREIGN KEY (cedula_estudiante) REFERENCES Estudiantes(cedula)
 		ON UPDATE RESTRICT
