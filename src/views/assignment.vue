@@ -8,6 +8,13 @@ import * as api from "../modules/apiTools.js";
 import { generarCartaDesignacionTutorTEG } from '../modules/generadorDOCX/carta_designacion_tutor_teg.js';
 import { generarCartaDesignacionTutorTIG } from '../modules/generadorDOCX/carta_designacion_tutor_tig.js';
 import { FormularioCartaDesigancion } from '../modules/formularioCartaDesignacion.js'
+import * as docx from 'docx';
+import file_saver from 'file-saver'
+import buffer from 'buffer'
+const { saveAs } = file_saver
+const { Buffer } = buffer
+// Load the full build.
+const { HeadingLevel,Packer } = docx;
 
 let data = reactive([]);
 let dataConsejo = reactive([]);
@@ -65,7 +72,7 @@ const aceptarTG = async (id) =>{
     'WlaLuchoCorp C.A'
   );
 
-  cartaDesignacion.imprimirPlanilla();
+
 
   data.value = await api.obtenerPropuestas('A');
 };
@@ -90,6 +97,33 @@ const buscarCDE = async (id) =>{
 
 const asignarTutorAcademico = async () =>{
   const res = await api.asignarTutorAcademico(formularioPropuesta.value.id_tg ,formularioPropuesta.value.id_tutor_academico);
+  const estudiante = await api.obtenerEstudianteDeTG(formularioPropuesta.value.id_tg);
+  const tutor_academico = await api.obtenerProfesorByCedula(formularioPropuesta.value.id_tutor_academico)
+  const tutor_empresarial = await api.obtenerExternosById(formularioPropuesta.value.id_tutor_empresarial)
+  const cartaDesignacion = new FormularioCartaDesigancion(
+    formularioPropuesta.value.titulo,
+    formularioPropuesta.value.modalidad,
+    estudiante,
+    tutor_academico,
+    tutor_empresarial,
+    '001-2022-2023',
+    'Wladimir J. Sanvicente',
+    'WlaLuchoCorp C.A'
+  );
+  //const respuesta = await api.descargarPlanilla(formularioPropuesta.value.id_tg,"Carta Designacion Tutor Academico");
+  cartaDesignacion.imprimirPlanilla(formularioPropuesta.value.id_tg)
+  //console.log("respuesta")
+  //console.log(respuesta.documento)
+  //const buff = Buffer.from(respuesta.documento.data);
+  //const blob = new Blob([buff]); 
+  //console.log("blob")
+  //console.log(blob)
+ // await saveAs(blob, "Descarga desde asignar"+".docx");
+  /*
+  Packer.toBlob(respuesta.documento.data).then(async blob => {
+        await saveAs(blob, "Descarga desde asignar"+".docx");
+  });
+  */
   console.log('resultado de asignacion');
   console.log(res);
 }

@@ -63,8 +63,7 @@ const aceptarTG = async (id) =>{
     'Wladimir J. Sanvicente',
     'WlaLuchoCorp C.A'
   );
-
-  cartaDesignacion.imprimirPlanilla();
+  cartaDesignacion.imprimirPlanilla(id);
 
   data.value = await api.obtenerPropuestas('PE');
 };

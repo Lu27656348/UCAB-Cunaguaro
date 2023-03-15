@@ -14,7 +14,7 @@ const { Footer, LineRuleType } = docx;
 const { Table, PageBreak } = docx;
 const { HeadingLevel,Packer } = docx;
 //const { TableRow,BorderStyle } = docx;
-
+import * as api from '../apiTools.js'
 import * as fs from 'fs'
 //Modelo de los datos de la carta de designación para inserción de datos
 const Carta_designacion = {
@@ -164,7 +164,7 @@ const generarTablaAlumno = (alumnos,titulo) => {
     return filas
 
 }
-export const generarCartaDesignacionTutorTEG = (Carta_designacion) => {
+export const generarCartaDesignacionTutorTEG = (Carta_designacion,id) => {
     console.log(Carta_designacion)
     const doc = new  Document({
         creator: "Luis C. Somoza & Wladimir San Vicente",
@@ -579,8 +579,13 @@ export const generarCartaDesignacionTutorTEG = (Carta_designacion) => {
         }]
     });
     const nombre_archivo = "Carta Designacion Tutor Academico"
-    Packer.toBlob(doc).then(blob => {
-        saveAs(blob, nombre_archivo+".docx");
+    console.log("guardando");
+    let archivo = null;
+    Packer.toBlob(doc).then(async blob => {
+        console.log("En la creacion de la planilla");
+        console.log(blob)
+        await api.anexarPlanilla(id,nombre_archivo,blob);
+        await saveAs(blob, nombre_archivo+".docx");
         //console.log("Documento creado de forma exitosa en el navegador");
     });
     /*
