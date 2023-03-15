@@ -37,7 +37,7 @@ export const Profesores = sequelize.define('profesores', {
         type: DataTypes.INTEGER,
         allowNull: true
     },
-    graduado: {
+    fecha_graduado: {
         type: DataTypes.INTEGER,
         allowNull: true
     },

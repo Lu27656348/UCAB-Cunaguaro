@@ -479,3 +479,42 @@ export const crearCDE = async (id_cde) =>{
   console.log(respuesta)
   return respuesta;
 };
+
+export const obtenerTGsinJurado = async () =>{
+  console.log("obtenerTGsinJurado()");
+  const resJurado = await fetch('http://localhost:3000/sinJurado/');
+  const jurados = await resJurado.json()
+  return jurados;
+
+};
+
+export const obtenerTGconJurado = async () =>{
+  console.log("obtenerTGconJurado()");
+  const resJurado = await fetch('http://localhost:3000/conJurado/');
+  const jurados = await resJurado.json()
+  return jurados;
+};
+
+export const crearJurados = async (...array) => {
+ 
+   array.forEach( (element) => {
+    const respuesta = crearJuradosPorUno(element);
+    console.log(respuesta)
+  })
+
+  return;
+};
+
+export const crearJuradosPorUno = async (jurado) => {
+  const resJurado = await fetch('http://localhost:3000/Jurado/crear/',{
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(jurado)
+  })
+  const respuesta = await resJurado.json()
+  return respuesta;
+};
+

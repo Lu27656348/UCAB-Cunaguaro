@@ -15,9 +15,8 @@ const añadirConsejo = async () => {
 };
 
 onMounted(async () => {
-  data.value = await api.obtenerPropuestas('A');
-  dataConsejo.value = await api.obtenerCDE();
-  dataEmpresas.value = await api.obtenerEmpresas();
+  data.value = await api.obtenerTGsinJurado();
+  console.log(data.value)
 });
 
 </script>
@@ -36,13 +35,11 @@ onMounted(async () => {
           <!-- Aqui va el registro para las propuestas de trabajo de grado -->
           <div
             class="request__container__display__list__record"
-            v-for="e in dataEmpresas.value"
-            :key="e.id_empresa"
+            v-for="e in data.value"
+            :key="e.id_tg"
           >
-            <p>{{ e.id_empresa }}</p>
-            <p>{{ e.nombre }}</p>
-            <p>{{ e.direccion }}</p>
-            <p>{{ e.telefono }}</p>
+            <p>{{ e.titulo }}</p>
+            <p>{{ e.estatus }}</p>
           </div>
         </div>
       </div>

@@ -82,6 +82,6 @@ export const buscarProfesor = async (req, res) => {
         const buscar = await Profesores.findByPk(id);
         return res.json(buscar);
     } catch (error) {
-        return res.status(404).json("Profesor no encontrado");
+        return res.status(404).json({mensaje: "Profesor no encontrado", error: error.message});
     }
 }
