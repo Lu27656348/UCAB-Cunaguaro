@@ -24,6 +24,12 @@
       <li class="navbar__list__element">
         <router-link to="/assignment">Asignacion de tutor academico</router-link>
       </li>
+      <li class="navbar__list__element">
+        <router-link to="/crearEmpresa">Crear Empresa</router-link>
+      </li>
+      <li class="navbar__list__element">
+        <router-link to="/crearConsejoEscuela">Crear Consejo Escuela</router-link>
+      </li>
     </ul>
   </div>
 </template>
