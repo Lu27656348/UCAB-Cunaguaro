@@ -581,11 +581,8 @@ export const generarCartaDesignacionTutorTEG = (Carta_designacion,id) => {
     const nombre_archivo = "Carta Designacion Tutor Academico"
     console.log("guardando");
     let archivo = null;
-    Packer.toBlob(doc).then(async blob => {
-        console.log("En la creacion de la planilla");
-        console.log(blob)
-        await api.anexarPlanilla(id,nombre_archivo,blob);
-        await saveAs(blob, nombre_archivo+".docx");
+    Packer.toBlob(doc).then( blob => {
+         saveAs(blob, nombre_archivo+".docx");
         //console.log("Documento creado de forma exitosa en el navegador");
     });
     /*

@@ -7,7 +7,8 @@ import profesoresRoutes from './routes/Profesores.routes.js';
 import realiza_PTRoutes from './routes/realiza_TG.routes.js';
 import tgRoutes from './routes/TG.routes.js';
 import empresasRoutes from './routes/Empresas.routes.js'
-import cdeRoutes from './routes/CDE.routes.js'
+import cdeRoutes from './routes/CDE.routes.js';
+import juradoRoutes from './routes/Jurados.routes.js';
 
 
 import cors from 'cors'
@@ -26,6 +27,7 @@ app.use(realiza_PTRoutes);
 app.use(tgRoutes);
 app.use(empresasRoutes);
 app.use(cdeRoutes);
+app.use(juradoRoutes);
 
 
 export default app;

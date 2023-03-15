@@ -495,26 +495,40 @@ export const obtenerTGconJurado = async () =>{
   return jurados;
 };
 
-export const crearJurados = async (...array) => {
- 
-   array.forEach( (element) => {
-    const respuesta = crearJuradosPorUno(element);
-    console.log(respuesta)
-  })
-
-  return;
-};
-
-export const crearJuradosPorUno = async (jurado) => {
-  const resJurado = await fetch('http://localhost:3000/Jurado/crear/',{
+export const crearJuradosPorUno = async (jurado,id_tg) => {
+  console.log("jurado,",jurado)
+  console.log("id", id_tg)
+  const resJurado = await fetch('http://localhost:3000/crearJurado',{
     method: 'POST',
     mode: 'cors',
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(jurado)
+    body: JSON.stringify({
+      cedula_profesor: jurado,
+      id_tg: id_tg
+    })
   })
-  const respuesta = await resJurado.json()
+  console.log(resJurado)
   return respuesta;
 };
+
+export const crearJurados = async (array,id_tg) => {
+   console.log("crearJurados()")
+   console.log("array")
+   console.log(array)
+   console.log("id_tg")
+   console.log(id_tg)
+   array.forEach( async (element,index) => {
+    console.log("element")
+    console.log(element)
+    const respuesta = await crearJuradosPorUno(element,id_tg);
+    const hola = await respuesta.json()
+    console.log(hola)
+  })
+
+  return;
+};
+
+
 
