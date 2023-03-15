@@ -1,7 +1,7 @@
 import { Jurados } from '../models/Jurados.js'
 export const obtenerJurados = async (req,res) => {
-    const Jurados = await Jurados.findAll();
-    res.json(Jurados);
+    const jurados = await Jurados.findAll();
+    res.json(jurados);
 };
 export const crearJurados = async (req,res) => {
     try {
