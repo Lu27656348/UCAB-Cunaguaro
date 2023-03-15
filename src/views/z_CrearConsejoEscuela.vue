@@ -36,13 +36,11 @@ onMounted(async () => {
           <!-- Aqui va el registro para las propuestas de trabajo de grado -->
           <div
             class="request__container__display__list__record"
-            v-for="e in dataEmpresas.value"
+            v-for="e in dataConsejo.value"
             :key="e.id_empresa"
           >
-            <p>{{ e.id_empresa }}</p>
-            <p>{{ e.nombre }}</p>
-            <p>{{ e.direccion }}</p>
-            <p>{{ e.telefono }}</p>
+            <p>{{ e.id_cde}}</p>
+            <p>{{ e.fecha_conformacion}}</p>
           </div>
         </div>
       </div>
