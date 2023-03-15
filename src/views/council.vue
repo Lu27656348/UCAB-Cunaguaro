@@ -47,7 +47,7 @@ const rechazarTG = async (id) =>{
 
 const aceptarTG = async (id) =>{
   await api.aprobarPropuestaCDE(id)
-  //await api.asignarTutorAcademico(id,tutor.value.cedula)
+  await api.asignarTutorAcademico(id,tutor.value.cedula)
   alert("aceptado");
   const estudiante = await api.obtenerEstudianteDeTG(id);
   const tutor_academico = await api.obtenerProfesorByCedula(formularioPropuesta.value.id_tutor_academico)
@@ -68,23 +68,6 @@ const aceptarTG = async (id) =>{
   data.value = await api.obtenerPropuestas('PE');
 };
 
-const buscarTutorAcademico = async (id) =>{
-  console.log(id)
-  tutor.value = await api.obtenerProfesorByCedula(id)
-  console.log(tutor.value)
-};
-
-const buscarTutorEmpresarial = async (id) =>{
-  console.log(id)
-  tutor.value = await api.obtenerExternoByCedula(id)
-  console.log(tutor.value)
-};
-
-const buscarCDE = async (id) =>{
-  console.log(id)
-  cde.value = await api.obtenerCDEById(id)
-  console.log(cde.value)
-};
 
 onMounted(async () => {
   data.value = await api.obtenerPropuestas('PE');

@@ -6,7 +6,7 @@ export const obtenerJurados = async (req,res) => {
 export const crearJurados = async (req,res) => {
     try {
         const { cedula_profesor, id_tg,tipo } = req.body;
-        const nuevo = await TG.create({
+        const nuevo = await Jurados.create({
             cedula_profesor,
             id_tg,
             tipo
