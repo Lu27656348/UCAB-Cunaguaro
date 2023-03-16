@@ -1,8 +1,8 @@
 <script setup>
 import { ref, reactive, onMounted } from "vue";
 import * as api from "../modules/apiTools.js";
-import { PropuestaTg } from "../modules/planillaPropuesta.js";
-import { PlanillaDesignacionRevisor } from '../modules/planillaDesignacionRevisor.js';
+import { PropuestaTg } from "../modules/classes/planillaPropuesta.js";
+import { PlanillaDesignacionRevisor } from '../modules/classes/planillaDesignacionRevisor.js';
 
 let dataPropuestasPorRevisor = reactive([]);
 
