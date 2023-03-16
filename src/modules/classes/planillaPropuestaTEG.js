@@ -1,4 +1,4 @@
-import { generarPlanillaPropuestaTEG } from './generadorDOCX/planilla_propuesta_TEG'
+import { generarPlanillaPropuestaTEG } from '../generadorDOCX/planilla_propuesta_TEG'
 import { _ } from 'lodash'
 export class PlanillaPropuestaTEG{
 

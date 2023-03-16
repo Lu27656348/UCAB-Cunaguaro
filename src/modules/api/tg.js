@@ -207,3 +207,19 @@ export const obtenerTGconJurado = async () =>{
   const jurados = await resJurado.json()
   return jurados;
 };
+
+export const obtenerJuradosDeTG = async (id_tg) =>{
+  console.log("obtenerJuradosDeTG()");
+  const resJurado = await fetch('http://localhost:3000/Jurado/buscar/',{
+    method: 'PUT',
+    mode: 'cors',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      id_tg: id_tg
+    })
+  });
+  const jurados = await resJurado.json()
+  return jurados;
+};

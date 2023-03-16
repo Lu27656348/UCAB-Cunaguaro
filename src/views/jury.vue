@@ -2,7 +2,7 @@
 import { ref, reactive, onMounted, computed } from "vue";
 import * as api from "../modules/apiTools.js";
 
-import { FormularioEmpresa } from '../modules/formularioEmpresa.js';
+import { FormularioEmpresa } from '../modules/classes/formularioEmpresa.js';
 
 let data = reactive([]);
 let dataConsejo = reactive([]);

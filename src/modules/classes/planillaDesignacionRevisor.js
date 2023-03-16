@@ -1,6 +1,6 @@
-import { generarCartaDesignacionRevisor } from './generadorDOCX/carta_designacion_revisor';
-import { generarPE_revisor_teg } from './generadorDOCX/pe_revisor_teg.js';
-import { generarPE_revisor_tig } from './generadorDOCX/pe_revisor_tig.js';
+import { generarCartaDesignacionRevisor } from '../generadorDOCX/carta_designacion_revisor';
+import { generarPE_revisor_teg } from '../generadorDOCX/pe_revisor_teg.js';
+import { generarPE_revisor_tig } from '../generadorDOCX/pe_revisor_tig.js';
 import { _ } from 'lodash';
 export class PlanillaDesignacionRevisor {
   constructor(
