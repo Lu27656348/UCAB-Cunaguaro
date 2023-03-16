@@ -1,9 +1,11 @@
 import { TG } from '../models/TG.js';
-import { Op } from 'sequelize'
+import { Op, Sequelize, QueryTypes } from 'sequelize'
+
 import { Realiza_tg } from '../models/realiza_PT.js';
 import { Estudiantes } from '../models/Estudiantes.js';
 import { Planillas } from '../models/Planillas.js';
 import { Jurados } from '../models/Jurados.js';
+import { sequelize } from '../database/database.js';
 export const obtenerTG = async (req,res) => {
     const tg = await TG.findAll();
     res.json(tg);
@@ -308,35 +310,15 @@ export const descargarPlanilla = async (req, res) => {
 }
 
 export const obtenerTGsinJurado = async (req, res) => {
-    try {
-        const buscar = await TG.findAll({
-            include: [
-                {
-                    model: Jurados
-                }
-            ],
-            required: false
-        });
-        //console.log(buscar)
-        return res.json(buscar);
-    } catch (error) {
-        return res.status(404).json("Error en busqueda de TG sin jurado");
-    }
+        const buscar = await sequelize.query("SELECT T.* FROM TG AS T LEFT JOIN Jurados AS J ON T.id_tg = J.id_tg WHERE J.id_tg IS NULL", { type: QueryTypes.SELECT});
+        console.log(buscar)
+        return res.json(buscar)
 }
 
 export const obtenerTGconJurado = async (req, res) => {
     const{ id_tg, nombre_planilla } = req.body
     try {
-        const buscar = await TG.findAll({
-            include: [
-                {
-                    model: Jurados,
-                    right: true
-                }
-            ],
-            required: true
-        });
-        //console.log(buscar)
+        const buscar =  await sequelize.query("SELECT T.* FROM TG AS T, Jurados AS J WHERE T.id_tg = J.id_tg GROUP BY T.id_tg", { type: QueryTypes.SELECT});
         return res.json(buscar);
     } catch (error) {
         return res.status(404).json("Error en busqueda por estatus");

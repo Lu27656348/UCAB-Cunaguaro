@@ -46,8 +46,8 @@ const rechazarTG = async (id) =>{
 };
 
 const aceptarTG = async (id) =>{
-  await api.aprobarPropuestaCDE(id)
-  await api.asignarTutorAcademico(id,tutor.value.cedula)
+  await api.aprobarPropuestaCDE(id);
+  await api.asignarTutorAcademico(id,formularioPropuesta.value.id_tg)
   alert("aceptado");
   const estudiante = await api.obtenerEstudianteDeTG(id);
   const tutor_academico = await api.obtenerProfesorByCedula(formularioPropuesta.value.id_tutor_academico)
