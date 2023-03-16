@@ -1,6 +1,9 @@
 <script setup>
 import { ref, reactive, onMounted, computed } from "vue";
 import * as api from "../modules/apiTools.js";
+import { notificacion_designacion_j } from '../modules/generadorDOCX/notificacion_designacion_j.js'
+import { notificacion_jurado } from '../modules/generadorDOCX/notificacion_jurado.js';
+import { planilla_evaluacion_final_TEG } from '../modules/generadorDOCX/Planilla_evaluacion_final_TEG.js'
 
 import { FormularioEmpresa } from '../modules/formularioEmpresa.js';
 
@@ -10,12 +13,16 @@ let dataEmpresas = reactive([]);
 
 let crearEmpresa = new FormularioEmpresa();
 
-const añadirConsejo = async () => {
-  console.log('Se creo el consejo, yeiii ^^');
+const descargarPlanillas = async () => {
+  console.log('Descargando planillas');
+  //notificacion_designacion_j();
+  //notificacion_jurado();
+  planilla_evaluacion_final_TEG();
+
 };
 
 onMounted(async () => {
-  data.value = await api.obtenerPropuestas('A');
+  data.value = await api.obtenerTGconJurado();
   dataConsejo.value = await api.obtenerCDE();
   dataEmpresas.value = await api.obtenerEmpresas();
 });
@@ -36,13 +43,12 @@ onMounted(async () => {
           <!-- Aqui va el registro para las propuestas de trabajo de grado -->
           <div
             class="request__container__display__list__record"
-            v-for="e in dataEmpresas.value"
-            :key="e.id_empresa"
+            v-for="e in data.value"
+            :key="e.id_tg"
           >
-            <p>{{ e.id_empresa }}</p>
-            <p>{{ e.nombre }}</p>
-            <p>{{ e.direccion }}</p>
-            <p>{{ e.telefono }}</p>
+            <p>{{ e.id_tg }}</p>
+            <p>{{ e.titulo }}</p>
+            <p>{{ e.modalidad }}</p>
           </div>
         </div>
       </div>
@@ -68,9 +74,9 @@ onMounted(async () => {
               </div>
               <div class="actions">
                 <button class="login__form__btn succes"
-                @click="añadirEmpresa()"
+                @click="descargarPlanillas()"
                 >
-                  Añadir Empresa 
+                  descargarPlanillas
                 </button>
               </div>
             </div>

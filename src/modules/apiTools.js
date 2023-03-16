@@ -510,7 +510,7 @@ export const crearJuradosPorUno = async (jurado,id_tg) => {
     })
   })
   console.log(resJurado)
-  return respuesta;
+  //return resJurado;
 };
 
 export const crearJurados = async (array,id_tg) => {
@@ -522,9 +522,8 @@ export const crearJurados = async (array,id_tg) => {
    array.forEach( async (element,index) => {
     console.log("element")
     console.log(element)
-    const respuesta = await crearJuradosPorUno(element,id_tg);
-    const hola = await respuesta.json()
-    console.log(hola)
+    let respuesta = await crearJuradosPorUno(element,id_tg);
+    console.log(respuesta)
   })
 
   return;
