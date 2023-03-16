@@ -1,10 +1,10 @@
 <script setup>
 import { ref, reactive, onMounted, computed } from "vue";
 import * as api from "../modules/apiTools.js";
-import { PlanillaCrearSolicitud } from "../modules/planillaCrearSolicitud.js";
-import { PlanillaPropuestaTEG } from "../modules/planillaPropuestaTEG.js";
-import { PlanillaPropuestaTIG } from "../modules/planillaPropuestaTIG.js";
-import { FormularioEmpresa } from '../modules/formularioEmpresa.js';
+import { PlanillaCrearSolicitud } from "../modules/classes/planillaCrearSolicitud.js";
+import { PlanillaPropuestaTEG } from "../modules/classes/planillaPropuestaTEG.js";
+import { PlanillaPropuestaTIG } from "../modules/classes/planillaPropuestaTIG.js";
+import { FormularioEmpresa } from '../modules/classes/formularioEmpresa.js';
 
 const props = defineProps({
   showPlanillaCreate: Boolean,

@@ -1,4 +1,4 @@
-import { generarPlanillaPropuestaTIG } from './generadorDOCX/planilla_propuesta_TIG'
+import { generarPlanillaPropuestaTIG } from '../generadorDOCX/planilla_propuesta_TIG'
 import { _ } from 'lodash'
 export class PlanillaPropuestaTIG{
 

@@ -1,6 +1,6 @@
 
-import { generarCartaDesignacionTutorTEG } from './generadorDOCX/carta_designacion_tutor_teg.js';
-import { generarCartaDesignacionTutorTIG } from './generadorDOCX/carta_designacion_tutor_tig.js';
+import { generarCartaDesignacionTutorTEG } from '../generadorDOCX/carta_designacion_tutor_teg.js';
+import { generarCartaDesignacionTutorTIG } from '../generadorDOCX/carta_designacion_tutor_tig.js';
 import { _ } from 'lodash';
 export class FormularioCartaDesigancion{
   constructor(

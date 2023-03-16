@@ -1,13 +1,8 @@
 <script setup>
-
-import Record from "../components/record.vue";
-import crearSolicitud from "../components/planillaSolicitudCrear.vue";
-import { PropuestaTg } from "../modules/planillaPropuesta.js";
+import { PropuestaTg } from "../modules/classes/planillaPropuesta.js";
 import { ref, reactive, onMounted, computed } from "vue";
 import * as api from "../modules/apiTools.js";
-import { generarCartaDesignacionTutorTEG } from '../modules/generadorDOCX/carta_designacion_tutor_teg.js';
-import { generarCartaDesignacionTutorTIG } from '../modules/generadorDOCX/carta_designacion_tutor_tig.js';
-import { FormularioCartaDesigancion } from '../modules/formularioCartaDesignacion.js'
+import { FormularioCartaDesigancion } from '../modules/classes/formularioCartaDesignacion.js'
 import * as docx from 'docx';
 import file_saver from 'file-saver'
 import buffer from 'buffer'

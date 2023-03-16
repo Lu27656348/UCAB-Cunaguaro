@@ -79,3 +79,19 @@ export const buscarJurados = async (req, res) => {
         return res.status(404).json("Jurados no encontrado");
     }
 }
+
+export const buscarJuradosByTG = async (req, res) => {
+    const {
+        id_tg
+    } = req.body;
+    try {
+        const buscar = await Jurados.findAll({
+            where: {
+                id_tg: id_tg
+            }
+        });
+        return res.json(buscar);
+    } catch (error) {
+        return res.status(404).json("Jurados de trabajo de grado no encontrados");
+    }
+}
