@@ -1,449 +1,149 @@
 import * as docx from 'docx';
-import file_saver from 'file-saver'
-const { saveAs } = file_saver
+import file_saver from 'file-saver';
+
+import * as estudiantes from './api/estudiantes.js';
+import * as profesores from './api/profesores.js';
+import * as externos from './api/externos.js';
+import * as empresas from './api/empresas.js';
+import * as tgs from './api/tg.js';
+import * as comites from './api/comite.js';
+import * as revisores from './api/revisor.js';
+import * as cde from './api/cde.js';
+
+const { saveAs } = file_saver;
 const { HeadingLevel,Packer } = docx;
 
-export const hola = async () => {
-  console.log("Hola desde la api");
-};
-
 export const insertarEstudiantes = async (estudiante) =>{
-  const insertar = await fetch('http://localhost:3000/Estudiantes',{
-      method: 'POST',
-      mode: 'cors',
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(estudiante)
-  });
-  const respuesta = await insertar.json();
-  console.log("insertarEstudiantes()");
-  console.log(respuesta)
-  return respuesta;
+  return estudiantes.insertarEstudiantes(estudiante);
 };
 
 export const obtenerEstudiantes = async () => {
-  const resEstudiantes = await fetch('http://localhost:3000/Estudiantes');
-  const estudiantes = await resEstudiantes.json();
-  //console.log("obtenerEstudiantes()");
-  //console.log(estudiantes);
-  return estudiantes;
+  return estudiantes.obtenerEstudiantes();
 };
 
 export const obtenerEstudianteByCedula = async (cedulaEstudiante) =>{
-  const resEstudiante = await fetch('http://localhost:3000/Estudiantes/'+cedulaEstudiante);
-  const estudiante = await resEstudiante.json();
-  console.log("obtenerEstudianteByCedula()");
-  console.log(estudiante);
-  return estudiante;
+  return estudiantes.obtenerEstudianteByCedula(cedulaEstudiante);
 };
 
 export const obtenerProfesores = async () => {
-  const resProfesores = await fetch('http://localhost:3000/Profesores');
-  const profesores = await resProfesores.json();
-  console.log("obtenerProfesores()");
-  console.log(profesores);
-  return profesores;
+  return profesores.obtenerProfesores();
 };
 
 export const obtenerProfesorByCedula = async (cedulaProfesor) => {
-  const resProfesor = await fetch('http://localhost:3000/Profesores/' + cedulaProfesor );
-  const profesor = await resProfesor.json();
-  console.log("obtenerProfesorByCedula()");
-  console.log(cedulaProfesor)
-  console.log(profesor);
-  return profesor;
+  return profesores.obtenerProfesorByCedula(cedulaProfesor);
 };
 
 export const obtenerExternos = async () => {
-  const resExternos = await fetch('http://localhost:3000/Externos/');
-  const externos = await resExternos.json();
-  console.log("obtenerExternos()");
-  console.log(externos);
-  return externos;
+  return externos.obtenerExternos();
 };
 
 export const obtenerExternosById = async ( idExterno) => {
-  const resExternos = await fetch('http://localhost:3000/Externos/' + idExterno);
-  const externos = await resExternos.json();
-  console.log("obtenerExternosById()");
-  console.log(externos);
-  return externos;
+  return externos.obtenerExternosById(idExterno);
 };
 
 export const obtenerExternoByCedula = async (cedulaExterno) => {
-  const resExterno = await fetch('http://localhost:3000/Externos/cedula/' + cedulaExterno );
-  const externo = await resExterno.json();
-  console.log("obtenerExternoByCedula()");
-  console.log(externo);
-  return externo;
+  return externos.obtenerExternoByCedula(cedulaExterno);
 };
 
 export const obtenerEmpresas = async () => {
-  const resEmpresas = await fetch('http://localhost:3000/Empresas/' );
-  const empresas = await resEmpresas.json();
-  console.log("obtenerEmpresas()");
-  console.log(empresas);
-  return empresas;
+  return empresas.obtenerEmpresas();
 };
 
 export const obtenerEmpresaById = async (idEmpresa) => {
-  const resEmpresa = await fetch('http://localhost:3000/Empresas/' + idEmpresa );
-  const empresa = await resEmpresa.json();
-  console.log("obtenerEmpresaById()");
-  console.log(empresa);
-  return empresa;
+  return empresas.obtenerEmpresaById(idEmpresa);
 };
 
 export const crearEmpresa = async (empresa) => {
-  const resEmpresa = await fetch('http://localhost:3000/Empresas/',{
-    method: 'POST',
-    mode: 'cors',
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(empresa)
-  });
+  empresas.crearEmpresa(empresa);
 };
 
 export const obtenerTG = async () => {
-  const resTG = await fetch('http://localhost:3000/TG/');
-  const tg = await resTG.json();
-  console.log("obtenerTG()");
-  console.log(tg);
-  return tg;
+  return tgs.obtenerTG();
 };
 
 export const obtenerTGById = async (idTG) => {
-  const resTG = await fetch('http://localhost:3000/TG/' + idTG);
-  const tg = await resTG.json();
-  console.log("obtenerTGById()");
-  console.log(tg);
-  return tg;
+  return tgs.obtenerTGById(idTG);
 };
 
 export const crearTrabajoGradoExperimental = async ( TG, cedulaEstudiante,cedulaTutorAcademico) => {
-  console.log("crearTrabajoGrado")
-  fetch('http://localhost:3000/TG',{
-    method: 'POST',
-    mode: 'cors',
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      titulo: TG.titulo,
-      modalidad: TG.modalidad,
-      id_tutor_academico: cedulaTutorAcademico,
-      id_tutor_empresarial: null
-    })
-  })
-  .then( (response) =>{
-    console.log("response")
-    console.log(response)
-    return response.json()
-  })
-  .then( (data) => {
-    console.log("data")
-    console.log(data)
-    console.log(data.id_tg)
-    const objeto = {
-      cedula_estudiante: cedulaEstudiante,
-      id_tg: data.id_tg
-    }
-    fetch('http://localhost:3000/realiza_TG',{
-      method: 'POST',
-      mode: 'cors',
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(objeto)
-    })
-    .then( (response) => {
-      console.log(response)
-      return response.json()
-    })
-    .then( (data) => {
-      console.log(data)
-    })
-    .catch( (error) => {
-      console.log("Error en creacion de realiza");
-      console.log(error);
-    })
-  })
-  .catch( (error) => {
-    console.log("Error en creacion de TG desde la api");
-    console.log(error)
-  })
+  tgs.crearTrabajoGradoExperimental(TG, cedulaEstudiante, cedulaTutorAcademico);
 };
 
 export const crearTrabajoGradoInstrumental = async ( TG, cedulaEstudiante,cedulaTutorExperimental ) => {
-  console.log("crearTrabajoGrado")
-  fetch('http://localhost:3000/TG',{
-    method: 'POST',
-    mode: 'cors',
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      titulo: TG.titulo,
-      modalidad: TG.modalidad,
-      id_tutor_academico: null,
-      id_tutor_empresarial: cedulaTutorExperimental
-    })
-  })
-  .then( (response) =>{
-    console.log("response")
-    console.log(response)
-    return response.json()
-  })
-  .then( (data) => {
-    console.log("data")
-    console.log(data)
-    console.log(data.id_tg)
-    const objeto = {
-      cedula_estudiante: cedulaEstudiante,
-      id_tg: data.id_tg
-    }
-    fetch('http://localhost:3000/realiza_TG',{
-      method: 'POST',
-      mode: 'cors',
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(objeto)
-    })
-    .then( (response) => {
-      console.log(response)
-      return response.json()
-    })
-    .then( (data) => {
-      console.log(data)
-    })
-    .catch( (error) => {
-      console.log("Error en creacion de realiza");
-      console.log(error);
-    })
-  })
-  .catch( (error) => {
-    console.log("Error en creacion de TG desde la api");
-    console.log(error)
-  })
+  tgs.crearTrabajoGradoInstrumental(TG, cedulaEstudiante, cedulaTutorExperimental);
 };
 
 export const obtenerPropuestas = async ( estatus ) => {
-  const resTG = await fetch('http://localhost:3000/TG/estatus/'+estatus);
-  const tg = await resTG.json();
-  //console.log("obtenerTG()");
-  //console.log(tg);
-  return tg;
-
-};
-
-export const obtenerComites = async ( estatus ) => {
-  const resCDE = await fetch('http://localhost:3000/CDE');
-  const cde = await resCDE.json();
-  console.log("obtenerComites()");
-  console.log(cde);
-  return cde;
-
+  return tgs.obtenerPropuestas(estatus);
 };
 
 export const eliminarPlanilla = async ( idTg ) => {
-  await fetch('http://localhost:3000/TG/' + idTg,{method: 'DELETE'});
+  tgs.eliminarPlanilla(idTg);
 };
 
 export const actualizarPlanilla = async ( planilla ) => {
-  await fetch('http://localhost:3000/TG/' + planilla.id_tg,{
-    method: 'PUT',
-    mode: 'cors',
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      titulo: planilla.titulo,
-      modalidad: planilla.modalidad,
-    })
-  });
-};
-
-export const rechazarPropuestaComite = async ( id_tg ) => {
-  console.log(id_tg);
-  await fetch('http://localhost:3000/TG/evaluacionComite/' + id_tg,{
-    method: 'PUT',
-    mode: 'cors',
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      desicion_comite: 'R'
-    })
-  });
-};
-
-export const aprobarPropuestaComite = async ( id_tg ) => {
-  console.log(id_tg);
-  await fetch('http://localhost:3000/TG/evaluacionComite/' + id_tg,{
-    method: 'PUT',
-    mode: 'cors',
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      desicion_comite: 'PR'
-  })
-  })
+  tgs.actualizarPlanilla(planilla);
 };
 
 export const obtenerPropuestaSinRevisor = async ( ) => {
-  const resTG = await fetch('http://localhost:3000/sin_revisor/');
-  const tg_sin_revisor = await resTG.json();
-  return tg_sin_revisor
+  return tgs.obtenerPropuestaSinRevisor();
+};
+
+export const obtenerComites = async ( estatus ) => {
+  return comites.obtenerComites(estatus);
+};
+
+export const rechazarPropuestaComite = async ( id_tg ) => {
+  comites.rechazarPropuestaComite(id_tg);
+};
+
+export const aprobarPropuestaComite = async ( id_tg ) => {
+  comites.aprobarPropuestaComite(id_tg);
 };
 
 export const designarRevisor = async ( id_tg, id_profesor_revisor) => {
-  const resTG = await fetch('http://localhost:3000/asignarRevisor/'+id_tg,{
-    method: 'PUT',
-    mode: 'cors',
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      id_profesor_revisor: id_profesor_revisor
-    })
-  });
-  
-  const tg_revisor = await resTG.json();
-  return tg_revisor
+  return comites.designarRevisor(id_tg, id_profesor_revisor);
 };
 
 export const obtenerEstudianteDeTG = async ( id_tg ) => {
-   const resEstudiantes = await fetch("http://localhost:3000/alumnosTG/" + id_tg);
-   const estudiantes = await resEstudiantes.json();
-   console.log("estudiantes")
-   console.log(estudiantes)
-   let lista = [];
-   estudiantes.forEach(element => {
-    if(element.realiza_tg!=null){
-      lista.push(element.realiza_tg.estudiante)
-    }else{
-      console.log("No se puede agregar alumno")
-    }
-   });
-   console.log("lista");
-   return lista;
+  return tgs.obtenerEstudianteDeTG(id_tg);
 };
 
 export const obtenerPropuestaConRevisorAsignado = async ( ) => {
-  const resTG = await fetch('http://localhost:3000/con_revisor/');
-  const tg_con_revisor = await resTG.json();
-  return tg_con_revisor
-
+  return tgs.obtenerPropuestaConRevisorAsignado();
 };
 
 export const aprobarPropuestaRevisor = async ( id_tg ) => {
-  const resTG = await fetch('http://localhost:3000/TG/evaluacionRevisor/' + id_tg, {
-    method: 'PUT',
-    mode: 'cors',
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      desicion_revisor: 'PE'
-    })
-  });
-  const tg_con_revisor = await resTG.json();
-  return tg_con_revisor
-
+  return revisores.aprobarPropuestaRevisor(id_tg);
 };
 
 export const rechazarPropuestaRevisor = async ( id_tg ) => {
-  const resTG = await fetch('http://localhost:3000/TG/evaluacionRevisor/' + id_tg, {
-    method: 'PUT',
-    mode: 'cors',
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      desicion_revisor: 'R'
-    })
-  });
-  const tg_con_revisor = await resTG.json();
-  return tg_con_revisor
+  return revisores.rechazarPropuestaRevisor(id_tg);
 };
 
 export const rechazarPropuestaCDE = async ( id_tg ) => {
-  const resTG = await fetch('http://localhost:3000/TG/evaluacionCDE/' + id_tg, {
-    method: 'PUT',
-    mode: 'cors',
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      desicion_cde: 'R'
-    })
-  });
-  const tg_con_revisor = await resTG.json();
-  return tg_con_revisor
+  return cde.rechazarPropuestaCDE(id_tg);
 };
 
 export const aprobarPropuestaCDE = async ( id_tg ) => {
-  const resTG = await fetch('http://localhost:3000/TG/evaluacionCDE/' + id_tg, {
-    method: 'PUT',
-    mode: 'cors',
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      desicion_cde: 'A'
-    })
-  });
-  const tg_con_revisor = await resTG.json();
-  return tg_con_revisor
+  return cde.aprobarPropuestaCDE(id_tg);
 };
 
 export const asignarTutorAcademico = async ( id_tg, id_tutor_academico ) => {
-  const resTG = await fetch('http://localhost:3000/TG/asignarTutorAcademico/' + id_tg, {
-    method: 'PUT',
-    mode: 'cors',
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      id_tutor_academico: id_tutor_academico
-    })
-  });
-  const tg_con_revisor = await resTG.json();
-  return tg_con_revisor
+  return cde.asignarTutorAcademico(id_tg, id_tutor_academico);
 };
 
 export const obtenerCDE = async ( ) => {
-  const resCDE = await fetch('http://localhost:3000/CDE');
-  const CDE = await resCDE.json()
-  return CDE;
+  return cde.obtenerCDE();
 };
 
 export const obtenerCDEById = async ( id_cde ) => {
-  const resCDE = await fetch('http://localhost:3000/CDE/'+id_cde);
-  const CDE = await resCDE.json()
-  return CDE;
+  return cde.obtenerCDEById(id_cde);
 };
 
 export const anexarPlanilla = async ( id_tg, nombre_planilla, documento) => {
-  const resPlanilla = await fetch('http://localhost:3000/anexarPlanilla/',{
-    method: 'POST',
-    mode: 'cors',
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      id_tg: id_tg,
-      nombre_planilla: nombre_planilla,
-      documento: documento
-    })
-  });
-  const planilla = await resPlanilla.json()
-  return planilla;
-}
+  return tgs.anexarPlanilla(id_tg, nombre_planilla, documento);
+};
 /*
 export const descargarPlanilla = async ( id_tg, nombre_planilla) => {
   const resPlanilla = await fetch('http://localhost:3000/descargarPlanilla/',{
@@ -464,70 +164,22 @@ export const descargarPlanilla = async ( id_tg, nombre_planilla) => {
 */
 
 export const crearCDE = async (id_cde) =>{
-  const insertar = await fetch('http://localhost:3000/CDE',{
-      method: 'POST',
-      mode: 'cors',
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        id_cde: id_cde
-      })
-  });
-  const respuesta = await insertar.json();
-  console.log("crearCDE()");
-  console.log(respuesta)
-  return respuesta;
+  return cde.crearCDE(id_cde);
 };
 
 export const obtenerTGsinJurado = async () =>{
-  console.log("obtenerTGsinJurado()");
-  const resJurado = await fetch('http://localhost:3000/sinJurado/');
-  const jurados = await resJurado.json()
-  return jurados;
-
+  return tgs.obtenerTGsinJurado();
 };
 
 export const obtenerTGconJurado = async () =>{
-  console.log("obtenerTGconJurado()");
-  const resJurado = await fetch('http://localhost:3000/conJurado/');
-  const jurados = await resJurado.json()
-  return jurados;
+  return tgs.obtenerTGconJurado();
 };
 
-export const crearJuradosPorUno = async (jurado,id_tg) => {
-  console.log("jurado,",jurado)
-  console.log("id", id_tg)
-  const resJurado = await fetch('http://localhost:3000/crearJurado',{
-    method: 'POST',
-    mode: 'cors',
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      cedula_profesor: jurado,
-      id_tg: id_tg
-    })
-  })
-  console.log(resJurado)
-  //return resJurado;
+export const crearJuradosPorUno = async (jurado, id_tg) => {
+  return cde.crearJuradosPorUno(jurado, id_tg);
 };
 
-export const crearJurados = async (array,id_tg) => {
-   console.log("crearJurados()")
-   console.log("array")
-   console.log(array)
-   console.log("id_tg")
-   console.log(id_tg)
-   array.forEach( async (element,index) => {
-    console.log("element")
-    console.log(element)
-    let respuesta = await crearJuradosPorUno(element,id_tg);
-    console.log(respuesta)
-  })
-
+export const crearJurados = async (array, id_tg) => {
+  cde.crearJurados(array, id_tg);
   return;
 };
-
-
-
