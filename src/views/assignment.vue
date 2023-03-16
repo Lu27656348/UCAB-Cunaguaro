@@ -54,12 +54,15 @@ const rechazarTG = async (id) =>{
 };
 
 const aceptarTG = async (id) =>{
+  let tutor_empresarial = null;
   await api.aprobarPropuestaCDE(id)
   //await api.asignarTutorAcademico(id,tutor.value.cedula)
   alert("aceptado");
   const estudiante = await api.obtenerEstudianteDeTG(id);
   const tutor_academico = await api.obtenerProfesorByCedula(formularioPropuesta.value.id_tutor_academico)
-  const tutor_empresarial = await api.obtenerExternosById(formularioPropuesta.value.id_tutor_empresarial)
+  if(formularioPropuesta.value.modalidad === 'I'){
+    tutor_empresarial = await api.obtenerExternosById(formularioPropuesta.value.id_tutor_empresarial)
+  }
   
   const cartaDesignacion = new FormularioCartaDesigancion(
     formularioPropuesta.value.titulo,
@@ -96,10 +99,13 @@ const buscarCDE = async (id) =>{
 };
 
 const asignarTutorAcademico = async () =>{
+  let tutor_empresarial = null;
   const res = await api.asignarTutorAcademico(formularioPropuesta.value.id_tg ,formularioPropuesta.value.id_tutor_academico);
   const estudiante = await api.obtenerEstudianteDeTG(formularioPropuesta.value.id_tg);
   const tutor_academico = await api.obtenerProfesorByCedula(formularioPropuesta.value.id_tutor_academico)
-  const tutor_empresarial = await api.obtenerExternosById(formularioPropuesta.value.id_tutor_empresarial)
+  if(formularioPropuesta.value.modalidad === 'I'){
+    tutor_empresarial = await api.obtenerExternosById(formularioPropuesta.value.id_tutor_empresarial)
+  }
   const cartaDesignacion = new FormularioCartaDesigancion(
     formularioPropuesta.value.titulo,
     formularioPropuesta.value.modalidad,
