@@ -1,6 +1,9 @@
 <script setup>
 import { ref, reactive, onMounted, computed } from "vue";
 import * as api from "../modules/apiTools.js";
+import { notificacion_designacion_j } from '../modules/generadorDOCX/notificacion_designacion_j.js'
+import { notificacion_jurado } from '../modules/generadorDOCX/notificacion_jurado.js';
+import { planilla_evaluacion_final_TEG } from '../modules/generadorDOCX/Planilla_evaluacion_final_TEG.js'
 
 import { FormularioEmpresa } from '../modules/formularioEmpresa.js';
 
@@ -10,8 +13,12 @@ let dataEmpresas = reactive([]);
 
 let crearEmpresa = new FormularioEmpresa();
 
-const añadirConsejo = async () => {
-  console.log('Se creo el consejo, yeiii ^^');
+const descargarPlanillas = async () => {
+  console.log('Descargando planillas');
+  //notificacion_designacion_j();
+  //notificacion_jurado();
+  planilla_evaluacion_final_TEG();
+
 };
 
 onMounted(async () => {
@@ -67,9 +74,9 @@ onMounted(async () => {
               </div>
               <div class="actions">
                 <button class="login__form__btn succes"
-                @click="añadirEmpresa()"
+                @click="descargarPlanillas()"
                 >
-                  Añadir Empresa 
+                  descargarPlanillas
                 </button>
               </div>
             </div>
