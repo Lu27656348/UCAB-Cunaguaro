@@ -55,8 +55,11 @@ const descargarPlanillas = async () => {
   console.log('Descargando planillas');
   //notificacion_designacion_j();
   //notificacion_jurado();
-  planilla_evaluacion_final_TEG();
+  //planilla_evaluacion_final_TEG();
+};
 
+const asignarNota = () => {
+  console.log('Nota designada');
 };
 
 onMounted(async () => {
@@ -104,19 +107,21 @@ onMounted(async () => {
               class="request__container__preview__form up-de"
             >
               <div class="request__container__preview__form__inputs">
-                <p>Nota Jurado 1 {{ planilla.j1 }}</p>
+                <p>Nota del trabajo de grado</p>
                 <input type="range" min="0" max="20" v-model="planilla.nota1">
                 <p>{{ planilla.nota1 }}</p>
+                <!--
                 <p>Nota Jurado 2 {{ planilla.j2 }}</p>
                 <input type="range" min="0" max="20" v-model="planilla.nota2">
                 <p>{{ planilla.nota2 }}</p>
                 <p>Nota Tutor academico {{ planilla.id_tutor_academico }}</p>
                 <input type="range" min="0" max="20" v-model="planilla.nota_tutor">
                 <p>{{ planilla.nota_tutor }}</p>
+                  -->
               </div>
               <div class="actions">
                 <button class="login__form__btn succes"
-                @click="descargarPlanillas()"
+                @click="asignarNota()"
                 >
                   Designar nota
                 </button>

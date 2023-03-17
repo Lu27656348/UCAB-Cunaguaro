@@ -20,7 +20,7 @@ export const crearRealiza_tg = async (req,res) => {
     }
 };
 export const actualizarRealiza_tg = async (req,res) => {
-    const { cedula_estudiante, id_tg } = req.body;
+    const { cedula_estudiante, id_tg,nota } = req.body;
     const id = req.params.id;
     try {
         const buscar = await Realiza_tg.findOne({
@@ -32,6 +32,7 @@ export const actualizarRealiza_tg = async (req,res) => {
 
         buscar.cedula_estudiante = cedula_estudiante;
         buscar.id_tg = id_tg;
+        buscar.nota = nota;
 
         const actualizar = await buscar.save();
         
