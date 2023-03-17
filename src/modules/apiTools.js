@@ -182,7 +182,3 @@ export const crearJurados = async (array, id_tg) => {
   cde.crearJurados(array, id_tg);
   return;
 };
-
-export const asignarNota = async (id_tg,cedula_estudiante,nota) =>{
-  return tgs.asignarNota(id_tg, cedula_estudiante, nota);
-};

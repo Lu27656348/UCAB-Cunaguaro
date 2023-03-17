@@ -223,21 +223,3 @@ export const obtenerJuradosDeTG = async (id_tg) =>{
   const jurados = await resJurado.json()
   return jurados;
 };
-
-export const asignarNota = async (id_tg,cedula_estudiante,nota) =>{
-  console.log("asignarNota()");
-  const resNota = await fetch('http://localhost:3000/realiza_TG/actualizar',{
-    method: 'PUT',
-    mode: 'cors',
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      id_tg: id_tg,
-      cedula_estudiante: cedula_estudiante,
-      nota: nota
-    })
-  });
-  const nota = await resNota.json()
-  return nota;
-};
