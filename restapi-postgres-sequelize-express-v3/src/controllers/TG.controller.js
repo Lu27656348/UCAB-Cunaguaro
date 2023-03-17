@@ -324,3 +324,4 @@ export const obtenerTGconJurado = async (req, res) => {
         return res.status(404).json("Error en busqueda por estatus");
     }
 }
+
