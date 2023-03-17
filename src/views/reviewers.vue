@@ -20,8 +20,7 @@ const clickenComponente = async (id) => {
 
 const designarTutor = async () => {
   console.log("formularioPropuesta");
-  console.log(formularioPropuesta.value.id_profesor_revisor);
-  console.log(formularioPropuesta.value.id_tg);
+  console.log(formularioPropuesta.value);
   
   await api.designarRevisor( 
     formularioPropuesta.value.id_tg, 
@@ -29,8 +28,14 @@ const designarTutor = async () => {
   );
 
   let alumnos = await api.obtenerEstudianteDeTG(formularioPropuesta.value.id_tg);
+  console.log("alumnos")
+  console.log(alumnos);
 
-  let revisor =  await api.obtenerProfesorByCedula(formularioPropuesta.value.id_profesor_revisor );
+  let empresa = await api.obtenerEmpresaById(formularioPropuesta.value.id_empresa)
+  console.log("empresa")
+  console.log(empresa);
+
+  let revisor =  await api.obtenerProfesorByCedula(formularioPropuesta.value.id_profesor_revisor);
   if(formularioPropuesta.value.modalidad === 'E'){
     let tutor_academico =  await api.obtenerProfesorByCedula(formularioPropuesta.value.id_tutor_academico );
     let planillaDesignacionDeRevisor = new PlanillaDesignacionRevisor(
@@ -38,10 +43,10 @@ const designarTutor = async () => {
     formularioPropuesta.value.titulo,
     tutor_academico,
     new Date(),
-    { nombre: 'Luz Medina', correo_administrador: 'lamedina@wlaluchocorp.com' },
+    { nombre: 'Luz E. Medina', correo_administrador: 'lmedinac@ucab.edu.ve' },
     formularioPropuesta.value.modalidad,
     `${revisor.nombres} ${revisor.apellidos}`,
-    "Agregar organizacion"
+    empresa.nombre
     );
     planillaDesignacionDeRevisor.añadirAlumno(alumnos[0]);
     console.log("planillaDesignacionDeRevisor");
@@ -53,10 +58,10 @@ const designarTutor = async () => {
     formularioPropuesta.value.titulo,
     tutor_empresarial,
     new Date(),
-    { nombre: 'Luz Medina', correo_administrador: 'lamedina@wlaluchocorp.com' },
+    { nombre: 'Luz E. Medina', correo_administrador: 'lmedinac@ucab.edu.ve' },
     formularioPropuesta.value.modalidad,
     `${revisor.nombres} ${revisor.apellidos}`,
-    "Agregar organizacion"
+    empresa.nombre
     );
     planillaDesignacionDeRevisor.añadirAlumno(alumnos[0])
     planillaDesignacionDeRevisor.imprimir();

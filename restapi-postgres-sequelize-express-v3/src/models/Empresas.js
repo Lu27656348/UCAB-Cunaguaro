@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from '../database/database.js';
+import { TG } from "./TG.js";
 
 export const Empresas = sequelize.define('empresas', {
     id_empresa: {
@@ -21,4 +22,14 @@ export const Empresas = sequelize.define('empresas', {
     }
 },{
     timestamps:false
+});
+
+Empresas.hasOne(TG, {
+    foreignKey: 'id_empresa',
+    sourceKey: 'id_empresa'
+});
+
+TG.belongsTo(Empresas, {
+    foreignKey: 'id_empresa',
+    targetId: 'id_empresa'
 });
