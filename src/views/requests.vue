@@ -109,6 +109,8 @@ onMounted(async () => {
           v-show="showPlanillaUpDe"
         >
           <div class="request__container__preview__form__inputs">
+            <p>Codigo del trabajo de Grado</p>
+            <input type="text" disabled style="user-select: none;" v-model="planilla.id_tg">
             <p for="">Titulo del Trabajo</p>
             <input type="text" v-model="planilla.titulo" />
             <p for="">Modalidad</p>

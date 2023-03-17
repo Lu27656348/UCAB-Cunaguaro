@@ -76,12 +76,7 @@ onMounted(async () => {
         </div>
       </div>
       <div class="committe__container__preview">
-        <h2>Visualización del documento de solicitud</h2>
-        <form action="" class="committe__container__preview__form"></form>
         <div class="create-state">
-          <div class="progressbar">
-            <div class="progressbar--content"></div>
-          </div>
           <div class="create-carousel">
             <h2>Visualización del documento de solicitud</h2>
             <div
