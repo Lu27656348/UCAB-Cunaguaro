@@ -6,6 +6,16 @@ export const CDE = sequelize.define('cde', {
         type: DataTypes.TEXT,
         primaryKey: true,
     },
+    id_cde_formateado: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        defaultValue: null
+    },
+    resumen_cde: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        defaultValue: null
+    },
     fecha_conformacion: {
         type: DataTypes.DATE,
         allowNull: false,

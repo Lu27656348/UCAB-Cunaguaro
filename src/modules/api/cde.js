@@ -87,7 +87,7 @@ export const crearJuradosPorUno = async (jurado,id_tg) => {
     })
   })
   console.log(resJurado)
-  return respuesta;
+  return resJurado;
 };
 
 export const crearJurados = async (array,id_tg) => {

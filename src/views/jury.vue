@@ -3,13 +3,19 @@ import { ref, reactive, onMounted, computed } from "vue";
 import * as api from "../modules/apiTools.js";
 
 import { FormularioEmpresa } from '../modules/classes/formularioEmpresa.js';
+import { NotificacionDesignacionJurado} from '../modules/classes/NotificacionDesignacionJurado.js'
+import { planilla_evaluacion_final_TEG } from '../modules/generadorDOCX/Planilla_evaluacion_final_TEG.js'
+import { notificacion_jurado } from '../modules/generadorDOCX/notificacion_jurado.js'
+import { notificacion_designacion_j } from '../modules/generadorDOCX/notificacion_designacion_j.js'
 
 let data = reactive([]);
 let dataConsejo = reactive([]);
 let dataEmpresas = reactive([]);
 let dataProfesores = reactive([]);
+let dataCDE = reactive([]);
 
 let profesoresDesignados = reactive(['','','','']);
+let cde_escogido = reactive('');
 
 let planilla = ref({
   id_tg: "",
@@ -18,36 +24,44 @@ let planilla = ref({
   estatus: "",
   id_tutor_academico: "",
   id_tutor_empresarial: "",
+  cde: ""
 });
 
+let notificacion = ref(new NotificacionDesignacionJurado());
 let crearEmpresa = new FormularioEmpresa();
-
-const añadirConsejo = async () => {
-  console.log('Se creo el consejo, yeiii ^^');
-};
 
 const designarJurado = async (profesores, id_tg) => {
   console.log(dataProfesores.value);
+  console.log(cde_escogido.value);
+  console.log(notificacion.value)
+  //notificacion_designacion_j();
+  //notificacion_jurado();
+  /*
   await api.crearJurados(profesoresDesignados,id_tg);
+  */
 }
 
 const clickenComponente = async (id) => {
   const respuesta = await api.obtenerTGById(id)
-  console.log("clickenComponente()");
-  console.log("planilla");
   planilla.value.id_tg = respuesta.id_tg;
   planilla.value.titulo = respuesta.titulo;
   planilla.value.modalidad = respuesta.modalidad;
   planilla.value.estatus = respuesta.estatus;
   planilla.value.id_tutor_academico = respuesta.id_tutor_academico;
   planilla.value.id_tutor_empresarial = respuesta.id_tutor_empresarial;
-  console.log(planilla.value);
+  planilla.value.cde = respuesta.id_cde_jurado;
+
+  notificacion.value.tg = await api.obtenerTGById(planilla.value.id_tg)
+  notificacion.value.alumnos = await api.obtenerEstudianteDeTG(planilla.value.id_tg);
+  notificacion.value.tutor_academico = await api.obtenerProfesorByCedula(planilla.value.id_tutor_academico)
+  notificacion.value.cde = await api.obtenerCDEById(cde_escogido.value)
+  //notificacion.value.tutor_empresarial = await api.obtenerExternosById(planilla.value.id_tutor_empresarial)
 };
 
 onMounted(async () => {
   data.value = await api.obtenerTGsinJurado();
   dataProfesores.value = await api.obtenerProfesores();
-  console.log(data.value)
+  dataCDE.value = await api.obtenerCDE();
 });
 
 </script>
@@ -121,6 +135,14 @@ onMounted(async () => {
                   :key="p.cedula"
                   :value="p.cedula"
                   >{{ p.nombres + '' + p.apellidos }}</option>
+                </select>
+                <p>Consejo de escuela</p>
+                <select name="cde" id="" v-model="cde_escogido">
+                  <option 
+                  v-for="p in dataCDE.value"
+                  :key="p.id_cde"
+                  :value="p.id_cde"
+                  >{{ p.id_cde_formateado }}</option>
                 </select>
               </div>
               <div class="actions">
