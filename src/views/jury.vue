@@ -15,7 +15,7 @@ let dataProfesores = reactive([]);
 let dataCDE = reactive([]);
 
 let profesoresDesignados = reactive(['','','','']);
-let cde_escogido = reactive('');
+let cde_escogido = ref("");
 
 let planilla = ref({
   id_tg: "",
@@ -33,6 +33,7 @@ let crearEmpresa = new FormularioEmpresa();
 const designarJurado = async (profesores, id_tg) => {
   console.log(dataProfesores.value);
   console.log(cde_escogido.value);
+  notificacion.value.cde = await api.obtenerCDEById(cde_escogido.value);
   console.log(notificacion.value)
   //notificacion_designacion_j();
   //notificacion_jurado();
@@ -54,7 +55,7 @@ const clickenComponente = async (id) => {
   notificacion.value.tg = await api.obtenerTGById(planilla.value.id_tg)
   notificacion.value.alumnos = await api.obtenerEstudianteDeTG(planilla.value.id_tg);
   notificacion.value.tutor_academico = await api.obtenerProfesorByCedula(planilla.value.id_tutor_academico)
-  notificacion.value.cde = await api.obtenerCDEById(cde_escogido.value)
+  //
   //notificacion.value.tutor_empresarial = await api.obtenerExternosById(planilla.value.id_tutor_empresarial)
 };
 
