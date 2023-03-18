@@ -31,11 +31,14 @@ let notificacion = ref(new NotificacionDesignacionJurado());
 let crearEmpresa = new FormularioEmpresa();
 
 const designarJurado = async (profesores, id_tg) => {
-  console.log(dataProfesores.value);
+  //console.log(dataProfesores.value);
   console.log(cde_escogido.value);
+  console.log(profesoresDesignados)
   notificacion.value.cde = await api.obtenerCDEById(cde_escogido.value);
-  console.log(notificacion.value)
-  //notificacion_designacion_j();
+  notificacion.value.jurado1 = await api.obtenerProfesorByCedula(profesoresDesignados[0]);
+  notificacion.value.jurado2 = await api.obtenerProfesorByCedula(profesoresDesignados[1]);
+  //console.log(notificacion.value)
+  notificacion_designacion_j(notificacion.value);
   //notificacion_jurado();
   /*
   await api.crearJurados(profesoresDesignados,id_tg);

@@ -16,8 +16,11 @@ const { HeadingLevel,Packer } = docx;
 const arrayPrueba = [
     {nombres: "Luis Carlos"},
 ]
-const generarFilaDatosAlumno = (alumno) => {
-    if( alumno != undefined && alumno != null ){
+const generarFilaDatosAlumno = (alumno,titulo,tutor,jurado1,jurado2) => {
+    console.log("generarFilaDatosAlumno()");
+    console.log(alumno);
+    console.log(tutor);
+    if( alumno != undefined && alumno != null && tutor !== undefined){
         let filaAlumno = new TableRow({
             children: [
                 new TableCell({
@@ -25,7 +28,7 @@ const generarFilaDatosAlumno = (alumno) => {
                         new Paragraph({
                             children: [
                                 new TextRun({
-                                    text: "hola"
+                                    text: alumno.apellidos + ', ' + alumno.nombres
                                 })
                             ]
                         })
@@ -36,7 +39,7 @@ const generarFilaDatosAlumno = (alumno) => {
                         new Paragraph({
                             children: [
                                 new TextRun({
-                                    text: "hola"
+                                    text: alumno.cedula
                                 })
                             ]
                         })
@@ -47,7 +50,7 @@ const generarFilaDatosAlumno = (alumno) => {
                         new Paragraph({
                             children: [
                                 new TextRun({
-                                    text: "hola"
+                                    text: titulo
                                 })
                             ]
                         })
@@ -58,7 +61,7 @@ const generarFilaDatosAlumno = (alumno) => {
                         new Paragraph({
                             children: [
                                 new TextRun({
-                                    text: "hola"
+                                    text: tutor.apellidos + ', ' + tutor.nombres
                                 })
                             ]
                         })
@@ -69,7 +72,7 @@ const generarFilaDatosAlumno = (alumno) => {
                         new Paragraph({
                             children: [
                                 new TextRun({
-                                    text: "hola"
+                                    text: jurado1.apellidos + ', ' + jurado1.nombres
                                 })
                             ]
                         })
@@ -80,7 +83,7 @@ const generarFilaDatosAlumno = (alumno) => {
                         new Paragraph({
                             children: [
                                 new TextRun({
-                                    text: "hola"
+                                    text: jurado2.apellidos + ', ' + jurado2.nombres
                                 })
                             ]
                         })
@@ -92,7 +95,8 @@ const generarFilaDatosAlumno = (alumno) => {
     }
     return;
 }
-const generarTablaDatosAlumno = (alumno) => {
+const generarTablaDatosAlumno = (notificacion) => {
+    console.log("generarTablaDatosAlumno()");
     const tabla = new Table({
         width: {
             size: 10000,
@@ -189,12 +193,13 @@ const generarTablaDatosAlumno = (alumno) => {
                     }),
                 ]
             }),
-            generarFilaDatosAlumno(arrayPrueba[0]),
+            generarFilaDatosAlumno(notificacion.alumnos[0],notificacion.tg.titulo,notificacion.tutor_academico,notificacion.jurado1,notificacion.jurado2),
         ]
     })
     return tabla
 }
 export const notificacion_designacion_j = (notificacion) => {
+    console.log("notificacion_designacion_j")
     console.log(notificacion)
     const doc = new  Document({
         creator: "Luis C. Somoza & Wladimir San Vicente",
@@ -332,7 +337,7 @@ export const notificacion_designacion_j = (notificacion) => {
                 new Paragraph({
                     children: [
                         new TextRun({
-                            text: "Inserte la fecha aqui"
+                            text: "Puerto Ordaz, " + new Date().toLocaleDateString()
                         })
                     ],
                     alignment: AlignmentType.RIGHT
@@ -340,7 +345,7 @@ export const notificacion_designacion_j = (notificacion) => {
                 new Paragraph({
                     children: [
                         new TextRun({
-                            text: "Profesor: [Inserte datos de profesor aqui]"
+                            text: "Profesor: " + notificacion.tutor_academico.apellidos + ', ' + notificacion.tutor_academico.nombres
                         })
                     ],
                     alignment: AlignmentType.JUSTIFIED
@@ -348,12 +353,12 @@ export const notificacion_designacion_j = (notificacion) => {
                 new Paragraph({
                     children: [
                         new TextRun({
-                            text: `Me es grato dirigirme a Usted en oportunidad de informarle que en Consejo de Escuela N° [Inserte consejo de escuela aqui] de [Inserte fecha de CDE aqui], ha sido designado como jurado del siguiente Trabajo de Grado:`
+                            text: `Me es grato dirigirme a Usted en oportunidad de informarle que en Consejo de Escuela N° ${notificacion.cde.id_cde_formateado} de ${notificacion.cde.fecha_conformacion}, ha sido designado como jurado del siguiente Trabajo de Grado:`
                         })
                     ],
                     alignment: AlignmentType.JUSTIFIED
                 }),
-                generarTablaDatosAlumno(),
+                generarTablaDatosAlumno(notificacion),
                 new Paragraph({
                     children: [
                         new TextRun({
