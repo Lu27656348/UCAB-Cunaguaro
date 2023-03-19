@@ -16,11 +16,38 @@ const { HeadingLevel,Packer } = docx;
 const arrayPrueba = [
     {nombres: "Luis Carlos"},
 ]
+const spacing = {
+    after: 200,
+    line: 355,
+    lineRule: LineRuleType.AUTO,
+};
+const sin_bordes = {
+    top: {
+        style: BorderStyle.NONE,
+        size: 1,
+        color: "ff0000",
+    },
+    bottom: {
+        style: BorderStyle.NONE,
+        size: 1,
+        color: "ff0000",
+    },
+    left: {
+        style: BorderStyle.NONE,
+        size: 1,
+        color: "ff0000",
+    },
+    right: {
+        style: BorderStyle.NONE,
+        size: 1,
+        color: "ff0000",
+    }
+}
 const generarFilaDatosAlumno = (alumno,titulo,tutor,jurado1,jurado2) => {
     console.log("generarFilaDatosAlumno()");
-    console.log(alumno);
-    console.log(tutor);
     if( alumno != undefined && alumno != null && tutor !== undefined){
+        console.log(alumno);
+        console.log(tutor);
         let filaAlumno = new TableRow({
             children: [
                 new TableCell({
@@ -30,7 +57,8 @@ const generarFilaDatosAlumno = (alumno,titulo,tutor,jurado1,jurado2) => {
                                 new TextRun({
                                     text: alumno.apellidos + ', ' + alumno.nombres
                                 })
-                            ]
+                            ],
+                            style: "aside"
                         })
                     ]
                 }),
@@ -41,7 +69,8 @@ const generarFilaDatosAlumno = (alumno,titulo,tutor,jurado1,jurado2) => {
                                 new TextRun({
                                     text: alumno.cedula
                                 })
-                            ]
+                            ],
+                            style: "aside"
                         })
                     ]
                 }),
@@ -52,7 +81,8 @@ const generarFilaDatosAlumno = (alumno,titulo,tutor,jurado1,jurado2) => {
                                 new TextRun({
                                     text: titulo
                                 })
-                            ]
+                            ],
+                            style: "aside"
                         })
                     ]
                 }),
@@ -63,7 +93,8 @@ const generarFilaDatosAlumno = (alumno,titulo,tutor,jurado1,jurado2) => {
                                 new TextRun({
                                     text: tutor.apellidos + ', ' + tutor.nombres
                                 })
-                            ]
+                            ],
+                            style: "aside"
                         })
                     ]
                 }),
@@ -74,7 +105,8 @@ const generarFilaDatosAlumno = (alumno,titulo,tutor,jurado1,jurado2) => {
                                 new TextRun({
                                     text: jurado1.apellidos + ', ' + jurado1.nombres
                                 })
-                            ]
+                            ],
+                            style: "aside"
                         })
                     ]
                 }),
@@ -85,7 +117,8 @@ const generarFilaDatosAlumno = (alumno,titulo,tutor,jurado1,jurado2) => {
                                 new TextRun({
                                     text: jurado2.apellidos + ', ' + jurado2.nombres
                                 })
-                            ]
+                            ],
+                            style: "aside"
                         })
                     ]
                 }),
@@ -93,7 +126,24 @@ const generarFilaDatosAlumno = (alumno,titulo,tutor,jurado1,jurado2) => {
         });
         return filaAlumno
     }
-    return;
+    let filaAlumno = new TableRow({
+                                children: [
+                                        new TableCell({
+                                            borders: sin_bordes,
+                                            children: [
+                                                new Paragraph({
+                                                    children: [
+                                                        new TextRun({
+                                                            text: ""
+                                                        })
+                                                    ],
+                                                    style: "aside"
+                                                })
+                                            ]
+                                        })
+                                ]
+                            })
+    return filaAlumno;
 }
 const generarTablaDatosAlumno = (notificacion) => {
     console.log("generarTablaDatosAlumno()");
@@ -107,7 +157,7 @@ const generarTablaDatosAlumno = (notificacion) => {
                 children: [
                     new TableCell({
                         width: {
-                            size: 1500,
+                            size: 1000,
                             type: WidthType.DXA,
                         },
                         children: [
@@ -116,13 +166,16 @@ const generarTablaDatosAlumno = (notificacion) => {
                                     new TextRun({
                                         text: "Estudiante"
                                     })
-                                ]
+                                ],
+                                style: "aside",
+                                alignment: AlignmentType.CENTER
                             })
-                        ]
+                        ],
+                        verticalAlign: VerticalAlign.CENTER
                     }),
                     new TableCell({
                         width: {
-                            size: 1500,
+                            size: 1000,
                             type: WidthType.DXA,
                         },
                         children: [
@@ -131,13 +184,16 @@ const generarTablaDatosAlumno = (notificacion) => {
                                     new TextRun({
                                         text: "Cedula"
                                     })
-                                ]
+                                ],
+                                style: "aside",
+                                alignment: AlignmentType.CENTER
                             })
-                        ]
+                        ],
+                        verticalAlign: VerticalAlign.CENTER
                     }),
                     new TableCell({
                         width: {
-                            size: 2500,
+                            size: 1000,
                             type: WidthType.DXA,
                         },
                         children: [
@@ -146,13 +202,16 @@ const generarTablaDatosAlumno = (notificacion) => {
                                     new TextRun({
                                         text: "Titulo trabajo de grado"
                                     })
-                                ]
+                                ],
+                                alignment: AlignmentType.CENTER,
+                                style: "aside"
                             })
-                        ]
+                        ],
+                        verticalAlign: VerticalAlign.CENTER
                     }),
                     new TableCell({
                         width: {
-                            size: 1500,
+                            size: 1000,
                             type: WidthType.DXA,
                         },
                         children: [
@@ -161,13 +220,16 @@ const generarTablaDatosAlumno = (notificacion) => {
                                     new TextRun({
                                         text: "Tutor"
                                     })
-                                ]
+                                ],
+                                alignment: AlignmentType.CENTER,
+                                style: "aside"
                             })
-                        ]
+                        ],
+                        verticalAlign: VerticalAlign.CENTER
                     }),
                     new TableCell({
                         width: {
-                            size: 1500,
+                            size: 1000,
                             type: WidthType.DXA,
                         },
                         children: [
@@ -176,29 +238,41 @@ const generarTablaDatosAlumno = (notificacion) => {
                                     new TextRun({
                                         text: "Jurado 1 "
                                     })
-                                ]
+                                ],
+                                alignment: AlignmentType.CENTER,
+                                style: "aside"
                             })
-                        ]
+                        ],
+                        verticalAlign: VerticalAlign.CENTER
                     }),
                     new TableCell({
+                        width: {
+                            size: 1000,
+                            type: WidthType.DXA,
+                        },
                         children: [
                             new Paragraph({
                                 children: [
                                     new TextRun({
                                         text: "Jurado 2"
                                     })
-                                ]
+                                ],
+                                style: "aside",
+                                alignment: AlignmentType.CENTER,
                             })
-                        ]
+                        ],
+                        verticalAlign: VerticalAlign.CENTER
                     }),
                 ]
             }),
             generarFilaDatosAlumno(notificacion.alumnos[0],notificacion.tg.titulo,notificacion.tutor_academico,notificacion.jurado1,notificacion.jurado2),
+            generarFilaDatosAlumno(notificacion.alumnos[1],notificacion.tg.titulo,notificacion.tutor_academico,notificacion.jurado1,notificacion.jurado2),
         ]
     })
     return tabla
 }
 export const notificacion_designacion_j = (notificacion) => {
+
     console.log("notificacion_designacion_j")
     console.log(notificacion)
     const doc = new  Document({
@@ -340,6 +414,8 @@ export const notificacion_designacion_j = (notificacion) => {
                             text: "Puerto Ordaz, " + new Date().toLocaleDateString()
                         })
                     ],
+                    spacing: spacing,
+                    style: "aside",
                     alignment: AlignmentType.RIGHT
                 }),
                 new Paragraph({
@@ -348,6 +424,8 @@ export const notificacion_designacion_j = (notificacion) => {
                             text: "Profesor: " + notificacion.tutor_academico.apellidos + ', ' + notificacion.tutor_academico.nombres
                         })
                     ],
+                    spacing: spacing,
+                    style: "aside",
                     alignment: AlignmentType.JUSTIFIED
                 }),
                 new Paragraph({
@@ -356,7 +434,9 @@ export const notificacion_designacion_j = (notificacion) => {
                             text: `Me es grato dirigirme a Usted en oportunidad de informarle que en Consejo de Escuela N° ${notificacion.cde.id_cde_formateado} de ${notificacion.cde.fecha_conformacion}, ha sido designado como jurado del siguiente Trabajo de Grado:`
                         })
                     ],
-                    alignment: AlignmentType.JUSTIFIED
+                    spacing: spacing,
+                    alignment: AlignmentType.JUSTIFIED,
+                    style: "aside"
                 }),
                 generarTablaDatosAlumno(notificacion),
                 new Paragraph({
@@ -364,7 +444,9 @@ export const notificacion_designacion_j = (notificacion) => {
                         new TextRun({
                             text: "Para la revisión y evaluación de este Trabajo de Grado se anexan los siguientes documentos:"
                         })
-                    ]
+                    ],
+                    spacing: spacing,
+                    style: "aside"
                 }),
                 new Paragraph({
                     bullet: {
@@ -374,7 +456,9 @@ export const notificacion_designacion_j = (notificacion) => {
                         new TextRun({
                             text: "Informe del Trabajo de Grado"
                         })
-                    ]
+                    ],
+                    spacing: spacing,
+                    style: "aside"
                 }),
                 new Paragraph({
                     bullet: {
@@ -384,7 +468,9 @@ export const notificacion_designacion_j = (notificacion) => {
                         new TextRun({
                             text: "Guía para el Jurador Examinador, el cual contiene un extracto del Reglamento de Trabajos de Grado de la Facultad de Ingeniería relativo a evaluación y criterios a ser evaluados."
                         })
-                    ]
+                    ],
+                    spacing: spacing,
+                    style: "aside"
                 }),
                 new Paragraph({
                     bullet: {
@@ -394,7 +480,9 @@ export const notificacion_designacion_j = (notificacion) => {
                         new TextRun({
                             text: "Planillas de evaluación del trabajo de grado editable, prellenadas con los datos del TG y del(los) estudiante(s)"
                         })
-                    ]
+                    ],
+                    spacing: spacing,
+                    style: "aside"
                 }),
                 new Paragraph({
                     bullet: {
@@ -404,49 +492,63 @@ export const notificacion_designacion_j = (notificacion) => {
                         new TextRun({
                             text: "Planilla de evaluación del final editable, prellenada con los datos de la propuesta y del(los) estudiante(s) (solo a utilizar por el presidente del jurado)"
                         })
-                    ]
+                    ],
+                    spacing: spacing,
+                    style: "aside"
                 }),
                 new Paragraph({
                     children: [
                         new TextRun({
                             text: "Las Planillas de evaluación estarán impresas y disponibles para ser retiradas en La Escuela de Ingeniería Informática, cuando usted guste. "
                         })
-                    ]
+                    ],
+                    spacing: spacing,
+                    style: "aside"
                 }),
                 new Paragraph({
                     children: [
                         new TextRun({
                             text: "La presentación oral será fijada para la segunda semana del mes de noviembre 2022, de acuerdo a la disponibilidad de los participantes. Posteriormente se le informará el lugar, fecha y hora de la misma."
                         })
-                    ]
+                    ],
+                    spacing: spacing,
+                    style: "aside"
                 }),
                 new Paragraph({
                     children: [
                         new TextRun({
                             text: "De antemano la Escuela de Ingeniería Informática desea expresarle un especial agradecimiento por su colaboración en la evaluación de este Trabajo de Grado."
                         })
-                    ]
+                    ],
+                    spacing: spacing,
+                    style: "aside"
                 }),
                 new Paragraph({
                     children: [
                         new TextRun({
                             text: "Saludándole cordialmente"
                         })
-                    ]
+                    ],
+                    spacing: spacing,
+                    style: "aside"
                 }),
                 new Paragraph({
                     children: [
                         new TextRun({
                             text: "Atentamente,"
                         })
-                    ]
+                    ],
+                    spacing: spacing,
+                    style: "aside"
                 }),
                 new Paragraph({
                     children: [
                         new TextRun({
                             text: "Luz E. Medina C"
                         })
-                    ]
+                    ],
+                    spacing: spacing,
+                    style: "aside"
                 }),
             ]
         }]

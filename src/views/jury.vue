@@ -5,8 +5,8 @@ import * as api from "../modules/apiTools.js";
 import { FormularioEmpresa } from '../modules/classes/formularioEmpresa.js';
 import { NotificacionDesignacionJurado} from '../modules/classes/NotificacionDesignacionJurado.js'
 import { planilla_evaluacion_final_TEG } from '../modules/generadorDOCX/Planilla_evaluacion_final_TEG.js'
-import { notificacion_jurado } from '../modules/generadorDOCX/notificacion_jurado.js'
 import { notificacion_designacion_j } from '../modules/generadorDOCX/notificacion_designacion_j.js'
+import { notificacion_designacion } from "../modules/generadorDOCX/notificacion_jurado.js";
 
 let data = reactive([]);
 let dataConsejo = reactive([]);
@@ -38,8 +38,9 @@ const designarJurado = async (profesores, id_tg) => {
   notificacion.value.jurado1 = await api.obtenerProfesorByCedula(profesoresDesignados[0]);
   notificacion.value.jurado2 = await api.obtenerProfesorByCedula(profesoresDesignados[1]);
   //console.log(notificacion.value)
-  notificacion_designacion_j(notificacion.value);
-  //notificacion_jurado();
+
+  //notificacion_designacion_j(notificacion.value);
+  notificacion_designacion(notificacion.value)
   /*
   await api.crearJurados(profesoresDesignados,id_tg);
   */
