@@ -38,9 +38,9 @@ const designarJurado = async (profesores, id_tg) => {
   notificacion.value.jurado1 = await api.obtenerProfesorByCedula(profesoresDesignados[0]);
   notificacion.value.jurado2 = await api.obtenerProfesorByCedula(profesoresDesignados[1]);
   //console.log(notificacion.value)
-
+  planilla_evaluacion_final_TEG(notificacion.value);
   //notificacion_designacion_j(notificacion.value);
-  notificacion_designacion(notificacion.value)
+  //notificacion_designacion(notificacion.value)
   /*
   await api.crearJurados(profesoresDesignados,id_tg);
   */

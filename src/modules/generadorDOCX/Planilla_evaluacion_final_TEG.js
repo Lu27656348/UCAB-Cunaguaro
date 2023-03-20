@@ -13,10 +13,276 @@ const { HeightRule,TableCell } = docx;
 const { Footer, LineRuleType } = docx;
 const { Table, PageBreak } = docx;
 const { HeadingLevel,Packer } = docx;
+const { HorizontalPositionAlign,VerticalPositionAlign } = docx;
+const { TextDirection } = docx;
 const arrayPrueba = [
     {nombres: "Luis Carlos"},
 ]
-const generarTablaDeNotas = () => {
+const spacing = {
+    after: 200,
+    line: 255,
+    lineRule: LineRuleType.AUTO,
+};
+
+
+const sin_bordes = {
+    top: {
+        style: BorderStyle.NONE,
+        size: 1,
+        color: "ff0000",
+    },
+    bottom: {
+        style: BorderStyle.NONE,
+        size: 1,
+        color: "ff0000",
+    },
+    left: {
+        style: BorderStyle.NONE,
+        size: 1,
+        color: "ff0000",
+    },
+    right: {
+        style: BorderStyle.NONE,
+        size: 1,
+        color: "ff0000",
+    }
+}
+
+const celdaCuadrito = new TableRow({
+                            children: [
+                                new TableCell({
+                                    children: [
+                                        new Table({
+                                            columnWidths: [300,300],
+                                            rows: [
+                                                new TableRow({
+                                                    children: [
+                                                        new TableCell({
+                                                            width: {
+                                                                size: 300,
+                                                                type: WidthType.DXA,
+                                                            },
+                                                            children: [
+                                                                new Paragraph({
+                                                                    children: [
+                                                                        new TextRun({
+                                                                            text: ""
+                                                                        })
+                                                                    ]
+                                                                })
+                                                            ],
+                                                            verticalAlign: VerticalAlign.CENTER
+                                                        })
+                                                    ],
+                                                    height: {
+                                                        value: 300,
+                                                        rule: HeightRule.EXACT
+                                                    }
+                                                })
+                                            ]
+                                        })
+                                    ],
+                                    verticalAlign: VerticalAlign.CENTER
+                                })
+                            ],
+                            height: {
+                                value: 1200,
+                                rule: HeightRule.EXACT
+                            }
+                        })
+const generarFilaNotaBase20 = () => {
+    const lista = [];
+    let columna = 0;
+    while (columna < 20){
+        let columna_generada = new TableCell({
+                                    children: [
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: (columna + 1).toString()
+                                                })
+                                            ],
+                                            alignment: AlignmentType.CENTER
+                                        }),
+                                    ],
+                                    width: {
+                                        size: 400,
+                                        type: WidthType.DXA
+                                    },
+                                    //textDirection: TextDirection.TOP_TO_BOTTOM_RIGHT_TO_LEFT,
+                                    verticalAlign: VerticalAlign.CENTER
+                                })
+        lista.push(columna_generada)
+        columna++;
+    }
+    const mensaje = new TableCell({
+                            children: [
+                                new Paragraph({
+                                    children: [
+                                        new TextRun({
+                                            text: "Puntos en base 20"
+                                        })
+                                    ],
+                                    alignment: AlignmentType.CENTER
+                                }),
+                            ],
+                            width: {
+                                size: 400,
+                                type: WidthType.DXA
+                            },
+                            //textDirection: TextDirection.TOP_TO_BOTTOM_RIGHT_TO_LEFT,
+                            verticalAlign: VerticalAlign.CENTER
+                        })
+    lista.push(mensaje)
+    let resultado = new TableRow({
+        children: lista,
+        height: {
+            value: 1200,
+            rule: HeightRule.EXACT
+        }
+    });
+    return resultado;
+}
+const generarFilasDeNotas = (ponderacion_inicial, ponderacion_final) => {
+    const lista = [];
+    const columna_inicial = new TableCell({
+                                    children: [
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: "10"
+                                                })
+                                            ],
+                                            alignment: AlignmentType.CENTER
+                                        }),
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: " - "
+                                                })
+                                            ],
+                                            alignment: AlignmentType.CENTER
+                                        }),
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: "22"
+                                                })
+                                            ],
+                                            alignment: AlignmentType.CENTER
+                                        })
+                                    ],
+                                    width: {
+                                        size: 400,
+                                        type: WidthType.DXA
+                                    },
+                                    //textDirection: TextDirection.TOP_TO_BOTTOM_RIGHT_TO_LEFT,
+                                    verticalAlign: VerticalAlign.CENTER
+                                })
+    lista.push(columna_inicial)
+    while (ponderacion_final <= 300){
+        let columna = new TableCell({
+                            children: [
+                                new Paragraph({
+                                    children: [
+                                        new TextRun({
+                                            text: ponderacion_inicial.toString()
+                                        })
+                                    ],
+                                    alignment: AlignmentType.CENTER
+                                }),
+                                new Paragraph({
+                                    children: [
+                                        new TextRun({
+                                            text: " - "
+                                        })
+                                    ],
+                                    alignment: AlignmentType.CENTER
+                                }),
+                                new Paragraph({
+                                    children: [
+                                        new TextRun({
+                                            text: ponderacion_final.toString()
+                                        })
+                                    ],
+                                    alignment: AlignmentType.CENTER
+                                })
+                            ],
+                            //textDirection: TextDirection.TOP_TO_BOTTOM_RIGHT_TO_LEFT,
+                            verticalAlign: VerticalAlign.CENTER,
+                            width: {
+                                size: 400,
+                                type: WidthType.DXA
+                            }
+                        })
+        lista.push(columna);
+        ponderacion_inicial = ponderacion_final + 1;
+        ponderacion_final = ponderacion_inicial + 14;
+    }
+    const columna_final = new TableCell({
+        children: [
+            new Paragraph({
+                children: [
+                    new TextRun({
+                        text: "293"
+                    })
+                ],
+                alignment: AlignmentType.CENTER
+            }),
+            new Paragraph({
+                children: [
+                    new TextRun({
+                        text: " - "
+                    })
+                ],
+                alignment: AlignmentType.CENTER
+            }),
+            new Paragraph({
+                children: [
+                    new TextRun({
+                        text: "300"
+                    })
+                ],
+                alignment: AlignmentType.CENTER
+            }),
+        ],
+        //textDirection: TextDirection.TOP_TO_BOTTOM_RIGHT_TO_LEFT,
+        verticalAlign: VerticalAlign.CENTER,
+        width: {
+            size: 400,
+            type: WidthType.DXA
+        }
+    });
+    const ponderacion = new TableCell({
+        children: [
+            new Paragraph({
+                children: [
+                    new TextRun({
+                        text: "Punto en base a 300"
+                    })
+                ],
+                alignment: AlignmentType.CENTER
+            })
+        ],
+        verticalAlign: VerticalAlign.CENTER,
+        width: {
+            size: 400,
+            type: WidthType.DXA
+        }
+    });
+    lista.push(columna_final);
+    lista.push(ponderacion);
+    let resultado = new TableRow({
+        children: lista,
+        height: {
+            value: 1200,
+            rule: HeightRule.EXACT
+        }
+    });
+    console.log(resultado)
+    return resultado;
+}
+const generarTablaDeNotas = (ponderacion_final) => {
     const tabla = new Table({
                     rows: [
                         new TableRow({
@@ -25,7 +291,7 @@ const generarTablaDeNotas = () => {
                                     children: new Paragraph({
                                         children: [
                                             new TextRun({
-                                                text: ""
+                                                text: "Alumno"
                                             })
                                         ]
                                     })
@@ -35,7 +301,7 @@ const generarTablaDeNotas = () => {
                     ]
     })
 }
-const generarFilaAlumno = (nombre_alumno) => {
+const generarFilaAlumno = (alumno) => {
     const fila = new TableRow({
         children: [
             new TableCell({
@@ -43,7 +309,7 @@ const generarFilaAlumno = (nombre_alumno) => {
                     new Paragraph({
                         children: [
                             new TextRun({
-                                text: nombre_alumno
+                                text: alumno.apellidos + ', ' + alumno.nombres
                             })
                         ]
                     })
@@ -98,96 +364,120 @@ const generarFilaAlumno = (nombre_alumno) => {
 
     return fila
 }
-const generarTablaPonderacion = () => {
+const generarTablaPonderacion = (alumno) => {
+    if( alumno != undefined && alumno != null){
+        const tabla = new Table({
+            width: {
+                size: 10000,
+                type: WidthType.DXA,
+            },
+            rows: [
+                new TableRow({
+                    children: [
+                        new TableCell({
+                            width: {
+                                size: 1500,
+                                type: WidthType.DXA,
+                            },
+                            children: [
+                                new Paragraph({
+                                    children: [
+                                        new TextRun({
+                                            text: ""
+                                        })
+                                    ]
+                                })
+                            ]
+                        }),
+                        new TableCell({
+                            width: {
+                                size: 1500,
+                                type: WidthType.DXA,
+                            },
+                            children: [
+                                new Paragraph({
+                                    children: [
+                                        new TextRun({
+                                            text: "<<Presidente Jurado>> (TOTAL A+B1)"
+                                        })
+                                    ]
+                                })
+                            ]
+                        }),
+                        new TableCell({
+                            width: {
+                                size: 2500,
+                                type: WidthType.DXA,
+                            },
+                            children: [
+                                new Paragraph({
+                                    children: [
+                                        new TextRun({
+                                            text: "<<Jurado 2>> (TOTAL A+B1)"
+                                        })
+                                    ]
+                                })
+                            ]
+                        }),
+                        new TableCell({
+                            width: {
+                                size: 1500,
+                                type: WidthType.DXA,
+                            },
+                            children: [
+                                new Paragraph({
+                                    children: [
+                                        new TextRun({
+                                            text: "<<Tutor>> (TOTAL A+B+C1)"
+                                        })
+                                    ]
+                                })
+                            ]
+                        }),
+                        new TableCell({
+                            width: {
+                                size: 1500,
+                                type: WidthType.DXA,
+                            },
+                            children: [
+                                new Paragraph({
+                                    children: [
+                                        new TextRun({
+                                            text: "Total sobre 300"
+                                        })
+                                    ]
+                                })
+                            ]
+                        }),
+                    ]
+                }),
+                generarFilaAlumno(alumno)
+            ]
+        })
+        return tabla
+    }
+
     const tabla = new Table({
-        width: {
-            size: 10000,
-            type: WidthType.DXA,
-        },
         rows: [
             new TableRow({
                 children: [
                     new TableCell({
-                        width: {
-                            size: 1500,
-                            type: WidthType.DXA,
-                        },
+                        borders: sin_bordes,
                         children: [
                             new Paragraph({
                                 children: [
                                     new TextRun({
-                                        text: "Alumno 1"
+                                        text: "Hola"
                                     })
                                 ]
                             })
                         ]
-                    }),
-                    new TableCell({
-                        width: {
-                            size: 1500,
-                            type: WidthType.DXA,
-                        },
-                        children: [
-                            new Paragraph({
-                                children: [
-                                    new TextRun({
-                                        text: "<<Presidente Jurado>> (TOTAL A+B1)"
-                                    })
-                                ]
-                            })
-                        ]
-                    }),
-                    new TableCell({
-                        width: {
-                            size: 2500,
-                            type: WidthType.DXA,
-                        },
-                        children: [
-                            new Paragraph({
-                                children: [
-                                    new TextRun({
-                                        text: "<<Jurado 2>> (TOTAL A+B1)"
-                                    })
-                                ]
-                            })
-                        ]
-                    }),
-                    new TableCell({
-                        width: {
-                            size: 1500,
-                            type: WidthType.DXA,
-                        },
-                        children: [
-                            new Paragraph({
-                                children: [
-                                    new TextRun({
-                                        text: "<<Tutor>> (TOTAL A+B+C1)"
-                                    })
-                                ]
-                            })
-                        ]
-                    }),
-                    new TableCell({
-                        width: {
-                            size: 1500,
-                            type: WidthType.DXA,
-                        },
-                        children: [
-                            new Paragraph({
-                                children: [
-                                    new TextRun({
-                                        text: "Total sobre 300"
-                                    })
-                                ]
-                            })
-                        ]
-                    }),
+                    })
                 ]
-            }),
-            generarFilaAlumno("Luis Carlos")
+            })
         ]
     })
-    return tabla
+    
 }
 const generarLinea = () => {
     const linea = new TableRow({
@@ -356,7 +646,8 @@ export const planilla_evaluacion_final_TEG = (notificacion) => {
                 new Paragraph({
                     children: [
                         new TextRun({
-                            text: "Planilla de Evaluación Final de Trabajo Experimental de Grado (TEG)"
+                            text: "Planilla de Evaluación Final de Trabajo Experimental de Grado (TEG)",
+                            bold: true
                         })
                     ],
                     alignment: AlignmentType.CENTER
@@ -375,7 +666,7 @@ export const planilla_evaluacion_final_TEG = (notificacion) => {
                                         new Paragraph({
                                             children: [
                                                 new TextRun({
-                                                    text: "Titulo TIG"
+                                                    text: "Titulo TEG"
                                                 })
                                             ]
                                         })
@@ -390,7 +681,7 @@ export const planilla_evaluacion_final_TEG = (notificacion) => {
                                         new Paragraph({
                                             children: [
                                                 new TextRun({
-                                                    text: "[Inserte el titulo del trabajo de grado aqui]"
+                                                    text: notificacion.tg.titulo
                                                 })
                                             ]
                                         })
@@ -400,8 +691,8 @@ export const planilla_evaluacion_final_TEG = (notificacion) => {
                         })
                     ]
                 }),
-                generarTablaPonderacion(),
-                generarTablaPonderacion(),
+                generarTablaPonderacion(notificacion.alumnos[0]),
+                generarTablaPonderacion(notificacion.alumnos[1]),
                 new Paragraph({
                     children: [
                         new TextRun({
@@ -482,7 +773,25 @@ export const planilla_evaluacion_final_TEG = (notificacion) => {
                     ]
                 }),
                 //Insertar tabla de ponderacion
-
+                new Paragraph({
+                    children: [
+                        new TextRun({
+                            text: ""
+                        })
+                    ],
+                    spacing: {
+                        after: 200,
+                        before: 200
+                    }
+                }),
+                new Table({
+                    columnWidths: [200,400],
+                    rows:[
+                        generarFilasDeNotas(23,37),
+                        generarFilaNotaBase20(),
+                        celdaCuadrito
+                    ]
+                })
             ]
         }]
     });
