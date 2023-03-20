@@ -1,4 +1,3 @@
-@charset "UTF-8";
 * {
   margin: 0;
   padding: 0;
@@ -33,7 +32,6 @@ body {
 .navbar__list {
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
   margin-top: 20px;
   list-style: none;
@@ -71,11 +69,6 @@ body {
 }
 .navbar__list__element:hover {
   transform: scale(1.02);
-}
-.navbar__list__element:hover::before {
-  content: "→";
-  color: #fff;
-  padding-right: 2px;
 }
 
 .login__form {

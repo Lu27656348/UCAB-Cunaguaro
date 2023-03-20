@@ -95,9 +95,6 @@ onMounted(async () => {
         <h2>Visualización del documento de solicitud</h2>
         <form action="" class="committe__container__preview__form"></form>
         <div class="create-state" v-show="planilla.showNotas">
-          <div class="progressbar">
-            <div class="progressbar--content"></div>
-          </div>
           <div class="create-carousel">
             <h2>Visualización del documento de solicitud</h2>
             <div
