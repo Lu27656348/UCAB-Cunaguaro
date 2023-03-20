@@ -47,49 +47,61 @@ const sin_bordes = {
         color: "ff0000",
     }
 }
-
-const celdaCuadrito = new TableRow({
-                            children: [
-                                new TableCell({
-                                    children: [
-                                        new Table({
-                                            columnWidths: [300,300],
-                                            rows: [
-                                                new TableRow({
-                                                    children: [
-                                                        new TableCell({
-                                                            width: {
-                                                                size: 300,
-                                                                type: WidthType.DXA,
-                                                            },
-                                                            children: [
-                                                                new Paragraph({
-                                                                    children: [
-                                                                        new TextRun({
-                                                                            text: ""
-                                                                        })
-                                                                    ]
-                                                                })
-                                                            ],
-                                                            verticalAlign: VerticalAlign.CENTER
-                                                        })
-                                                    ],
-                                                    height: {
-                                                        value: 300,
-                                                        rule: HeightRule.EXACT
-                                                    }
-                                                })
-                                            ]
-                                        })
-                                    ],
-                                    verticalAlign: VerticalAlign.CENTER
-                                })
-                            ],
-                            height: {
-                                value: 1200,
-                                rule: HeightRule.EXACT
-                            }
-                        })
+const linea_superior = {
+    bottom: {
+        style: BorderStyle.NONE,
+        size: 1,
+        color: "ff0000",
+    },
+    left: {
+        style: BorderStyle.NONE,
+        size: 1,
+        color: "ff0000",
+    },
+    right: {
+        style: BorderStyle.NONE,
+        size: 1,
+        color: "ff0000",
+    }
+}
+const celdaCuadrito = new TableCell({
+                                children: [
+                                    new Table({
+                                        indent: {
+                                            size: 100,
+                                            type: WidthType.DXA,
+                                        },
+                                        //columnWidths: [300,300],
+                                        rows: [
+                                            new TableRow({
+                                                children: [
+                                                    new TableCell({
+                                                        width: {
+                                                            size: 150,
+                                                            type: WidthType.DXA,
+                                                        },
+                                                        children: [
+                                                            new Paragraph({
+                                                                children: [
+                                                                    new TextRun({
+                                                                        text: ""
+                                                                    })
+                                                                ]
+                                                            })
+                                                        ],
+                                                        verticalAlign: VerticalAlign.CENTER
+                                                    })
+                                                ],
+                                                height: {
+                                                    value: 150,
+                                                    rule: HeightRule.EXACT
+                                                }
+                                            })
+                                        ]
+                                    })
+                                ],
+                                verticalAlign: VerticalAlign.CENTER
+                            })
 const generarFilaNotaBase20 = () => {
     const lista = [];
     let columna = 0;
@@ -106,7 +118,7 @@ const generarFilaNotaBase20 = () => {
                                         }),
                                     ],
                                     width: {
-                                        size: 400,
+                                        size: 420,
                                         type: WidthType.DXA
                                     },
                                     //textDirection: TextDirection.TOP_TO_BOTTOM_RIGHT_TO_LEFT,
@@ -123,11 +135,12 @@ const generarFilaNotaBase20 = () => {
                                             text: "Puntos en base 20"
                                         })
                                     ],
+                                    style: "reducido",
                                     alignment: AlignmentType.CENTER
                                 }),
                             ],
                             width: {
-                                size: 400,
+                                size: 600,
                                 type: WidthType.DXA
                             },
                             //textDirection: TextDirection.TOP_TO_BOTTOM_RIGHT_TO_LEFT,
@@ -137,7 +150,7 @@ const generarFilaNotaBase20 = () => {
     let resultado = new TableRow({
         children: lista,
         height: {
-            value: 1200,
+            value: 800,
             rule: HeightRule.EXACT
         }
     });
@@ -153,6 +166,7 @@ const generarFilasDeNotas = (ponderacion_inicial, ponderacion_final) => {
                                                     text: "10"
                                                 })
                                             ],
+                                            style: "reducido",
                                             alignment: AlignmentType.CENTER
                                         }),
                                         new Paragraph({
@@ -161,6 +175,7 @@ const generarFilasDeNotas = (ponderacion_inicial, ponderacion_final) => {
                                                     text: " - "
                                                 })
                                             ],
+                                            style: "reducido",
                                             alignment: AlignmentType.CENTER
                                         }),
                                         new Paragraph({
@@ -169,11 +184,12 @@ const generarFilasDeNotas = (ponderacion_inicial, ponderacion_final) => {
                                                     text: "22"
                                                 })
                                             ],
+                                            style: "reducido",
                                             alignment: AlignmentType.CENTER
                                         })
                                     ],
                                     width: {
-                                        size: 400,
+                                        size: 420,
                                         type: WidthType.DXA
                                     },
                                     //textDirection: TextDirection.TOP_TO_BOTTOM_RIGHT_TO_LEFT,
@@ -189,6 +205,7 @@ const generarFilasDeNotas = (ponderacion_inicial, ponderacion_final) => {
                                             text: ponderacion_inicial.toString()
                                         })
                                     ],
+                                    style: "reducido",
                                     alignment: AlignmentType.CENTER
                                 }),
                                 new Paragraph({
@@ -197,6 +214,7 @@ const generarFilasDeNotas = (ponderacion_inicial, ponderacion_final) => {
                                             text: " - "
                                         })
                                     ],
+                                    style: "reducido",
                                     alignment: AlignmentType.CENTER
                                 }),
                                 new Paragraph({
@@ -205,13 +223,14 @@ const generarFilasDeNotas = (ponderacion_inicial, ponderacion_final) => {
                                             text: ponderacion_final.toString()
                                         })
                                     ],
+                                    style: "reducido",
                                     alignment: AlignmentType.CENTER
                                 })
                             ],
                             //textDirection: TextDirection.TOP_TO_BOTTOM_RIGHT_TO_LEFT,
                             verticalAlign: VerticalAlign.CENTER,
                             width: {
-                                size: 400,
+                                size: 420,
                                 type: WidthType.DXA
                             }
                         })
@@ -227,6 +246,7 @@ const generarFilasDeNotas = (ponderacion_inicial, ponderacion_final) => {
                         text: "293"
                     })
                 ],
+                style: "reducido",
                 alignment: AlignmentType.CENTER
             }),
             new Paragraph({
@@ -235,6 +255,7 @@ const generarFilasDeNotas = (ponderacion_inicial, ponderacion_final) => {
                         text: " - "
                     })
                 ],
+                style: "reducido",
                 alignment: AlignmentType.CENTER
             }),
             new Paragraph({
@@ -243,13 +264,14 @@ const generarFilasDeNotas = (ponderacion_inicial, ponderacion_final) => {
                         text: "300"
                     })
                 ],
+                style: "reducido",
                 alignment: AlignmentType.CENTER
             }),
         ],
         //textDirection: TextDirection.TOP_TO_BOTTOM_RIGHT_TO_LEFT,
         verticalAlign: VerticalAlign.CENTER,
         width: {
-            size: 400,
+            size: 420,
             type: WidthType.DXA
         }
     });
@@ -261,12 +283,13 @@ const generarFilasDeNotas = (ponderacion_inicial, ponderacion_final) => {
                         text: "Punto en base a 300"
                     })
                 ],
+                style: "reducido",
                 alignment: AlignmentType.CENTER
             })
         ],
         verticalAlign: VerticalAlign.CENTER,
         width: {
-            size: 400,
+            size: 600,
             type: WidthType.DXA
         }
     });
@@ -275,31 +298,129 @@ const generarFilasDeNotas = (ponderacion_inicial, ponderacion_final) => {
     let resultado = new TableRow({
         children: lista,
         height: {
-            value: 1200,
+            value: 800,
             rule: HeightRule.EXACT
         }
     });
     console.log(resultado)
     return resultado;
 }
-const generarTablaDeNotas = (ponderacion_final) => {
-    const tabla = new Table({
-                    rows: [
-                        new TableRow({
-                            children: [
-                                new TableCell({
-                                    children: new Paragraph({
+
+const generarFirma = () => {
+    const table = new Table({
+        rows: [
+            new TableRow({
+                children: [
+                    new TableCell({
+                        borders: sin_bordes,
+                        children: [
+                            new Table({
+                                rows: [
+                                    new TableRow({
                                         children: [
-                                            new TextRun({
-                                                text: "Alumno"
+                                            new TableCell({
+                                                borders: linea_superior,
+                                                children: [
+                                                    new Paragraph({
+                                                        children: [
+                                                            new TextRun({
+                                                                text: "Fecha"
+                                                            })
+                                                        ],
+                                                        alignment: AlignmentType.CENTER
+                                                    })
+                                                ],
+                                                verticalAlign: VerticalAlign.CENTER,
+                                                width: {
+                                                    size: 2000,
+                                                    type:  WidthType.DXA
+                                                },
                                             })
                                         ]
                                     })
-                                })
-                            ]
-                        })
-                    ]
+                                ]
+                            })
+                        ]
+                    }),
+                    new TableCell({
+                        borders: sin_bordes,
+                        children: [
+                            new Table({
+                                indent: {
+                                    size: 250,
+                                    type: WidthType.DXA,
+                                },
+                                rows: [
+                                    new TableRow({
+                                        children: [
+                                            new TableCell({
+                                                borders: linea_superior,
+                                                children: [
+                                                    new Paragraph({
+                                                        children: [
+                                                            new TextRun({
+                                                                text: "Nombre presidente del Jurado"
+                                                            })
+                                                        ],
+                                                        alignment: AlignmentType.CENTER
+                                                    })
+                                                ],
+                                                verticalAlign: VerticalAlign.CENTER,
+                                                width: {
+                                                    size: 6000,
+                                                    type:  WidthType.DXA
+                                                },
+                                            })
+                                        ]
+                                    })
+                                ]
+                            })
+                        ]
+                    }),
+                    new TableCell({
+                        borders: sin_bordes,
+                        children: [
+                            new Table({
+                                indent: {
+                                    size: 250,
+                                    type: WidthType.DXA,
+                                },
+                                rows: [
+                                    new TableRow({
+                                        children: [
+                                            new TableCell({
+                                                borders: linea_superior,
+                                                children: [
+                                                    new Paragraph({
+                                                        children: [
+                                                            new TextRun({
+                                                                text: "Firma"
+                                                            })
+                                                        ],
+                                                        alignment: AlignmentType.CENTER
+                                                    })
+                                                ],
+                                                verticalAlign: VerticalAlign.CENTER,
+                                                width: {
+                                                    size: 2000,
+                                                    type:  WidthType.DXA
+                                                },
+                                            })
+                                        ]
+                                    })
+                                ]
+                            })
+                        ]
+                    }),
+                ],
+                height: {
+                    value: 400,
+                    rule: HeightRule.EXACT
+                }
+            })
+        ]
     })
+    return table;
 }
 const generarFilaAlumno = (alumno) => {
     const fila = new TableRow({
@@ -309,7 +430,14 @@ const generarFilaAlumno = (alumno) => {
                     new Paragraph({
                         children: [
                             new TextRun({
-                                text: alumno.apellidos + ', ' + alumno.nombres
+                                text: alumno.apellidos + ', '
+                            })
+                        ]
+                    }),
+                    new Paragraph({
+                        children: [
+                            new TextRun({
+                                text: alumno.nombres
                             })
                         ]
                     })
@@ -367,10 +495,6 @@ const generarFilaAlumno = (alumno) => {
 const generarTablaPonderacion = (alumno) => {
     if( alumno != undefined && alumno != null){
         const tabla = new Table({
-            width: {
-                size: 10000,
-                type: WidthType.DXA,
-            },
             rows: [
                 new TableRow({
                     children: [
@@ -391,62 +515,98 @@ const generarTablaPonderacion = (alumno) => {
                         }),
                         new TableCell({
                             width: {
-                                size: 1500,
+                                size: 2000,
                                 type: WidthType.DXA,
                             },
                             children: [
                                 new Paragraph({
                                     children: [
                                         new TextRun({
-                                            text: "<<Presidente Jurado>> (TOTAL A+B1)"
+                                            text: "<<Presidente Jurado>>"
                                         })
-                                    ]
+                                    ],
+                                    alignment: AlignmentType.CENTER
+                                }),
+                                new Paragraph({
+                                    children: [
+                                        new TextRun({
+                                            text: "(TOTAL A+B1)"
+                                        })
+                                    ],
+                                    alignment: AlignmentType.CENTER
+                                }),
+                            ]
+                        }),
+                        new TableCell({
+                            width: {
+                                size: 2000,
+                                type: WidthType.DXA,
+                            },
+                            children: [
+                                new Paragraph({
+                                    children: [
+                                        new TextRun({
+                                            text: "<<Jurado 2>>"
+                                        })
+                                    ],
+                                    alignment: AlignmentType.CENTER
+                                }),
+                                new Paragraph({
+                                    children: [
+                                        new TextRun({
+                                            text: "(TOTAL A+B1)"
+                                        })
+                                    ],
+                                    alignment: AlignmentType.CENTER
                                 })
                             ]
                         }),
                         new TableCell({
                             width: {
-                                size: 2500,
+                                size: 2000,
                                 type: WidthType.DXA,
                             },
                             children: [
                                 new Paragraph({
                                     children: [
                                         new TextRun({
-                                            text: "<<Jurado 2>> (TOTAL A+B1)"
+                                            text: "<<Tutor>>"
                                         })
-                                    ]
-                                })
+                                    ],
+                                    alignment: AlignmentType.CENTER
+                                }),
+                                new Paragraph({
+                                    children: [
+                                        new TextRun({
+                                            text: "(TOTAL A+B+C1)"
+                                        })
+                                    ],
+                                    alignment: AlignmentType.CENTER
+                                }),
                             ]
                         }),
                         new TableCell({
                             width: {
-                                size: 1500,
+                                size: 2000,
                                 type: WidthType.DXA,
                             },
                             children: [
                                 new Paragraph({
                                     children: [
                                         new TextRun({
-                                            text: "<<Tutor>> (TOTAL A+B+C1)"
+                                            text: "Total"
                                         })
-                                    ]
-                                })
-                            ]
-                        }),
-                        new TableCell({
-                            width: {
-                                size: 1500,
-                                type: WidthType.DXA,
-                            },
-                            children: [
+                                    ],
+                                    alignment: AlignmentType.CENTER
+                                }),
                                 new Paragraph({
                                     children: [
                                         new TextRun({
-                                            text: "Total sobre 300"
+                                            text: "sobre 300"
                                         })
-                                    ]
-                                })
+                                    ],
+                                    alignment: AlignmentType.CENTER
+                                }),
                             ]
                         }),
                     ]
@@ -480,9 +640,22 @@ const generarTablaPonderacion = (alumno) => {
     
 }
 const generarLinea = () => {
+    const linea_sin_margenes = {
+        left: {
+            style: BorderStyle.NONE,
+            size: 1,
+            color: "ff0000",
+        },
+        right: {
+            style: BorderStyle.NONE,
+            size: 1,
+            color: "ff0000",
+        }
+    }
     const linea = new TableRow({
         children: [
             new TableCell({
+                borders: linea_sin_margenes,
                 children: [
                     new Paragraph({
                         children: [
@@ -494,6 +667,19 @@ const generarLinea = () => {
                 ]
             }),
             new TableCell({
+                borders: linea_sin_margenes,
+                children: [
+                    new Paragraph({
+                        children: [
+                            new TextRun({
+                                text: ""
+                            })
+                        ]
+                    })
+                ]
+            }),
+            new TableCell({
+                borders: linea_sin_margenes,
                 children: [
                     new Paragraph({
                         children: [
@@ -507,6 +693,91 @@ const generarLinea = () => {
         ]
     })
     return linea;
+}
+
+const generarFilaNombresAlumno = (alumno) => {
+    let fila = '';
+    if( alumno != undefined && alumno != null){
+        console.log(alumno)
+        fila = new TableRow({
+            height: {
+                value: 600,
+                rule: HeightRule.EXACT
+            },
+            children: [
+                new TableCell({
+                    width: {
+                        size: 2700,
+                        type: WidthType.DXA
+                    },
+                    borders: {
+                        right: {
+                            style: BorderStyle.NONE,
+                            size: 1,
+                            color: "ff0000",
+                        }
+                    },
+                    children: [
+                        new Paragraph({
+                            children: [
+                                new TextRun({
+                                    text: "Alumno: "
+                                })
+                            ],
+                            alignment: AlignmentType.CENTER
+                        }),
+        
+                    ],
+                    verticalAlign: VerticalAlign.CENTER
+                }),
+                new TableCell({
+                    width: {
+                        size: 6300,
+                        type: WidthType.DXA
+                    },
+                    borders: {
+                        left: {
+                            style: BorderStyle.NONE,
+                            size: 1,
+                            color: "ff0000",
+                        }
+                    },
+                    children: [
+                        new Paragraph({
+                            children: [
+                                new TextRun({
+                                    text: alumno.apellidos + ', ' + alumno.nombres
+                                })
+                            ],
+                            indent: {
+                                firstLine: 400
+                            },
+                            alignment: AlignmentType.LEFT
+                        })
+                    ],
+                    verticalAlign: VerticalAlign.CENTER
+                }),
+            ]
+        })
+        return fila;
+    }
+    fila = new TableRow({
+                    children: [
+                        new TableCell({
+                            borders: sin_bordes,
+                            children: [
+                                new Paragraph({
+                                    children: [
+                                        new TextRun({
+                                            text: ""
+                                        })
+                                    ]
+                                })
+                            ]
+                        })
+                    ]
+                })
+    return fila;
 }
 export const planilla_evaluacion_final_TEG = (notificacion) => {
     console.log(notificacion)
@@ -532,12 +803,40 @@ export const planilla_evaluacion_final_TEG = (notificacion) => {
             },
             paragraphStyles: [
                 {
+                    id: "titulo",
+                    name: "Aside",
+                    basedOn: "Normal",
+                    next: "Normal",
+                    run: {
+                        size: 24,
+                    },
+                    paragraph: {
+                        spacing: {
+                            line: 276,
+                        },
+                    },
+                },
+                {
                     id: "aside",
                     name: "Aside",
                     basedOn: "Normal",
                     next: "Normal",
                     run: {
-                        size: 20,
+                        size: 22,
+                    },
+                    paragraph: {
+                        spacing: {
+                            line: 276,
+                        },
+                    },
+                },
+                {
+                    id: "reducido",
+                    name: "Reducido",
+                    basedOn: "Normal",
+                    next: "Normal",
+                    run: {
+                        size: 15,
                     },
                     paragraph: {
                         spacing: {
@@ -644,52 +943,79 @@ export const planilla_evaluacion_final_TEG = (notificacion) => {
             },
             children: [
                 new Paragraph({
+                    style: "titulo",
                     children: [
                         new TextRun({
                             text: "Planilla de Evaluación Final de Trabajo Experimental de Grado (TEG)",
                             bold: true
                         })
                     ],
+                    spacing: {
+                        after: 200
+                    },
                     alignment: AlignmentType.CENTER
                 }),
                 new Table({
-                    columnWidths: [3000, 7000],
                     rows: [
                         new TableRow({
                             children: [
                                 new TableCell({
                                     width: {
-                                        size: 3000,
+                                        size: 2000,
                                         type: WidthType.DXA
                                     },
                                     children: [
                                         new Paragraph({
                                             children: [
                                                 new TextRun({
-                                                    text: "Titulo TEG"
+                                                    text: "Titulo TEG",
+                                                    bold: true
                                                 })
-                                            ]
+                                            ],
+                                            indent: {
+                                                firstLine: 150
+                                            },
                                         })
                                     ]
                                 }),
                                 new TableCell({
                                     width: {
-                                        size: 7000,
+                                        size: 8000,
                                         type: WidthType.DXA
                                     },
                                     children: [
                                         new Paragraph({
                                             children: [
                                                 new TextRun({
-                                                    text: notificacion.tg.titulo
+                                                    text: notificacion.tg.titulo,
+                                                    bold: true
                                                 })
-                                            ]
+                                            ],
+                                            indent: {
+                                                firstLine: 400
+                                            },
                                         })
                                     ]
                                 }),
-                            ]
+                            ],
+                            //Height
+                            height: {
+                                value: 400,
+                                rule: HeightRule.AUTO
+                            }
                         })
                     ]
+                }),
+                new Paragraph({
+                    children: [
+                        new TextRun({
+                            text: ""
+                        })
+                    ],
+                    spacing: {
+                        after: 100,
+                        before: 100
+                    }
                 }),
                 generarTablaPonderacion(notificacion.alumnos[0]),
                 generarTablaPonderacion(notificacion.alumnos[1]),
@@ -698,23 +1024,76 @@ export const planilla_evaluacion_final_TEG = (notificacion) => {
                         new TextRun({
                             text: "Nota Definitiva (base 20 según tabla anexa)"
                         })
-                    ]
+                    ],
+                    spacing: {
+                        after: 300,
+                        before: 100
+                    }
                 }),
                 /*Inserte la linea de alumnos aqui */
+                new Table({
+                    rows: [
+                        generarFilaNombresAlumno(notificacion.alumnos[0]),
+                        generarFilaNombresAlumno(notificacion.alumnos[1]),
+                    ]
+                }),
+                new Paragraph({
+                    children: [
+                        new TextRun({
+                            text: ""
+                        })
+                    ],
+                    spacing: {
+                        after: 300,
+                        before: 100
+                    }
+                }),
                 new Table({
                     rows: [
                         new TableRow({
                             children: [
                                 new TableCell({
+                                    borders: {
+                                        left: {
+                                            style: BorderStyle.NONE,
+                                            size: 1,
+                                            color: "ff0000",
+                                        },
+                                        top: {
+                                            style: BorderStyle.NONE,
+                                            size: 1,
+                                            color: "ff0000",   
+                                        }
+                                    },
                                     children: [
                                         new Paragraph({
                                             children: [
                                                 new TextRun({
                                                     text: "Mención Honorífica Justificación:"
                                                 })
+                                            ],
+                                            alignment: AlignmentType.CENTER
+                                        })
+                                    ],
+                                    width: {
+                                        size: 3500,
+                                        type: WidthType.DXA
+                                    }
+                                }),
+                                new TableCell({
+                                    children: [
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: ""
+                                                })
                                             ]
                                         })
-                                    ]
+                                    ],
+                                    width: {
+                                        size: 2000,
+                                        type: WidthType.DXA
+                                    }
                                 }),
                                 new TableCell({
                                     children: [
@@ -723,9 +1102,26 @@ export const planilla_evaluacion_final_TEG = (notificacion) => {
                                                 new TextRun({
                                                     text: "Nota 19 ó 20 y acuerdo unánime del jurado"
                                                 })
-                                            ]
+                                            ],
+                                            alignment: AlignmentType.CENTER
                                         })
-                                    ]
+                                    ],
+                                    borders: {
+                                        right: {
+                                            style: BorderStyle.NONE,
+                                            size: 1,
+                                            color: "ff0000",
+                                        },
+                                        top: {
+                                            style: BorderStyle.NONE,
+                                            size: 1,
+                                            color: "ff0000",   
+                                        }
+                                    },
+                                    width: {
+                                        size: 3500,
+                                        type: WidthType.DXA
+                                    }
                                 }),
                             ]
                         }),
@@ -737,20 +1133,63 @@ export const planilla_evaluacion_final_TEG = (notificacion) => {
 
                     ]
                 }),
+                new Paragraph({
+                    children: [
+                        new TextRun({
+                            text: " "
+                        })
+                    ],
+                    spacing: {
+                        after: 200,
+                        before: 200
+                    }
+                }),
                 new Table({
                     rows: [
                         new TableRow({
                             children: [
                                 new TableCell({
+                                    borders: {
+                                        left: {
+                                            style: BorderStyle.NONE,
+                                            size: 1,
+                                            color: "ff0000",
+                                        },
+                                        top: {
+                                            style: BorderStyle.NONE,
+                                            size: 1,
+                                            color: "ff0000",   
+                                        }
+                                    },
                                     children: [
                                         new Paragraph({
                                             children: [
                                                 new TextRun({
                                                     text: "Mención Publicación Justificación:"
                                                 })
+                                            ],
+                                            alignment: AlignmentType.CENTER
+                                        })
+                                    ],
+                                    width: {
+                                        size: 3500,
+                                        type: WidthType.DXA
+                                    }
+                                }),
+                                new TableCell({
+                                    children: [
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: ""
+                                                })
                                             ]
                                         })
-                                    ]
+                                    ],
+                                    width: {
+                                        size: 2000,
+                                        type: WidthType.DXA
+                                    }
                                 }),
                                 new TableCell({
                                     children: [
@@ -759,9 +1198,26 @@ export const planilla_evaluacion_final_TEG = (notificacion) => {
                                                 new TextRun({
                                                     text: "Nota 20 y acuerdo unánime del jurado"
                                                 })
-                                            ]
+                                            ],
+                                            alignment: AlignmentType.CENTER
                                         })
-                                    ]
+                                    ],
+                                    borders: {
+                                        right: {
+                                            style: BorderStyle.NONE,
+                                            size: 1,
+                                            color: "ff0000",
+                                        },
+                                        top: {
+                                            style: BorderStyle.NONE,
+                                            size: 1,
+                                            color: "ff0000",   
+                                        }
+                                    },
+                                    width: {
+                                        size: 3500,
+                                        type: WidthType.DXA
+                                    }
                                 }),
                             ]
                         }),
@@ -770,6 +1226,7 @@ export const planilla_evaluacion_final_TEG = (notificacion) => {
                         generarLinea(),
                         generarLinea(),
                         //Espacio
+
                     ]
                 }),
                 //Insertar tabla de ponderacion
@@ -789,9 +1246,60 @@ export const planilla_evaluacion_final_TEG = (notificacion) => {
                     rows:[
                         generarFilasDeNotas(23,37),
                         generarFilaNotaBase20(),
-                        celdaCuadrito
+                        new TableRow({
+                            children: [
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                new TableCell({
+                                    children: [
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: ""
+                                                })
+                                            ]
+                                        })
+                                    ]
+                                })
+                            ],
+                            height: {
+                                value: 300,
+                                rule: HeightRule.EXACT
+                            }
+                        })
+
                     ]
-                })
+                }),
+                new Paragraph({
+                    children: [
+                        new TextRun({
+                            text: ""
+                        })
+                    ],
+                    spacing: {
+                        after: 600,
+                        before: 200
+                    }
+                }),
+                generarFirma()
             ]
         }]
     });
