@@ -71,28 +71,32 @@ onMounted(async () => {
 
 <template>
   <div class="request">
-    <!-- Colocar un nuevo contenedor para colocar el agregado de solicitudes en el la parte de la lista -->
-    <h1>Solicitudes de Propuestas de trabajo de grado</h1>
-    <div class="container request__container">
-      <!-- Colocar un nuevo contenedor para el filtrado -->
-
-      <div class="request__container__display">
-        <div class="request__container__display__controllers">
-          <button>
-            <img src="../assets/imgs/search-circle-outline.svg" />Buscar
-            Solicitud
+    <div class="request__container__display__controllers">
+          <button class="succes">
+            <ion-icon name="person-circle-outline"></ion-icon>Buscar Estudiante
+          </button>
+          <button class="succes">
+            <ion-icon name="bulb-outline"></ion-icon>Buscar Propuesta
+          </button>
+          <button class="succes">
+            <ion-icon name="cog-outline"></ion-icon>Buscar Modalidad
           </button>
           <button @click="actionShowPlanillaCrear()">
             <img src="../assets/imgs/add-circle-outline.svg" alt="" />Crear
             Planilla
           </button>
         </div>
+    <div class="container request__container">
+      <!-- Colocar un nuevo contenedor para el filtrado -->
+      <div class="request__container__display">
+        
 
         <div class="request__container__display__list">
           <Record
             class="request__container__display__list__record"
             v-for="e in data.value"
             :key="e.id_tg"
+            :id_tg="e.id_tg"
             :titulo="e.titulo"
             :modalidad="e.modalidad"
             :estatus="e.estatus"
@@ -127,6 +131,7 @@ onMounted(async () => {
               Actualizar planilla
             </button>
             <button
+            class="cancel"
               @click="eliminarPlanilla(planilla.id_tg)"
             >
               Eliminar planilla

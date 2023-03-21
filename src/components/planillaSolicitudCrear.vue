@@ -163,15 +163,6 @@ onMounted( async ()=>{
               v-model="crearSolicitudForm.trabajoDeGrado.titulo"
               class="request__container__preview__form__inputs--titulo-tg"
               placeholder="Tutilo de Propuesta TG"
-              style="
-                resize: none;
-                padding: 10px;
-                width: 80%;
-                height: 70px;
-                line-height: 1.5;
-                border-radius: 5px;
-                border: 1px solid #ccc;
-                box-shadow: 1px 1px 1px #999;"
             ></textarea>
             <p for="">Modalidad</p>
             <select

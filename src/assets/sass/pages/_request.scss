@@ -1,5 +1,73 @@
 @use '../abstracts/variables';
 
+button {
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  appearance: none;
+  background-color: #178a9e;
+
+  margin: variables.$px-mrg-btn;
+  padding: variables.$px-pdd-btn + 2px;
+
+  border-radius: 10px;
+  border: solid 2px #8686868f;
+
+  width: 30%;
+  height: variables.$px-h-btn;
+
+  background-color: #dadada;
+
+  transition: 0.2s;
+  &:disabled:hover{
+    cursor: not-allowed;
+  }
+  &:enabled{
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.01);
+      box-shadow: 5px 5px 15px #4e65885d;
+  
+      background-color: #7da0d496;
+      border: #7da0d4 solid 2px;
+  
+      //text-decoration: underline;
+      :active {
+        transform: scale(0.98);
+      }
+    }
+  }
+
+  &.succes {
+    &:hover {
+      background-color: #4deb5a77;
+      border: #44ff53 solid 2px;
+      box-shadow: 0px 0 15px #fff12f91;
+      transform: scale(1.1);
+    }
+
+    &:active {
+      transform: scale(1);
+    }
+  }
+
+  &.cancel {
+    &:hover {
+      background-color: #e62a2a77;
+      border: #fd4a4a solid 2px;
+      box-shadow: 0px 0 15px #ff4c4c91;
+      transform: scale(1.1);
+    }
+
+    &:active {
+      transform: scale(1);
+    }
+  }
+}
+
 .request__container,
 .committe__container{
   display: flex;
@@ -11,45 +79,6 @@
 
   overflow-y: hidden;
   transition: all ease-in 0.2s;
-
-  button {
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-
-    appearance: none;
-    background-color: #178a9e;
-
-    margin: variables.$px-mrg-btn;
-    padding: variables.$px-pdd-btn + 2px;
-
-    border-radius: 10px;
-    border: solid 2px #8686868f;
-
-    width: 30%;
-    height: variables.$px-h-btn;
-
-    background-color: #dadada;
-
-    transition: 0.2s;
-
-    &:hover {
-      cursor: pointer;
-      transform: scale(1.01);
-      box-shadow: 5px 5px 15px #4e65885d;
-
-      background-color: #7da0d496;
-      border: #7da0d4 solid 2px;
-
-      //text-decoration: underline;
-    }
-
-    &:active {
-      transform: scale(0.98);
-    }
-  }
 
   &__display,
   &__display {
@@ -66,12 +95,12 @@
     border-radius: 10px;
 
     &__controllers {
-
+      align-self:baseline;
       display: flex;
       align-items: center;
       justify-content: center;
 
-      width: 100%;
+      width: 50%;
 
       padding: 15px;
 
@@ -79,6 +108,10 @@
         object-fit: contain;
         width: 30px;
         color: #dadada;
+      }
+      ion-icon{
+        width: 30px;
+        height: 25px;
       }
     }
 
@@ -127,7 +160,7 @@
     align-items: center;
     
     height: 100%;
-    width: 70%;
+    width: 100%;
     
     background-color: #dadada;
     h2{
