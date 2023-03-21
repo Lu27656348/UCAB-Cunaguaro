@@ -224,6 +224,15 @@ body {
 .create-state .create-carousel .external-profesional {
   width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.create-state .create-carousel .students .request__container__preview__form,
+.create-state .create-carousel .tutor .request__container__preview__form,
+.create-state .create-carousel .company .request__container__preview__form,
+.create-state .create-carousel .external-profesional .request__container__preview__form {
+  width: 90%;
 }
 .create-state .create-carousel .students .request__container__preview__form__inputs--titulo-tg,
 .create-state .create-carousel .tutor .request__container__preview__form__inputs--titulo-tg,
