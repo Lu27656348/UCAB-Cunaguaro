@@ -31,7 +31,7 @@ function actionShowPlanillaUpDe() {
 
 const clickenComponente = async (id) => {
   actionShowPlanillaUpDe();
-  const respuesta = await api.obtenerTGById(id)
+  const respuesta = await api.obtenerTGById(id);
   console.log("clickenComponente()");
   console.log("planilla");
   planilla.value.id_tg = respuesta.id_tg;
@@ -43,15 +43,15 @@ const clickenComponente = async (id) => {
   console.log(planilla.value);
 };
 
-async function actualizarPlanilla(){
+async function actualizarPlanilla() {
   await api.actualizarPlanilla(planilla.value);
-  data.value = await api.obtenerPropuestas('PC');
+  data.value = await api.obtenerPropuestas("PC");
 }
 
-async function eliminarPlanilla(){
-  console.log(planilla.value)
+async function eliminarPlanilla() {
+  console.log(planilla.value);
   await api.eliminarPlanilla(planilla.value.id_tg);
-  data.value = await api.obtenerPropuestas('PC');
+  data.value = await api.obtenerPropuestas("PC");
 }
 /*
 actualizarLista.value = computed( async () =>{
@@ -62,7 +62,7 @@ actualizarLista.value = computed( async () =>{
 });
 */
 onMounted(async () => {
-  data.value = await api.obtenerPropuestas('PC');
+  data.value = await api.obtenerPropuestas("PC");
   console.log(data.value);
 });
 
@@ -72,25 +72,22 @@ onMounted(async () => {
 <template>
   <div class="request">
     <div class="request__container__display__controllers">
-          <button class="succes">
-            <ion-icon name="person-circle-outline"></ion-icon>Buscar Estudiante
-          </button>
-          <button class="succes">
-            <ion-icon name="bulb-outline"></ion-icon>Buscar Propuesta
-          </button>
-          <button class="succes">
-            <ion-icon name="cog-outline"></ion-icon>Buscar Modalidad
-          </button>
-          <button @click="actionShowPlanillaCrear()">
-            <img src="../assets/imgs/add-circle-outline.svg" alt="" />Crear
-            Planilla
-          </button>
-        </div>
+      <button class="succes">
+        <ion-icon name="person-circle-outline"></ion-icon>Buscar Estudiante
+      </button>
+      <button class="succes">
+        <ion-icon name="bulb-outline"></ion-icon>Buscar Propuesta
+      </button>
+      <button class="succes">
+        <ion-icon name="cog-outline"></ion-icon>Buscar Modalidad
+      </button>
+      <button @click="actionShowPlanillaCrear()">
+        <img src="../assets/imgs/add-circle-outline.svg" alt="" />Crear Planilla
+      </button>
+    </div>
     <div class="container request__container">
       <!-- Colocar un nuevo contenedor para el filtrado -->
       <div class="request__container__display">
-        
-
         <div class="request__container__display__list">
           <Record
             class="request__container__display__list__record"
@@ -114,9 +111,13 @@ onMounted(async () => {
         >
           <div class="request__container__preview__form__inputs">
             <p>Codigo del trabajo de Grado</p>
-            <input type="text" disabled style="user-select: none;" v-model="planilla.id_tg">
-            <p for="">Titulo del Trabajo</p>
-            <input type="text" v-model="planilla.titulo" />
+            <textarea
+              disabled
+              maxlength="200"
+              v-model="planilla.titulo"
+              class="request__container__preview__form__inputs--titulo-tg"
+              placeholder="Tutilo de Propuesta TG"
+            ></textarea>
             <p for="">Modalidad</p>
             <select name="modalidad" id="">
               <option value="E">Experimental</option>
@@ -124,22 +125,19 @@ onMounted(async () => {
             </select>
           </div>
           <div class="actions">
-            <button
-              type="submit"
-              @click=" actualizarPlanilla(planilla.id_tg)"
-            >
+            <button type="submit" @click="actualizarPlanilla(planilla.id_tg)">
               Actualizar planilla
             </button>
-            <button
-            class="cancel"
-              @click="eliminarPlanilla(planilla.id_tg)"
-            >
+            <button class="cancel" @click="eliminarPlanilla(planilla.id_tg)">
               Eliminar planilla
             </button>
           </div>
         </form>
 
-        <crearSolicitud :showPlanillaCreate="showPlanillaCreate" @actualizarData="()=> actualizarLista = true" />
+        <crearSolicitud
+          :showPlanillaCreate="showPlanillaCreate"
+          @actualizarData="() => (actualizarLista = true)"
+        />
       </div>
     </div>
   </div>
