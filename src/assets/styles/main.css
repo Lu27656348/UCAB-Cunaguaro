@@ -480,6 +480,7 @@ button.cancel:active {
   align-items: center;
   justify-content: center;
   width: 90%;
+  height: 100%;
 }
 .request__container__preview__form__inputs,
 .committe__container__preview__form__inputs {

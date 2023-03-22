@@ -35,6 +35,7 @@ const clickenComponente = async (id) => {
   console.log("clickenComponente()");
   console.log("planilla");
   planilla.value.id_tg = respuesta.id_tg;
+  planilla.value.id_tg_formateado = respuesta.id_tg_formateado;
   planilla.value.titulo = respuesta.titulo;
   planilla.value.modalidad = respuesta.modalidad;
   planilla.value.estatus = respuesta.estatus;
@@ -93,7 +94,7 @@ onMounted(async () => {
             class="request__container__display__list__record"
             v-for="e in data.value"
             :key="e.id_tg"
-            :id_tg="e.id_tg"
+            :id_tg="e.id_tg_formateado"
             :titulo="e.titulo"
             :modalidad="e.modalidad"
             :estatus="e.estatus"
@@ -110,7 +111,9 @@ onMounted(async () => {
           v-show="showPlanillaUpDe"
         >
           <div class="request__container__preview__form__inputs">
-            <p>Codigo del trabajo de Grado</p>
+            <p>Codigo de Trabajo de Grado</p>
+            <input disabled type="text" v-model="planilla.id_tg_formateado" name="" id="">
+            <p>Titulo de Trabajo de Grado</p>
             <textarea
               disabled
               maxlength="200"

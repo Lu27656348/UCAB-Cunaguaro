@@ -1,7 +1,7 @@
 <script setup>
 
     const props = defineProps({
-        id_tg: Number,
+        id_tg: String,
         titulo: String,
         modalidad: String,
         fechaenvio: String,

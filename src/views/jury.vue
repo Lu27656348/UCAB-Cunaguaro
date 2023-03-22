@@ -76,10 +76,8 @@ onMounted(async () => {
         </div>
       </div>
       <div class="committe__container__preview">
-        <div class="create-state">
-          <div class="create-carousel">
             <h2>Visualización del documento de solicitud</h2>
-            <div
+            <form
               class="request__container__preview__form up-de"
             >
               <p>{{ planilla.id_tg }}</p>
@@ -125,11 +123,9 @@ onMounted(async () => {
                   Designar Jurado
                 </button>
               </div>
-            </div>
+            </form>
             <!-- aqui van los formularios necesarios para el proceso de crear una asignacion de revisor a la propuesta -->
           </div>
         </div>
       </div>
-    </div>
-  </div>
 </template>
