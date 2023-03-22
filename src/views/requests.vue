@@ -5,6 +5,7 @@ import { ref, reactive, onMounted, computed } from "vue";
 import * as api from "../modules/apiTools.js";
 
 let data = reactive([]);
+let dataFiltrada = reactive([]);
 
 // Objeto para guardar los datos de la planilla que se esta leyendo
 let planilla = ref({
@@ -16,9 +17,12 @@ let planilla = ref({
   id_tutor_empresarial: "",
 });
 
+let btnFiltrado = ref(false);
+
 const showPlanillaUpDe = ref(false);
 const showPlanillaCreate = ref(false);
 const actualizarLista = ref(false);
+const tituloParaFiltrar = ref(null);
 
 function actionShowPlanillaCrear() {
   showPlanillaUpDe.value = false;
@@ -27,6 +31,15 @@ function actionShowPlanillaCrear() {
 function actionShowPlanillaUpDe() {
   showPlanillaUpDe.value = true;
   showPlanillaCreate.value = false;
+}
+
+function showFiltrado() {
+  btnFiltrado.value = !btnFiltrado.value;
+}
+
+function filtrarLista(){
+  dataFiltrada.value = data.value.filter((t) => t.titulo.includes(tituloParaFiltrar.value));
+  console.log(dataFiltrada.value);
 }
 
 const clickenComponente = async (id) => {
@@ -54,17 +67,11 @@ async function eliminarPlanilla() {
   await api.eliminarPlanilla(planilla.value.id_tg);
   data.value = await api.obtenerPropuestas("PC");
 }
-/*
-actualizarLista.value = computed( async () =>{
-  let falso = actualizarLista.value
-  console.log(actualizarLista.value);
-  await actualizarPlanilla();
-  return actualizarLista.value = false; 
-});
-*/
 onMounted(async () => {
   data.value = await api.obtenerPropuestas("PC");
   console.log(data.value);
+  dataFiltrada.value = data.value;
+  console.log(dataFiltrada.value);
 });
 
 //------------------------------------------------------>
@@ -76,7 +83,7 @@ onMounted(async () => {
       <button class="succes">
         <ion-icon name="person-circle-outline"></ion-icon>Buscar Estudiante
       </button>
-      <button class="succes">
+      <button @click="showFiltrado()" class="succes">
         <ion-icon name="bulb-outline"></ion-icon>Buscar Propuesta
       </button>
       <button class="succes">
@@ -92,7 +99,7 @@ onMounted(async () => {
         <div class="request__container__display__list">
           <Record
             class="request__container__display__list__record"
-            v-for="e in data.value"
+            v-for="e in dataFiltrada.value"
             :key="e.id_tg"
             :id_tg="e.id_tg_formateado"
             :titulo="e.titulo"
@@ -112,7 +119,13 @@ onMounted(async () => {
         >
           <div class="request__container__preview__form__inputs">
             <p>Codigo de Trabajo de Grado</p>
-            <input disabled type="text" v-model="planilla.id_tg_formateado" name="" id="">
+            <input
+              disabled
+              type="text"
+              v-model="planilla.id_tg_formateado"
+              name=""
+              id=""
+            />
             <p>Titulo de Trabajo de Grado</p>
             <textarea
               disabled
@@ -142,6 +155,21 @@ onMounted(async () => {
           @actualizarData="() => (actualizarLista = true)"
         />
       </div>
+    </div>
+    <div
+      class="filter-form"
+      v-if="btnFiltrado"
+      style="
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        background-color: aqua;
+        padding: 15px;
+        "
+    >
+      <p>Digite el Titulo de Trabajo de Grado</p>
+      <input type="text" v-model="tituloParaFiltrar" placeholder="Titulo de Trabajo de Grado">
+      <button @click="filtrarLista()">Buscar propuesta</button>
     </div>
   </div>
 </template>
