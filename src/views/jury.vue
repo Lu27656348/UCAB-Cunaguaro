@@ -11,7 +11,7 @@ import { notificacion_designacion } from "../modules/generadorDOCX/notificacion_
 
 import { planilla_evaluacion_trabajo_escrito_TEG } from "../modules/generadorDOCX/planilla_evaluacion_trabajo_escrito_TEG.js";
 import { planilla_evaluacion_presentacion_oral_TEG } from "../modules/generadorDOCX/planilla_evaluacion_presentacion_oral.js";
-
+import { planilla_evaluacion_TIG_Jurado } from "../modules/generadorDOCX/planilla_evaluacion_TIG_Jurado.js";
 let data = reactive([]);
 let dataConsejo = reactive([]);
 let dataEmpresas = reactive([]);
@@ -42,7 +42,8 @@ const designarJurado = async (profesores, id_tg) => {
   notificacion.value.jurado1 = await api.obtenerProfesorByCedula(profesoresDesignados[0]);
   notificacion.value.jurado2 = await api.obtenerProfesorByCedula(profesoresDesignados[1]);
 
-  planilla_evaluacion_presentacion_oral_TEG(notificacion.value)
+  planilla_evaluacion_TIG_Jurado(notificacion.value);
+  //planilla_evaluacion_presentacion_oral_TEG(notificacion.value)
   //console.log(notificacion.value)
   //planilla_evaluacion_final_TEG(notificacion.value);
   //planilla_evaluacion_final_TIG(notificacion.value);
