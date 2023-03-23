@@ -187,6 +187,24 @@ body {
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
+  overflow-y: auto;
+}
+.create-state::-webkit-scrollbar {
+  appearance: none;
+}
+.create-state::-webkit-scrollbar:vertical {
+  width: 10px;
+}
+.create-state::-webkit-scrollbar:horizontal {
+  height: 10px;
+}
+.create-state::-webkit-scrollbar-thumb {
+  background-color: #797979;
+  border-radius: 20px;
+  border: 2px solid #f1f2f3;
+}
+.create-state::-webkit-scrollbar-track {
+  border-radius: 10px;
 }
 .create-state .progressbar {
   margin: 10px 0 10px;

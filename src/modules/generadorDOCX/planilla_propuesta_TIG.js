@@ -147,7 +147,7 @@ const generarDatosAlumno = ( object ) => {
                         },
                         children: [
                             new TextRun({
-                                text: pt.nombre +", C.I.N. " + pt.cedula,
+                                text: pt.apellidos + ', ' + pt.nombres +", C.I.N. " + pt.cedula,
                                 font: "Times New Roman",
                             })
                         ],
@@ -288,7 +288,7 @@ const generarNombresAlumno = ( object ) => {
                                         style: "aside",
                                         children: [
                                             new TextRun({
-                                                text: pt.nombre,
+                                                text: pt.apellidos + ', ' + pt.nombres,
                                             })
                                         ],
                                         alignment: AlignmentType.LEFT
@@ -338,7 +338,7 @@ const generarNombresAlumno = ( object ) => {
 const generarFilaAlumno = (planilla_propuesta_TIG) => {
     const filas = [];
     filas.push(encabezadoTablaAlumno);
-    planilla_propuesta_TIG.alumno.forEach( (element) => {
+    planilla_propuesta_TIG.alumnos.forEach( (element) => {
         if(element !== undefined && !(Object.keys(element).length === 0)){
             const fila = new TableRow({
                 height: {
@@ -356,7 +356,7 @@ const generarFilaAlumno = (planilla_propuesta_TIG) => {
                                 style: "aside",
                                 children: [
                                     new TextRun({
-                                        text: element.nombre
+                                        text: element.apellidos + ', ' + element.nombres
                                     }),
                                 ],
                                 alignment: AlignmentType.CENTER
@@ -559,7 +559,7 @@ const generarTablaDatosAlumno = (object) => {
                             children: [
                                 new Paragraph({
                                     style: "aside",
-                                    text: object.nombre,
+                                    text: object.apellidos + ', ' +object.nombres,
                                     alignment: AlignmentType.LEFT
                                 })
                             ],
@@ -897,7 +897,7 @@ export const generarPlanillaPropuestaTIG = (planilla_propuesta_TIG) => {
                     style: "aside",
                     children: [
                         new TextRun({
-                            text: 'Ciudad Guayanna, ' + planilla_propuesta_TIG.fecha_envio,
+                            text: 'Ciudad Guayana, ' + planilla_propuesta_TIG.fecha_envio.toLocaleDateString(),
                             font: "Times New Roman",
                         })
                     ],
@@ -982,7 +982,7 @@ export const generarPlanillaPropuestaTIG = (planilla_propuesta_TIG) => {
                     style: "aside",
                     children: [
                         new TextRun({
-                            text: "Por medio de la presente hago constar que estoy dispuesto a supervisar, en calidad de Tutor Académico el Trabajo Experimental de Grado (TIG) titulado: " + '"'+planilla_propuesta_TIG.titulo+'", que será desarrollado por el (los) alumno(s):',
+                            text: "Por medio de la presente hago constar que estoy dispuesto a supervisar, en calidad de Tutor Empresarial el Trabajo Experimental de Grado (TIG) titulado: " + '"'+planilla_propuesta_TIG.titulo+'", que será desarrollado por el (los) alumno(s):',
                             font: "Times New Roman",
                         })
                     ],
@@ -997,8 +997,8 @@ export const generarPlanillaPropuestaTIG = (planilla_propuesta_TIG) => {
                     }
                 }),
                 //Aqui se imprimen los los alumnos y sus datos
-                generarDatosAlumno(planilla_propuesta_TIG.alumno[0]),
-                generarDatosAlumno(planilla_propuesta_TIG.alumno[1]),
+                generarDatosAlumno(planilla_propuesta_TIG.alumnos[0]),
+                generarDatosAlumno(planilla_propuesta_TIG.alumnos[1]),
                 new Paragraph({
                     style: "aside",
                     children: [
@@ -1028,7 +1028,7 @@ export const generarPlanillaPropuestaTIG = (planilla_propuesta_TIG) => {
                         lineRule: LineRuleType.AUTO,
                     }
                 }),
-                //INSERTAMOS TABLA DE DATOS DE TUTOR ACADEMICO AQUI
+                //INSERTAMOS TABLA DE DATOS DE TUTOR EMPRESARIAL AQUI
                 new Table({
                     columnWidths: [3000, 4500],
                     rows: [
@@ -1074,7 +1074,7 @@ export const generarPlanillaPropuestaTIG = (planilla_propuesta_TIG) => {
                                             style: "aside",
                                             children: [
                                                 new TextRun({
-                                                    text: "       Tutor Academico",
+                                                    text: "       Tutor Empresarial",
                                                     bold: true,
                                                 })
                                             ],
@@ -1126,26 +1126,9 @@ export const generarPlanillaPropuestaTIG = (planilla_propuesta_TIG) => {
                                     children: [
                                         new Paragraph({
                                             style: "aside",
-                                            borders: {
-                                                top: {
-                                                    style: BorderStyle.NONE,
-                                                    size: 1,
-                                                    color: "ff0000",
-                                                },
-                                                left: {
-                                                    style: BorderStyle.NONE,
-                                                    size: 1,
-                                                    color: "ff0000",
-                                                },
-                                                right: {
-                                                    style: BorderStyle.NONE,
-                                                    size: 1,
-                                                    color: "ff0000",
-                                                }
-                                            },
                                             children: [
                                                 new TextRun({
-                                                    text: planilla_propuesta_TIG.tutor_empresarial.nombre,
+                                                    text: planilla_propuesta_TIG.tutor_empresarial.apellidos + ', ' + planilla_propuesta_TIG.tutor_empresarial.nombres,
                                                 })
                                             ],
                                             alignment: AlignmentType.LEFT
@@ -1305,23 +1288,6 @@ export const generarPlanillaPropuestaTIG = (planilla_propuesta_TIG) => {
                                     children: [
                                         new Paragraph({
                                             style: "aside",
-                                            borders: {
-                                                top: {
-                                                    style: BorderStyle.NONE,
-                                                    size: 1,
-                                                    color: "ff0000",
-                                                },
-                                                left: {
-                                                    style: BorderStyle.NONE,
-                                                    size: 1,
-                                                    color: "ff0000",
-                                                },
-                                                right: {
-                                                    style: BorderStyle.NONE,
-                                                    size: 1,
-                                                    color: "ff0000",
-                                                }
-                                            },
                                             children: [
                                                 new TextRun({
                                                     text: planilla_propuesta_TIG.tutor_empresarial.telefono,
@@ -1378,7 +1344,7 @@ export const generarPlanillaPropuestaTIG = (planilla_propuesta_TIG) => {
                                             style: "aside",
                                             children: [
                                                 new TextRun({
-                                                    text: planilla_propuesta_TIG.tutor_empresarial.fecha_entrega,
+                                                    text: new Date().toLocaleDateString(),
                                                 })
                                             ],
                                             alignment: AlignmentType.LEFT
@@ -1634,7 +1600,7 @@ export const generarPlanillaPropuestaTIG = (planilla_propuesta_TIG) => {
                         lineRule: LineRuleType.AUTO,
                     }
                 }),
-                //Datos de tutor academico
+                //Datos de tutor Empresarial
                 new Table({
                     columnWidths: [3000, 4500],
                     rows: [
@@ -1682,7 +1648,7 @@ export const generarPlanillaPropuestaTIG = (planilla_propuesta_TIG) => {
                                             style: "aside",
                                             children: [
                                                 new TextRun({
-                                                    text: planilla_propuesta_TIG.tutor_empresarial.nombre,
+                                                    text: planilla_propuesta_TIG.tutor_empresarial.apellidos + ', ' + planilla_propuesta_TIG.tutor_empresarial.nombres,
                                                 })
                                             ],
                                             alignment: AlignmentType.LEFT
@@ -2063,18 +2029,18 @@ export const generarPlanillaPropuestaTIG = (planilla_propuesta_TIG) => {
                         type: WidthType.DXA,
                     },
                     //Inserte tabla de alumnos aqui
-                    rows: generarTablaDatosAlumno(planilla_propuesta_TIG.alumno[0])
+                    rows: generarTablaDatosAlumno(planilla_propuesta_TIG.alumnos[0])
                                       
                   
                 }),
-                generarDatosAlumno2(planilla_propuesta_TIG.alumno[1]),
+                generarDatosAlumno2(planilla_propuesta_TIG.alumnos[1]),
                 new Table({
                     width: {
                         size: 9000,
                         type: WidthType.DXA,
                     },
                     //Inserte tabla de alumnos aqui
-                    rows: generarTablaDatosAlumno(planilla_propuesta_TIG.alumno[1])
+                    rows: generarTablaDatosAlumno(planilla_propuesta_TIG.alumnos[1])
                                       
                   
                 }),
@@ -2094,7 +2060,7 @@ export const generarPlanillaPropuestaTIG = (planilla_propuesta_TIG) => {
                     style: "aside",
                     children:[ 
                         new TextRun({
-                            text: "Datos Tutor Academico",
+                            text: "Datos Tutor Empresarial",
                             bold: true
                         })
                     ],
@@ -2133,7 +2099,7 @@ export const generarPlanillaPropuestaTIG = (planilla_propuesta_TIG) => {
                                         new Paragraph({
                                             children: [
                                                 new TextRun({
-                                                    text: planilla_propuesta_TIG.tutor_empresarial.nombre,
+                                                    text: planilla_propuesta_TIG.tutor_empresarial.apellidos + ', ' + planilla_propuesta_TIG.tutor_empresarial.nombres,
                                                 })
                                             ],
                                             style: "aside",
@@ -2146,7 +2112,12 @@ export const generarPlanillaPropuestaTIG = (planilla_propuesta_TIG) => {
                                         type: WidthType.DXA
                                     },
                                     verticalAlign: VerticalAlign.CENTER
-                                }),                       
+                                }),     
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia,               
                             ]
                         }),
                         new TableRow({
@@ -2189,7 +2160,12 @@ export const generarPlanillaPropuestaTIG = (planilla_propuesta_TIG) => {
                                         type: WidthType.DXA
                                     },
                                     verticalAlign: VerticalAlign.CENTER
-                                })
+                                }),
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia, 
                             ]
                         }),
                         new TableRow({
@@ -2334,23 +2310,11 @@ export const generarPlanillaPropuestaTIG = (planilla_propuesta_TIG) => {
                                     },
                                     verticalAlign: VerticalAlign.CENTER
                                 }),
-                                new TableCell({
-                                    borders: linea,
-                                    children: [
-                                        new Paragraph({
-                                            children: [
-                                                new TextRun({
-                                                    text: "",
-                                                })
-                                            ],
-                                            
-                                        }),
-                                    ],
-                                    width: {
-                                        size: 10000,
-                                        type: WidthType.DXA
-                                    },
-                                }),
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia, 
                             ]
                         }),
                         new TableRow({
@@ -2389,19 +2353,11 @@ export const generarPlanillaPropuestaTIG = (planilla_propuesta_TIG) => {
                                     ],
                                     verticalAlign: VerticalAlign.CENTER
                                 }),
-                                new TableCell({
-                                    borders: linea,
-                                    children: [
-                                        new Paragraph({
-                                            children: [
-                                                new TextRun({
-                                                    text: "",
-                                                })
-                                            ],
-                                            
-                                        }),
-                                    ]
-                                })
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia, 
                             ]
                         }),
                         new TableRow({
@@ -2516,7 +2472,7 @@ export const generarPlanillaPropuestaTIG = (planilla_propuesta_TIG) => {
                                         new Paragraph({
                                             children: [
                                                 new TextRun({
-                                                    text: "SI",
+                                                    text: "NO",
                                                     bold: true
                                                 })
                                             ],
@@ -2525,8 +2481,12 @@ export const generarPlanillaPropuestaTIG = (planilla_propuesta_TIG) => {
                                         })
                                     ],
                                     verticalAlign: VerticalAlign.CENTER
-
                                 }),
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia, 
                             ]
                         }),
                         
@@ -2586,7 +2546,12 @@ export const generarPlanillaPropuestaTIG = (planilla_propuesta_TIG) => {
                                         })
                                     ],
                                     verticalAlign: VerticalAlign.CENTER
-                                })
+                                }),
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia, 
                             ]
                         }),
                         new TableRow({
@@ -2624,7 +2589,12 @@ export const generarPlanillaPropuestaTIG = (planilla_propuesta_TIG) => {
                                         })
                                     ],
                                     verticalAlign: VerticalAlign.CENTER
-                                })
+                                }),
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia, 
                             ]
                         }),
                         new TableRow({
@@ -2662,7 +2632,12 @@ export const generarPlanillaPropuestaTIG = (planilla_propuesta_TIG) => {
                                         })
                                     ],
                                     verticalAlign: VerticalAlign.CENTER
-                                })
+                                }),
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia, 
                             ]
                         }),
                     ]
@@ -2695,8 +2670,8 @@ export const generarPlanillaPropuestaTIG = (planilla_propuesta_TIG) => {
                 }),
                 new Table({
                     rows: [
-                        generarNombresAlumno(planilla_propuesta_TIG.alumno[0]),
-                        generarNombresAlumno(planilla_propuesta_TIG.alumno[1]),
+                        generarNombresAlumno(planilla_propuesta_TIG.alumnos[0]),
+                        generarNombresAlumno(planilla_propuesta_TIG.alumnos[1]),
                         new TableRow({
                             height: {
                                 value: 500, 
@@ -3052,8 +3027,8 @@ export const generarPlanillaPropuestaTIG = (planilla_propuesta_TIG) => {
     */
     
    let nombre_archivo = '' 
-   if(planilla_propuesta_TIG.alumno[0].nombre !== undefined){
-         nombre_archivo = planilla_propuesta_TIG.alumno[0].nombre;
+   if(planilla_propuesta_TIG.alumnos[0].nombres !== undefined){
+         nombre_archivo = planilla_propuesta_TIG.alumnos[0].nombres;
    }
    
     Packer.toBlob(doc).then(blob => {

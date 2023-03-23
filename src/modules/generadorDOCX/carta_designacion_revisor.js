@@ -45,8 +45,7 @@ const Carta_designacion = {
 */
 export const generarCartaDesignacionRevisor = (Carta_designacion) => {
     console.log("Carta_designacion");
-    console.log(Carta_designacion.propuesta.tutor_academico);
-    console.log(Carta_designacion.propuesta.modalidad);
+    console.log(Carta_designacion);
 
     let tutor = '';
     if (Carta_designacion.modalidad=='E'){
@@ -192,7 +191,7 @@ export const generarCartaDesignacionRevisor = (Carta_designacion) => {
                     style: "aside",
                     children: [
                         new TextRun({
-                            text: 'Puerto Ordaz, ' + Carta_designacion.fecha_designacion,
+                            text: 'Puerto Ordaz, ' + Carta_designacion.fecha_designacion.toLocaleDateString(),
                             font: "Trebuchet MS",
                         })
                     ],
