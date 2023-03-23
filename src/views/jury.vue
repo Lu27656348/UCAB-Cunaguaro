@@ -4,6 +4,11 @@ import * as api from "../modules/apiTools.js";
 
 import { FormularioEmpresa } from "../modules/classes/formularioEmpresa.js";
 
+import { planilla_evaluacion_trabajo_escrito_TEG } from "../modules/generadorDOCX/planilla_evaluacion_trabajo_escrito_TEG.js";
+import { planilla_evaluacion_presentacion_oral_TEG } from "../modules/generadorDOCX/planilla_evaluacion_presentacion_oral.js";
+import { planilla_evaluacion_TIG_Jurado } from "../modules/generadorDOCX/planilla_evaluacion_TIG_Jurado.js";
+import { planilla_evaluacion_TIG_TA } from "../modules/generadorDOCX/planilla_evaluacion_TIG_TA.js"
+
 let data = reactive([]);
 let dataConsejo = reactive([]);
 let dataEmpresas = reactive([]);
@@ -30,6 +35,18 @@ const designarJurado = async (profesores, id_tg) => {
   console.log(dataProfesores.value);
   await api.crearJurados(profesoresDesignados, id_tg);
 };
+
+  planilla_evaluacion_TIG_TA(notificacion.value);
+  //planilla_evaluacion_TIG_Jurado(notificacion.value);
+  //planilla_evaluacion_presentacion_oral_TEG(notificacion.value)
+  //planilla_evaluacion_final_TEG(notificacion.value);
+  //planilla_evaluacion_final_TIG(notificacion.value);
+  //notificacion_designacion_j(notificacion.value);
+  //notificacion_designacion(notificacion.value)
+  /*
+  await api.crearJurados(profesoresDesignados,id_tg);
+  */
+}
 
 const clickenComponente = async (id) => {
   const respuesta = await api.obtenerTGById(id);
