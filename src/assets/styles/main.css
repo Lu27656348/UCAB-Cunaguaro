@@ -1,4 +1,3 @@
-@charset "UTF-8";
 * {
   margin: 0;
   padding: 0;
@@ -20,24 +19,28 @@ body {
   display: flex;
   align-items: center;
   flex-direction: column;
-  width: 10%;
+  width: 13%;
   height: 100%;
   background-color: #494748;
+  transition: 0.2s;
+  overflow-x: hidden;
 }
 .navbar img {
-  margin-top: 30px;
+  margin-top: 25px;
   width: 88px;
   height: 100px;
   object-fit: contain;
+  transition: all 0.2s;
 }
 .navbar__list {
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
-  margin-top: 20px;
+  margin-top: 10px;
   list-style: none;
   overflow-y: scroll;
+  overflow-x: hidden;
+  transition: all 0.2s;
 }
 .navbar__list::-webkit-scrollbar {
   appearance: none;
@@ -59,23 +62,26 @@ body {
 .navbar__list__element {
   display: flex;
   align-items: center;
-  justify-content: center;
   height: 55px;
-  width: 90%;
+  width: 100%;
   border-bottom: 1px #fff solid;
   transition: 0.2s;
 }
 .navbar__list__element a {
+  display: flex;
+  align-items: center;
   color: #fff;
   text-decoration: none;
+  transition: all 0.2s;
+}
+.navbar__list__element a ion-icon {
+  width: 20px;
+  height: 20px;
+  padding-right: 5px;
 }
 .navbar__list__element:hover {
-  transform: scale(1.02);
-}
-.navbar__list__element:hover::before {
-  content: "→";
-  color: #fff;
-  padding-right: 2px;
+  transform: scale(1.04);
+  transition: all 0.2s;
 }
 
 .login__form {
@@ -212,35 +218,40 @@ body {
 .create-state .create-carousel img:active {
   transform: scale(1.1);
 }
-.create-state .create-carousel .students, .create-state .create-carousel .tutor, .create-state .create-carousel .company, .create-state .create-carousel .external-profesional {
+.create-state .create-carousel .students,
+.create-state .create-carousel .tutor,
+.create-state .create-carousel .company,
+.create-state .create-carousel .external-profesional {
   width: 100%;
   height: 100%;
-}
-.create-state .create-carousel .students .request__container__preview__form__inputs--titulo-tg, .create-state .create-carousel .tutor .request__container__preview__form__inputs--titulo-tg, .create-state .create-carousel .company .request__container__preview__form__inputs--titulo-tg, .create-state .create-carousel .external-profesional .request__container__preview__form__inputs--titulo-tg {
-  appearance: none;
-  touch-action: none;
   display: flex;
-  flex-wrap: wrap;
-  height: 30px;
-  word-break: break-all;
+  justify-content: center;
+  align-items: center;
 }
-.create-state .create-carousel button.succes:hover {
-  background-color: rgba(77, 235, 90, 0.4666666667);
-  border: #44ff53 solid 2px;
-  box-shadow: 0px 0 15px rgba(255, 241, 47, 0.568627451);
-  transform: scale(1.1);
+.create-state .create-carousel .students .request__container__preview__form,
+.create-state .create-carousel .tutor .request__container__preview__form,
+.create-state .create-carousel .company .request__container__preview__form,
+.create-state .create-carousel .external-profesional .request__container__preview__form {
+  width: 90%;
 }
-.create-state .create-carousel button.succes:active {
-  transform: scale(1);
+.create-state .create-carousel .students .request__container__preview__form__inputs--titulo-tg,
+.create-state .create-carousel .tutor .request__container__preview__form__inputs--titulo-tg,
+.create-state .create-carousel .company .request__container__preview__form__inputs--titulo-tg,
+.create-state .create-carousel .external-profesional .request__container__preview__form__inputs--titulo-tg {
+  resize: none;
+  padding: 10px;
+  width: 100%;
+  height: 100px;
+  line-height: 1.5;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 1px #999;
 }
-.create-state .create-carousel button.cancel:hover {
-  background-color: rgba(230, 42, 42, 0.4666666667);
-  border: #fd4a4a solid 2px;
-  box-shadow: 0px 0 15px rgba(255, 76, 76, 0.568627451);
-  transform: scale(1.1);
-}
-.create-state .create-carousel button.cancel:active {
-  transform: scale(1);
+.create-state .create-carousel .students select:hover,
+.create-state .create-carousel .tutor select:hover,
+.create-state .create-carousel .company select:hover,
+.create-state .create-carousel .external-profesional select:hover {
+  cursor: pointer;
 }
 
 .request__container__preview__form {
@@ -248,6 +259,7 @@ body {
   align-items: center;
   flex-direction: column;
   padding-top: 18%;
+  padding: 10px 0;
   height: 100%;
   width: 100%;
 }
@@ -316,18 +328,7 @@ body {
   backdrop-filter: blur(3px);
 }
 
-.request__container,
-.committe__container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-  overflow-y: hidden;
-  transition: all ease-in 0.2s;
-}
-.request__container button,
-.committe__container button {
+button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -343,17 +344,47 @@ body {
   background-color: #dadada;
   transition: 0.2s;
 }
-.request__container button:hover,
-.committe__container button:hover {
+button:disabled:hover {
+  cursor: not-allowed;
+}
+button:enabled:hover {
   cursor: pointer;
   transform: scale(1.01);
   box-shadow: 5px 5px 15px rgba(78, 101, 136, 0.3647058824);
   background-color: rgba(125, 160, 212, 0.5882352941);
   border: #7da0d4 solid 2px;
 }
-.request__container button:active,
-.committe__container button:active {
+button:enabled:hover :active {
   transform: scale(0.98);
+}
+button.succes:hover {
+  background-color: rgba(77, 235, 90, 0.4666666667);
+  border: #44ff53 solid 2px;
+  box-shadow: 0px 0 15px rgba(255, 241, 47, 0.568627451);
+  transform: scale(1.1);
+}
+button.succes:active {
+  transform: scale(1);
+}
+button.cancel:hover {
+  background-color: rgba(230, 42, 42, 0.4666666667);
+  border: #fd4a4a solid 2px;
+  box-shadow: 0px 0 15px rgba(255, 76, 76, 0.568627451);
+  transform: scale(1.1);
+}
+button.cancel:active {
+  transform: scale(1);
+}
+
+.request__container,
+.committe__container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  overflow-y: hidden;
+  transition: all ease-in 0.2s;
 }
 .request__container__display, .request__container__display,
 .committe__container__display,
@@ -370,10 +401,11 @@ body {
 .request__container__display__controllers, .request__container__display__controllers,
 .committe__container__display__controllers,
 .committe__container__display__controllers {
+  align-self: baseline;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 50%;
   padding: 15px;
 }
 .request__container__display__controllers button img, .request__container__display__controllers button img,
@@ -382,6 +414,12 @@ body {
   object-fit: contain;
   width: 30px;
   color: #dadada;
+}
+.request__container__display__controllers ion-icon, .request__container__display__controllers ion-icon,
+.committe__container__display__controllers ion-icon,
+.committe__container__display__controllers ion-icon {
+  width: 30px;
+  height: 25px;
 }
 .request__container__display__list, .request__container__display__list,
 .committe__container__display__list,
@@ -428,13 +466,49 @@ body {
   flex-direction: column;
   align-items: center;
   height: 100%;
-  width: 70%;
+  width: 100%;
   background-color: #dadada;
 }
 .request__container__preview h2,
 .committe__container__preview h2 {
   display: none;
   padding: 20px 0 0 0;
+}
+.request__container__preview__form,
+.committe__container__preview__form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  height: 100%;
+}
+.request__container__preview__form__inputs,
+.committe__container__preview__form__inputs {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+.request__container__preview__form__inputs--titulo-tg,
+.committe__container__preview__form__inputs--titulo-tg {
+  margin: 10px 0;
+}
+.request__container__preview .request__container__preview__form__inputs--titulo-tg,
+.committe__container__preview .request__container__preview__form__inputs--titulo-tg {
+  resize: none;
+  padding: 10px;
+  width: 100%;
+  height: 100px;
+  line-height: 1.5;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 1px #999;
+}
+.request__container__preview .request__container__preview__form__inputs--titulo-tg:disabled,
+.committe__container__preview .request__container__preview__form__inputs--titulo-tg:disabled {
+  background-color: #fdfdfd;
+  color: #000;
 }
 
 /*# sourceMappingURL=main.css.map */
