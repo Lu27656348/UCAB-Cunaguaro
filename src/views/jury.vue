@@ -136,9 +136,7 @@ onMounted(async () => {
               Designar Jurado
             </button>
           </div>
-        </form>
         <!-- aqui van los formularios necesarios para el proceso de crear una asignacion de revisor a la propuesta -->
       </div>
     </div>
-  </div>
 </template>
