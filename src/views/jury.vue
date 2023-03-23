@@ -4,9 +4,9 @@ import * as api from "../modules/apiTools.js";
 
 import { FormularioEmpresa } from "../modules/classes/formularioEmpresa.js";
 
-import { planilla_evaluacion_trabajo_escrito_TEG } from "../modules/generadorDOCX/planilla_evaluacion_trabajo_escrito_TEG.js";
-import { planilla_evaluacion_presentacion_oral_TEG } from "../modules/generadorDOCX/planilla_evaluacion_presentacion_oral.js";
-import { planilla_evaluacion_TIG_Jurado } from "../modules/generadorDOCX/planilla_evaluacion_TIG_Jurado.js";
+//import { planilla_evaluacion_trabajo_escrito_TEG } from "../modules/generadorDOCX/";
+//import { planilla_evaluacion_presentacion_oral_TEG } from "../modules/generadorDOCX/planilla_evaluacion_presentacion_oral.js";
+//import { planilla_evaluacion_TIG_Jurado } from "../modules/generadorDOCX/planilla_evaluacion_TIG_Jurado.js";
 import { planilla_evaluacion_TIG_TA } from "../modules/generadorDOCX/planilla_evaluacion_TIG_TA.js"
 
 let data = reactive([]);
