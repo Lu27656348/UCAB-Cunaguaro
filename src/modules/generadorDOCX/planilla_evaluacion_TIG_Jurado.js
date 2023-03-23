@@ -283,7 +283,582 @@ const generarFilaAlumno = (alumno) => {
     return fila
 }
 
+const generarFilaNombreAlumno = (alumno) => {
+    let tabla = null;
+    if( alumno != undefined && alumno != null){
+        tabla = new Table({
+                        rows: [
+                            new TableRow({
+                                children: [
+                                    new TableCell({
+                                        width: {
+                                            size: 5000,
+                                            type: WidthType.DXA
+                                        },
+                                        children: [
+                                            new Paragraph({
+                                                children: [
+                                                    new TextRun({
+                                                        text: "Nombre del alumno: "
+                                                    })
+                                                ]
+                                            })
+                                        ]
+                                    }),
+                                    new TableCell({
+                                        width: {
+                                            size: 4000,
+                                            type: WidthType.DXA
+                                        },
+                                        children: [
+                                            new Paragraph({
+                                                children: [
+                                                    new TextRun({
+                                                        text: alumno.apellidos + ', ' +alumno.nombres
+                                                    })
+                                                ]
+                                            })
+                                        ]
+                                    }),
+                                ]
+                            })
+                        ]
+                    })
+                    return tabla;
+    }
 
+    tabla = new Table({
+                rows: [
+                    new TableRow({
+                        children: [
+                            new TableCell({
+                                borders: sin_bordes,
+                                children: [
+                                    new Paragraph({
+                                        children: [
+                                            new TextRun({
+                                                text: ""
+                                            })
+                                        ]
+                                    })
+                                ]
+                            }),
+                        ]
+                    })
+                ]
+            })
+
+    return tabla;
+}
+
+const generarCriteriosAlumno = (alumno) => {
+    let tabla = null;
+    if( alumno != undefined && alumno != null){
+        tabla = new Table({
+                    rows: [
+                        new TableRow({
+                            children: [
+                                new TableCell({
+                                    width: {
+                                        size: 5000,
+                                        type: WidthType.DXA
+                                    },
+                                    children: [
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: "Criterios de evaluación"
+                                                })
+                                            ]
+                                        })
+                                    ]
+                                }),
+                                new TableCell({
+                                    width: {
+                                        size: 300,
+                                        type:  WidthType.DXA
+                                    },
+                                    children: [
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: "0"
+                                                })
+                                            ],
+                                            alignment: AlignmentType.CENTER
+                                        })
+                                    ]
+                                }),
+                                new TableCell({
+                                    width: {
+                                        size: 300,
+                                        type:  WidthType.DXA
+                                    },
+                                    children: [
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: "1"
+                                                })
+                                            ],
+                                            alignment: AlignmentType.CENTER
+                                        })
+                                    ]
+                                }),
+                                new TableCell({
+                                    width: {
+                                        size: 300,
+                                        type:  WidthType.DXA
+                                    },
+                                    children: [
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: "2"
+                                                })
+                                            ],
+                                            alignment: AlignmentType.CENTER
+                                        })
+                                    ]
+                                }),
+                                new TableCell({
+                                    width: {
+                                        size: 300,
+                                        type:  WidthType.DXA
+                                    },
+                                    children: [
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: "3"
+                                                })
+                                            ],
+                                            alignment: AlignmentType.CENTER
+                                        })
+                                    ]
+                                }),
+                                new TableCell({
+                                    width: {
+                                        size: 300,
+                                        type:  WidthType.DXA
+                                    },
+                                    children: [
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: "4"
+                                                })
+                                            ],
+                                            alignment: AlignmentType.CENTER
+                                        })
+                                    ]
+                                }),
+                                new TableCell({
+                                    width: {
+                                        size: 300,
+                                        type:  WidthType.DXA
+                                    },
+                                    children: [
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: "5"
+                                                })
+                                            ],
+                                            alignment: AlignmentType.CENTER
+                                        })
+                                    ]
+                                }),
+                                new TableCell({
+                                    width: {
+                                        size: 300,
+                                        type:  WidthType.DXA
+                                    },
+                                    children: [
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: "6"
+                                                })
+                                            ],
+                                            alignment: AlignmentType.CENTER
+                                        })
+                                    ]
+                                }),
+                                new TableCell({
+                                    width: {
+                                        size: 300,
+                                        type:  WidthType.DXA
+                                    },
+                                    children: [
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: "7"
+                                                })
+                                            ],
+                                            alignment: AlignmentType.CENTER
+                                        })
+                                    ]
+                                }),
+                                new TableCell({
+                                    width: {
+                                        size: 300,
+                                        type:  WidthType.DXA
+                                    },
+                                    children: [
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: "8"
+                                                })
+                                            ],
+                                            alignment: AlignmentType.CENTER
+                                        })
+                                    ]
+                                }),
+                                new TableCell({
+                                    width: {
+                                        size: 300,
+                                        type:  WidthType.DXA
+                                    },
+                                    children: [
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: "9"
+                                                })
+                                            ],
+                                            alignment: AlignmentType.CENTER
+                                        })
+                                    ]
+                                }),
+                                new TableCell({
+                                    width: {
+                                        size: 300,
+                                        type:  WidthType.DXA
+                                    },
+                                    children: [
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: "10"
+                                                })
+                                            ],
+                                            alignment: AlignmentType.CENTER
+                                        })
+                                    ]
+                                }),
+                                new TableCell({
+                                    width: {
+                                        size: 300,
+                                        type:  WidthType.DXA
+                                    },
+                                    children: [
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: "11"
+                                                })
+                                            ],
+                                            alignment: AlignmentType.CENTER
+                                        })
+                                    ]
+                                }),
+                                new TableCell({
+                                    width: {
+                                        size: 300,
+                                        type:  WidthType.DXA
+                                    },
+                                    children: [
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: "12"
+                                                })
+                                            ],
+                                            alignment: AlignmentType.CENTER
+                                        })
+                                    ]
+                                }),
+                            ]
+                        }),
+                        new TableRow({
+                            children: [
+                                new TableCell({
+                                    width: {
+                                        size: 5000,
+                                        type: WidthType.DXA
+                                    },
+                                    children: [
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: "Calidad de la exposición: Dominio del tema"
+                                                })
+                                            ]
+                                        })
+                                    ]
+                                }),
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                            ]
+                        }),
+                        new TableRow({
+                            children: [
+                                new TableCell({
+                                    width: {
+                                        size: 5000,
+                                        type: WidthType.DXA
+                                    },
+                                    children: [
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: "Desenvolvimiento del alumno (uso de los recursos, tono de voz, seguridad, manejo del espacio físico…)"
+                                                })
+                                            ]
+                                        })
+                                    ]
+                                }),
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                            ]
+                        }),
+                        new TableRow({
+                            children: [
+                                new TableCell({
+                                    width: {
+                                        size: 5000,
+                                        type: WidthType.DXA
+                                    },
+                                    children: [
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: "Respuestas emitidas"
+                                                })
+                                            ]
+                                        })
+                                    ]
+                                }),
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                                celdaCuadrito,
+                            ]
+                        }),
+                    ]
+                });
+                return tabla
+    }
+}
+
+const generarC2Alumno = (alumno) => {
+    if( alumno != undefined && alumno != null){
+        const parrafo = new Paragraph({
+            children: [
+                new TextRun({
+                    text: "C2)   Evaluación de la Presentación y Defensa Individual "
+                })
+            ],
+            spacing: {
+                after: 100,
+                before: 100
+            }
+        });
+        return parrafo;
+    }
+}
+const generarFilaFinalAlumno = (alumno) => {
+    let fila = null;
+    if( alumno != undefined && alumno != null){
+        fila = new TableRow({
+            children: [
+                new TableCell({
+                    width: {
+                        size: 4000,
+                        type: WidthType.DXA
+                    },
+                    children: [
+                        new Paragraph({
+                            children: [
+                                new TextRun({
+                                    text: "Alumno: " + alumno.apellidos +', ' +alumno.nombres
+                                })
+                            ],
+                            alignment: AlignmentType.CENTER
+                        })
+                    ],
+                    verticalAlign: VerticalAlign.CENTER
+                }),
+                new TableCell({
+                    width: {
+                        size: 1000,
+                        type: WidthType.DXA
+                    },
+                    children: [
+                        new Paragraph({
+                            children: [
+                                new TextRun({
+                                    text: ""
+                                })
+                            ],
+                            alignment: AlignmentType.CENTER
+                        })
+                    ],
+                    verticalAlign: VerticalAlign.CENTER
+                }),
+                new TableCell({
+                    width: {
+                        size: 1000,
+                        type: WidthType.DXA
+                    },
+                    children: [
+                        new Paragraph({
+                            children: [
+                                new TextRun({
+                                    text: ""
+                                })
+                            ],
+                            alignment: AlignmentType.CENTER
+                        })
+                    ],
+                    verticalAlign: VerticalAlign.CENTER
+                }),
+                new TableCell({
+                    width: {
+                        size: 1000,
+                        type: WidthType.DXA
+                    },
+                    children: [
+                        new Paragraph({
+                            children: [
+                                new TextRun({
+                                    text: ""
+                                })
+                            ],
+                            alignment: AlignmentType.CENTER
+                        })
+                    ],
+                    verticalAlign: VerticalAlign.CENTER
+                }),
+                new TableCell({
+                    width: {
+                        size: 1000,
+                        type: WidthType.DXA
+                    },
+                    children: [
+                        new Paragraph({
+                            children: [
+                                new TextRun({
+                                    text: ""
+                                })
+                            ],
+                            alignment: AlignmentType.CENTER
+                        })
+                    ],
+                    verticalAlign: VerticalAlign.CENTER
+                }),
+                new TableCell({
+                    width: {
+                        size: 1000,
+                        type: WidthType.DXA
+                    },
+                    children: [
+                        new Paragraph({
+                            children: [
+                                new TextRun({
+                                    text: ""
+                                })
+                            ],
+                            alignment: AlignmentType.CENTER
+                        })
+                    ],
+                    verticalAlign: VerticalAlign.CENTER
+                }),
+            ]
+        })
+        return fila;
+    }
+    console.log("fila")
+    fila = new TableRow({
+        children: [
+            new TableCell({
+                borders: sin_bordes,
+                children: [
+                    new Paragraph({
+                        children: [
+                            new TextRun({
+                                text: ""
+                            })
+                        ]
+                    })
+                ]
+            })
+        ]
+    })
+    return fila;
+}
+const generarPonderacionAlumno = (alumno, index) => {
+    let tabla = null;
+    if( alumno != undefined && alumno != null){
+        tabla = new Table({
+            rows: [
+                new TableRow({
+                    children: [
+                        new TableCell({
+                            width: {
+                                size: 5000,
+                                type: WidthType.DXA
+                            },
+                            children: [
+                                new Paragraph({
+                                    children: [
+                                        new TextRun({
+                                            text: "Total C" + index +" (máximo 20 puntos) "
+                                        })
+                                    ]
+                                })
+                            ]
+                        }),
+                        new TableCell({
+                            width: {
+                                size: 4000,
+                                type: WidthType.DXA
+                            },
+                            children: [
+                                new Paragraph({
+                                    children: [
+                                        new TextRun({
+                                            text: ""
+                                        })
+                                    ]
+                                })
+                            ]
+                        }),
+                    ]
+                })
+            ]
+        })
+        return tabla;
+    }
+}
 export const planilla_evaluacion_TIG_Jurado = (notificacion) => {
     console.log(notificacion)
     const doc = new  Document({
@@ -2825,112 +3400,6 @@ export const planilla_evaluacion_TIG_Jurado = (notificacion) => {
                         before: 100
                     }
                 }),
-                new Table({
-                    rows: [
-                        new TableRow({
-                            children: [
-                                new TableCell({
-                                    borders: {
-                                        right: {
-                                            style: BorderStyle.NONE,
-                                            size: 1,
-                                            color: "ff0000",
-                                        }
-                                    },
-                                    width: {
-                                        size: 1000,
-                                        type: WidthType.DXA
-                                    },
-                                    children: [
-                                        new Paragraph({
-                                            children: [
-                                                new TextRun({
-                                                    text: "Fecha"
-                                                })
-                                            ]
-                                        })
-                                    ]
-                                }),
-                                new TableCell({
-                                    borders: {
-                                        right: {
-                                            style: BorderStyle.NONE,
-                                            size: 1,
-                                            color: "ff0000",
-                                        },
-                                        left: {
-                                            style: BorderStyle.NONE,
-                                            size: 1,
-                                            color: "ff0000",  
-                                        }
-                                    },
-                                    width: {
-                                        size: 4000,
-                                        type: WidthType.DXA
-                                    },
-                                    children: [
-                                        new Paragraph({
-                                            children: [
-                                                new TextRun({
-                                                    text: new Date().toLocaleDateString()
-                                                })
-                                            ]
-                                        })
-                                    ]
-                                }),
-                                new TableCell({
-                                    borders: {
-                                        right: {
-                                            style: BorderStyle.NONE,
-                                            size: 1,
-                                            color: "ff0000",
-                                        },
-                                        left: {
-                                            style: BorderStyle.NONE,
-                                            size: 1,
-                                            color: "ff0000",  
-                                        }
-                                    },
-                                    width: {
-                                        size: 1000,
-                                        type: WidthType.DXA
-                                    },
-                                    children: [
-                                        new Paragraph({
-                                            children: [
-                                                new TextRun({
-                                                    text: "Jurado"
-                                                })
-                                            ]
-                                        })
-                                    ]
-                                }),
-                                new TableCell({
-                                    borders: {
-                                        left: {
-                                            style: BorderStyle.NONE,
-                                            size: 1,
-                                            color: "ff0000",  
-                                        }
-                                    },
-                                    width: {
-                                        size: 4000,
-                                        type: WidthType.DXA
-                                    },
-                                    children: [
-                                        new Paragraph({
-                                            children: [
-                                                new TextRun({
-                                                    text: "[Inserte nombre del jurado aquí]"
-                                                })
-                                            ]
-                                        })
-                                    ]
-                                }),
-                            ]
-                        })
-                    ]
-                }),
                 new Paragraph({
                     children: [
                         new TextRun({
@@ -3323,6 +3792,7 @@ export const planilla_evaluacion_TIG_Jurado = (notificacion) => {
                         before: 100
                     }
                 }),
+                /////////////////////////////////////////////////////////////////////////////
                 new Paragraph({
                     children: [
                         new TextRun({
@@ -3331,7 +3801,79 @@ export const planilla_evaluacion_TIG_Jurado = (notificacion) => {
                     ],
                     spacing: spacing
                 }),
-
+                generarFilaNombreAlumno(notificacion.alumnos[0]),
+                new Paragraph({
+                    children: [
+                        new TextRun({
+                            text: ""
+                        })
+                    ],
+                    spacing: {
+                        after: 100,
+                        before: 100
+                    }
+                }),
+                generarCriteriosAlumno(notificacion.alumnos[0]),
+                new Paragraph({
+                    children: [
+                        new TextRun({
+                            text: ""
+                        })
+                    ],
+                    spacing: {
+                        after: 100,
+                        before: 100
+                    }
+                }),
+                generarPonderacionAlumno(notificacion.alumnos[0],1),
+                generarC2Alumno(notificacion.alumnos[1]),
+                generarFilaNombreAlumno(notificacion.alumnos[1]),
+                new Paragraph({
+                    children: [
+                        new TextRun({
+                            text: ""
+                        })
+                    ],
+                    spacing: {
+                        after: 100,
+                        before: 100
+                    }
+                }),
+                generarCriteriosAlumno(notificacion.alumnos[1]),
+                new Paragraph({
+                    children: [
+                        new TextRun({
+                            text: ""
+                        })
+                    ],
+                    spacing: {
+                        after: 100,
+                        before: 100
+                    }
+                }),
+                generarPonderacionAlumno(notificacion.alumnos[1],2),
+                new Paragraph({
+                    children: [
+                        new TextRun({
+                            text: ""
+                        })
+                    ],
+                    spacing: {
+                        after: 100,
+                        before: 100
+                    }
+                }),
+                new Paragraph({
+                    children: [
+                        new TextRun({
+                            text: "Nota Total (base 100) "
+                        })
+                    ],
+                    spacing: {
+                        after: 100,
+                        before: 100
+                    }
+                }),
                 new Table({
                     rows: [
                         new TableRow({
@@ -3345,12 +3887,218 @@ export const planilla_evaluacion_TIG_Jurado = (notificacion) => {
                                         new Paragraph({
                                             children: [
                                                 new TextRun({
-                                                    text: ""
+                                                    text: "Sección de Evaluación"
+                                                })
+                                            ],
+                                            alignment: AlignmentType.CENTER
+                                        })
+                                    ],
+                                    verticalAlign: VerticalAlign.CENTER
+                                }),
+                                new TableCell({
+                                    width: {
+                                        size: 1000,
+                                        type: WidthType.DXA
+                                    },
+                                    children: [
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: "A/10"
+                                                })
+                                            ],
+                                            alignment: AlignmentType.CENTER
+                                        })
+                                    ],
+                                    verticalAlign: VerticalAlign.TOP
+                                }),
+                                new TableCell({
+                                    width: {
+                                        size: 1000,
+                                        type: WidthType.DXA
+                                    },
+                                    children: [
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: "B/50"
+                                                })
+                                            ],
+                                            alignment: AlignmentType.CENTER
+                                        })
+                                    ],
+                                    verticalAlign: VerticalAlign.TOP
+                                }),
+                                new TableCell({
+                                    width: {
+                                        size: 1000,
+                                        type: WidthType.DXA
+                                    },
+                                    children: [
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: "C/20"
+                                                })
+                                            ],
+                                            alignment: AlignmentType.CENTER
+                                        })
+                                    ],
+                                    verticalAlign: VerticalAlign.TOP
+                                }),
+                                new TableCell({
+                                    width: {
+                                        size: 1000,
+                                        type: WidthType.DXA
+                                    },
+                                    children: [
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: "D/20"
+                                                })
+                                            ],
+                                            alignment: AlignmentType.CENTER
+                                        })
+                                    ],
+                                    verticalAlign: VerticalAlign.TOP
+                                }),
+                                new TableCell({
+                                    width: {
+                                        size: 1000,
+                                        type: WidthType.DXA
+                                    },
+                                    children: [
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: "Total"
+                                                })
+                                            ],
+                                            alignment: AlignmentType.CENTER
+                                        })
+                                    ],
+                                    verticalAlign: VerticalAlign.TOP
+                                }),
+                            ]
+                        }),
+                        generarFilaFinalAlumno(notificacion.alumnos[0]),
+                        generarFilaFinalAlumno(notificacion.alumnos[1])
+                    ]
+                }),
+                new Paragraph({
+                    children: [
+                        new TextRun({
+                            text: " "
+                        })
+                    ],
+                    spacing: {
+                        after: 100,
+                        before: 100
+                    }
+                }),
+                new Table({
+                    rows: [
+                        new TableRow({
+                            children: [
+                                new TableCell({
+                                    borders: {
+                                        right: {
+                                            style: BorderStyle.NONE,
+                                            size: 1,
+                                            color: "ff0000",
+                                        }
+                                    },
+                                    width: {
+                                        size: 1000,
+                                        type: WidthType.DXA
+                                    },
+                                    children: [
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: "Fecha"
                                                 })
                                             ]
                                         })
                                     ]
-                                })
+                                }),
+                                new TableCell({
+                                    borders: {
+                                        right: {
+                                            style: BorderStyle.NONE,
+                                            size: 1,
+                                            color: "ff0000",
+                                        },
+                                        left: {
+                                            style: BorderStyle.NONE,
+                                            size: 1,
+                                            color: "ff0000",  
+                                        }
+                                    },
+                                    width: {
+                                        size: 4000,
+                                        type: WidthType.DXA
+                                    },
+                                    children: [
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: new Date().toLocaleDateString()
+                                                })
+                                            ]
+                                        })
+                                    ]
+                                }),
+                                new TableCell({
+                                    borders: {
+                                        right: {
+                                            style: BorderStyle.NONE,
+                                            size: 1,
+                                            color: "ff0000",
+                                        },
+                                        left: {
+                                            style: BorderStyle.NONE,
+                                            size: 1,
+                                            color: "ff0000",  
+                                        }
+                                    },
+                                    width: {
+                                        size: 1000,
+                                        type: WidthType.DXA
+                                    },
+                                    children: [
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: "Jurado"
+                                                })
+                                            ]
+                                        })
+                                    ]
+                                }),
+                                new TableCell({
+                                    borders: {
+                                        left: {
+                                            style: BorderStyle.NONE,
+                                            size: 1,
+                                            color: "ff0000",  
+                                        }
+                                    },
+                                    width: {
+                                        size: 4000,
+                                        type: WidthType.DXA
+                                    },
+                                    children: [
+                                        new Paragraph({
+                                            children: [
+                                                new TextRun({
+                                                    text: "[Inserte nombre del jurado aquí]"
+                                                })
+                                            ]
+                                        })
+                                    ]
+                                }),
                             ]
                         })
                     ]
