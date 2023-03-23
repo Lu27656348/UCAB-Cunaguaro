@@ -3,7 +3,12 @@ export class PlantillaDatosPersonales {
     this.cedula = '';
     this.nombres = '';
     this.apellidos = '';
-    this.telefonos = '';
-    this.correo = '';
+    this.telefono = '';
+    this.email = '';
+    this.oficina = '';
+    this.habitacion = '';
+    this.experiencia = '';
+    this.fecha_graduado = '';
+    this.cargo = '';
   }
 }

@@ -32,6 +32,8 @@ async function buscarEstudiante() {
   crearSolicitudForm.value.alumnos[0].apellidos = resEstudiante.apellidos;
   crearSolicitudForm.value.alumnos[0].nombres = resEstudiante.nombres;
   crearSolicitudForm.value.alumnos[0].cedula = resEstudiante.cedula;
+  crearSolicitudForm.value.alumnos[0].email = resEstudiante.email;
+  crearSolicitudForm.value.alumnos[0].telefono = resEstudiante.telefono;
 }
 
 async function buscarTutor() {
@@ -41,6 +43,8 @@ async function buscarTutor() {
   crearSolicitudForm.value.tutor.apellidos = resTutor.apellidos;
   crearSolicitudForm.value.tutor.nombres = resTutor.nombres;
   crearSolicitudForm.value.tutor.cedula = resTutor.cedula;
+  crearSolicitudForm.value.tutor.email = resTutor.email;
+  crearSolicitudForm.value.tutor.telefono = resTutor.telefono;
 }
 
 async function buscarTutorEmpresarial() {
@@ -55,14 +59,15 @@ async function buscarTutorEmpresarial() {
     resTutorEmpresarial.cedula;
 }
 
-crearSolicitudForm.value.empresa.idEmpresa = computed(() => {
+crearSolicitudForm.value.empresa.id_empresa = computed(() => {
+
   if (idEmpresaSeleccionada.value != null) {
+    console.log(idEmpresaSeleccionada.value)
     let arregloEmpresa = dataEmpresas.filter(
       (t) => t.id_empresa == idEmpresaSeleccionada.value
     );
 
     crearSolicitudForm.value.empresa.nombre = arregloEmpresa[0].nombre;
-    crearSolicitudForm.value.empresa.rif = arregloEmpresa[0].rif;
     crearSolicitudForm.value.empresa.direccion = arregloEmpresa[0].direccion;
     crearSolicitudForm.value.empresa.telefono = arregloEmpresa[0].telefono;
 
@@ -71,22 +76,18 @@ crearSolicitudForm.value.empresa.idEmpresa = computed(() => {
   return "";
 });
 
-async function insertarPlanilla() {
+async function insertarPlanilla(){
+  console.log("crearSolicitudForm.value")
+  console.log(crearSolicitudForm.value)
   let planillaGenerada;
+  
   if (crearSolicitudForm.value.trabajoDeGrado.modalidad == "E") {
-    await api.crearTrabajoGradoExperimental(crearSolicitudForm.value.trabajoDeGrado, crearSolicitudForm.value.alumnos[0].cedula,crearSolicitudForm.value.tutor.cedula);
+    await api.crearTrabajoGradoExperimental(crearSolicitudForm.value.trabajoDeGrado, crearSolicitudForm.value.alumnos[0].cedula,crearSolicitudForm.value.tutor.cedula,crearSolicitudForm.value.empresa.id_empresa);
     planillaGenerada = new PlanillaPropuestaTEG(
       crearSolicitudForm.value.trabajoDeGrado.titulo,
       crearSolicitudForm.value.empresa.nombre,
       crearSolicitudForm.value.empresa,
-      {
-        nombre: `${crearSolicitudForm.value.tutor.nombres} ${crearSolicitudForm.value.tutor.apellidos}`,
-        cedula: crearSolicitudForm.value.tutor.cedula,
-        email: "franklinBelloBellisimo@ucab.edu.ve",
-        telefono: "04121598764",
-        profesion: "Ingeniero Informatico",
-        fecha_entrega: new Date(),
-      }
+      crearSolicitudForm.value.tutor
     );
   } else {
     const cedulatutorempresarial = await api.obtenerExternoByCedula(crearSolicitudForm.value.tutorEmpresarial.cedula);
@@ -97,29 +98,13 @@ async function insertarPlanilla() {
       crearSolicitudForm.value.trabajoDeGrado.titulo,
       crearSolicitudForm.value.empresa.nombre,
       crearSolicitudForm.value.empresa,
-      {
-        nombre: `${crearSolicitudForm.value.tutorEmpresarial.nombres} ${crearSolicitudForm.value.tutorEmpresarial.apellidos}`,
-        cedula: crearSolicitudForm.value.tutorEmpresarial.cedula,
-        email: "franklinBelloBellisimo@ucab.edu.ve",
-        telefono: "04121598764",
-        profesion: "Ingeniero Informatico",
-        fecha_entrega: new Date(),
-      }
+      crearSolicitudForm.value.tutorEmpresarial
     );
   }
-  planillaGenerada.añadirAlumno({
-    nombre: `${crearSolicitudForm.value.alumnos[0].nombres} ${crearSolicitudForm.value.alumnos[0].apellidos}`,
-    cedula: crearSolicitudForm.value.alumnos[0].cedula,
-    telefono: "04147723811",
-    email: "wladimirSanvicente@wlachoCorp C.A",
-    oficina: "#33",
-    habitacion: "Marte, calle 4, al lado del detective marciano",
-    fecha_inicio: "02/14/2053",
-    horario_propuesto: "2 min al dia",
-  });
-
+  planillaGenerada.añadirAlumno(crearSolicitudForm.value.alumnos[0]);
   planillaGenerada.imprimir();
   //crearSolicitudForm.value.progressbarState += crearSolicitudForm.value.progressValue;
+  //location.reload()
 }
 
 let textarea = ref( '' );
@@ -163,6 +148,15 @@ onMounted( async ()=>{
               v-model="crearSolicitudForm.trabajoDeGrado.titulo"
               class="request__container__preview__form__inputs--titulo-tg"
               placeholder="Tutilo de Propuesta TG"
+              style="
+                resize: none;
+                padding: 10px;
+                width: 80%;
+                height: 70px;
+                line-height: 1.5;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+                box-shadow: 1px 1px 1px #999;"
             ></textarea>
             <p for="">Modalidad</p>
             <select
@@ -360,8 +354,8 @@ onMounted( async ()=>{
             <input
               type="text"
               disabled
-              v-model="crearSolicitudForm.empresa.rif"
-              placeholder="rif"
+              v-model="crearSolicitudForm.empresa.nombre"
+              placeholder="nombre"
             />
             <input
               type="text"
@@ -379,7 +373,7 @@ onMounted( async ()=>{
           <div class="actions">
             <button class="succes"
               :disabled="
-                crearSolicitudForm.empresa.idEmpresa == -1 ? true : false
+                crearSolicitudForm.empresa.id_empresa == -1 ? true : false
               "
               @click="insertarPlanilla()"
             >

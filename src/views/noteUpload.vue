@@ -1,10 +1,10 @@
 <script setup>
 import { ref, reactive, onMounted, computed } from "vue";
 import * as api from "../modules/apiTools.js";
-import * as jurados from "../modules/api/tg.js";
-import { planilla_evaluacion_final_TEG } from "../modules/generadorDOCX/Planilla_evaluacion_final_TEG.js";
+import * as jurados from "../modules/api/tg.js"
+import { planilla_evaluacion_final_TEG } from '../modules/generadorDOCX/Planilla_evaluacion_final_TEG.js'
 
-import { FormularioEmpresa } from "../modules/classes/formularioEmpresa.js";
+import { FormularioEmpresa } from '../modules/classes/formularioEmpresa.js';
 //import { platform } from "os";
 
 let data = reactive([]);
@@ -14,19 +14,19 @@ let dataEmpresas = reactive([]);
 let crearEmpresa = new FormularioEmpresa();
 
 let planilla = ref({
-  id_tg: "",
-  titulo: "",
-  modalidad: "",
-  id_tutor_academico: "",
-  id_tutor_empresarial: "",
-  j1: "",
-  j2: "",
-  j1_suplente: "",
-  j2_suplente: "",
-  nota1: "0",
-  nota2: "0",
-  nota_tutor: "0",
-  showNotas: false,
+  id_tg: '',
+  titulo: '',
+  modalidad: '',
+  id_tutor_academico: '',
+  id_tutor_empresarial: '',
+  j1: '',
+  j2: '',
+  j1_suplente: '',
+  j2_suplente: '',
+  nota1: '0',
+  nota2: '0',
+  nota_tutor: '0',
+  showNotas: false
 });
 
 const clickenComponente = async (id) => {
@@ -41,9 +41,9 @@ const clickenComponente = async (id) => {
   planilla.value.id_tutor_empresarial = respuesta.id_tutor_empresarial;
   planilla.value.j1 = juradosTG[0];
   planilla.value.j1_suplente = juradosTG[2];
-  planilla.value.j2 = juradosTG[1];
+  planilla.value.j2 = juradosTG [1];
   planilla.value.j2_suplente = juradosTG[3];
-
+  
   console.log(planilla.value);
   console.log("Jurados");
   console.log(juradosTG);
@@ -52,10 +52,11 @@ const clickenComponente = async (id) => {
 };
 
 const descargarPlanillas = async () => {
-  console.log("Descargando planillas");
+  console.log('Descargando planillas');
   //notificacion_designacion_j();
   //notificacion_jurado();
   planilla_evaluacion_final_TEG();
+
 };
 
 onMounted(async () => {
@@ -63,6 +64,7 @@ onMounted(async () => {
   dataConsejo.value = await api.obtenerCDE();
   dataEmpresas.value = await api.obtenerEmpresas();
 });
+
 </script>
 <template>
   <div class="request">
@@ -91,43 +93,38 @@ onMounted(async () => {
       </div>
       <div class="committe__container__preview">
         <h2>Visualización del documento de solicitud</h2>
-        <form action="" class="committe__container__preview__form">
-          <h2>Visualización del documento de solicitud</h2>
-          <div class="request__container__preview__form up-de">
-            <div class="request__container__preview__form__inputs">
-              <textarea
-                disabled
-                maxlength="200"
-                v-model=planilla.titulo
-                class="request__container__preview__form__inputs--titulo-tg"
-                placeholder="Tutilo de Propuesta TG"
-              ></textarea>
-              <p>Nota Jurado 1 {{ planilla.j1 }}</p>
-              <input type="range" min="0" max="20" v-model="planilla.nota1" />
-              <p>{{ planilla.nota1 }}</p>
-              <p>Nota Jurado 2 {{ planilla.j2 }}</p>
-              <input type="range" min="0" max="20" v-model="planilla.nota2" />
-              <p>{{ planilla.nota2 }}</p>
-              <p>Nota Tutor academico {{ planilla.id_tutor_academico }}</p>
-              <input
-                type="range"
-                min="0"
-                max="20"
-                v-model="planilla.nota_tutor"
-              />
-              <p>{{ planilla.nota_tutor }}</p>
-            </div>
-            <div class="actions">
-              <button
-                class="login__form__btn succes"
-                @click="descargarPlanillas()"
-              >
-                Designar nota
-              </button>
-            </div>
+        <form action="" class="committe__container__preview__form"></form>
+        <div class="create-state" v-show="planilla.showNotas">
+          <div class="progressbar">
+            <div class="progressbar--content"></div>
           </div>
-          <!-- aqui van los formularios necesarios para el proceso de crear una asignacion de revisor a la propuesta -->
-        </form>
+          <div class="create-carousel">
+            <h2>Visualización del documento de solicitud</h2>
+            <div
+              class="request__container__preview__form up-de"
+            >
+              <div class="request__container__preview__form__inputs">
+                <p>Nota Jurado 1 {{ planilla.j1 }}</p>
+                <input type="range" min="0" max="20" v-model="planilla.nota1">
+                <p>{{ planilla.nota1 }}</p>
+                <p>Nota Jurado 2 {{ planilla.j2 }}</p>
+                <input type="range" min="0" max="20" v-model="planilla.nota2">
+                <p>{{ planilla.nota2 }}</p>
+                <p>Nota Tutor academico {{ planilla.id_tutor_academico }}</p>
+                <input type="range" min="0" max="20" v-model="planilla.nota_tutor">
+                <p>{{ planilla.nota_tutor }}</p>
+              </div>
+              <div class="actions">
+                <button class="login__form__btn succes"
+                @click="descargarPlanillas()"
+                >
+                  Designar nota
+                </button>
+              </div>
+            </div>
+            <!-- aqui van los formularios necesarios para el proceso de crear una asignacion de revisor a la propuesta -->
+          </div>
+        </div>
       </div>
     </div>
   </div>

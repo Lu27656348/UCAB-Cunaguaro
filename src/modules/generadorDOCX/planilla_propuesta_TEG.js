@@ -147,7 +147,7 @@ const generarDatosAlumno = ( object ) => {
                         },
                         children: [
                             new TextRun({
-                                text: pt.nombre +", C.I.N. " + pt.cedula,
+                                text: pt.apellidos + ', ' + pt.nombres  +" C.I.N. " + pt.cedula,
                                 font: "Times New Roman",
                             })
                         ],
@@ -256,9 +256,11 @@ const encabezadoTablaAlumno = new TableRow({
     ]
 })
 const generarNombresAlumno = ( object ) => {
-
+    console.log("generarNombresAlumno()");
+    console.log(object);
+    console.log(object.nombres);
+    console.log(object.apellidos);
     if(object !== undefined && !(Object.keys(object).length === 0)){
-        const pt = convertProxyObjectToPojo(object);
         const fila = new TableRow({
                         height: {
                             value: 500, 
@@ -288,7 +290,7 @@ const generarNombresAlumno = ( object ) => {
                                         style: "aside",
                                         children: [
                                             new TextRun({
-                                                text: pt.nombre,
+                                                text: object.apellidos + ', ' + object.nombres,
                                             })
                                         ],
                                         alignment: AlignmentType.LEFT
@@ -336,6 +338,8 @@ const generarNombresAlumno = ( object ) => {
 
 }
 const generarFilaAlumno = (planilla_propuesta_TEG) => {
+    console.log("generarFilaAlumno()");
+    console.log(planilla_propuesta_TEG);
     const filas = [];
     filas.push(encabezadoTablaAlumno);
     planilla_propuesta_TEG.alumno.forEach( (element) => {
@@ -356,7 +360,7 @@ const generarFilaAlumno = (planilla_propuesta_TEG) => {
                                 style: "aside",
                                 children: [
                                     new TextRun({
-                                        text: element.nombre
+                                        text: element.apellidos + ', ' + element.nombres
                                     }),
                                 ],
                                 alignment: AlignmentType.CENTER
@@ -559,7 +563,7 @@ const generarTablaDatosAlumno = (object) => {
                             children: [
                                 new Paragraph({
                                     style: "aside",
-                                    text: object.nombre,
+                                    text: object.apellidos + ', ' + object.nombres,
                                     alignment: AlignmentType.LEFT
                                 })
                             ],
@@ -775,6 +779,8 @@ const generarTablaDatosAlumno = (object) => {
 
 }
 export const generarPlanillaPropuestaTEG = (planilla_propuesta_TEG) => {
+    console.log("planilla_propuesta_TEG")
+    console.log(planilla_propuesta_TEG)
     const doc = new Document({
         creator: "Luis C. Somoza & Wladimir SanVicente",
         title: "Planilla de propuesta de TEG",
@@ -896,7 +902,7 @@ export const generarPlanillaPropuestaTEG = (planilla_propuesta_TEG) => {
                     style: "aside",
                     children: [
                         new TextRun({
-                            text: 'Ciudad Guayanna, ' + planilla_propuesta_TEG.fecha_envio,
+                            text: 'Ciudad Guayana, ' + planilla_propuesta_TEG.fecha_envio.toLocaleDateString(),
                             font: "Times New Roman",
                         })
                     ],
@@ -1144,7 +1150,7 @@ export const generarPlanillaPropuestaTEG = (planilla_propuesta_TEG) => {
                                             },
                                             children: [
                                                 new TextRun({
-                                                    text: planilla_propuesta_TEG.tutor_academico.nombre,
+                                                    text: planilla_propuesta_TEG.tutor_academico.nombres,
                                                 })
                                             ],
                                             alignment: AlignmentType.LEFT
@@ -1377,7 +1383,7 @@ export const generarPlanillaPropuestaTEG = (planilla_propuesta_TEG) => {
                                             style: "aside",
                                             children: [
                                                 new TextRun({
-                                                    text: planilla_propuesta_TEG.tutor_academico.fecha_entrega,
+                                                    text: new Date().toLocaleDateString(),
                                                 })
                                             ],
                                             alignment: AlignmentType.LEFT
@@ -1681,7 +1687,7 @@ export const generarPlanillaPropuestaTEG = (planilla_propuesta_TEG) => {
                                             style: "aside",
                                             children: [
                                                 new TextRun({
-                                                    text: planilla_propuesta_TEG.tutor_academico.nombre,
+                                                    text: planilla_propuesta_TEG.tutor_academico.nombres,
                                                 })
                                             ],
                                             alignment: AlignmentType.LEFT
@@ -2132,7 +2138,7 @@ export const generarPlanillaPropuestaTEG = (planilla_propuesta_TEG) => {
                                         new Paragraph({
                                             children: [
                                                 new TextRun({
-                                                    text: planilla_propuesta_TEG.tutor_academico.nombre,
+                                                    text: planilla_propuesta_TEG.tutor_academico.nombres,
                                                 })
                                             ],
                                             style: "aside",
@@ -2145,7 +2151,10 @@ export const generarPlanillaPropuestaTEG = (planilla_propuesta_TEG) => {
                                         type: WidthType.DXA
                                     },
                                     verticalAlign: VerticalAlign.CENTER
-                                }),                       
+                                }),               
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia
                             ]
                         }),
                         new TableRow({
@@ -2188,7 +2197,10 @@ export const generarPlanillaPropuestaTEG = (planilla_propuesta_TEG) => {
                                         type: WidthType.DXA
                                     },
                                     verticalAlign: VerticalAlign.CENTER
-                                })
+                                }),
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia
                             ]
                         }),
                         new TableRow({
@@ -2333,23 +2345,9 @@ export const generarPlanillaPropuestaTEG = (planilla_propuesta_TEG) => {
                                     },
                                     verticalAlign: VerticalAlign.CENTER
                                 }),
-                                new TableCell({
-                                    borders: linea,
-                                    children: [
-                                        new Paragraph({
-                                            children: [
-                                                new TextRun({
-                                                    text: "",
-                                                })
-                                            ],
-                                            
-                                        }),
-                                    ],
-                                    width: {
-                                        size: 10000,
-                                        type: WidthType.DXA
-                                    },
-                                }),
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia
                             ]
                         }),
                         new TableRow({
@@ -2388,19 +2386,9 @@ export const generarPlanillaPropuestaTEG = (planilla_propuesta_TEG) => {
                                     ],
                                     verticalAlign: VerticalAlign.CENTER
                                 }),
-                                new TableCell({
-                                    borders: linea,
-                                    children: [
-                                        new Paragraph({
-                                            children: [
-                                                new TextRun({
-                                                    text: "",
-                                                })
-                                            ],
-                                            
-                                        }),
-                                    ]
-                                })
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia
                             ]
                         }),
                         new TableRow({
@@ -2430,7 +2418,7 @@ export const generarPlanillaPropuestaTEG = (planilla_propuesta_TEG) => {
                                         new Paragraph({
                                             children: [
                                                 new TextRun({
-                                                    text: planilla_propuesta_TEG.tutor_academico.graduado,
+                                                    text: planilla_propuesta_TEG.tutor_academico.fecha_graduado,
                                                 })
                                             ],
                                             style: "aside",
@@ -2526,6 +2514,9 @@ export const generarPlanillaPropuestaTEG = (planilla_propuesta_TEG) => {
                                     verticalAlign: VerticalAlign.CENTER
 
                                 }),
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia
                             ]
                         }),
                         
@@ -2581,11 +2572,22 @@ export const generarPlanillaPropuestaTEG = (planilla_propuesta_TEG) => {
                                                     text: planilla_propuesta_TEG.empresa.nombre,
                                                 })
                                             ],
-                                            alignment: AlignmentType.LEFT
+                                            alignment: AlignmentType.LEFT,
+                                            indent: {
+                                                firstLine: 300,
+                                                size: 300,
+                                                type: WidthType.DXA,
+                                            }
                                         })
                                     ],
                                     verticalAlign: VerticalAlign.CENTER
-                                })
+                                }),
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia
                             ]
                         }),
                         new TableRow({
@@ -2619,11 +2621,22 @@ export const generarPlanillaPropuestaTEG = (planilla_propuesta_TEG) => {
                                                 })
                                             ],
                                             style: "aside",
-                                            alignment: AlignmentType.LEFT
+                                            alignment: AlignmentType.LEFT,
+                                            indent: {
+                                                firstLine: 300,
+                                                size: 300,
+                                                type: WidthType.DXA,
+                                            }
                                         })
                                     ],
                                     verticalAlign: VerticalAlign.CENTER
-                                })
+                                }),
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia
                             ]
                         }),
                         new TableRow({
@@ -2657,11 +2670,22 @@ export const generarPlanillaPropuestaTEG = (planilla_propuesta_TEG) => {
                                                 })
                                             ],
                                             style: "aside",
-                                            alignment: AlignmentType.LEFT
+                                            alignment: AlignmentType.LEFT,
+                                            indent: {
+                                                firstLine: 300,
+                                                size: 300,
+                                                type: WidthType.DXA,
+                                            }
                                         })
                                     ],
                                     verticalAlign: VerticalAlign.CENTER
-                                })
+                                }),
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia,
+                                celda_vacia
                             ]
                         }),
                     ]
@@ -2695,7 +2719,7 @@ export const generarPlanillaPropuestaTEG = (planilla_propuesta_TEG) => {
                 new Table({
                     rows: [
                         generarNombresAlumno(planilla_propuesta_TEG.alumno[0]),
-                        generarNombresAlumno(planilla_propuesta_TEG.alumno[1]),
+                        //generarNombresAlumno(planilla_propuesta_TEG),
                         new TableRow({
                             height: {
                                 value: 500, 
