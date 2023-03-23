@@ -123,7 +123,7 @@ const generarDesicion = (text) => {
 const generarCriterio = (text) => {
     return (new TableRow({
         height: {
-            value: 300,
+            value: 500,
             rule: HeightRule.EXACT
         },
         children: [
@@ -497,7 +497,7 @@ export const generarPE_revisor_teg = (PE_REVISOR_TEG) => {
                     rows: [
                         new TableRow({
                             height: {
-                                value: 300,
+                                value: 500,
                                 rule: HeightRule.EXACT
                             },
                             children: [
@@ -1013,7 +1013,7 @@ export const generarPE_revisor_teg = (PE_REVISOR_TEG) => {
                                         new Paragraph({
                                             children: [
                                                 new TextRun({
-                                                    text: "Lárez Mata, Jesús José"
+                                                    text: PE_REVISOR_TEG.revisor
                                                 })
                                             ],
                                             alignment: AlignmentType.LEFT

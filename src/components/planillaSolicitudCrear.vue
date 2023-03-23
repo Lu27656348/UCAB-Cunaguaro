@@ -1,14 +1,19 @@
 <script setup>
 import { ref, reactive, onMounted, computed } from "vue";
 import * as api from "../modules/apiTools.js";
+import { PlantillaDatosPersonales } from "../modules/classes/plantillasDatosPersonales.js";
 import { PlanillaCrearSolicitud } from "../modules/classes/planillaCrearSolicitud.js";
 import { PlanillaPropuestaTEG } from "../modules/classes/planillaPropuestaTEG.js";
 import { PlanillaPropuestaTIG } from "../modules/classes/planillaPropuestaTIG.js";
-import { FormularioEmpresa } from '../modules/classes/formularioEmpresa.js';
+import { FormularioEmpresa } from "../modules/classes/formularioEmpresa.js";
 
 const props = defineProps({
   showPlanillaCreate: Boolean,
 });
+
+let alumno1 = ref(new PlantillaDatosPersonales());
+let alumno2 = ref(new PlantillaDatosPersonales());
+let showAlumno2 = ref(false);
 
 //const emit = defineEmits(["actualizarData"]);
 const crearSolicitudForm = ref(new PlanillaCrearSolicitud());
@@ -18,6 +23,22 @@ let dataEmpresas = reactive([]);
 //let dataProfesionalesExternos = reactive([]);
 let idEmpresaSeleccionada = ref(null);
 
+const mostarAlumno2 = () => {
+  showAlumno2.value = !showAlumno2.value;
+
+  if (!showAlumno2.value && crearSolicitudForm.value.alumnos.length > 1) {
+    crearSolicitudForm.value.quitarAlumno();
+    alumno2.value.apellidos = "";
+    alumno2.value.nombres = "";
+    alumno2.value.cedula = "";
+
+    alumno2.value.email = "";
+    alumno2.value.telefono = "";
+    alumno2.value.oficina = "";
+    alumno2.value.habitacion = "";
+  }
+};
+
 const añadirEmpresa = async () => {
   await api.crearEmpresa(crearEmpresa);
   console.log(crearEmpresa);
@@ -25,22 +46,61 @@ const añadirEmpresa = async () => {
   crearSolicitudForm.value.ocultarAddEmpresa();
 };
 
-async function buscarEstudiante() {
+async function buscarEstudiantes() {
+  let alumnos = [];
+
   const resEstudiante = await api.obtenerEstudianteByCedula(
-    crearSolicitudForm.value.alumnos[0].cedula
+    alumno1.value.cedula
   );
-  crearSolicitudForm.value.alumnos[0].apellidos = resEstudiante.apellidos;
-  crearSolicitudForm.value.alumnos[0].nombres = resEstudiante.nombres;
-  crearSolicitudForm.value.alumnos[0].cedula = resEstudiante.cedula;
+  alumno1.value.apellidos = resEstudiante.apellidos;
+  alumno1.value.nombres = resEstudiante.nombres;
+  alumno1.value.cedula = resEstudiante.cedula;
+
+  alumno1.value.email = resEstudiante.email;
+  alumno1.value.telefono = resEstudiante.telefono;
+  alumno1.value.oficina = resEstudiante.oficina;
+  alumno1.value.habitacion = resEstudiante.habitacion;
+
+  console.log(alumno1.value);
+  alumnos.push(alumno1.value);
+
+  if (alumno2.value.cedula != "") {
+    const resEstudiante2 = await api.obtenerEstudianteByCedula(
+      alumno2.value.cedula
+    );
+    alumno2.value.apellidos = resEstudiante2.apellidos;
+    alumno2.value.nombres = resEstudiante2.nombres;
+    alumno2.value.cedula = resEstudiante2.cedula;
+
+    alumno2.value.email = resEstudiante2.email;
+    alumno2.value.telefono = resEstudiante2.telefono;
+    alumno2.value.oficina = resEstudiante2.oficina;
+    alumno2.value.habitacion = resEstudiante2.habitacion;
+
+    alumnos.push(alumno2.value);
+  }
+  crearSolicitudForm.value.alumnos = alumnos;
+  console.log(crearSolicitudForm.value.alumnos);
 }
 
 async function buscarTutor() {
+  console.log("BuscarTutor()");
+  console.log(crearSolicitudForm.value.tutor.cedula);
   const resTutor = await api.obtenerProfesorByCedula(
     crearSolicitudForm.value.tutor.cedula
   );
   crearSolicitudForm.value.tutor.apellidos = resTutor.apellidos;
   crearSolicitudForm.value.tutor.nombres = resTutor.nombres;
   crearSolicitudForm.value.tutor.cedula = resTutor.cedula;
+
+  crearSolicitudForm.value.tutor.email = resTutor.email;
+  crearSolicitudForm.value.tutor.telefono = resTutor.telefono;
+  crearSolicitudForm.value.tutor.oficina = resTutor.oficina;
+  crearSolicitudForm.value.tutor.experiencia = resTutor.experiencia;
+  crearSolicitudForm.value.tutor.habitacion = resTutor.habitacion;
+  crearSolicitudForm.value.tutor.fecha_graduado = resTutor.fecha_graduado;
+  crearSolicitudForm.value.tutor.cargo = resTutor.cargo;
+  crearSolicitudForm.value.tutor.profesion = "Recordar agregar profesion";
 }
 
 async function buscarTutorEmpresarial() {
@@ -51,8 +111,7 @@ async function buscarTutorEmpresarial() {
     resTutorEmpresarial.nombres;
   crearSolicitudForm.value.tutorEmpresarial.apellidos =
     resTutorEmpresarial.apellidos;
-  crearSolicitudForm.value.cedula =
-    resTutorEmpresarial.cedula;
+  crearSolicitudForm.value.cedula = resTutorEmpresarial.cedula;
 }
 
 crearSolicitudForm.value.empresa.idEmpresa = computed(() => {
@@ -74,71 +133,100 @@ crearSolicitudForm.value.empresa.idEmpresa = computed(() => {
 async function insertarPlanilla() {
   let planillaGenerada;
   if (crearSolicitudForm.value.trabajoDeGrado.modalidad == "E") {
-    await api.crearTrabajoGradoExperimental(crearSolicitudForm.value.trabajoDeGrado, crearSolicitudForm.value.alumnos[0].cedula,crearSolicitudForm.value.tutor.cedula);
+    console.log("InsertarPlanilla()");
+    console.log(crearSolicitudForm.value.alumnos[0].cedula);
+    console.log(crearSolicitudForm.value.tutor.cedula);
+    await api.crearTrabajoGradoExperimental(
+      crearSolicitudForm.value.trabajoDeGrado,
+      crearSolicitudForm.value.alumnos[0].cedula,
+      crearSolicitudForm.value.tutor.cedula
+    );
     planillaGenerada = new PlanillaPropuestaTEG(
       crearSolicitudForm.value.trabajoDeGrado.titulo,
       crearSolicitudForm.value.empresa.nombre,
       crearSolicitudForm.value.empresa,
       {
-        nombre: `${crearSolicitudForm.value.tutor.nombres} ${crearSolicitudForm.value.tutor.apellidos}`,
+        nombres: `${crearSolicitudForm.value.tutor.nombres}`,
+        apellidos: `${crearSolicitudForm.value.tutor.apellidos}`,
         cedula: crearSolicitudForm.value.tutor.cedula,
-        email: "franklinBelloBellisimo@ucab.edu.ve",
-        telefono: "04121598764",
-        profesion: "Ingeniero Informatico",
+        email: crearSolicitudForm.value.tutor.email,
+        telefono: crearSolicitudForm.value.tutor.telefono,
+        profesion: crearSolicitudForm.value.tutor.profesion,
         fecha_entrega: new Date(),
       }
     );
   } else {
-    const cedulatutorempresarial = await api.obtenerExternoByCedula(crearSolicitudForm.value.tutorEmpresarial.cedula);
-    console.log("cedulatutorempresarial")
-    console.log(cedulatutorempresarial)
-    await api.crearTrabajoGradoInstrumental(crearSolicitudForm.value.trabajoDeGrado, crearSolicitudForm.value.alumnos[0].cedula,cedulatutorempresarial.id_externo);
+    const cedulatutorempresarial = await api.obtenerExternoByCedula(
+      crearSolicitudForm.value.tutorEmpresarial.cedula
+    );
+    console.log("cedulatutorempresarial");
+    console.log(cedulatutorempresarial);
+    await api.crearTrabajoGradoInstrumental(
+      crearSolicitudForm.value.trabajoDeGrado,
+      crearSolicitudForm.value.alumnos[0].cedula,
+      cedulatutorempresarial.id_externo
+    );
     planillaGenerada = new PlanillaPropuestaTIG(
       crearSolicitudForm.value.trabajoDeGrado.titulo,
       crearSolicitudForm.value.empresa.nombre,
       crearSolicitudForm.value.empresa,
       {
-        nombre: `${crearSolicitudForm.value.tutorEmpresarial.nombres} ${crearSolicitudForm.value.tutorEmpresarial.apellidos}`,
+        nombres: `${crearSolicitudForm.value.tutorEmpresarial.nombres}`,
+        apellidos: `${crearSolicitudForm.value.tutorEmpresarial.apellidos}`,
         cedula: crearSolicitudForm.value.tutorEmpresarial.cedula,
-        email: "franklinBelloBellisimo@ucab.edu.ve",
-        telefono: "04121598764",
-        profesion: "Ingeniero Informatico",
+        email: crearSolicitudForm.value.tutorEmpresarial.email,
+        telefono: crearSolicitudForm.value.tutorEmpresarial.telefono,
+        profesion: crearSolicitudForm.value.tutorEmpresarial.profesion,
         fecha_entrega: new Date(),
       }
     );
   }
   planillaGenerada.añadirAlumno({
-    nombre: `${crearSolicitudForm.value.alumnos[0].nombres} ${crearSolicitudForm.value.alumnos[0].apellidos}`,
+    nombres: `${crearSolicitudForm.value.alumnos[0].nombres}`,
+    apellidos: `${crearSolicitudForm.value.alumnos[0].apellidos}`,
     cedula: crearSolicitudForm.value.alumnos[0].cedula,
-    telefono: "04147723811",
-    email: "wladimirSanvicente@wlachoCorp C.A",
-    oficina: "#33",
-    habitacion: "Marte, calle 4, al lado del detective marciano",
-    fecha_inicio: "02/14/2053",
-    horario_propuesto: "2 min al dia",
+    telefono: crearSolicitudForm.value.alumnos[0].telefono,
+    email: crearSolicitudForm.value.alumnos[0].email,
+    oficina: "#####",
+    habitacion: crearSolicitudForm.value.alumnos[0].habitacion,
+    fecha_inicio: "#####",
+    horario_propuesto: "#####",
   });
+  if (alumno2.value.cedula != "") {
+    planillaGenerada.añadirAlumno({
+      nombres: `${crearSolicitudForm.value.alumnos[1].nombres}`,
+      apellidos: `${crearSolicitudForm.value.alumnos[1].apellidos}`,
+      cedula: crearSolicitudForm.value.alumnos[1].cedula,
+      telefono: crearSolicitudForm.value.alumnos[1].telefono,
+      email: crearSolicitudForm.value.alumnos[1].email,
+      oficina: "#####",
+      habitacion: crearSolicitudForm.value.alumnos[1].habitacion,
+      fecha_inicio: "#####",
+      horario_propuesto: "#####",
+    });
+  }
 
   planillaGenerada.imprimir();
   //crearSolicitudForm.value.progressbarState += crearSolicitudForm.value.progressValue;
 }
 
-let textarea = ref( '' );
+let textarea = ref("");
 
-textarea.value = computed(()=>{
-  if (textarea == undefined){
+textarea.value = computed(() => {
+  if (textarea == undefined) {
     console.log(textarea.value);
-  return '';
+    return "";
   }
 });
 
-const mostrarTextArea = ()=>{
+const mostrarTextArea = () => {
   console.log(textarea.value);
-}
+};
 
-onMounted( async ()=>{
+onMounted(async () => {
   dataEmpresas = await api.obtenerEmpresas();
   crearSolicitudForm.value.crearSolicitud();
-})
+});
 //------------------------------------------------------>
 </script>
 <template>
@@ -159,7 +247,7 @@ onMounted( async ()=>{
             <!-- Trabajo de grado -->
             <p @click="mostrarTextArea()" for="">Titulo del Trabajo</p>
             <textarea
-            maxlength="200"
+              maxlength="200"
               v-model="crearSolicitudForm.trabajoDeGrado.titulo"
               class="request__container__preview__form__inputs--titulo-tg"
               placeholder="Tutilo de Propuesta TG"
@@ -173,34 +261,75 @@ onMounted( async ()=>{
               <option value="E">Experimental</option>
               <option value="I">Instrumental</option>
             </select>
-            <!-- Estudiante -->
-            <p for="">Cedula Alumno</p>
-            <input
-              type="number"
-              placeholder="V27301846"
-              v-model="crearSolicitudForm.alumnos[0].cedula"
-            />
-            <!--<p for="">Nombres</p>-->
-            <input
-              disabled
-              type="text"
-              placeholder="Nombres"
-              v-model="crearSolicitudForm.alumnos[0].nombres"
-            />
-            <!--<p for="">Apellidos</p>-->
-            <input
-              disabled
-              type="text"
-              placeholder="Apellidos"
-              v-model="crearSolicitudForm.alumnos[0].apellidos"
-            />
+            <!-- Estudiante 1 -->
+            <div
+              id="estudiante1"
+              class="request__container__preview__form__inputs"
+            >
+              <p for="">Cedula Alumno</p>
+              <input
+                type="number"
+                placeholder="V27301846"
+                v-model="alumno1.cedula"
+              />
+              <!--<p for="">Nombres</p>-->
+              <input
+                disabled
+                type="text"
+                placeholder="Nombres"
+                v-model="alumno1.nombres"
+              />
+              <!--<p for="">Apellidos</p>-->
+              <input
+                disabled
+                type="text"
+                placeholder="Apellidos"
+                v-model="alumno1.apellidos"
+              />
+              <button
+                style="display: none"
+                type="submit "
+                @click="buscarEstudiantes()"
+              ></button>
+              <button class="succes" @click="mostarAlumno2()">
+                Añadir 2do estudiante
+              </button>
+            </div>
+            <div
+              v-show="showAlumno2"
+              id="estudiante2"
+              class="request__container__preview__form__inputs"
+            >
+              <p for="">Cedula Alumno</p>
+              <input
+                type="number"
+                placeholder="V27301846"
+                v-model="alumno2.cedula"
+              />
+              <!--<p for="">Nombres</p>-->
+              <input
+                disabled
+                type="text"
+                placeholder="Nombres"
+                v-model="alumno2.nombres"
+              />
+              <!--<p for="">Apellidos</p>-->
+              <input
+                disabled
+                type="text"
+                placeholder="Apellidos"
+                v-model="alumno2.apellidos"
+              />
+            </div>
           </div>
           <div class="actions">
+            <!--
             <button
-              style="display: none"
-              type="submit "
-              @click="buscarEstudiante()"
+            style="display: none"
+            type="submit "
+            @click="buscarEstudiantes()"
             ></button>
+            -->
             <!--/*
             <button
               :disabled="
@@ -216,7 +345,9 @@ onMounted( async ()=>{
             </button>
             */-->
             <button
-            :disabled=" crearSolicitudForm.trabajoDeGrado.modalidad == ''? true : false " 
+              :disabled="
+                crearSolicitudForm.trabajoDeGrado.modalidad == '' ? true : false
+              "
               @click="crearSolicitudForm.tituloAlumnoCompletado()"
             >
               Siguiente
@@ -224,7 +355,13 @@ onMounted( async ()=>{
           </div>
         </form>
       </div>
-      <div class="tutor" v-show="crearSolicitudForm.showTutor && crearSolicitudForm.trabajoDeGrado.modalidad == 'E'">
+      <div
+        class="tutor"
+        v-show="
+          crearSolicitudForm.showTutor &&
+          crearSolicitudForm.trabajoDeGrado.modalidad == 'E'
+        "
+      >
         <form
           class="request__container__preview__form"
           @submit.prevent="submit"
@@ -271,16 +408,18 @@ onMounted( async ()=>{
             >
               Siguiente
             </button>-->
-            <button
-              @click="crearSolicitudForm.tutorCompletado()"
-            >
+            <button @click="crearSolicitudForm.tutorCompletado()">
               Siguiente
             </button>
           </div>
         </form>
       </div>
-      <div class="external-profesional"
-        v-show="crearSolicitudForm.showTutor && crearSolicitudForm.trabajoDeGrado.modalidad == 'I'"
+      <div
+        class="external-profesional"
+        v-show="
+          crearSolicitudForm.showTutor &&
+          crearSolicitudForm.trabajoDeGrado.modalidad == 'I'
+        "
       >
         <form
           class="request__container__preview__form"
@@ -322,9 +461,7 @@ onMounted( async ()=>{
               type="submit "
               @click="buscarTutorEmpresarial()"
             ></button>
-            <button
-              @click="crearSolicitudForm.tutorCompletado()"
-            >
+            <button @click="crearSolicitudForm.tutorCompletado()">
               Siguiente
             </button>
           </div>
@@ -344,7 +481,11 @@ onMounted( async ()=>{
             <!-- Empresa-->
             <p>Seleccione la empresa:</p>
             <div
-            style="display: flex; align-items: center; justify-content: center;"
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              "
             >
               <select name="Empresa" id="" v-model="idEmpresaSeleccionada">
                 <option
@@ -377,7 +518,8 @@ onMounted( async ()=>{
             />
           </div>
           <div class="actions">
-            <button class="succes"
+            <button
+              class="succes"
               :disabled="
                 crearSolicitudForm.empresa.idEmpresa == -1 ? true : false
               "
@@ -415,10 +557,7 @@ onMounted( async ()=>{
               v-model="crearEmpresa.telefono"
             />
           </div>
-          <button
-            class="login__form__btn succes"
-            @click="añadirEmpresa()"
-          >
+          <button class="login__form__btn succes" @click="añadirEmpresa()">
             Añadir Empresa
           </button>
         </div>
