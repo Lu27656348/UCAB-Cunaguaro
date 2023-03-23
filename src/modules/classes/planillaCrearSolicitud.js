@@ -24,9 +24,8 @@ export class PlanillaCrearSolicitud {
     this.tutor = new PlantillaDatosPersonales();
     this.tutorEmpresarial = new PlantillaDatosPersonales();
     this.empresa = {
-      idEmpresa: '',
+      id_empresa: '',
       nombre: '',
-      rif: '',
       direccion: '',
       telefono: ''
     };

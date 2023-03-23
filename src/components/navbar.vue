@@ -3,38 +3,38 @@
     <img src="../assets/ucab - isotipo.png" alt="" />
     <ul class="navbar__list">
       <li class="navbar__list__element">
-        <router-link to="/"><ion-icon name="log-out-outline"></ion-icon> Login</router-link>
+        <router-link to="/">Login</router-link>
       </li>
       <!--<li class="navbar__list__element"><router-link to="/upload-propouse">Upload<br>propuose</router-link></li>-->
       <li class="navbar__list__element">
-        <router-link to="/requests"><ion-icon name="bulb-outline"></ion-icon> Propuesta</router-link>
+        <router-link to="/requests">Planilla Solicitud</router-link>
       </li>
       <li class="navbar__list__element">
-        <router-link to="/committee"><ion-icon name="layers-outline"></ion-icon> Comité</router-link>
+        <router-link to="/committee">Comité de escuela</router-link>
       </li>
       <li class="navbar__list__element">
-        <router-link to="/reviewers"><ion-icon name="person-outline"></ion-icon> Revisor</router-link>
+        <router-link to="/reviewers">Asignacion de revisor</router-link>
       </li>
       <li class="navbar__list__element">
-        <router-link to="/reviewers_evaluation"><ion-icon name="search-circle-outline"></ion-icon> Revisión</router-link>
+        <router-link to="/reviewers_evaluation">Evaluaciones de Revisor</router-link>
       </li>
       <li class="navbar__list__element">
-        <router-link to="/council"><ion-icon name="people-outline"></ion-icon> Consejo</router-link>
+        <router-link to="/council">Consejo Escuela</router-link>
       </li>
       <li class="navbar__list__element">
-        <router-link to="/assignment"><ion-icon name="person-add-outline"></ion-icon> Tutor</router-link>
+        <router-link to="/assignment">Asignacion de tutor academico</router-link>
       </li>
       <li class="navbar__list__element">
-        <router-link to="/crearEmpresa"><ion-icon name="business-outline"></ion-icon> Empresas</router-link>
+        <router-link to="/crearEmpresa">Crear Empresa</router-link>
       </li>
       <li class="navbar__list__element">
-        <router-link to="/crearConsejoEscuela">+<ion-icon name="people-outline"></ion-icon> Consejo</router-link>
+        <router-link to="/crearConsejoEscuela">Crear Consejo Escuela</router-link>
       </li>
       <li class="navbar__list__element">
-        <router-link to="/designarJurado"><ion-icon name="cafe-outline"></ion-icon> Jurados</router-link>
+        <router-link to="/designarJurado">Designar Jurado</router-link>
       </li>
       <li class="navbar__list__element">
-        <router-link to="/evaluacionNotas"><ion-icon name="shield-checkmark-outline"></ion-icon> Defensa TG.</router-link>
+        <router-link to="/evaluacionNotas">Defensa Trabajo de Grado</router-link>
       </li>
     </ul>
   </div>
