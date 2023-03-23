@@ -44,12 +44,13 @@ const aceptarTG = async (id) => {
   await api.asignarTutorAcademico(id, formularioPropuesta.value.id_tg);
   alert("aceptado");
   const estudiante = await api.obtenerEstudianteDeTG(id);
-  const tutor_academico = await api.obtenerProfesorByCedula(formularioPropuesta.value.id_tutor_academico);
-  let tutor_empresarial = null;
-  if(formularioPropuesta.value.modalidad == 'I'){
-    tutor_empresarial = await api.obtenerExternosById(formularioPropuesta.value.id_tutor_empresarial)
-  }
-  
+  const tutor_academico = await api.obtenerProfesorByCedula(
+    formularioPropuesta.value.id_tutor_academico
+  );
+  const tutor_empresarial = await api.obtenerExternosById(
+    formularioPropuesta.value.id_tutor_empresarial
+  );
+
   const cartaDesignacion = new FormularioCartaDesigancion(
     formularioPropuesta.value.titulo,
     formularioPropuesta.value.modalidad,

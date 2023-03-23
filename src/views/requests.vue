@@ -59,14 +59,13 @@ const clickenComponente = async (id) => {
 
 async function actualizarPlanilla() {
   await api.actualizarPlanilla(planilla.value);
-  data.value = await api.obtenerPropuestas('PC');
-  return;
+  data.value = await api.obtenerPropuestas("PC");
 }
 
-async function eliminarPlanilla(){
+async function eliminarPlanilla() {
+  console.log(planilla.value);
   await api.eliminarPlanilla(planilla.value.id_tg);
-  data.value = await api.obtenerPropuestas('PC');
-  return;
+  data.value = await api.obtenerPropuestas("PC");
 }
 onMounted(async () => {
   data.value = await api.obtenerPropuestas("PC");
