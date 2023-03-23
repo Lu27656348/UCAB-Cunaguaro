@@ -5,6 +5,7 @@ import { ref, reactive, onMounted, computed } from "vue";
 import * as api from "../modules/apiTools.js";
 
 let data = reactive([]);
+let dataFiltrada = reactive([]);
 
 // Objeto para guardar los datos de la planilla que se esta leyendo
 let planilla = ref({
@@ -16,9 +17,12 @@ let planilla = ref({
   id_tutor_empresarial: "",
 });
 
+let btnFiltrado = ref(false);
+
 const showPlanillaUpDe = ref(false);
 const showPlanillaCreate = ref(false);
 const actualizarLista = ref(false);
+const tituloParaFiltrar = ref(null);
 
 function actionShowPlanillaCrear() {
   showPlanillaUpDe.value = false;
@@ -29,12 +33,22 @@ function actionShowPlanillaUpDe() {
   showPlanillaCreate.value = false;
 }
 
+function showFiltrado() {
+  btnFiltrado.value = !btnFiltrado.value;
+}
+
+function filtrarLista(){
+  dataFiltrada.value = data.value.filter((t) => t.titulo.includes(tituloParaFiltrar.value));
+  console.log(dataFiltrada.value);
+}
+
 const clickenComponente = async (id) => {
   actionShowPlanillaUpDe();
-  const respuesta = await api.obtenerTGById(id)
+  const respuesta = await api.obtenerTGById(id);
   console.log("clickenComponente()");
   console.log("planilla");
   planilla.value.id_tg = respuesta.id_tg;
+  planilla.value.id_tg_formateado = respuesta.id_tg_formateado;
   planilla.value.titulo = respuesta.titulo;
   planilla.value.modalidad = respuesta.modalidad;
   planilla.value.estatus = respuesta.estatus;
@@ -43,27 +57,21 @@ const clickenComponente = async (id) => {
   console.log(planilla.value);
 };
 
-async function actualizarPlanilla(){
+async function actualizarPlanilla() {
   await api.actualizarPlanilla(planilla.value);
-  data.value = await api.obtenerPropuestas('PC');
+  data.value = await api.obtenerPropuestas("PC");
 }
 
-async function eliminarPlanilla(){
-  console.log(planilla.value)
+async function eliminarPlanilla() {
+  console.log(planilla.value);
   await api.eliminarPlanilla(planilla.value.id_tg);
-  data.value = await api.obtenerPropuestas('PC');
+  data.value = await api.obtenerPropuestas("PC");
 }
-/*
-actualizarLista.value = computed( async () =>{
-  let falso = actualizarLista.value
-  console.log(actualizarLista.value);
-  await actualizarPlanilla();
-  return actualizarLista.value = false; 
-});
-*/
 onMounted(async () => {
-  data.value = await api.obtenerPropuestas('PC');
+  data.value = await api.obtenerPropuestas("PC");
   console.log(data.value);
+  dataFiltrada.value = data.value;
+  console.log(dataFiltrada.value);
 });
 
 //------------------------------------------------------>
@@ -71,28 +79,29 @@ onMounted(async () => {
 
 <template>
   <div class="request">
-    <!-- Colocar un nuevo contenedor para colocar el agregado de solicitudes en el la parte de la lista -->
-    <h1>Solicitudes de Propuestas de trabajo de grado</h1>
+    <div class="request__container__display__controllers">
+      <button class="succes">
+        <ion-icon name="person-circle-outline"></ion-icon>Buscar Estudiante
+      </button>
+      <button @click="showFiltrado()" class="succes">
+        <ion-icon name="bulb-outline"></ion-icon>Buscar Propuesta
+      </button>
+      <button class="succes">
+        <ion-icon name="cog-outline"></ion-icon>Buscar Modalidad
+      </button>
+      <button @click="actionShowPlanillaCrear()">
+        <img src="../assets/imgs/add-circle-outline.svg" alt="" />Crear Planilla
+      </button>
+    </div>
     <div class="container request__container">
       <!-- Colocar un nuevo contenedor para el filtrado -->
-
       <div class="request__container__display">
-        <div class="request__container__display__controllers">
-          <button>
-            <img src="../assets/imgs/search-circle-outline.svg" />Buscar
-            Solicitud
-          </button>
-          <button @click="actionShowPlanillaCrear()">
-            <img src="../assets/imgs/add-circle-outline.svg" alt="" />Crear
-            Planilla
-          </button>
-        </div>
-
         <div class="request__container__display__list">
           <Record
             class="request__container__display__list__record"
-            v-for="e in data.value"
+            v-for="e in dataFiltrada.value"
             :key="e.id_tg"
+            :id_tg="e.id_tg_formateado"
             :titulo="e.titulo"
             :modalidad="e.modalidad"
             :estatus="e.estatus"
@@ -109,10 +118,22 @@ onMounted(async () => {
           v-show="showPlanillaUpDe"
         >
           <div class="request__container__preview__form__inputs">
-            <p>Codigo del trabajo de Grado</p>
-            <input type="text" disabled style="user-select: none;" v-model="planilla.id_tg">
-            <p for="">Titulo del Trabajo</p>
-            <input type="text" v-model="planilla.titulo" />
+            <p>Codigo de Trabajo de Grado</p>
+            <input
+              disabled
+              type="text"
+              v-model="planilla.id_tg_formateado"
+              name=""
+              id=""
+            />
+            <p>Titulo de Trabajo de Grado</p>
+            <textarea
+              disabled
+              maxlength="200"
+              v-model="planilla.titulo"
+              class="request__container__preview__form__inputs--titulo-tg"
+              placeholder="Tutilo de Propuesta TG"
+            ></textarea>
             <p for="">Modalidad</p>
             <select name="modalidad" id="">
               <option value="E">Experimental</option>
@@ -120,22 +141,35 @@ onMounted(async () => {
             </select>
           </div>
           <div class="actions">
-            <button
-              type="submit"
-              @click=" actualizarPlanilla(planilla.id_tg)"
-            >
+            <button type="submit" @click="actualizarPlanilla(planilla.id_tg)">
               Actualizar planilla
             </button>
-            <button
-              @click="eliminarPlanilla(planilla.id_tg)"
-            >
+            <button class="cancel" @click="eliminarPlanilla(planilla.id_tg)">
               Eliminar planilla
             </button>
           </div>
         </form>
 
-        <crearSolicitud :showPlanillaCreate="showPlanillaCreate" @actualizarData="()=> actualizarLista = true" />
+        <crearSolicitud
+          :showPlanillaCreate="showPlanillaCreate"
+          @actualizarData="() => (actualizarLista = true)"
+        />
       </div>
+    </div>
+    <div
+      class="filter-form"
+      v-if="btnFiltrado"
+      style="
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        background-color: aqua;
+        padding: 15px;
+        "
+    >
+      <p>Digite el Titulo de Trabajo de Grado</p>
+      <input type="text" v-model="tituloParaFiltrar" placeholder="Titulo de Trabajo de Grado">
+      <button @click="filtrarLista()">Buscar propuesta</button>
     </div>
   </div>
 </template>
