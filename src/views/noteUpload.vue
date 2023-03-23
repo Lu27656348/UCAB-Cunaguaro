@@ -95,6 +95,13 @@ onMounted(async () => {
           <h2>Visualización del documento de solicitud</h2>
           <div class="request__container__preview__form up-de">
             <div class="request__container__preview__form__inputs">
+              <textarea
+                disabled
+                maxlength="200"
+                v-model=planilla.titulo
+                class="request__container__preview__form__inputs--titulo-tg"
+                placeholder="Tutilo de Propuesta TG"
+              ></textarea>
               <p>Nota Jurado 1 {{ planilla.j1 }}</p>
               <input type="range" min="0" max="20" v-model="planilla.nota1" />
               <p>{{ planilla.nota1 }}</p>

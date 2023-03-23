@@ -105,11 +105,13 @@ onMounted(async () => {
           <div class="request__container__preview__form up-de">
             <div class="request__container__preview__form__inputs">
               <p>Titulo del Trabajo</p>
-              <input
+              <textarea
                 disabled
-                type="text"
+                maxlength="200"
                 v-model="formularioPropuesta.titulo"
-              />
+                class="request__container__preview__form__inputs--titulo-tg"
+                placeholder="Tutilo de Propuesta TG"
+              ></textarea>
               <p>Modalidad</p>
               <input
                 disabled
