@@ -2,24 +2,14 @@
 import { ref, reactive, onMounted, computed } from "vue";
 import * as api from "../modules/apiTools.js";
 
-import { FormularioEmpresa } from '../modules/classes/formularioEmpresa.js';
-import { NotificacionDesignacionJurado} from '../modules/classes/NotificacionDesignacionJurado.js'
-import { planilla_evaluacion_final_TEG } from '../modules/generadorDOCX/Planilla_evaluacion_final_TEG.js'
-import { planilla_evaluacion_final_TIG } from '../modules/generadorDOCX/Planilla_evaluacion_final_TIG';
-import { notificacion_designacion_j } from '../modules/generadorDOCX/notificacion_designacion_j.js'
-import { notificacion_designacion } from "../modules/generadorDOCX/notificacion_jurado.js";
+import { FormularioEmpresa } from "../modules/classes/formularioEmpresa.js";
 
-import { planilla_evaluacion_trabajo_escrito_TEG } from "../modules/generadorDOCX/planilla_evaluacion_trabajo_escrito_TEG.js";
-import { planilla_evaluacion_presentacion_oral_TEG } from "../modules/generadorDOCX/planilla_evaluacion_presentacion_oral.js";
-import { planilla_evaluacion_TIG_Jurado } from "../modules/generadorDOCX/planilla_evaluacion_TIG_Jurado.js";
 let data = reactive([]);
 let dataConsejo = reactive([]);
 let dataEmpresas = reactive([]);
 let dataProfesores = reactive([]);
-let dataCDE = reactive([]);
 
-let profesoresDesignados = reactive(['','','','']);
-let cde_escogido = ref("");
+let profesoresDesignados = reactive(["", "", "", ""]);
 
 let planilla = ref({
   id_tg: "",
@@ -28,55 +18,38 @@ let planilla = ref({
   estatus: "",
   id_tutor_academico: "",
   id_tutor_empresarial: "",
-  cde: ""
 });
 
-let notificacion = ref(new NotificacionDesignacionJurado());
 let crearEmpresa = new FormularioEmpresa();
 
-const designarJurado = async (profesores, id_tg) => {
-  //console.log(dataProfesores.value);
-  console.log(cde_escogido.value);
-  console.log(profesoresDesignados)
-  notificacion.value.cde = await api.obtenerCDEById(cde_escogido.value);
-  notificacion.value.jurado1 = await api.obtenerProfesorByCedula(profesoresDesignados[0]);
-  notificacion.value.jurado2 = await api.obtenerProfesorByCedula(profesoresDesignados[1]);
+const añadirConsejo = async () => {
+  console.log("Se creo el consejo, yeiii ^^");
+};
 
-  planilla_evaluacion_TIG_Jurado(notificacion.value);
-  //planilla_evaluacion_presentacion_oral_TEG(notificacion.value)
-  //console.log(notificacion.value)
-  //planilla_evaluacion_final_TEG(notificacion.value);
-  //planilla_evaluacion_final_TIG(notificacion.value);
-  //notificacion_designacion_j(notificacion.value);
-  //notificacion_designacion(notificacion.value)
-  /*
-  await api.crearJurados(profesoresDesignados,id_tg);
-  */
-}
+const designarJurado = async (profesores, id_tg) => {
+  console.log(dataProfesores.value);
+  await api.crearJurados(profesoresDesignados, id_tg);
+};
 
 const clickenComponente = async (id) => {
-  const respuesta = await api.obtenerTGById(id)
+  const respuesta = await api.obtenerTGById(id);
+  console.log("clickenComponente()");
+  console.log("planilla");
   planilla.value.id_tg = respuesta.id_tg;
+  planilla.value.id_tg_formateado = respuesta.id_tg_formateado;
   planilla.value.titulo = respuesta.titulo;
   planilla.value.modalidad = respuesta.modalidad;
   planilla.value.estatus = respuesta.estatus;
   planilla.value.id_tutor_academico = respuesta.id_tutor_academico;
   planilla.value.id_tutor_empresarial = respuesta.id_tutor_empresarial;
-  planilla.value.cde = respuesta.id_cde_jurado;
-
-  notificacion.value.tg = await api.obtenerTGById(planilla.value.id_tg)
-  notificacion.value.alumnos = await api.obtenerEstudianteDeTG(planilla.value.id_tg);
-  notificacion.value.tutor_academico = await api.obtenerProfesorByCedula(planilla.value.id_tutor_academico)
-  //
-  //notificacion.value.tutor_empresarial = await api.obtenerExternosById(planilla.value.id_tutor_empresarial)
+  console.log(planilla.value);
 };
 
 onMounted(async () => {
   data.value = await api.obtenerTGsinJurado();
   dataProfesores.value = await api.obtenerProfesores();
-  dataCDE.value = await api.obtenerCDE();
+  console.log(data.value);
 });
-
 </script>
 <template>
   <div class="request">
@@ -95,7 +68,7 @@ onMounted(async () => {
             class="request__container__display__list__record"
             v-for="e in data.value"
             :key="e.id_tg"
-            @click="clickenComponente( e.id_tg )"
+            @click="clickenComponente(e.id_tg)"
           >
             <p>{{ e.titulo }}</p>
             <p>{{ e.estatus }}</p>
@@ -104,72 +77,66 @@ onMounted(async () => {
       </div>
       <div class="committe__container__preview">
         <h2>Visualización del documento de solicitud</h2>
-        <form action="" class="committe__container__preview__form"></form>
-        <div class="create-state">
-          <div class="progressbar">
-            <div class="progressbar--content"></div>
+        <form class="request__container__preview__form up-de">
+          <input type="text" placeholder="Id TG" v-model="planilla.id_tg_formateado">
+          <textarea
+            disabled
+            maxlength="200"
+            v-model="planilla.titulo"
+            class="request__container__preview__form__inputs--titulo-tg"
+            placeholder="Tutilo de Propuesta TG"
+          ></textarea>
+          <div class="request__container__preview__form__inputs">
+            <p>J1</p>
+            <select name="profesor" id="" v-model="profesoresDesignados[0]">
+              <option
+                v-for="p in dataProfesores.value"
+                :key="p.cedula"
+                :value="p.cedula"
+              >
+                {{ p.nombres + "" + p.apellidos }}
+              </option>
+            </select>
+            <p>J2</p>
+            <select name="profesor" id="" v-model="profesoresDesignados[1]">
+              <option
+                v-for="p in dataProfesores.value"
+                :key="p.cedula"
+                :value="p.cedula"
+              >
+                {{ p.nombres + "" + p.apellidos }}
+              </option>
+            </select>
+            <p>J1-suplente</p>
+            <select name="profesor" id="" v-model="profesoresDesignados[2]">
+              <option
+                v-for="p in dataProfesores.value"
+                :key="p.cedula"
+                :value="p.cedula"
+              >
+                {{ p.nombres + "" + p.apellidos }}
+              </option>
+            </select>
+            <p>J2-suplente</p>
+            <select name="profesor" id="" v-model="profesoresDesignados[3]">
+              <option
+                v-for="p in dataProfesores.value"
+                :key="p.cedula"
+                :value="p.cedula"
+              >
+                {{ p.nombres + "" + p.apellidos }}
+              </option>
+            </select>
           </div>
-          <div class="create-carousel">
-            <h2>Visualización del documento de solicitud</h2>
-            <div
-              class="request__container__preview__form up-de"
+          <div class="actions">
+            <button
+              class="login__form__btn succes"
+              @click="designarJurado(profesoresDesignados, planilla.id_tg)"
             >
-              <p>{{ planilla.id_tg }}</p>
-              <p>{{ planilla.titulo }}</p>
-              <div class="request__container__preview__form__inputs">
-                <p>J1</p>
-                <select name="profesor" id="" v-model="profesoresDesignados[0]">
-                  <option 
-                  v-for="p in dataProfesores.value"
-                  :key="p.cedula"
-                  :value="p.cedula"
-                  >{{ p.nombres + '' + p.apellidos }}</option>
-                </select>
-                <p>J2</p>
-                <select name="profesor" id="" v-model="profesoresDesignados[1]">
-                  <option 
-                  v-for="p in dataProfesores.value"
-                  :key="p.cedula"
-                  :value="p.cedula"
-                  >{{ p.nombres + '' + p.apellidos }}</option>
-                </select>
-                <p>J1-suplente</p>
-                <select name="profesor" id="" v-model="profesoresDesignados[2]">
-                  <option 
-                  v-for="p in dataProfesores.value"
-                  :key="p.cedula"
-                  :value="p.cedula"
-                  >{{ p.nombres + '' + p.apellidos }}</option>
-                </select>
-                <p>J2-suplente</p>
-                <select name="profesor" id="" v-model="profesoresDesignados[3]">
-                  <option 
-                  v-for="p in dataProfesores.value"
-                  :key="p.cedula"
-                  :value="p.cedula"
-                  >{{ p.nombres + '' + p.apellidos }}</option>
-                </select>
-                <p>Consejo de escuela</p>
-                <select name="cde" id="" v-model="cde_escogido">
-                  <option 
-                  v-for="p in dataCDE.value"
-                  :key="p.id_cde"
-                  :value="p.id_cde"
-                  >{{ p.id_cde_formateado }}</option>
-                </select>
-              </div>
-              <div class="actions">
-                <button class="login__form__btn succes"
-                @click="designarJurado(profesoresDesignados, planilla.id_tg)"
-                >
-                  Designar Jurado
-                </button>
-              </div>
-            </div>
-            <!-- aqui van los formularios necesarios para el proceso de crear una asignacion de revisor a la propuesta -->
+              Designar Jurado
+            </button>
           </div>
-        </div>
+        <!-- aqui van los formularios necesarios para el proceso de crear una asignacion de revisor a la propuesta -->
       </div>
     </div>
-  </div>
 </template>
