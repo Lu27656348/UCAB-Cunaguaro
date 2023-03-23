@@ -20,7 +20,6 @@ const clickenComponente = async (id) => {
 
 const designarTutor = async () => {
   console.log("formularioPropuesta");
-<<<<<<< HEAD
   console.log(formularioPropuesta.value.id_profesor_revisor);
   console.log(formularioPropuesta.value.id_tg);
 
@@ -51,35 +50,6 @@ const designarTutor = async () => {
       formularioPropuesta.value.modalidad,
       `${revisor.nombres} ${revisor.apellidos}`,
       "Agregar organizacion"
-=======
-  console.log(formularioPropuesta.value);
-  
-  await api.designarRevisor( 
-    formularioPropuesta.value.id_tg, 
-    formularioPropuesta.value.id_profesor_revisor 
-  );
-
-  let alumnos = await api.obtenerEstudianteDeTG(formularioPropuesta.value.id_tg);
-  console.log("alumnos")
-  console.log(alumnos);
-
-  let empresa = await api.obtenerEmpresaById(formularioPropuesta.value.id_empresa)
-  console.log("empresa")
-  console.log(empresa);
-
-  let revisor =  await api.obtenerProfesorByCedula(formularioPropuesta.value.id_profesor_revisor);
-  if(formularioPropuesta.value.modalidad === 'E'){
-    let tutor_academico =  await api.obtenerProfesorByCedula(formularioPropuesta.value.id_tutor_academico );
-    let planillaDesignacionDeRevisor = new PlanillaDesignacionRevisor(
-
-    formularioPropuesta.value.titulo,
-    tutor_academico,
-    new Date(),
-    { nombre: 'Luz E. Medina', correo_administrador: 'lmedinac@ucab.edu.ve' },
-    formularioPropuesta.value.modalidad,
-    `${revisor.nombres} ${revisor.apellidos}`,
-    empresa.nombre
->>>>>>> Middleware
     );
     planillaDesignacionDeRevisor.añadirAlumno(alumnos[0]);
     console.log("planillaDesignacionDeRevisor");
@@ -90,7 +60,6 @@ const designarTutor = async () => {
       formularioPropuesta.value.id_tutor_empresarial
     );
     let planillaDesignacionDeRevisor = new PlanillaDesignacionRevisor(
-<<<<<<< HEAD
       formularioPropuesta.value.titulo,
       tutor_empresarial,
       new Date(),
@@ -101,15 +70,6 @@ const designarTutor = async () => {
       formularioPropuesta.value.modalidad,
       `${revisor.nombres} ${revisor.apellidos}`,
       "Agregar organizacion"
-=======
-    formularioPropuesta.value.titulo,
-    tutor_empresarial,
-    new Date(),
-    { nombre: 'Luz E. Medina', correo_administrador: 'lmedinac@ucab.edu.ve' },
-    formularioPropuesta.value.modalidad,
-    `${revisor.nombres} ${revisor.apellidos}`,
-    empresa.nombre
->>>>>>> Middleware
     );
     planillaDesignacionDeRevisor.añadirAlumno(alumnos[0]);
     planillaDesignacionDeRevisor.imprimir();

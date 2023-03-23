@@ -14,7 +14,7 @@ export const obtenerTGById = async (idTG) => {
   return tg;
 };
 
-export const crearTrabajoGradoExperimental = async ( TG, cedulaEstudiante,cedulaTutorAcademico,id_empresa) => {
+export const crearTrabajoGradoExperimental = async ( TG, cedulaEstudiante,cedulaTutorAcademico) => {
   console.log("crearTrabajoGrado")
   fetch('http://localhost:3000/TG',{
     method: 'POST',
@@ -26,8 +26,7 @@ export const crearTrabajoGradoExperimental = async ( TG, cedulaEstudiante,cedula
       titulo: TG.titulo,
       modalidad: TG.modalidad,
       id_tutor_academico: cedulaTutorAcademico,
-      id_tutor_empresarial: null,
-      id_empresa: id_empresa
+      id_tutor_empresarial: null
     })
   })
   .then( (response) =>{
@@ -69,7 +68,7 @@ export const crearTrabajoGradoExperimental = async ( TG, cedulaEstudiante,cedula
   })
 };
 
-export const crearTrabajoGradoInstrumental = async ( TG, cedulaEstudiante,cedulaTutorExperimental,id_empresa) => {
+export const crearTrabajoGradoInstrumental = async ( TG, cedulaEstudiante,cedulaTutorExperimental ) => {
   console.log("crearTrabajoGrado")
   fetch('http://localhost:3000/TG',{
     method: 'POST',
@@ -81,8 +80,7 @@ export const crearTrabajoGradoInstrumental = async ( TG, cedulaEstudiante,cedula
       titulo: TG.titulo,
       modalidad: TG.modalidad,
       id_tutor_academico: null,
-      id_tutor_empresarial: cedulaTutorExperimental,
-      id_empresa: id_empresa
+      id_tutor_empresarial: cedulaTutorExperimental
     })
   })
   .then( (response) =>{
@@ -159,6 +157,8 @@ export const obtenerPropuestaSinRevisor = async ( ) => {
 export const obtenerEstudianteDeTG = async ( id_tg ) => {
   const resEstudiantes = await fetch("http://localhost:3000/alumnosTG/" + id_tg);
   const estudiantes = await resEstudiantes.json();
+  console.log("estudiantes")
+  console.log(estudiantes)
   let lista = [];
   estudiantes.forEach(element => {
    if(element.realiza_tg!=null){
