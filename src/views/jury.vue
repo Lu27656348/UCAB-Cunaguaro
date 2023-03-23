@@ -33,8 +33,7 @@ const añadirConsejo = async () => {
 
 const designarJurado = async (profesores, id_tg) => {
   console.log(dataProfesores.value);
-  await api.crearJurados(profesoresDesignados, id_tg);
-};
+  //await api.crearJurados(profesoresDesignados, id_tg);
 
   planilla_evaluacion_TIG_TA(notificacion.value);
   //planilla_evaluacion_TIG_Jurado(notificacion.value);
@@ -46,7 +45,7 @@ const designarJurado = async (profesores, id_tg) => {
   /*
   await api.crearJurados(profesoresDesignados,id_tg);
   */
-}
+};
 
 const clickenComponente = async (id) => {
   const respuesta = await api.obtenerTGById(id);
