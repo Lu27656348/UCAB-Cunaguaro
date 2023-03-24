@@ -125,7 +125,7 @@ crearSolicitudForm.value.empresa.idEmpresa = computed(() => {
     crearSolicitudForm.value.empresa.rif = arregloEmpresa[0].rif;
     crearSolicitudForm.value.empresa.direccion = arregloEmpresa[0].direccion;
     crearSolicitudForm.value.empresa.telefono = arregloEmpresa[0].telefono;
-
+    console.log(arregloEmpresa[0]);
     return arregloEmpresa[0].id_empresa;
   }
   return "";
@@ -495,7 +495,7 @@ onMounted(async () => {
           <div class="actions">
             <button
               class="succes"
-              :disabled="crearSolicitudForm.empresa.telefono == ''"
+              :disabled="crearSolicitudForm.empresa.idEmpresa == ''"
               @click="insertarPlanilla()"
             >
               Completado!
