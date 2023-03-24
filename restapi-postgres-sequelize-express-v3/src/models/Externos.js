@@ -42,7 +42,7 @@ export const Externos = sequelize.define('externos', {
         allowNull: true
     },
     fecha_graduado: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DATE,
         allowNull: true
     },
     cargo: {

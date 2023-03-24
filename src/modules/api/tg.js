@@ -38,29 +38,62 @@ export const crearTrabajoGradoExperimental = async ( TG, cedulaEstudiante,cedula
     console.log("data")
     console.log(data)
     console.log(data.id_tg)
-    const objeto = {
-      cedula_estudiante: cedulaEstudiante,
-      id_tg: data.id_tg
-    }
-    fetch('http://localhost:3000/realiza_TG',{
+    if( cedulaEstudiante.length == 1 ){
+      const objeto = {
+        cedula_estudiante: cedulaEstudiante[0].cedula,
+        id_tg: data.id_tg
+      }
+      fetch('http://localhost:3000/realiza_TG',{
       method: 'POST',
       mode: 'cors',
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(objeto)
-    })
-    .then( (response) => {
-      console.log(response)
-      return response.json()
-    })
-    .then( (data) => {
-      console.log(data)
-    })
-    .catch( (error) => {
-      console.log("Error en creacion de realiza");
-      console.log(error);
-    })
+      })
+      .then( (response) => {
+        console.log(response)
+        return response.json()
+      })
+      .then( (data) => {
+        console.log(data)
+      })
+      .catch( (error) => {
+        console.log("Error en creacion de realiza");
+        console.log(error);
+      })
+    }else if (cedulaEstudiante.length > 1){
+      console.log("Se detectaron 2 alumnos");
+      cedulaEstudiante.forEach( async (element) => {
+        if(element != undefined && element != null){
+          let objeto = {
+            cedula_estudiante: element.cedula,
+            id_tg: data.id_tg
+          }
+          console.log(objeto);
+          fetch('http://localhost:3000/realiza_TG',{
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(objeto)
+          })
+          .then( (response) => {
+            console.log(response)
+            return response.json()
+          })
+          .then( (data) => {
+            console.log(data)
+          })
+          .catch( (error) => {
+            console.log("Error en creacion de realiza con 2 estudiantes");
+            console.log(error);
+          })
+        }
+      })
+    }
+
   })
   .catch( (error) => {
     console.log("Error en creacion de TG desde la api");
@@ -92,29 +125,63 @@ export const crearTrabajoGradoInstrumental = async ( TG, cedulaEstudiante,cedula
     console.log("data")
     console.log(data)
     console.log(data.id_tg)
-    const objeto = {
-      cedula_estudiante: cedulaEstudiante,
-      id_tg: data.id_tg
+    
+    if (cedulaEstudiante.length == 1){
+      const objeto = {
+        cedula_estudiante: cedulaEstudiante[0].cedula,
+        id_tg: data.id_tg
+      }
+      fetch('http://localhost:3000/realiza_TG',{
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(objeto)
+      })
+      .then( (response) => {
+        console.log(response)
+        return response.json()
+      })
+      .then( (data) => {
+        console.log(data)
+      })
+      .catch( (error) => {
+        console.log("Error en creacion de realiza");
+        console.log(error);
+      })
+    }else if(cedulaEstudiante.length > 1){
+      console.log("Se detectaron 2 alumnos");
+      cedulaEstudiante.forEach( async (element) => {
+        if(element != undefined && element != null){
+          let objeto = {
+            cedula_estudiante: element.cedula,
+            id_tg: data.id_tg
+          }
+          console.log(objeto);
+          fetch('http://localhost:3000/realiza_TG',{
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(objeto)
+          })
+          .then( (response) => {
+            console.log(response)
+            return response.json()
+          })
+          .then( (data) => {
+            console.log(data)
+          })
+          .catch( (error) => {
+            console.log("Error en creacion de realiza con 2 estudiantes");
+            console.log(error);
+          })
+        }
+      })
     }
-    fetch('http://localhost:3000/realiza_TG',{
-      method: 'POST',
-      mode: 'cors',
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(objeto)
-    })
-    .then( (response) => {
-      console.log(response)
-      return response.json()
-    })
-    .then( (data) => {
-      console.log(data)
-    })
-    .catch( (error) => {
-      console.log("Error en creacion de realiza");
-      console.log(error);
-    })
+    
   })
   .catch( (error) => {
     console.log("Error en creacion de TG desde la api");
