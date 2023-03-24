@@ -9,6 +9,8 @@ import tgRoutes from './routes/TG.routes.js';
 import empresasRoutes from './routes/Empresas.routes.js'
 import cdeRoutes from './routes/CDE.routes.js';
 import juradoRoutes from './routes/Jurados.routes.js';
+import ctgRoutes from './routes/CTG.routes.js';
+import revisa_ctgRoutes from './routes/revisa_CTG.routes.js';
 
 
 import cors from 'cors'
@@ -28,6 +30,8 @@ app.use(tgRoutes);
 app.use(empresasRoutes);
 app.use(cdeRoutes);
 app.use(juradoRoutes);
+app.use(ctgRoutes);
+app.use(revisa_ctgRoutes);
 
 
 export default app;
