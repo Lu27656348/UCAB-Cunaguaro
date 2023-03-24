@@ -52,6 +52,16 @@ export const TG = sequelize.define('tg', {
         allowNull: true,
         defaultValue: null
     },
+    observaciones_revisor:{
+        type: DataTypes.TEXT,
+        allowNull: true,
+        defaultValue: null
+    },
+    decision_revisor:{
+        type: DataTypes.CHAR,
+        allowNull: true,
+        defaultValue: null
+    },
     id_tutor_academico: {
         type: DataTypes.STRING(10),
         allowNull: true,

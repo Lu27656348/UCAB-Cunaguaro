@@ -111,7 +111,7 @@ export const evaluacionComite = async (req, res) => {
 
 export const evaluacionRevisor = async (req, res) => {
     const id = req.params.id;
-    const { desicion_revisor } = req.body;
+    const { decision_revisor, observaciones_revisor, estatus } = req.body;
 
     try {
         const buscar = await TG.findOne({
@@ -120,8 +120,11 @@ export const evaluacionRevisor = async (req, res) => {
             }
         });
 
-        buscar.estatus = desicion_revisor;
-        buscar.fecha_revision = new Date()
+        buscar.estatus = estatus;
+        buscar.decision_revisor = decision_revisor;
+        buscar.observaciones_revisor = observaciones_revisor;
+        buscar.fecha_revision = new Date();
+        
         const actualizar = await buscar.save();
         return res.json(buscar);
     } catch (error) {

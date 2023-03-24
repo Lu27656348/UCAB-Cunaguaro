@@ -103,6 +103,7 @@ onMounted(async () => {
             :key="e.id_tg"
             :id_tg="e.id_tg_formateado"
             :titulo="e.titulo"
+            :fecha_solicitud="e.fecha_solicitud"
             :modalidad="e.modalidad"
             :estatus="e.estatus"
             @click="clickenComponente(e.id_tg)"

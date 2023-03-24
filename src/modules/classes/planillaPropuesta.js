@@ -7,6 +7,8 @@ export class PropuestaTg{
     this.id_tutor_academico=null;
     this.id_tutor_empresarial = null;
     this.estatus='';
+    this.id_ctg='';
+    this.observaciones_revisor = '';
   };
   setPropuestaPendienteRevisor(){
     this.status = 'PR';

@@ -135,11 +135,11 @@ async function insertarPlanilla() {
   let planillaGenerada;
   if (crearSolicitudForm.value.trabajoDeGrado.modalidad == "E") {
     console.log("InsertarPlanilla()");
-    console.log(crearSolicitudForm.value.alumnos[0].cedula);
+    console.log(crearSolicitudForm.value.alumnos);
     console.log(crearSolicitudForm.value.tutor.cedula);
     await api.crearTrabajoGradoExperimental(
       crearSolicitudForm.value.trabajoDeGrado,
-      crearSolicitudForm.value.alumnos[0].cedula,
+      crearSolicitudForm.value.alumnos,
       crearSolicitudForm.value.tutor.cedula
     );
     planillaGenerada = new PlanillaPropuestaTEG(
@@ -164,7 +164,7 @@ async function insertarPlanilla() {
     console.log(cedulatutorempresarial);
     await api.crearTrabajoGradoInstrumental(
       crearSolicitudForm.value.trabajoDeGrado,
-      crearSolicitudForm.value.alumnos[0].cedula,
+      crearSolicitudForm.value.alumnos,
       cedulatutorempresarial.id_externo
     );
     planillaGenerada = new PlanillaPropuestaTIG(

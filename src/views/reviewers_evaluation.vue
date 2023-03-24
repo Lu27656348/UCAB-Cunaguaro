@@ -23,14 +23,14 @@ const clickenComponente = async (id) => {
 };
 
 const rechazarPropuesta = async () => {
-  await api.rechazarPropuestaRevisor(formularioPropuesta.value.id_tg);
+  await api.rechazarPropuestaRevisor(formularioPropuesta.value.id_tg, formularioPropuesta.value.observaciones_revisor);
   alert("Rechazada por Revisor");
   dataPropuestasConRevisorAsignado.value =
     await api.obtenerPropuestaConRevisorAsignado();
 };
 
 const aprobarPropuesta = async () => {
-  await api.aprobarPropuestaRevisor(formularioPropuesta.value.id_tg);
+  await api.aprobarPropuestaRevisor(formularioPropuesta.value.id_tg, formularioPropuesta.value.observaciones_revisor);
   alert("Aprobada por Revisor");
   dataPropuestasConRevisorAsignado.value =
     await api.obtenerPropuestaConRevisorAsignado();
@@ -90,6 +90,13 @@ onMounted(async () => {
               <input disabled type="text" v-model="revisor.nombres" />
               <input disabled type="text" v-model="revisor.apellidos" />
               <input disabled type="text" v-model="revisor.cedula" />
+              <strong>Observaciones</strong>
+              <textarea
+                style="height: 50px;"
+                v-model="formularioPropuesta.observaciones_revisor"
+                class="request__container__preview__form__inputs--titulo-tg"
+                placeholder="Observaciones..."
+              ></textarea>
             </div>
 
             <div class="actions">

@@ -4,20 +4,20 @@ import * as api from "../modules/apiTools.js";
 import { PropuestaTg } from "../modules/classes/planillaPropuesta.js";
 
 let dataPropuestas = reactive([]);
-let dataPorRevisores = reactive([]);
-let dataProfesores = reactive([]);
-let datosProfesor = null;
+let dataComites = reactive([]);
 //Lista de comites en bdd
 let comites;
 
 let formularioPropuesta = ref(new PropuestaTg());
-console.log(formularioPropuesta);
 
 const clickenComponente = async (id) => {
-  console.log(id);
+  //console.log(id);
   formularioPropuesta.value = await api.obtenerTGById(id);
-  console.log("formularioPropuesta.value");
-  console.log(formularioPropuesta.value);
+  //console.log("formularioPropuesta.value");
+  //console.log(formularioPropuesta.value);
+
+  let datosProfesor;
+
   if (formularioPropuesta.value.modalidad === "E") {
     const resdatosProfesor = await api.obtenerProfesorByCedula(
       formularioPropuesta.value.id_tutor_academico
@@ -32,21 +32,26 @@ const clickenComponente = async (id) => {
 };
 
 const rechazarPropuestaComite = async () => {
-  api.rechazarPropuestaComite(formularioPropuesta.value.id_tg);
+  await api.rechazarPropuestaComite(formularioPropuesta.value.id_tg);
+  await api.rechazarPropuestaCTG(formularioPropuesta.value.id_tg, formularioPropuesta.value.id_ctg);
   alert("Rechazado con tristeza");
   dataPropuestas.value = await api.obtenerPropuestas("PC");
 };
 
 const aprobarPropuestaComite = async () => {
-  api.aprobarPropuestaComite(formularioPropuesta.value.id_tg);
+  await api.aprobarPropuestaComite(formularioPropuesta.value.id_tg);
+  await api.aprobarPropuestaCTG(formularioPropuesta.value.id_tg, formularioPropuesta.value.id_ctg);
   alert("Aprobado por comite");
   dataPropuestas.value = await api.obtenerPropuestas("PC");
+  alert("Aprobado por comite");
 };
 
 onMounted(async () => {
   dataPropuestas.value = await api.obtenerPropuestas("PC");
   comites = await api.obtenerComites();
+  dataComites.value = await api.obtenerCTG();
   console.log(comites);
+  console.log(dataComites.value);
 });
 </script>
 <template>
@@ -106,6 +111,13 @@ onMounted(async () => {
                 type="text"
                 v-model="formularioPropuesta.estatus"
               />
+              <select v-model="formularioPropuesta.id_ctg" name="consejo" id="">
+                <option 
+                  v-for="c in dataComites.value"
+                  :key="c.id_ctg"
+                  :value="c.id_ctg"
+                >{{ c.id_ctg_formateado }}</option>
+              </select>
             </div>
             <div class="actions">
               <button class="cancel" @click="rechazarPropuestaComite()">
