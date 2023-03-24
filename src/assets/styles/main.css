@@ -188,6 +188,7 @@ body {
   align-items: center;
   flex-direction: column;
   overflow-y: auto;
+  transition: all 0.2s;
 }
 .create-state::-webkit-scrollbar {
   appearance: none;
@@ -485,6 +486,8 @@ button.cancel:active {
   align-items: center;
   height: 100%;
   width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
   background-color: #dadada;
 }
 .request__container__preview h2,
