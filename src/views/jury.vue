@@ -93,7 +93,7 @@ onMounted(async () => {
       </div>
       <div class="committe__container__preview">
         <h2>Visualización del documento de solicitud</h2>
-        <form class="request__container__preview__form up-de">
+        <div class="request__container__preview__form up-de">
           <input type="text" placeholder="Id TG" v-model="planilla.id_tg_formateado">
           <textarea
             disabled
@@ -152,7 +152,7 @@ onMounted(async () => {
               Designar Jurado
             </button>
           </div>
-        </form>
+        </div>
         <!-- aqui van los formularios necesarios para el proceso de crear una asignacion de revisor a la propuesta -->
       </div>
     </div>
