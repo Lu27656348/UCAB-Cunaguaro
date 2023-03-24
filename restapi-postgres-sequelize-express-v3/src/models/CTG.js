@@ -17,7 +17,7 @@ export const CTG = sequelize.define('ctg', {
         defaultValue: null,
         allowNull: true
     },
-    resumen_CTG: {
+    resumen_ctg: {
         type: DataTypes.TEXT,
         defaultValue: null,
         allowNull: true

@@ -101,6 +101,16 @@ export const aprobarPropuestaComite = async ( id_tg ) => {
   comites.aprobarPropuestaComite(id_tg);
 };
 
+export const obtenerCTG = async ( ) => {
+  return comites.obtenerCTG();
+};
+
+export const aprobarPropuestaCTG = async ( id_tg,id_ctg ) => {
+  return comites.revisionCTG(id_tg,id_ctg,"A");
+};
+export const rechazarPropuestaCTG = async ( id_tg,id_ctg ) => {
+  return comites.revisionCTG(id_tg,id_ctg,"R");
+};
 export const designarRevisor = async ( id_tg, id_profesor_revisor) => {
   return comites.designarRevisor(id_tg, id_profesor_revisor);
 };
@@ -113,12 +123,12 @@ export const obtenerPropuestaConRevisorAsignado = async ( ) => {
   return tgs.obtenerPropuestaConRevisorAsignado();
 };
 
-export const aprobarPropuestaRevisor = async ( id_tg ) => {
-  return revisores.aprobarPropuestaRevisor(id_tg);
+export const aprobarPropuestaRevisor = async ( id_tg, observaciones_revisor) => {
+  return revisores.aprobarPropuestaRevisor(id_tg,observaciones_revisor);
 };
 
-export const rechazarPropuestaRevisor = async ( id_tg ) => {
-  return revisores.rechazarPropuestaRevisor(id_tg);
+export const rechazarPropuestaRevisor = async ( id_tg, observaciones_revisor) => {
+  return revisores.rechazarPropuestaRevisor(id_tg,observaciones_revisor);
 };
 
 export const rechazarPropuestaCDE = async ( id_tg ) => {
@@ -144,24 +154,7 @@ export const obtenerCDEById = async ( id_cde ) => {
 export const anexarPlanilla = async ( id_tg, nombre_planilla, documento) => {
   return tgs.anexarPlanilla(id_tg, nombre_planilla, documento);
 };
-/*
-export const descargarPlanilla = async ( id_tg, nombre_planilla) => {
-  const resPlanilla = await fetch('http://localhost:3000/descargarPlanilla/',{
-    method: 'PUT',
-    mode: 'cors',
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      id_tg: id_tg,
-      nombre_planilla: nombre_planilla
-    })
-  });
-  console.log(resPlanilla)
-  const planilla = await resPlanilla.json()
-  return planilla;
-}
-*/
+
 export const crearCDE = async (id_cde) =>{
   return cde.crearCDE(id_cde);
 };

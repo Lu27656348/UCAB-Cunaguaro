@@ -15,9 +15,10 @@ let alumno1 = ref(new PlantillaDatosPersonales());
 let alumno2 = ref(new PlantillaDatosPersonales());
 let showAlumno2 = ref(false);
 
+
 //const emit = defineEmits(["actualizarData"]);
 const crearSolicitudForm = ref(new PlanillaCrearSolicitud());
-let crearEmpresa = new FormularioEmpresa();
+let crearEmpresa = ref(new FormularioEmpresa());
 
 let dataEmpresas = reactive([]);
 //let dataProfesionalesExternos = reactive([]);
@@ -40,8 +41,8 @@ const mostarAlumno2 = () => {
 };
 
 const añadirEmpresa = async () => {
-  await api.crearEmpresa(crearEmpresa);
-  console.log(crearEmpresa);
+  await api.crearEmpresa(crearEmpresa.value);
+  console.log(crearEmpresa.value);
   dataEmpresas.value = await api.obtenerEmpresas();
   crearSolicitudForm.value.ocultarAddEmpresa();
 };
@@ -124,7 +125,7 @@ crearSolicitudForm.value.empresa.idEmpresa = computed(() => {
     crearSolicitudForm.value.empresa.rif = arregloEmpresa[0].rif;
     crearSolicitudForm.value.empresa.direccion = arregloEmpresa[0].direccion;
     crearSolicitudForm.value.empresa.telefono = arregloEmpresa[0].telefono;
-
+    console.log(arregloEmpresa[0]);
     return arregloEmpresa[0].id_empresa;
   }
   return "";
@@ -262,10 +263,7 @@ onMounted(async () => {
               <option value="I">Instrumental</option>
             </select>
             <!-- Estudiante 1 -->
-            <div
-              id="estudiante1"
-              class="request__container__preview__form__inputs"
-            >
+            <div id="estudiante1">
               <p for="">Cedula Alumno</p>
               <input
                 type="number"
@@ -291,15 +289,8 @@ onMounted(async () => {
                 type="submit "
                 @click="buscarEstudiantes()"
               ></button>
-              <button class="succes" @click="mostarAlumno2()">
-                Añadir 2do estudiante
-              </button>
             </div>
-            <div
-              v-show="showAlumno2"
-              id="estudiante2"
-              class="request__container__preview__form__inputs"
-            >
+            <div v-show="showAlumno2" id="estudiante2">
               <p for="">Cedula Alumno</p>
               <input
                 type="number"
@@ -322,31 +313,16 @@ onMounted(async () => {
               />
             </div>
           </div>
+          <button class="succes" @click="mostarAlumno2()">
+            {{ showAlumno2 ? "Quitar Estudiante" : "Añadir Estudiante" }}
+          </button>
           <div class="actions">
-            <!--
-            <button
-            style="display: none"
-            type="submit "
-            @click="buscarEstudiantes()"
-            ></button>
-            -->
-            <!--/*
             <button
               :disabled="
-                crearSolicitudForm.alumnos[0].nombres == '' ||
-                crearSolicitudForm.trabajoDeGrado.modalidad == '' ||
-                crearSolicitudForm.trabajoDeGrado.tituloTG == ''
-                  ? true
-                  : false
-              "
-              @click="crearSolicitudForm.tituloAlumnoCompletado()"
-            >
-              Siguiente
-            </button>
-            */-->
-            <button
-              :disabled="
-                crearSolicitudForm.trabajoDeGrado.modalidad == '' ? true : false
+                (crearSolicitudForm.trabajoDeGrado.modalidad == '' ||
+                crearSolicitudForm.trabajoDeGrado.titulo == '' ||
+                alumno1.apellidos == '') ||
+                (showAlumno2 && alumno2.apellidos == '')
               "
               @click="crearSolicitudForm.tituloAlumnoCompletado()"
             >
@@ -355,8 +331,7 @@ onMounted(async () => {
           </div>
         </form>
       </div>
-      <div
-        class="tutor"
+      <div class="tutor"
         v-show="
           crearSolicitudForm.showTutor &&
           crearSolicitudForm.trabajoDeGrado.modalidad == 'E'
@@ -402,13 +377,10 @@ onMounted(async () => {
               type="submit "
               @click="buscarTutor()"
             ></button>
-            <!--<button
-              :disabled="crearSolicitudForm.tutor.nombres == '' ? true : false"
-              @click="crearSolicitudForm.tutorCompletado()"
+            <button 
+            @click="crearSolicitudForm.tutorCompletado()"
+            :disabled="crearSolicitudForm.tutor.apellidos==''"
             >
-              Siguiente
-            </button>-->
-            <button @click="crearSolicitudForm.tutorCompletado()">
               Siguiente
             </button>
           </div>
@@ -461,7 +433,10 @@ onMounted(async () => {
               type="submit "
               @click="buscarTutorEmpresarial()"
             ></button>
-            <button @click="crearSolicitudForm.tutorCompletado()">
+            <button 
+            @click="crearSolicitudForm.tutorCompletado()"
+            :disabled="crearSolicitudForm.tutorEmpresarial.apellidos==''"
+            >
               Siguiente
             </button>
           </div>
@@ -520,9 +495,7 @@ onMounted(async () => {
           <div class="actions">
             <button
               class="succes"
-              :disabled="
-                crearSolicitudForm.empresa.idEmpresa == -1 ? true : false
-              "
+              :disabled="crearSolicitudForm.empresa.idEmpresa == ''"
               @click="insertarPlanilla()"
             >
               Completado!
@@ -557,7 +530,10 @@ onMounted(async () => {
               v-model="crearEmpresa.telefono"
             />
           </div>
-          <button class="login__form__btn succes" @click="añadirEmpresa()">
+          <button 
+          class="login__form__btn succes" 
+          :disabled="crearEmpresa.direccion == '' || crearEmpresa.direccion == '' || crearEmpresa.telefono == ''"
+          @click="añadirEmpresa()">
             Añadir Empresa
           </button>
         </div>
