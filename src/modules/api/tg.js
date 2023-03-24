@@ -69,7 +69,7 @@ export const crearTrabajoGradoExperimental = async ( TG, cedulaEstudiante,cedula
 };
 
 export const crearTrabajoGradoInstrumental = async ( TG, cedulaEstudiante,cedulaTutorExperimental ) => {
-  console.log("crearTrabajoGrado")
+  console.log("API/crearTrabajoGrado()");
   fetch('http://localhost:3000/TG',{
     method: 'POST',
     mode: 'cors',

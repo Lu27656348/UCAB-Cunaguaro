@@ -17,10 +17,7 @@ export class PlanillaCrearSolicitud {
       id_tg: ""
     };
     
-    this.alumnos = [
-      new PlantillaDatosPersonales(),
-      new PlantillaDatosPersonales()
-    ];
+    this.alumnos = [];
     this.tutor = new PlantillaDatosPersonales();
     this.tutorEmpresarial = new PlantillaDatosPersonales();
     this.empresa = {
@@ -31,6 +28,14 @@ export class PlanillaCrearSolicitud {
       telefono: ''
     };
   };
+  añadirAlumno(alumno){
+    this.alumnos.push(alumno);
+    alert('Alumno Insertado');
+  }
+  quitarAlumno(){
+    this.alumnos.pop();
+    alert('Alumno Descartado');
+  }
   crearSolicitud() {
     this.progressbarState = 0;
 

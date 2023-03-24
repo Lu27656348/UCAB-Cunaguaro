@@ -10,10 +10,10 @@ export const Realiza_tg = sequelize.define('realiza_tg', {
         type: DataTypes.TEXT,
         primaryKey: true,
     },
-    fecha_entrega_informe: {
-        type: DataTypes.TEXT,
-        allowNull: true,
-        defaultValue: null
+    nota: {
+        type: DataTypes.INTEGER,
+        defaultValue: null,
+        allowNull: true
     }
 },{
     timestamps:false

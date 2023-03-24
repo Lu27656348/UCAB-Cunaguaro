@@ -4,14 +4,11 @@ import * as api from "../modules/apiTools.js";
 
 import { FormularioEmpresa } from "../modules/classes/formularioEmpresa.js";
 
-<<<<<<< HEAD
-import { planilla_evaluacion_trabajo_escrito_TEG } from "../modules/generadorDOCX/planilla_evaluacion_trabajo_escrito_TEG.js";
-import { planilla_evaluacion_presentacion_oral_TEG } from "../modules/generadorDOCX/planilla_evaluacion_presentacion_oral.js";
-import { planilla_evaluacion_TIG_Jurado } from "../modules/generadorDOCX/planilla_evaluacion_TIG_Jurado.js";
+//import { planilla_evaluacion_trabajo_escrito_TEG } from "../modules/generadorDOCX/";
+//import { planilla_evaluacion_presentacion_oral_TEG } from "../modules/generadorDOCX/planilla_evaluacion_presentacion_oral.js";
+//import { planilla_evaluacion_TIG_Jurado } from "../modules/generadorDOCX/planilla_evaluacion_TIG_Jurado.js";
 import { planilla_evaluacion_TIG_TA } from "../modules/generadorDOCX/planilla_evaluacion_TIG_TA.js"
 
-=======
->>>>>>> Middleware
 let data = reactive([]);
 let dataConsejo = reactive([]);
 let dataEmpresas = reactive([]);
@@ -34,7 +31,10 @@ const añadirConsejo = async () => {
   console.log("Se creo el consejo, yeiii ^^");
 };
 
-<<<<<<< HEAD
+const designarJurado = async (profesores, id_tg) => {
+  console.log(dataProfesores.value);
+  //await api.crearJurados(profesoresDesignados, id_tg);
+
   planilla_evaluacion_TIG_TA(notificacion.value);
   //planilla_evaluacion_TIG_Jurado(notificacion.value);
   //planilla_evaluacion_presentacion_oral_TEG(notificacion.value)
@@ -45,13 +45,7 @@ const añadirConsejo = async () => {
   /*
   await api.crearJurados(profesoresDesignados,id_tg);
   */
-}
-=======
-const designarJurado = async (profesores, id_tg) => {
-  console.log(dataProfesores.value);
-  await api.crearJurados(profesoresDesignados, id_tg);
 };
->>>>>>> Middleware
 
 const clickenComponente = async (id) => {
   const respuesta = await api.obtenerTGById(id);
@@ -158,7 +152,9 @@ onMounted(async () => {
               Designar Jurado
             </button>
           </div>
+        </form>
         <!-- aqui van los formularios necesarios para el proceso de crear una asignacion de revisor a la propuesta -->
       </div>
     </div>
+  </div>
 </template>
