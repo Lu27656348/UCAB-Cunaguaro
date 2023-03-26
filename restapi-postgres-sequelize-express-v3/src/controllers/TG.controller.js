@@ -346,3 +346,21 @@ export const obtenerTGconJurado = async (req, res) => {
         return res.status(404).json("Error en busqueda por estatus");
     }
 }
+
+
+export const designarCDEJurado = async (req, res) => {
+    try {
+        const{ id_tg,id_cde,observaciones_cde_j} = req.body
+        const buscar = await TG.findOne({
+            where: {
+                id_tg: id_tg
+            }
+        });
+        buscar.id_cde_jurado = id_cde;
+        buscar.observaciones_cde_j = observaciones_cde_j;
+        const actualizar = await buscar.save();
+        return res.json(buscar);
+    } catch (error) {
+        return res.status(404).json("Error en designación de jurado por parte del CDE");
+    }
+}

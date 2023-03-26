@@ -4,10 +4,13 @@ import * as api from "../modules/apiTools.js";
 
 import { FormularioEmpresa } from "../modules/classes/formularioEmpresa.js";
 
-//import { planilla_evaluacion_trabajo_escrito_TEG } from "../modules/generadorDOCX/";
-//import { planilla_evaluacion_presentacion_oral_TEG } from "../modules/generadorDOCX/planilla_evaluacion_presentacion_oral.js";
-//import { planilla_evaluacion_TIG_Jurado } from "../modules/generadorDOCX/planilla_evaluacion_TIG_Jurado.js";
-import { planilla_evaluacion_TIG_TA } from "../modules/generadorDOCX/planilla_evaluacion_TIG_TA.js"
+/* Planillas de notificaciones */
+import { notificacion_designacion_j } from '../modules/generadorDOCX/notificacion_designacion_j.js';
+import { notificacion_designacion } from '../modules/generadorDOCX/notificacion_jurado.js';
+
+/* Planillas para trabajo de grado experimental */
+import { planilla_evaluacion_final_TEG } from '../modules/generadorDOCX/Planilla_evaluacion_final_TEG.js';
+import { planilla_evaluacion_presentacion_oral_TEG } from '../modules/generadorDOCX/planilla_evaluacion_presentacion_oral.js';
 
 let data = reactive([]);
 let dataConsejo = reactive([]);
@@ -25,6 +28,19 @@ let planilla = ref({
   id_tutor_empresarial: "",
 });
 
+let consejoDeEscuela = reactive([]);
+let cde = ref('')
+
+
+let notificacion = ref({
+        tg: '',
+        alumnos: '',
+        jurado1: '',
+        jurado2: '',
+        tutor_academico: '',
+        tutor_empresarial: '',
+        cde: ''
+})
 let crearEmpresa = new FormularioEmpresa();
 
 const añadirConsejo = async () => {
@@ -32,19 +48,44 @@ const añadirConsejo = async () => {
 };
 
 const designarJurado = async (profesores, id_tg) => {
-  console.log(dataProfesores.value);
-  //await api.crearJurados(profesoresDesignados, id_tg);
+  //console.log(dataProfesores.value);
+  //console.log("profesoresDesignados[0]");
+  //console.log(profesoresDesignados[0]);
+  //console.log("profesoresDesignados[1]");
+  //console.log(profesoresDesignados[1]);
 
-  planilla_evaluacion_TIG_TA(notificacion.value);
-  //planilla_evaluacion_TIG_Jurado(notificacion.value);
+  const jurado1 = await api.obtenerProfesorByCedula(profesoresDesignados[0]);
+  const jurado2 = await api.obtenerProfesorByCedula(profesoresDesignados[1]);
+
+  notificacion.value.jurado1 = jurado1;
+  notificacion.value.jurado2 = jurado2;
+  notificacion.value.cde = await api.obtenerCDEById(cde.value)
+  console.log("cde.value")
+  console.log(cde.value)
+
+  /* La función crearJurado designa todos los jurados del trabajo de grado */
+  await api.crearJurados(profesoresDesignados, id_tg);
+  
+
+
+  console.log(planilla.value)
+  /* Si la planilla es experimental */
+  if (planilla.value.modalidad == 'E'){
+
   //planilla_evaluacion_presentacion_oral_TEG(notificacion.value)
   //planilla_evaluacion_final_TEG(notificacion.value);
-  //planilla_evaluacion_final_TIG(notificacion.value);
+
+  }else{
+
+  //planilla_evaluacion_TIG_TA(notificacion.value);
+  //planilla_evaluacion_TIG_Jurado(notificacion.value);
+  //planilla_evaluacion_final_TIG(notificacion.value); 
+
+  }
+
   //notificacion_designacion_j(notificacion.value);
-  //notificacion_designacion(notificacion.value)
-  /*
-  await api.crearJurados(profesoresDesignados,id_tg);
-  */
+  //notificacion_designacion(notificacion.value);
+
 };
 
 const clickenComponente = async (id) => {
@@ -59,11 +100,27 @@ const clickenComponente = async (id) => {
   planilla.value.id_tutor_academico = respuesta.id_tutor_academico;
   planilla.value.id_tutor_empresarial = respuesta.id_tutor_empresarial;
   console.log(planilla.value);
+
+  const alumnosTG = await api.obtenerEstudianteDeTG(respuesta.id_tg);
+  console.log("alumnosTG");
+  console.log(alumnosTG);
+
+  notificacion.value.alumnos = alumnosTG;
+  notificacion.value.tg = planilla.value;
+
+  notificacion.value.tutor_academico = await api.obtenerProfesorByCedula(planilla.value.id_tutor_academico);
+  if(planilla.value.modalidad == 'I'){
+    notificacion.value.tutor_empresarial = await api.obtenerExternosById(planilla.value.id_tutor_empresarial);
+  }else{
+    notificacion.value.tutor_empresarial = null;
+  }
+  notificacion.value.tg = planilla.value;
 };
 
 onMounted(async () => {
   data.value = await api.obtenerTGsinJurado();
   dataProfesores.value = await api.obtenerProfesores();
+  consejoDeEscuela.value = await api.obtenerCDE();
   console.log(data.value);
 });
 </script>
@@ -143,6 +200,16 @@ onMounted(async () => {
                 {{ p.nombres + "" + p.apellidos }}
               </option>
             </select>
+            <p>Consejo de escuela</p>
+            <select name="cde" id="" v-model="cde">
+              <option
+                v-for="p in consejoDeEscuela.value"
+                :key="p.id_cde"
+                :value="p.id_cde"
+              >
+                {{ p.id_cde_formateado }}
+              </option>
+            </select>
           </div>
           <div class="actions">
             <button
@@ -152,6 +219,7 @@ onMounted(async () => {
               Designar Jurado
             </button>
           </div>
+          
         </div>
         <!-- aqui van los formularios necesarios para el proceso de crear una asignacion de revisor a la propuesta -->
       </div>

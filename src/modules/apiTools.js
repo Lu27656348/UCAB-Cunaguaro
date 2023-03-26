@@ -211,3 +211,10 @@ export const crearJurados = async (array, id_tg) => {
   cde.crearJurados(array, id_tg);
   return;
 };
+
+export const designarCDEJurado = async (id_tg , id_cde) => {
+  fetch('',{
+    
+  })
+  return;
+};

@@ -55,7 +55,7 @@ const descargarPlanillas = async () => {
   console.log("Descargando planillas");
   //notificacion_designacion_j();
   //notificacion_jurado();
-  planilla_evaluacion_final_TEG();
+  //planilla_evaluacion_final_TEG();
 };
 
 onMounted(async () => {
