@@ -71,7 +71,7 @@ export const crearTrabajoGradoExperimental = async ( TG, cedulaEstudiante,cedula
             id_tg: data.id_tg
           }
           console.log(objeto);
-          fetch('http://localhost:3000/realiza_TG',{
+          await fetch('http://localhost:3000/realiza_TG',{
             method: 'POST',
             mode: 'cors',
             headers: {

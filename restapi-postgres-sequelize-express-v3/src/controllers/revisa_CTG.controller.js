@@ -1,11 +1,37 @@
-import {revisa_CTG} from '../models/revisa_CTG.js'
+import {revisa_CTG} from '../models/revisa_CTG.js';
+import { TG } from '../models/TG.js';
 export const obtenerrevisa_CTG = async (req,res) => {
     const revisa_ctg = await revisa_CTG.findAll();
     res.json(revisa_ctg);
 };
 export const crearrevisa_CTG = async (req,res) => {
+
+
     try {
         const { id_ctg,id_tg,decision_ctg,comentario } = req.body;
+        
+        if(decision_ctg == 'A'){
+            const buscar = await TG.findOne({
+                where: {
+                    id_tg: id_tg
+                }
+            });
+            console.log(buscar)
+            buscar.estatus = "PR";
+    
+           await buscar.save();
+        }else{
+            const buscar = await TG.findOne({
+                where: {
+                    id_tg: id_tg
+                }
+            });
+            console.log(buscar)
+            buscar.estatus = "R";
+    
+           await buscar.save();
+        }
+
         const nuevo = await revisa_CTG.create({
             id_ctg,
             id_tg,
@@ -17,7 +43,7 @@ export const crearrevisa_CTG = async (req,res) => {
         });
         res.json(nuevo);
     } catch (error) {
-        return res.status(500).json( { mensaje: "Error en creación de revisa_CTG", error: error.message })
+        return res.status(500).json( { mensaje: "Error en creación de revisa_CTG", error: error.message})
     }
 };
 export const actualizarrevisa_CTG = async (req,res) => {

@@ -105,11 +105,47 @@ export const obtenerCTG = async ( ) => {
   return comites.obtenerCTG();
 };
 
-export const aprobarPropuestaCTG = async ( id_tg,id_ctg ) => {
-  return comites.revisionCTG(id_tg,id_ctg,"A");
+export const aprobarPropuestaCTG = async ( id_tg,id_ctg,decision_ctg) => {
+  fetch('http://localhost:3000/revisa_CTG',{
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        id_ctg: id_ctg,
+        id_tg: id_tg,
+        decision_ctg: decision_ctg,
+        comentario: null
+      })
+  })
+  .then((response) =>{
+    return response.json()
+  })
+  .then( (data)  => {
+    console.log(data)
+  })
 };
-export const rechazarPropuestaCTG = async ( id_tg,id_ctg ) => {
-  return comites.revisionCTG(id_tg,id_ctg,"R");
+export const rechazarPropuestaCTG = async ( id_tg,id_ctg,decision_ctg ) => {
+  fetch('http://localhost:3000/revisa_CTG',{
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        id_ctg: id_ctg,
+        id_tg: id_tg,
+        decision_ctg: decision_ctg,
+        comentario: null
+      })
+  })
+  .then((response) =>{
+    return response.json()
+  })
+  .then( (data)  => {
+    console.log(data)
+  })
 };
 export const designarRevisor = async ( id_tg, id_profesor_revisor) => {
   return comites.designarRevisor(id_tg, id_profesor_revisor);
@@ -135,8 +171,8 @@ export const rechazarPropuestaCDE = async ( id_tg ) => {
   return cde.rechazarPropuestaCDE(id_tg);
 };
 
-export const aprobarPropuestaCDE = async ( id_tg ) => {
-  return cde.aprobarPropuestaCDE(id_tg);
+export const aprobarPropuestaCDE = async ( id_tg,id_cde ) => {
+  return cde.aprobarPropuestaCDE(id_tg,id_cde);
 };
 
 export const asignarTutorAcademico = async ( id_tg, id_tutor_academico ) => {

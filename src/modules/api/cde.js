@@ -13,7 +13,9 @@ export const rechazarPropuestaCDE = async ( id_tg ) => {
   return tg_con_revisor
 };
 
-export const aprobarPropuestaCDE = async ( id_tg ) => {
+export const aprobarPropuestaCDE = async ( id_tg,id_cde ) => {
+  console.log("aprobarPropuestaCDE()")
+  console.log(id_cde)
   const resTG = await fetch('http://localhost:3000/TG/evaluacionCDE/' + id_tg, {
     method: 'PUT',
     mode: 'cors',
@@ -21,7 +23,8 @@ export const aprobarPropuestaCDE = async ( id_tg ) => {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      desicion_cde: 'A'
+      desicion_cde: 'A',
+      id_cde: id_cde
     })
   });
   const tg_con_revisor = await resTG.json();

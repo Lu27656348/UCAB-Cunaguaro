@@ -88,11 +88,27 @@ export const buscarTGByModalidad = async (req, res) => {
         return res.status(404).json("TG no encontrado");
     }
 }
-
 export const evaluacionComite = async (req, res) => {
     const id = req.params.id;
-    const { desicion_comite } = req.body;
+    const { decision_comite } = req.body;
+    try {
+        const buscar = await TG.findOne({
+            where: {
+                id_tg: id
+            }
+        });
 
+        buscar.evaluacion_cde = decision_comite;
+        const actualizar = await buscar.save();
+        return res.json(buscar);
+    } catch (error) {
+        return res.status(404).json("Error en evaluación de comite");
+    }
+}
+/*
+export const evaluacionComite = async (req, res) => {
+    const id = req.params.id;
+    const { desicion_comite,id_cde } = req.body;
     try {
         const buscar = await TG.findOne({
             where: {
@@ -101,14 +117,15 @@ export const evaluacionComite = async (req, res) => {
         });
 
         buscar.estatus = desicion_comite;
-        buscar.fecha_ctg = new Date()
+        buscar.id_cde_tutor = id_cde;
+        buscar.evaluacion_cde = desicion_comite;
         const actualizar = await buscar.save();
         return res.json(buscar);
     } catch (error) {
         return res.status(404).json("Error en evaluación de comite");
     }
 }
-
+*/
 export const evaluacionRevisor = async (req, res) => {
     const id = req.params.id;
     const { decision_revisor, observaciones_revisor, estatus } = req.body;
@@ -134,7 +151,7 @@ export const evaluacionRevisor = async (req, res) => {
 
 export const evaluacionCDE = async (req, res) => {
     const id = req.params.id;
-    const { desicion_cde } = req.body;
+    const { desicion_cde,id_cde } = req.body;
 
     try {
         const buscar = await TG.findOne({
@@ -144,6 +161,8 @@ export const evaluacionCDE = async (req, res) => {
         });
 
         buscar.estatus = desicion_cde;
+        buscar.id_cde_tutor = id_cde;
+        buscar.evaluacion_cde = desicion_cde;
         buscar.fecha_cde = new Date()
         const actualizar = await buscar.save();
         return res.json(buscar);
