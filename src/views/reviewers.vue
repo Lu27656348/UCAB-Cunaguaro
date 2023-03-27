@@ -12,8 +12,11 @@ let showDesignarTutor = ref(false);
 //Lista de comites en bdd
 let profesoresADesignar = ref([]);
 let formularioPropuesta = ref(new PropuestaTg());
-
+const onSubmit = async ()  => {
+  console.log("submit")
+}
 const clickenComponente = async (id) => {
+
   formularioPropuesta.value = await api.obtenerTGById(id);
   console.log(formularioPropuesta.value);
 };
@@ -59,6 +62,8 @@ const designarTutor = async () => {
     let tutor_empresarial = await api.obtenerExternosById(
       formularioPropuesta.value.id_tutor_empresarial
     );
+    console.log("tutor_empresarial")
+    console.log(tutor_empresarial)
     let planillaDesignacionDeRevisor = new PlanillaDesignacionRevisor(
       formularioPropuesta.value.titulo,
       tutor_empresarial,
@@ -122,7 +127,7 @@ onMounted(async () => {
       </div>
       <div class="committe__container__preview">
         <h2>Visualización del documento de solicitud</h2>
-        <form action="" class="committe__container__preview__form">
+        <form action="" class="committe__container__preview__form" @submit.prevent="onSubmit">
           <h2>Visualización del documento de solicitud</h2>
           <div class="request__container__preview__form up-de">
             <div class="request__container__preview__form__inputs">

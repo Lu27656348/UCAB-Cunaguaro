@@ -67,6 +67,11 @@ export const TG = sequelize.define('tg', {
         allowNull: true,
         defaultValue: null
     },
+    tutor_asignado: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+    },
     id_tutor_empresarial: {
         type: DataTypes.INTEGER,
         allowNull: true,

@@ -66,30 +66,19 @@ export const crearTrabajoGradoExperimental = async ( TG, cedulaEstudiante,cedula
       console.log("Se detectaron 2 alumnos");
       cedulaEstudiante.forEach( async (element) => {
         if(element != undefined && element != null){
-          let objeto = {
-            cedula_estudiante: element.cedula,
-            id_tg: data.id_tg
-          }
-          console.log(objeto);
-          await fetch('http://localhost:3000/realiza_TG',{
+          const peticion = await fetch('http://localhost:3000/realiza_TG',{
             method: 'POST',
             mode: 'cors',
             headers: {
               "Content-Type": "application/json"
             },
-            body: JSON.stringify(objeto)
+            body: JSON.stringify({
+              cedula_estudiante: element.cedula,
+              id_tg: data.id_tg
+            })
           })
-          .then( (response) => {
-            console.log(response)
-            return response.json()
-          })
-          .then( (data) => {
-            console.log(data)
-          })
-          .catch( (error) => {
-            console.log("Error en creacion de realiza con 2 estudiantes");
-            console.log(error);
-          })
+          const respuesta = await peticion.json();
+          console.log(respuesta);
         }
       })
     }

@@ -183,7 +183,8 @@ export const asignarTutorAcademico = async (req, res) => {
         });
 
         buscar.id_tutor_academico = id_tutor_academico;
-
+        buscar.tutor_asignado = true;
+        const actualizar = await buscar.save();
         return res.json(buscar);
     } catch (error) {
         return res.status(404).json("Error en asignacion de tutor academico");
@@ -360,6 +361,20 @@ export const designarCDEJurado = async (req, res) => {
         buscar.observaciones_cde_j = observaciones_cde_j;
         const actualizar = await buscar.save();
         return res.json(buscar);
+    } catch (error) {
+        return res.status(404).json("Error en designación de jurado por parte del CDE");
+    }
+}
+
+export const obtenerPropuestasSinTutorAcademicoAsignado = async (req, res) => {
+    try {
+        const tgs = await TG.findAll({
+            where: {
+                tutor_asignado: false,
+                estatus: 'A'
+            }
+        })
+        return res.json(tgs);
     } catch (error) {
         return res.status(404).json("Error en designación de jurado por parte del CDE");
     }

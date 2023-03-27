@@ -53,7 +53,9 @@ const aceptarTG = async (id) => {
   const tutor_empresarial = await api.obtenerExternosById(
     formularioPropuesta.value.id_tutor_empresarial
   );
-
+  const onSubmit = async ()  => {
+    console.log("submit")
+  }
   const cartaDesignacion = new FormularioCartaDesigancion(
     formularioPropuesta.value.titulo,
     formularioPropuesta.value.modalidad,
@@ -103,7 +105,7 @@ onMounted(async () => {
       </div>
       <div class="committe__container__preview">
         <h2>Visualización del documento de solicitud</h2>
-        <form action="" class="committe__container__preview__form">
+        <form action="" class="committe__container__preview__form" @submit.prevent="onSubmit">
           <h2>Visualización del documento de solicitud</h2>
           <div class="request__container__preview__form up-de">
             <div class="request__container__preview__form__inputs">

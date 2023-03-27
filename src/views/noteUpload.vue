@@ -46,16 +46,12 @@ const clickenComponente = async (id) => {
 
   console.log(planilla.value);
   console.log("Jurados");
-  console.log(juradosTG);
 
   planilla.value.showNotas = true;
 };
 
 const descargarPlanillas = async () => {
   console.log("Descargando planillas");
-  //notificacion_designacion_j();
-  //notificacion_jurado();
-  //planilla_evaluacion_final_TEG();
 };
 
 onMounted(async () => {

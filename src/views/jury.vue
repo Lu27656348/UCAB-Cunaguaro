@@ -48,11 +48,6 @@ const añadirConsejo = async () => {
 };
 
 const designarJurado = async (profesores, id_tg) => {
-  //console.log(dataProfesores.value);
-  //console.log("profesoresDesignados[0]");
-  //console.log(profesoresDesignados[0]);
-  //console.log("profesoresDesignados[1]");
-  //console.log(profesoresDesignados[1]);
 
   const jurado1 = await api.obtenerProfesorByCedula(profesoresDesignados[0]);
   const jurado2 = await api.obtenerProfesorByCedula(profesoresDesignados[1]);
@@ -60,15 +55,11 @@ const designarJurado = async (profesores, id_tg) => {
   notificacion.value.jurado1 = jurado1;
   notificacion.value.jurado2 = jurado2;
   notificacion.value.cde = await api.obtenerCDEById(cde.value)
-  console.log("cde.value")
-  console.log(cde.value)
 
   /* La función crearJurado designa todos los jurados del trabajo de grado */
   await api.crearJurados(profesoresDesignados, id_tg);
-  
+  await api.designarCDEJurado(id_tg,cde.value);
 
-
-  console.log(planilla.value)
   /* Si la planilla es experimental */
   if (planilla.value.modalidad == 'E'){
 
@@ -85,13 +76,12 @@ const designarJurado = async (profesores, id_tg) => {
 
   //notificacion_designacion_j(notificacion.value);
   //notificacion_designacion(notificacion.value);
+  data.value = await api.obtenerTGsinJurado();
 
 };
 
 const clickenComponente = async (id) => {
   const respuesta = await api.obtenerTGById(id);
-  console.log("clickenComponente()");
-  console.log("planilla");
   planilla.value.id_tg = respuesta.id_tg;
   planilla.value.id_tg_formateado = respuesta.id_tg_formateado;
   planilla.value.titulo = respuesta.titulo;
@@ -99,11 +89,8 @@ const clickenComponente = async (id) => {
   planilla.value.estatus = respuesta.estatus;
   planilla.value.id_tutor_academico = respuesta.id_tutor_academico;
   planilla.value.id_tutor_empresarial = respuesta.id_tutor_empresarial;
-  console.log(planilla.value);
 
   const alumnosTG = await api.obtenerEstudianteDeTG(respuesta.id_tg);
-  console.log("alumnosTG");
-  console.log(alumnosTG);
 
   notificacion.value.alumnos = alumnosTG;
   notificacion.value.tg = planilla.value;
@@ -121,7 +108,6 @@ onMounted(async () => {
   data.value = await api.obtenerTGsinJurado();
   dataProfesores.value = await api.obtenerProfesores();
   consejoDeEscuela.value = await api.obtenerCDE();
-  console.log(data.value);
 });
 </script>
 <template>

@@ -77,6 +77,12 @@ export const obtenerPropuestas = async ( estatus ) => {
   return tgs.obtenerPropuestas(estatus);
 };
 
+export const obtenerPropuestasSinTutorAcademicoAsignado = async ( ) => {
+  const tgs = await fetch('http://localhost:3000/SinTutorAcademicoAsignado');
+  const respuesta = await tgs.json()
+  console.log(respuesta)
+  return respuesta;
+};
 export const eliminarPlanilla = async ( idTg ) => {
   tgs.eliminarPlanilla(idTg);
 };
@@ -212,9 +218,27 @@ export const crearJurados = async (array, id_tg) => {
   return;
 };
 
-export const designarCDEJurado = async (id_tg , id_cde) => {
-  fetch('',{
-    
-  })
+export const designarCDEJurado = async (id_tg , id_cde,observaciones_cde_j) => {
+  fetch('http://localhost:3000/designarCDEJurado',{
+      method: 'PUT',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        id_tg: id_tg,
+        id_cde: id_cde,
+        observaciones_cde_j: observaciones_cde_j
+      })
+    })
+    .then( (response) => {
+      return response.json()
+    })
+    .then( (data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.log(error)
+    })
   return;
 };
