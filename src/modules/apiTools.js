@@ -65,12 +65,12 @@ export const obtenerTGById = async (idTG) => {
   return tgs.obtenerTGById(idTG);
 };
 
-export const crearTrabajoGradoExperimental = async ( TG, cedulaEstudiante,cedulaTutorAcademico) => {
-  tgs.crearTrabajoGradoExperimental(TG, cedulaEstudiante, cedulaTutorAcademico);
+export const crearTrabajoGradoExperimental = async ( TG, cedulaEstudiante,cedulaTutorAcademico,id_empresa) => {
+  tgs.crearTrabajoGradoExperimental(TG, cedulaEstudiante, cedulaTutorAcademico,id_empresa);
 };
 
-export const crearTrabajoGradoInstrumental = async ( TG, cedulaEstudiante,cedulaTutorExperimental ) => {
-  tgs.crearTrabajoGradoInstrumental(TG, cedulaEstudiante, cedulaTutorExperimental);
+export const crearTrabajoGradoInstrumental = async ( TG, cedulaEstudiante,cedulaTutorExperimental,id_empresa ) => {
+  tgs.crearTrabajoGradoInstrumental(TG, cedulaEstudiante, cedulaTutorExperimental,id_empresa);
 };
 
 export const obtenerPropuestas = async ( estatus ) => {

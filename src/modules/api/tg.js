@@ -14,7 +14,7 @@ export const obtenerTGById = async (idTG) => {
   return tg;
 };
 
-export const crearTrabajoGradoExperimental = async ( TG, cedulaEstudiante,cedulaTutorAcademico) => {
+export const crearTrabajoGradoExperimental = async ( TG, cedulaEstudiante,cedulaTutorAcademico,id_empresa) => {
   console.log("crearTrabajoGrado")
   fetch('http://localhost:3000/TG',{
     method: 'POST',
@@ -26,7 +26,8 @@ export const crearTrabajoGradoExperimental = async ( TG, cedulaEstudiante,cedula
       titulo: TG.titulo,
       modalidad: TG.modalidad,
       id_tutor_academico: cedulaTutorAcademico,
-      id_tutor_empresarial: null
+      id_tutor_empresarial: null,
+      id_empresa: id_empresa
     })
   })
   .then( (response) =>{

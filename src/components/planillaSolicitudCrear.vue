@@ -125,6 +125,7 @@ crearSolicitudForm.value.empresa.idEmpresa = computed(() => {
     crearSolicitudForm.value.empresa.rif = arregloEmpresa[0].rif;
     crearSolicitudForm.value.empresa.direccion = arregloEmpresa[0].direccion;
     crearSolicitudForm.value.empresa.telefono = arregloEmpresa[0].telefono;
+    crearSolicitudForm.value.empresa.id_empresa = arregloEmpresa[0].id_empresa;
     console.log(arregloEmpresa[0]);
     return arregloEmpresa[0].id_empresa;
   }
@@ -137,10 +138,13 @@ async function insertarPlanilla() {
     console.log("InsertarPlanilla()");
     console.log(crearSolicitudForm.value.alumnos);
     console.log(crearSolicitudForm.value.tutor.cedula);
+    console.log(crearSolicitudForm.value.empresa)
+    
     await api.crearTrabajoGradoExperimental(
       crearSolicitudForm.value.trabajoDeGrado,
       crearSolicitudForm.value.alumnos,
-      crearSolicitudForm.value.tutor.cedula
+      crearSolicitudForm.value.tutor.cedula,
+      crearSolicitudForm.value.empresa.id_empresa
     );
     planillaGenerada = new PlanillaPropuestaTEG(
       crearSolicitudForm.value.trabajoDeGrado.titulo,
@@ -156,6 +160,7 @@ async function insertarPlanilla() {
         fecha_entrega: new Date(),
       }
     );
+    
   } else {
     const cedulatutorempresarial = await api.obtenerExternoByCedula(
       crearSolicitudForm.value.tutorEmpresarial.cedula
@@ -165,7 +170,8 @@ async function insertarPlanilla() {
     await api.crearTrabajoGradoInstrumental(
       crearSolicitudForm.value.trabajoDeGrado,
       crearSolicitudForm.value.alumnos,
-      cedulatutorempresarial.id_externo
+      cedulatutorempresarial.id_externo,
+      crearSolicitudForm.value.empresa.id_empresa
     );
     planillaGenerada = new PlanillaPropuestaTIG(
       crearSolicitudForm.value.trabajoDeGrado.titulo,

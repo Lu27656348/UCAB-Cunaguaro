@@ -13,17 +13,18 @@ export const obtenerTG = async (req,res) => {
 export const crearTG = async (req,res) => {
     console.log("crearTG")
     try {
-        const {titulo,modalidad,id_tutor_academico,id_tutor_empresarial } = req.body;
+        const {titulo,modalidad,id_tutor_academico,id_tutor_empresarial,id_empresa } = req.body;
         console.log(titulo)
         console.log(modalidad)
         const nuevo = await TG.create({
             titulo,
             modalidad,
             id_tutor_academico,
-            id_tutor_empresarial
+            id_tutor_empresarial,
+            id_empresa
         },
         {
-            fields: ["titulo","modalidad","id_tutor_academico","id_tutor_empresarial"]
+            fields: ["titulo","modalidad","id_tutor_academico","id_tutor_empresarial","id_empresa"]
         });
         res.json(nuevo);
     } catch (error) {
