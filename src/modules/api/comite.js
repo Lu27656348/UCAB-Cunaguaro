@@ -15,8 +15,6 @@ export const buscarCTG = async ( id ) => {
 };
 
 export const revisionCTG = ( id_ctg, id_tg,decision_ctg ) => {
-  console.log("decision_comite")
-  console.log(decision_ctg)
   let respuesta = null;
   fetch('http://localhost:3000/revisa_CTG',{
     method: 'POST',
@@ -35,15 +33,13 @@ export const revisionCTG = ( id_ctg, id_tg,decision_ctg ) => {
     return response.json()
   })
   .then( (data) => {
-    console.log(data)
-    respuesta = data
+    //console.log(data)
     return data;
   })
   .catch( (error) => {
-    console.log(error)
+    return error
   })
-  console.log(respuesta)
-  return respuesta;
+
 };
 
 export const obtenerComites = async ( estatus ) => {
@@ -68,17 +64,23 @@ export const rechazarPropuestaComite = async ( id_tg ) => {
   });
 };
 
-export const aprobarPropuestaComite = async ( id_tg ) => {
-  console.log(id_tg);
-  await fetch('http://localhost:3000/TG/evaluacionComite/' + id_tg,{
+export const aprobarPropuestaComite = async ( id_tg,id_ctg ) => {
+  
+  fetch('http://localhost:3000/TG/evaluacionComite/' + id_tg,{
     method: 'PUT',
     mode: 'cors',
     headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      desicion_comite: 'PR'
+      decision_comite: 'PR'
   })
+  })
+  .then( (response) => {
+    return response.json()
+  } )
+  .then( (data) => {
+    console.log(data)
   })
 };
 

@@ -13,7 +13,9 @@ export const rechazarPropuestaCDE = async ( id_tg ) => {
   return tg_con_revisor
 };
 
-export const aprobarPropuestaCDE = async ( id_tg ) => {
+export const aprobarPropuestaCDE = async ( id_tg,id_cde ) => {
+  console.log("aprobarPropuestaCDE()")
+  console.log(id_cde)
   const resTG = await fetch('http://localhost:3000/TG/evaluacionCDE/' + id_tg, {
     method: 'PUT',
     mode: 'cors',
@@ -21,7 +23,8 @@ export const aprobarPropuestaCDE = async ( id_tg ) => {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      desicion_cde: 'A'
+      desicion_cde: 'A',
+      id_cde: id_cde
     })
   });
   const tg_con_revisor = await resTG.json();
@@ -72,9 +75,15 @@ export const crearCDE = async (id_cde) =>{
   return respuesta;
 };
 
-export const crearJuradosPorUno = async (jurado,id_tg) => {
+export const crearJuradosPorUno = async (jurado,id_tg,index) => {
   console.log("jurado,",jurado)
   console.log("id", id_tg)
+  let tipo = null;
+  if(index == 3 || index == 2){
+    tipo = 'S'
+  }else{
+    tipo = 'J'
+  }
   const resJurado = await fetch('http://localhost:3000/crearJurado',{
     method: 'POST',
     mode: 'cors',
@@ -83,25 +92,17 @@ export const crearJuradosPorUno = async (jurado,id_tg) => {
     },
     body: JSON.stringify({
       cedula_profesor: jurado,
-      id_tg: id_tg
+      id_tg: id_tg,
+      tipo: tipo
     })
   })
   console.log(resJurado)
-  return respuesta;
 };
 
 export const crearJurados = async (array,id_tg) => {
   console.log("crearJurados()")
-  console.log("array")
-  console.log(array)
-  console.log("id_tg")
-  console.log(id_tg)
   array.forEach( async (element,index) => {
-   console.log("element")
-   console.log(element)
-   const respuesta = await crearJuradosPorUno(element,id_tg);
-   const hola = await respuesta.json()
-   console.log(hola)
+   await crearJuradosPorUno(element,id_tg,index);
  })
 
  return;

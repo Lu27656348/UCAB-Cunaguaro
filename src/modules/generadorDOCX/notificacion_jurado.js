@@ -75,6 +75,7 @@ const generarFilaDatosAlumno = (alumno,titulo,tutor,jurado1,jurado2) => {
                     ]
                 }),
                 new TableCell({
+                    rowSpan: 2,
                     children: [
                         new Paragraph({
                             children: [
@@ -87,6 +88,7 @@ const generarFilaDatosAlumno = (alumno,titulo,tutor,jurado1,jurado2) => {
                     ]
                 }),
                 new TableCell({
+                    rowSpan: 2,
                     children: [
                         new Paragraph({
                             children: [
@@ -99,6 +101,7 @@ const generarFilaDatosAlumno = (alumno,titulo,tutor,jurado1,jurado2) => {
                     ]
                 }),
                 new TableCell({
+                    rowSpan: 2,
                     children: [
                         new Paragraph({
                             children: [
@@ -111,6 +114,7 @@ const generarFilaDatosAlumno = (alumno,titulo,tutor,jurado1,jurado2) => {
                     ]
                 }),
                 new TableCell({
+                    rowSpan: 2,
                     children: [
                         new Paragraph({
                             children: [

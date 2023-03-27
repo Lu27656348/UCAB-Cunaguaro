@@ -12,7 +12,9 @@ let revisor = ref("");
 //Lista de comites en bdd
 let profesoresADesignar = ref([]);
 let formularioPropuesta = ref(new PropuestaTg());
-
+const onSubmit = async ()  => {
+  console.log("submit")
+}
 const clickenComponente = async (id) => {
   console.log(id);
   formularioPropuesta.value = await api.obtenerTGById(id);
@@ -69,7 +71,7 @@ onMounted(async () => {
       </div>
       <div class="committe__container__preview">
         <h2>Visualización del documento de solicitud</h2>
-        <form action="" class="committe__container__preview__form">
+        <form action="" class="committe__container__preview__form" @submit.prevent="onSubmit">
           <h2>Visualización del documento de solicitud</h2>
           <div class="request__container__preview__form up-de">
             <div class="request__container__preview__form__inputs">

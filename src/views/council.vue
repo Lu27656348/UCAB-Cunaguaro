@@ -35,22 +35,27 @@ const clickenComponente = async (id) => {
 
 const rechazarTG = async (id) => {
   await api.rechazarPropuestaCDE(id);
-  alert("rechazado");
   data.value = await api.obtenerPropuestas("PE");
 };
 
 const aceptarTG = async (id) => {
-  await api.aprobarPropuestaCDE(id);
-  await api.asignarTutorAcademico(id, formularioPropuesta.value.id_tg);
+
+  //formularioPropuesta.value.id_cde
+  await api.aprobarPropuestaCDE(id,formularioPropuesta.value.id_cde);
+
+  //await api.asignarTutorAcademico(id, formularioPropuesta.value.id_tg);
   alert("aceptado");
   const estudiante = await api.obtenerEstudianteDeTG(id);
   const tutor_academico = await api.obtenerProfesorByCedula(
     formularioPropuesta.value.id_tutor_academico
   );
+
   const tutor_empresarial = await api.obtenerExternosById(
     formularioPropuesta.value.id_tutor_empresarial
   );
-
+  const onSubmit = async ()  => {
+    console.log("submit")
+  }
   const cartaDesignacion = new FormularioCartaDesigancion(
     formularioPropuesta.value.titulo,
     formularioPropuesta.value.modalidad,
@@ -70,7 +75,7 @@ onMounted(async () => {
   data.value = await api.obtenerPropuestas("PE");
   dataConsejo.value = await api.obtenerCDE();
   //console.log("data.value")
-  //console.log(data.value)
+  console.log(dataConsejo.value)
 });
 </script>
 <template>
@@ -100,7 +105,7 @@ onMounted(async () => {
       </div>
       <div class="committe__container__preview">
         <h2>Visualización del documento de solicitud</h2>
-        <form action="" class="committe__container__preview__form">
+        <form action="" class="committe__container__preview__form" @submit.prevent="onSubmit">
           <h2>Visualización del documento de solicitud</h2>
           <div class="request__container__preview__form up-de">
             <div class="request__container__preview__form__inputs">
@@ -130,13 +135,13 @@ onMounted(async () => {
                 type="text"
                 v-model="formularioPropuesta.estatus"
               />
-              <select name="CDE" id="">
+              <select name="CDE" id="" v-model="formularioPropuesta.id_cde">
                 <option
                   v-for="c in dataConsejo.value"
                   :key="c.id_cde"
                   :value="c.id_cde"
                 >
-                  {{ c.id_cde }}
+                  {{ c.id_cde_formateado }}
                 </option>
               </select>
             </div>

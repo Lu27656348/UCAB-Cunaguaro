@@ -65,18 +65,24 @@ export const obtenerTGById = async (idTG) => {
   return tgs.obtenerTGById(idTG);
 };
 
-export const crearTrabajoGradoExperimental = async ( TG, cedulaEstudiante,cedulaTutorAcademico) => {
-  tgs.crearTrabajoGradoExperimental(TG, cedulaEstudiante, cedulaTutorAcademico);
+export const crearTrabajoGradoExperimental = async ( TG, cedulaEstudiante,cedulaTutorAcademico,id_empresa) => {
+  tgs.crearTrabajoGradoExperimental(TG, cedulaEstudiante, cedulaTutorAcademico,id_empresa);
 };
 
-export const crearTrabajoGradoInstrumental = async ( TG, cedulaEstudiante,cedulaTutorExperimental ) => {
-  tgs.crearTrabajoGradoInstrumental(TG, cedulaEstudiante, cedulaTutorExperimental);
+export const crearTrabajoGradoInstrumental = async ( TG, cedulaEstudiante,cedulaTutorExperimental,id_empresa ) => {
+  tgs.crearTrabajoGradoInstrumental(TG, cedulaEstudiante, cedulaTutorExperimental,id_empresa);
 };
 
 export const obtenerPropuestas = async ( estatus ) => {
   return tgs.obtenerPropuestas(estatus);
 };
 
+export const obtenerPropuestasSinTutorAcademicoAsignado = async ( ) => {
+  const tgs = await fetch('http://localhost:3000/SinTutorAcademicoAsignado');
+  const respuesta = await tgs.json()
+  console.log(respuesta)
+  return respuesta;
+};
 export const eliminarPlanilla = async ( idTg ) => {
   tgs.eliminarPlanilla(idTg);
 };
@@ -105,11 +111,47 @@ export const obtenerCTG = async ( ) => {
   return comites.obtenerCTG();
 };
 
-export const aprobarPropuestaCTG = async ( id_tg,id_ctg ) => {
-  return comites.revisionCTG(id_tg,id_ctg,"A");
+export const aprobarPropuestaCTG = async ( id_tg,id_ctg,decision_ctg) => {
+  fetch('http://localhost:3000/revisa_CTG',{
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        id_ctg: id_ctg,
+        id_tg: id_tg,
+        decision_ctg: decision_ctg,
+        comentario: null
+      })
+  })
+  .then((response) =>{
+    return response.json()
+  })
+  .then( (data)  => {
+    console.log(data)
+  })
 };
-export const rechazarPropuestaCTG = async ( id_tg,id_ctg ) => {
-  return comites.revisionCTG(id_tg,id_ctg,"R");
+export const rechazarPropuestaCTG = async ( id_tg,id_ctg,decision_ctg ) => {
+  fetch('http://localhost:3000/revisa_CTG',{
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        id_ctg: id_ctg,
+        id_tg: id_tg,
+        decision_ctg: decision_ctg,
+        comentario: null
+      })
+  })
+  .then((response) =>{
+    return response.json()
+  })
+  .then( (data)  => {
+    console.log(data)
+  })
 };
 export const designarRevisor = async ( id_tg, id_profesor_revisor) => {
   return comites.designarRevisor(id_tg, id_profesor_revisor);
@@ -135,8 +177,8 @@ export const rechazarPropuestaCDE = async ( id_tg ) => {
   return cde.rechazarPropuestaCDE(id_tg);
 };
 
-export const aprobarPropuestaCDE = async ( id_tg ) => {
-  return cde.aprobarPropuestaCDE(id_tg);
+export const aprobarPropuestaCDE = async ( id_tg,id_cde ) => {
+  return cde.aprobarPropuestaCDE(id_tg,id_cde);
 };
 
 export const asignarTutorAcademico = async ( id_tg, id_tutor_academico ) => {
@@ -173,5 +215,30 @@ export const crearJuradosPorUno = async (jurado, id_tg) => {
 
 export const crearJurados = async (array, id_tg) => {
   cde.crearJurados(array, id_tg);
+  return;
+};
+
+export const designarCDEJurado = async (id_tg , id_cde,observaciones_cde_j) => {
+  fetch('http://localhost:3000/designarCDEJurado',{
+      method: 'PUT',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        id_tg: id_tg,
+        id_cde: id_cde,
+        observaciones_cde_j: observaciones_cde_j
+      })
+    })
+    .then( (response) => {
+      return response.json()
+    })
+    .then( (data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.log(error)
+    })
   return;
 };

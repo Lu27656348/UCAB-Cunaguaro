@@ -32,18 +32,14 @@ const clickenComponente = async (id) => {
 };
 
 const rechazarPropuestaComite = async () => {
-  await api.rechazarPropuestaComite(formularioPropuesta.value.id_tg);
-  await api.rechazarPropuestaCTG(formularioPropuesta.value.id_tg, formularioPropuesta.value.id_ctg);
-  alert("Rechazado con tristeza");
+  await api.rechazarPropuestaCTG(formularioPropuesta.value.id_tg, formularioPropuesta.value.id_ctg,"R");
   dataPropuestas.value = await api.obtenerPropuestas("PC");
 };
 
 const aprobarPropuestaComite = async () => {
-  await api.aprobarPropuestaComite(formularioPropuesta.value.id_tg);
-  await api.aprobarPropuestaCTG(formularioPropuesta.value.id_tg, formularioPropuesta.value.id_ctg);
-  alert("Aprobado por comite");
+  //await api.aprobarPropuestaComite(formularioPropuesta.value.id_tg);
+  await api.aprobarPropuestaCTG(formularioPropuesta.value.id_tg, formularioPropuesta.value.id_ctg,"A");
   dataPropuestas.value = await api.obtenerPropuestas("PC");
-  alert("Aprobado por comite");
 };
 
 onMounted(async () => {
@@ -81,7 +77,9 @@ onMounted(async () => {
       </div>
       <div class="committe__container__preview">
         <h2>Visualización del documento de solicitud</h2>
-        <form action="" class="committe__container__preview__form">
+        <!-- Aquí puedes escribir tu comentario -->
+       <!-- <form action="" class="committe__container__preview__form">-->
+        <div>
           <h2>Visualización del documento de solicitud</h2>
           <div class="request__container__preview__form up-de">
             <div class="request__container__preview__form__inputs">
@@ -133,7 +131,8 @@ onMounted(async () => {
             
             <!-- aqui van los formularios necesarios para el proceso de crear una asignacion de revisor a la propuesta -->
           </div>
-        </form>
+        <!--</form>-->
+          </div>
       </div>
     </div>
   </div>

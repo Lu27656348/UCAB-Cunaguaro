@@ -13,17 +13,18 @@ export const obtenerTG = async (req,res) => {
 export const crearTG = async (req,res) => {
     console.log("crearTG")
     try {
-        const {titulo,modalidad,id_tutor_academico,id_tutor_empresarial } = req.body;
+        const {titulo,modalidad,id_tutor_academico,id_tutor_empresarial,id_empresa } = req.body;
         console.log(titulo)
         console.log(modalidad)
         const nuevo = await TG.create({
             titulo,
             modalidad,
             id_tutor_academico,
-            id_tutor_empresarial
+            id_tutor_empresarial,
+            id_empresa
         },
         {
-            fields: ["titulo","modalidad","id_tutor_academico","id_tutor_empresarial"]
+            fields: ["titulo","modalidad","id_tutor_academico","id_tutor_empresarial","id_empresa"]
         });
         res.json(nuevo);
     } catch (error) {
@@ -88,11 +89,27 @@ export const buscarTGByModalidad = async (req, res) => {
         return res.status(404).json("TG no encontrado");
     }
 }
-
 export const evaluacionComite = async (req, res) => {
     const id = req.params.id;
-    const { desicion_comite } = req.body;
+    const { decision_comite } = req.body;
+    try {
+        const buscar = await TG.findOne({
+            where: {
+                id_tg: id
+            }
+        });
 
+        buscar.evaluacion_cde = decision_comite;
+        const actualizar = await buscar.save();
+        return res.json(buscar);
+    } catch (error) {
+        return res.status(404).json("Error en evaluación de comite");
+    }
+}
+/*
+export const evaluacionComite = async (req, res) => {
+    const id = req.params.id;
+    const { desicion_comite,id_cde } = req.body;
     try {
         const buscar = await TG.findOne({
             where: {
@@ -101,14 +118,15 @@ export const evaluacionComite = async (req, res) => {
         });
 
         buscar.estatus = desicion_comite;
-        buscar.fecha_ctg = new Date()
+        buscar.id_cde_tutor = id_cde;
+        buscar.evaluacion_cde = desicion_comite;
         const actualizar = await buscar.save();
         return res.json(buscar);
     } catch (error) {
         return res.status(404).json("Error en evaluación de comite");
     }
 }
-
+*/
 export const evaluacionRevisor = async (req, res) => {
     const id = req.params.id;
     const { decision_revisor, observaciones_revisor, estatus } = req.body;
@@ -134,7 +152,7 @@ export const evaluacionRevisor = async (req, res) => {
 
 export const evaluacionCDE = async (req, res) => {
     const id = req.params.id;
-    const { desicion_cde } = req.body;
+    const { desicion_cde,id_cde } = req.body;
 
     try {
         const buscar = await TG.findOne({
@@ -144,6 +162,8 @@ export const evaluacionCDE = async (req, res) => {
         });
 
         buscar.estatus = desicion_cde;
+        buscar.id_cde_tutor = id_cde;
+        buscar.evaluacion_cde = desicion_cde;
         buscar.fecha_cde = new Date()
         const actualizar = await buscar.save();
         return res.json(buscar);
@@ -164,7 +184,8 @@ export const asignarTutorAcademico = async (req, res) => {
         });
 
         buscar.id_tutor_academico = id_tutor_academico;
-
+        buscar.tutor_asignado = true;
+        const actualizar = await buscar.save();
         return res.json(buscar);
     } catch (error) {
         return res.status(404).json("Error en asignacion de tutor academico");
@@ -325,5 +346,37 @@ export const obtenerTGconJurado = async (req, res) => {
         return res.json(buscar);
     } catch (error) {
         return res.status(404).json("Error en busqueda por estatus");
+    }
+}
+
+
+export const designarCDEJurado = async (req, res) => {
+    try {
+        const{ id_tg,id_cde,observaciones_cde_j} = req.body
+        const buscar = await TG.findOne({
+            where: {
+                id_tg: id_tg
+            }
+        });
+        buscar.id_cde_jurado = id_cde;
+        buscar.observaciones_cde_j = observaciones_cde_j;
+        const actualizar = await buscar.save();
+        return res.json(buscar);
+    } catch (error) {
+        return res.status(404).json("Error en designación de jurado por parte del CDE");
+    }
+}
+
+export const obtenerPropuestasSinTutorAcademicoAsignado = async (req, res) => {
+    try {
+        const tgs = await TG.findAll({
+            where: {
+                tutor_asignado: false,
+                estatus: 'A'
+            }
+        })
+        return res.json(tgs);
+    } catch (error) {
+        return res.status(404).json("Error en designación de jurado por parte del CDE");
     }
 }

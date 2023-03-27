@@ -67,8 +67,58 @@ export const TG = sequelize.define('tg', {
         allowNull: true,
         defaultValue: null
     },
+    tutor_asignado: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+    },
     id_tutor_empresarial: {
         type: DataTypes.INTEGER,
+        allowNull: true,
+        defaultValue: null
+    },
+    id_cde_tutor: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        defaultValue: null
+    },
+    observaciones_cde_t: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+        defaultValue: null
+    },
+    evaluacion_cde: {
+        type: DataTypes.CHAR,
+        allowNull: true,
+        defaultValue: null
+    },
+    id_cde_jurado: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        defaultValue: null
+    },
+    observaciones_cde_j: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+        defaultValue: null
+    },
+    id_empresa: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        defaultValue: null
+    },
+    mencion: {
+        type: DataTypes.CHAR,
+        allowNull: true,
+        defaultValue: null
+    },
+    razon_mencion: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+        defaultValue: null
+    },
+    fecha_entrega_informe: {
+        type: DataTypes.DATE,
         allowNull: true,
         defaultValue: null
     },

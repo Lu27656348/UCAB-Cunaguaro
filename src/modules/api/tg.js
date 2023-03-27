@@ -14,7 +14,7 @@ export const obtenerTGById = async (idTG) => {
   return tg;
 };
 
-export const crearTrabajoGradoExperimental = async ( TG, cedulaEstudiante,cedulaTutorAcademico) => {
+export const crearTrabajoGradoExperimental = async ( TG, cedulaEstudiante,cedulaTutorAcademico,id_empresa) => {
   console.log("crearTrabajoGrado")
   fetch('http://localhost:3000/TG',{
     method: 'POST',
@@ -26,7 +26,8 @@ export const crearTrabajoGradoExperimental = async ( TG, cedulaEstudiante,cedula
       titulo: TG.titulo,
       modalidad: TG.modalidad,
       id_tutor_academico: cedulaTutorAcademico,
-      id_tutor_empresarial: null
+      id_tutor_empresarial: null,
+      id_empresa: id_empresa
     })
   })
   .then( (response) =>{
@@ -66,30 +67,19 @@ export const crearTrabajoGradoExperimental = async ( TG, cedulaEstudiante,cedula
       console.log("Se detectaron 2 alumnos");
       cedulaEstudiante.forEach( async (element) => {
         if(element != undefined && element != null){
-          let objeto = {
-            cedula_estudiante: element.cedula,
-            id_tg: data.id_tg
-          }
-          console.log(objeto);
-          fetch('http://localhost:3000/realiza_TG',{
+          const peticion = await fetch('http://localhost:3000/realiza_TG',{
             method: 'POST',
             mode: 'cors',
             headers: {
               "Content-Type": "application/json"
             },
-            body: JSON.stringify(objeto)
+            body: JSON.stringify({
+              cedula_estudiante: element.cedula,
+              id_tg: data.id_tg
+            })
           })
-          .then( (response) => {
-            console.log(response)
-            return response.json()
-          })
-          .then( (data) => {
-            console.log(data)
-          })
-          .catch( (error) => {
-            console.log("Error en creacion de realiza con 2 estudiantes");
-            console.log(error);
-          })
+          const respuesta = await peticion.json();
+          console.log(respuesta);
         }
       })
     }
