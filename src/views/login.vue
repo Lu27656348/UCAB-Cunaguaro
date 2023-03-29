@@ -17,7 +17,7 @@ const register = ()=>{
   createUserWithEmailAndPassword(getAuth(), email.value, password.value)
     .then(data => {
       console.log('registrado con exito!');
-      router.push('/request'); //redirige a propuestas
+      router.push('/requests'); //redirige a propuestas
     })
     .catch(error => {
       console.log(error.code);;
@@ -29,7 +29,7 @@ const signIn = () =>{
   signInWithEmailAndPassword(getAuth(), email.value, password.value)
     .then(data => {
       console.log('Acceso con exito!');
-      router.push('/request'); //redirige a propuestas
+      router.push('/requests'); //redirige a propuestas
     })
     .catch(error => {
       console.log(error.code);;
@@ -56,7 +56,7 @@ const signInWithGoogle = () => {
   signInWithPopup(getAuth(), provider)
   .then((result) =>{
     console.log(result.user);
-    router.push('/feed');
+    router.push('/requests');
   })
   .catch((error) =>{
     alert('Error al iniciar sesion');
