@@ -51,7 +51,7 @@ export const generarCartaDesignacionRevisor = (Carta_designacion) => {
     if (Carta_designacion.modalidad=='E'){
         tutor = Carta_designacion.propuesta.tutor_academico.apellidos + ', ' + Carta_designacion.propuesta.tutor_academico.nombres
     }else{
-        tutor = Carta_designacion.propuesta.tutor_empresarial.apellidos + ', ' + Carta_designacion.propuesta.tutor_empresarial.nombres
+        tutor = Carta_designacion.propuesta.tutor_academico.apellidos + ', ' + Carta_designacion.propuesta.tutor_academico.nombres
     }
     console.log(tutor);
     const doc = new Document({

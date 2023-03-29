@@ -342,7 +342,7 @@ export const generarCartaDesignacionTutorTEG = (Carta_designacion,id) => {
                             font: "Trebuchet MS"
                         }),
                         new  TextRun({
-                            text: " Fecha: " + Carta_designacion.fecha_designacion,
+                            text: " Fecha: " + Carta_designacion.fecha_designacion.toLocaleDateString(),
                             bold: true,
                             font: "Trebuchet MS"
                         }),

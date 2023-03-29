@@ -81,8 +81,10 @@ const designarTutor = async () => {
       `${revisor.nombres} ${revisor.apellidos}`,
       empresaTG.nombre
     );
+
     planillaDesignacionDeRevisor.añadirAlumno(alumnos[0]);
     planillaDesignacionDeRevisor.imprimir();
+    
   }
 };
 

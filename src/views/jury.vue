@@ -63,14 +63,14 @@ const designarJurado = async (profesores, id_tg) => {
   /* Si la planilla es experimental */
   if (planilla.value.modalidad == 'E'){
 
-  //planilla_evaluacion_presentacion_oral_TEG(notificacion.value)
-  //planilla_evaluacion_final_TEG(notificacion.value);
+  planilla_evaluacion_presentacion_oral_TEG(notificacion.value)
+  planilla_evaluacion_final_TEG(notificacion.value);
 
   }else{
 
-  //planilla_evaluacion_TIG_TA(notificacion.value);
-  //planilla_evaluacion_TIG_Jurado(notificacion.value);
-  //planilla_evaluacion_final_TIG(notificacion.value); 
+  planilla_evaluacion_TIG_TA(notificacion.value);
+  planilla_evaluacion_TIG_Jurado(notificacion.value);
+  planilla_evaluacion_final_TIG(notificacion.value); 
 
   }
 

@@ -68,7 +68,7 @@ const aceptarTG = async (id) => {
     "Luz E. Medina",
     empresa.nombre
   );
-  cartaDesignacion.imprimirPlanilla(id);
+  //cartaDesignacion.imprimirPlanilla(id);
 
   data.value = await api.obtenerPropuestas("PE");
 };
