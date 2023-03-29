@@ -1,5 +1,53 @@
 <script setup>
-import { onMounted } from "vue";
+import { ref, onMounted } from "vue";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth";
+import {useRouter} from 'vue-router';
+
+const email = ref('');
+const password = ref('');
+const router = useRouter();
+const errMsg = ref(''); //Mensaje de error
+const register = ()=>{
+  createUserWithEmailAndPassword(getAuth(), email.value, password.value)
+    .then(data => {
+      console.log('registrado con exito!');
+      router.push('/request'); //redirige a propuestas
+    })
+    .catch(error => {
+      console.log(error.code);;
+      alert(error.message);
+    });
+};
+
+const signIn = () =>{
+  signInWithEmailAndPassword(getAuth(), email.value, password.value)
+    .then(data => {
+      console.log('Acceso con exito!');
+      router.push('/request'); //redirige a propuestas
+    })
+    .catch(error => {
+      console.log(error.code);;
+      switch (error.code) {
+        case 'auth/invalid-email':
+          errMsg.value = 'Email invalido'
+          break;
+        case 'auth/user-not-found':
+          errMsg.value = 'Usuario no encontrado'
+          break;
+        case 'auth/wrong-password':
+          errMsg.value = 'Contraseña Incorrecta'
+          break;
+        default:
+          errMsg.value = 'Email o Contraseña incorrectas'
+          break;
+      
+      };
+    });
+};
+
+const signInWithGoogle = () => {
+
+};
 
 onMounted(() => {
   let router = document.getElementById("router");
@@ -15,22 +63,23 @@ onMounted(() => {
 <template>
   <div class="login">
     <div class="login-bc">
-      <form class="login__form" action="">
+      <div class="login__form" action="">
         <h2 class="login__form--msg">Ingresar a la aplicación</h2>
         <div class="login__form__mail">
           <!--<h3>Cédula</h3>-->
-          <input type="number" placeholder="Cédula" />
+          <input type="email" placeholder="email" v-model="email"/>
         </div>
         <div class="login__form__password">
           <!--<h3>Contraseña</h3>-->
-          <input type="password" placeholder="Contraseña" />
+          <input type="password" placeholder="Contraseña" v-model="password"/>
         </div>
-        <button class="login__form__btn succes">Iniciar Sesión</button>
-        <button class="login__form__btn cancel">Cancelar</button>
+        <p v-if="errMsg">{{ errMsg }}</p>
+        <button class="login__form__btn succes" @click="signIn()">Iniciar Sesión</button>
+        <button class="login__form__btn cancel" @click="register()">Cancelar</button>
         <a class="login__form--forget" ref="/council"
           >Se me olvidó la contraseña</a
         >
-      </form>
+      </div>
     </div>
   </div>
 </template>
