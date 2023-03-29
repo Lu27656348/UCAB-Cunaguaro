@@ -1,6 +1,12 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth";
+import { 
+  getAuth, 
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signInWithEmailAndPassword
+} from "firebase/auth";
 import {useRouter} from 'vue-router';
 
 const email = ref('');
@@ -46,7 +52,15 @@ const signIn = () =>{
 };
 
 const signInWithGoogle = () => {
-
+  const provider = new GoogleAuthProvider();
+  signInWithPopup(getAuth(), provider)
+  .then((result) =>{
+    console.log(result.user);
+    router.push('/feed');
+  })
+  .catch((error) =>{
+    alert('Error al iniciar sesion');
+  })
 };
 
 onMounted(() => {
@@ -76,6 +90,7 @@ onMounted(() => {
         <p v-if="errMsg">{{ errMsg }}</p>
         <button class="login__form__btn succes" @click="signIn()">Iniciar Sesión</button>
         <button class="login__form__btn cancel" @click="register()">Cancelar</button>
+        <button class="login__form__btn cancel" @click="signInWithGoogle()">Iniciar sesion con Google</button>
         <a class="login__form--forget" ref="/council"
           >Se me olvidó la contraseña</a
         >
