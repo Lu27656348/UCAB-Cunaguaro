@@ -67,7 +67,7 @@ export const crearTrabajoGradoExperimental = async ( TG, cedulaEstudiante,cedula
       console.log("Se detectaron 2 alumnos");
       cedulaEstudiante.forEach( async (element) => {
         if(element != undefined && element != null){
-          const peticion = await fetch('http://localhost:3000/realiza_TG',{
+          let peticion = await fetch('http://localhost:3000/realiza_TG',{
             method: 'POST',
             mode: 'cors',
             headers: {
@@ -78,7 +78,7 @@ export const crearTrabajoGradoExperimental = async ( TG, cedulaEstudiante,cedula
               id_tg: data.id_tg
             })
           })
-          const respuesta = await peticion.json();
+          let respuesta = await peticion.json();
           console.log(respuesta);
         }
       })

@@ -26,6 +26,11 @@ const designarTutor = async () => {
   console.log(formularioPropuesta.value.id_profesor_revisor);
   console.log(formularioPropuesta.value.id_tg);
 
+  const propuesta = await api.obtenerTGById(formularioPropuesta.value.id_tg);
+  console.log("Propuesta");
+  console.log(propuesta)
+
+  const empresaTG = await api.obtenerEmpresaById(propuesta.id_empresa)
   await api.designarRevisor(
     formularioPropuesta.value.id_tg,
     formularioPropuesta.value.id_profesor_revisor
@@ -47,12 +52,12 @@ const designarTutor = async () => {
       tutor_academico,
       new Date(),
       {
-        nombre: "Luz Medina",
-        correo_administrador: "lamedina@wlaluchocorp.com",
+        nombre: "Luz E. Medina",
+        correo_administrador: "lemedina@ucab.edu.ve",
       },
       formularioPropuesta.value.modalidad,
       `${revisor.nombres} ${revisor.apellidos}`,
-      "Agregar organizacion"
+      empresaTG.nombre
     );
     planillaDesignacionDeRevisor.añadirAlumno(alumnos[0]);
     console.log("planillaDesignacionDeRevisor");
@@ -69,12 +74,12 @@ const designarTutor = async () => {
       tutor_empresarial,
       new Date(),
       {
-        nombre: "Luz Medina",
-        correo_administrador: "lamedina@wlaluchocorp.com",
+        nombre: "Luz E. Medina",
+        correo_administrador: "lemedina@ucab.edu.ve",
       },
       formularioPropuesta.value.modalidad,
       `${revisor.nombres} ${revisor.apellidos}`,
-      "Agregar organizacion"
+      empresaTG.nombre
     );
     planillaDesignacionDeRevisor.añadirAlumno(alumnos[0]);
     planillaDesignacionDeRevisor.imprimir();

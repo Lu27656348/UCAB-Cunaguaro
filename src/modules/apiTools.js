@@ -112,7 +112,8 @@ export const obtenerCTG = async ( ) => {
 };
 
 export const aprobarPropuestaCTG = async ( id_tg,id_ctg,decision_ctg) => {
-  fetch('http://localhost:3000/revisa_CTG',{
+  try {
+    const peticion =  await fetch('http://localhost:3000/revisa_CTG',{
       method: 'POST',
       mode: 'cors',
       headers: {
@@ -124,13 +125,15 @@ export const aprobarPropuestaCTG = async ( id_tg,id_ctg,decision_ctg) => {
         decision_ctg: decision_ctg,
         comentario: null
       })
-  })
-  .then((response) =>{
-    return response.json()
-  })
-  .then( (data)  => {
-    console.log(data)
-  })
+  });
+  const respuesta = await peticion.json();
+  console.log(respuesta)
+  return respuesta;
+  } catch (error) {
+    console.log("Error en aprobación de propuesta por parte del consejo")
+    console.log(error)
+  }
+
 };
 export const rechazarPropuestaCTG = async ( id_tg,id_ctg,decision_ctg ) => {
   fetch('http://localhost:3000/revisa_CTG',{

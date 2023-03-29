@@ -7,7 +7,7 @@ import { FormularioCartaDesigancion } from "../modules/classes/formularioCartaDe
 let data = reactive([]);
 let dataConsejo = reactive([]);
 let dataProfesores = reactive([]);
-
+let cdeRef = ref('')
 let formularioPropuesta = ref(new PropuestaTg());
 
 const clickenComponente = async (id) => {
@@ -17,10 +17,12 @@ const clickenComponente = async (id) => {
 
 const asignarTutorAcademico = async () => {
   let tutor_empresarial = null;
+  
   const res = await api.asignarTutorAcademico(
     formularioPropuesta.value.id_tg,
     formularioPropuesta.value.id_tutor_academico
   );
+  
   const estudiante = await api.obtenerEstudianteDeTG(
     formularioPropuesta.value.id_tg
   );
@@ -32,17 +34,22 @@ const asignarTutorAcademico = async () => {
       formularioPropuesta.value.id_tutor_empresarial
     );
   }
+  const propuesta = await api.obtenerTGById(formularioPropuesta.value.id_tg);
+  const empresaTG = await api.obtenerEmpresaById(propuesta.id_empresa);
+  const consejoTG = await api.obtenerCDEById(cdeRef.value)
+
   const cartaDesignacion = new FormularioCartaDesigancion(
     formularioPropuesta.value.titulo,
     formularioPropuesta.value.modalidad,
     estudiante,
     tutor_academico,
     tutor_empresarial,
-    "001-2022-2023",
-    "Wladimir J. Sanvicente",
-    "WlaLuchoCorp C.A"
+    consejoTG.id_cde_formateado,
+    "Luz E. Medina",
+    empresaTG.nombre
   );
 
+  cartaDesignacion.imprimirPlanilla();
   data.value = await api.obtenerPropuestasSinTutorAcademicoAsignado();
 };
 
@@ -104,6 +111,7 @@ onMounted(async () => {
             />
             <p>Estatus</p>
             <input disabled type="text" v-model="formularioPropuesta.estatus" />
+            <p>Seleccione el tutor académico: </p>
             <select
               name="CDE"
               id=""
@@ -115,6 +123,20 @@ onMounted(async () => {
                 :value="p.cedula"
               >
                 {{ `${p.nombres} ${p.apellidos}` }}
+              </option>
+            </select>
+            <p>Seleccione el Consejo de Escuela que designó al tutor: </p>
+            <select
+              name="CDEs"
+              id=""
+              v-model="cdeRef"
+            >
+              <option
+                v-for="p in dataConsejo.value"
+                :key="p.id_cde"
+                :value="p.id_cde"
+              >
+                {{ p.id_cde_formateado }}
               </option>
             </select>
           </div>

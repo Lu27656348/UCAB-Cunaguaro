@@ -49,22 +49,24 @@ const aceptarTG = async (id) => {
   const tutor_academico = await api.obtenerProfesorByCedula(
     formularioPropuesta.value.id_tutor_academico
   );
-
-  const tutor_empresarial = await api.obtenerExternosById(
-    formularioPropuesta.value.id_tutor_empresarial
-  );
-  const onSubmit = async ()  => {
-    console.log("submit")
+  let tutor_empresarial = null;
+  if(formularioPropuesta.value.modalidad == 'I'){
+    tutor_empresarial = await api.obtenerExternosById(
+      formularioPropuesta.value.id_tutor_empresarial
+    );
   }
+ 
+  const consejoEscuela = await api.obtenerCDEById(formularioPropuesta.value.id_cde)
+  const empresa = await api.obtenerEmpresaById(formularioPropuesta.value.id_empresa)
   const cartaDesignacion = new FormularioCartaDesigancion(
     formularioPropuesta.value.titulo,
     formularioPropuesta.value.modalidad,
     estudiante,
     tutor_academico,
     tutor_empresarial,
-    "001-2022-2023",
-    "Wladimir J. Sanvicente",
-    "WlaLuchoCorp C.A"
+    consejoEscuela.id_cde_formateado,
+    "Luz E. Medina",
+    empresa.nombre
   );
   cartaDesignacion.imprimirPlanilla(id);
 
