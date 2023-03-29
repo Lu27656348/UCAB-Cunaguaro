@@ -25,6 +25,7 @@ BEGIN
 	RETURN NEW;
 END;
 $$
+;
 
 CREATE TRIGGER verificar_jurado_trigger 
     BEFORE INSERT OR UPDATE ON Jurados
