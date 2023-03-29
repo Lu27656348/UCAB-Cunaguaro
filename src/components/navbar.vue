@@ -1,3 +1,26 @@
+<script>
+
+  import { onMounted, ref } from 'vue';
+  import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+
+  const isLoggedIn = ref(false);
+
+  let auth;
+  
+  const handleSignOut = () =>{
+    signOut(auth).then(() => {
+      router.push('/');
+    });
+  };
+  onMounted(auth, (user)=>{
+    if (user){
+      isLoggedIn.value = true;
+    } else{
+      isLoggedIn.value = false;
+    }
+  });
+  
+</script>
 <template>
   <div class="navbar">
     <img src="../assets/ucab - isotipo.png" alt="" />
@@ -35,6 +58,9 @@
       </li>
       <li class="navbar__list__element">
         <router-link to="/evaluacionNotas"><ion-icon name="shield-checkmark-outline"></ion-icon> Defensa TG.</router-link>
+      </li>
+      <li class="navbar__list__element">
+        <button @click="handleSignOut()" >Cerrar sesion</button>
       </li>
     </ul>
   </div>
