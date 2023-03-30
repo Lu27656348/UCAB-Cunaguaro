@@ -269,6 +269,6 @@ export const encriptarContrasena = async (contrasena) => {
   return encriptado
 }
 
-export const defensaTrabajoDeGrado = async (id_tg,fecha_entrega_informe,fecha_defensa,mencion,razon_mencion) => {
-  await tgs.defensaTrabajoDeGrado(id_tg,fecha_entrega_informe,fecha_defensa,mencion,razon_mencion);
+export const defensaTrabajoDeGrado = async (id_tg,fecha_entrega_informe,fecha_defensa,mencion,razon_mencion, alumnos) => {
+  return await tgs.defensaTrabajoDeGrado(id_tg,fecha_entrega_informe,fecha_defensa,mencion,razon_mencion,alumnos);
 }

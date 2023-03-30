@@ -48,7 +48,9 @@ const clickenComponente = async (id) => {
   planilla.value.j2 = juradosTG[1];
   planilla.value.j2_suplente = juradosTG[3];
 
-  planilla.value = await api.obtenerEstudianteDeTG(planilla.value.id_tg);
+  planilla.value.alumnos = await api.obtenerEstudianteDeTG(planilla.value.id_tg);
+
+  console.log("planilla.value.alumnos")
 
   // console.log(planilla.value);
   // console.log("Jurados");
@@ -58,7 +60,10 @@ const clickenComponente = async (id) => {
 
 const descargarPlanillas = async () => {
   //console.log("Descargando planillas");
-  await api.defensaTrabajoDeGrado(planilla.value.id_tg,planilla.value.fecha_entrega_informe,planilla.value.fecha_defensa,planilla.value.mencion,planilla.value.comentario_mencion)
+  console.log(planilla.value.alumnos)
+  const respuesta = await api.defensaTrabajoDeGrado(planilla.value.id_tg,planilla.value.fecha_entrega_informe,planilla.value.fecha_defensa,planilla.value.mencion,planilla.value.comentario_mencion,planilla.value.alumnos);
+  console.log("Respuesta");
+  console.log(respuesta);
 };
 
 onMounted(async () => {
@@ -94,7 +99,9 @@ onMounted(async () => {
       </div>
       <div class="committe__container__preview">
         <h2>Visualización del documento de solicitud</h2>
-        <form action="" class="committe__container__preview__form">
+        <!-- Aquí empieza la cabecera de la web -->
+        <div>
+         <!--<form action="" class="committe__container__preview__form"> -->
           <h2>Visualización del documento de solicitud</h2>
           <div class="request__container__preview__form up-de">
             <div class="request__container__preview__form__inputs">
@@ -105,7 +112,7 @@ onMounted(async () => {
                 class="request__container__preview__form__inputs--titulo-tg"
                 placeholder="Tutilo de Propuesta TG"
               ></textarea>
-              <p>Nota Final {{ planilla.j1 }}</p>
+              <p>Nota Final</p>
               <div 
                 class="estudiantesTg"
                 v-for="e in planilla.alumnos"
@@ -118,6 +125,7 @@ onMounted(async () => {
                   max="20" 
                   :disabled="planilla.id_tg == ''" v-model="e.nota" 
                 />
+                <p>{{ e.nota }}</p>
               </div>
               <p>Fecha de entrega del Informe Final</p>
               <input type="date" name="fechaEntrega" :disabled="planilla.id_tg == ''" v-model="planilla.fecha_entrega_informe" >
@@ -149,7 +157,9 @@ onMounted(async () => {
             </div>
           </div>
           <!-- aqui van los formularios necesarios para el proceso de crear una asignacion de revisor a la propuesta -->
-        </form>
+        <!--</form> -->
+        </div>
+        <!-- Aquí empieza la cabecera de la web -->
       </div>
     </div>
   </div>

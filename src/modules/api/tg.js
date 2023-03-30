@@ -275,7 +275,7 @@ export const obtenerJuradosDeTG = async (id_tg) =>{
   return jurados;
 };
 
-export const defensaTrabajoDeGrado = async (id_tg,fecha_entrega_informe,fecha_defensa,mencion,razon_mencion) =>{
+export const defensaTrabajoDeGrado = async (id_tg,fecha_entrega_informe,fecha_defensa,mencion,razon_mencion,alumnos) =>{
   console.log("defensaTrabajoDeGrado()");
   const resJurado = await fetch('http://localhost:3000/defensaTrabajoDeGrado',{
     method: 'PUT',
@@ -288,9 +288,12 @@ export const defensaTrabajoDeGrado = async (id_tg,fecha_entrega_informe,fecha_de
       fecha_entrega_informe: fecha_entrega_informe,
       fecha_defensa: fecha_defensa,
       mencion: mencion,
-      razon_mencion: razon_mencion
+      razon_mencion: razon_mencion,
+      alumnos: alumnos
     })
   });
   const jurados = await resJurado.json()
+  console.log("jurados")
+  console.log(jurados)
   return jurados;
 };
