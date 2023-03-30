@@ -27,6 +27,8 @@ let planilla = ref({
   nota2: "0",
   nota_tutor: "0",
   showNotas: false,
+  mencion: '',
+  comentario_mencion: ''
 });
 
 const clickenComponente = async (id) => {
@@ -98,25 +100,32 @@ onMounted(async () => {
                 class="request__container__preview__form__inputs--titulo-tg"
                 placeholder="Tutilo de Propuesta TG"
               ></textarea>
-              <p>Nota Jurado 1 {{ planilla.j1 }}</p>
-              <input type="range" min="0" max="20" v-model="planilla.nota1" />
-              <p>{{ planilla.nota1 }}</p>
-              <p>Nota Jurado 2 {{ planilla.j2 }}</p>
-              <input type="range" min="0" max="20" v-model="planilla.nota2" />
-              <p>{{ planilla.nota2 }}</p>
-              <p>Nota Tutor academico {{ planilla.id_tutor_academico }}</p>
-              <input
-                type="range"
-                min="0"
-                max="20"
-                v-model="planilla.nota_tutor"
-              />
-              <p>{{ planilla.nota_tutor }}</p>
+              <p>Nota Final {{ planilla.j1 }}</p>
+              <input type="range" min="0" max="20" :disabled="planilla.id_tg == ''" v-model="planilla.nota1" />
+              <p>Fecha de entrega del Informe Final</p>
+              <input type="date" name="fechaEntrega" :disabled="planilla.id_tg == ''">
+              <p>Fecha de defensa</p>
+              <input type="date" name="fechaDefenza" :disabled="planilla.id_tg == ''">
+              <p>Mencion</p>
+              <select name="mencion" id="" v-model="planilla.mencion" :disabled="planilla.id_tg == ''">
+                <option value="">Sin Mencion</option>
+                <option value="h">Honorifica</option>
+                <option value="p">Publicacion</option>
+              </select>
+              <textarea
+                v-if="!planilla.mencion == ''"
+                maxlength="200"
+                class="request__container__preview__form__inputs--titulo-tg"
+                placeholder="Razon de la mencion"
+                v-model="planilla.comentario_mencion"
+                :disabled="planilla.id_tg == ''"
+              ></textarea>
             </div>
             <div class="actions">
               <button
                 class="login__form__btn succes"
                 @click="descargarPlanillas()"
+                :disabled="planilla.id_tg == ''"
               >
                 Designar nota
               </button>
