@@ -1,67 +1,26 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import { 
-  getAuth, 
-  createUserWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signInWithEmailAndPassword
-} from "firebase/auth";
 import {useRouter} from 'vue-router';
 
 const email = ref('');
 const password = ref('');
 const router = useRouter();
 const errMsg = ref(''); //Mensaje de error
+
 const register = ()=>{
-  createUserWithEmailAndPassword(getAuth(), email.value, password.value)
-    .then(data => {
-      console.log('registrado con exito!');
-      router.push('/requests'); //redirige a propuestas
-    })
-    .catch(error => {
-      console.log(error.code);;
-      alert(error.message);
-    });
+  console.log(`Usuario Registrado: ${email.value} \n ${password.value}`);
 };
 
 const signIn = () =>{
-  signInWithEmailAndPassword(getAuth(), email.value, password.value)
-    .then(data => {
-      console.log('Acceso con exito!');
-      router.push('/requests'); //redirige a propuestas
-    })
-    .catch(error => {
-      console.log(error.code);;
-      switch (error.code) {
-        case 'auth/invalid-email':
-          errMsg.value = 'Email invalido'
-          break;
-        case 'auth/user-not-found':
-          errMsg.value = 'Usuario no encontrado'
-          break;
-        case 'auth/wrong-password':
-          errMsg.value = 'Contraseña Incorrecta'
-          break;
-        default:
-          errMsg.value = 'Email o Contraseña incorrectas'
-          break;
-      
-      };
-    });
+  console.log(`Usuario acedido: ${email.value} \n ${password.value}`);
+  router.push('/requets');
 };
 
-const signInWithGoogle = () => {
-  const provider = new GoogleAuthProvider();
-  signInWithPopup(getAuth(), provider)
-  .then((result) =>{
-    console.log(result.user);
-    router.push('/requests');
-  })
-  .catch((error) =>{
-    alert('Error al iniciar sesion');
-  })
-};
+const limpiar = ()=>{
+  console.log('Campos limpios');
+  email.value = '';
+  password.value = '';
+}
 
 onMounted(() => {
   let router = document.getElementById("router");
@@ -71,8 +30,6 @@ onMounted(() => {
 
 //  console.log(router[0].nodeName);
 </script>
-
-
 
 <template>
   <div class="login">
@@ -89,8 +46,8 @@ onMounted(() => {
         </div>
         <p v-if="errMsg">{{ errMsg }}</p>
         <button class="login__form__btn succes" @click="signIn()">Iniciar Sesión</button>
-        <button class="login__form__btn cancel" @click="register()">Cancelar</button>
-        <button class="login__form__btn cancel" @click="signInWithGoogle()">Iniciar sesion con Google</button>
+        <button class="login__form__btn cancel" @click="limpiar()">Cancelar</button>
+        <button class="login__form__btn" @click="register()">Registrarse</button>
         <a class="login__form--forget" ref="/council"
           >Se me olvidó la contraseña</a
         >
