@@ -21,7 +21,8 @@ const asignarTutorAcademico = async () => {
   
   const res = await api.asignarTutorAcademico(
     formularioPropuesta.value.id_tg,
-    formularioPropuesta.value.id_tutor_academico
+    formularioPropuesta.value.id_tutor_academico,
+    observaciones.value
   );
   
   const estudiante = await api.obtenerEstudianteDeTG(

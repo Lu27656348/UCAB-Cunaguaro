@@ -398,7 +398,7 @@ export const generarCartaDesignacionTutorTIG = (Carta_designacion) => {
                             font: "Trebuchet MS"
                         }),
                         new  TextRun({
-                            text: " Fecha: " + Carta_designacion.fecha_designacion,
+                            text: " Fecha: " + Carta_designacion.fecha_designacion.toLocaleDateString(),
                             bold: true,
                             font: "Trebuchet MS"
                         }),

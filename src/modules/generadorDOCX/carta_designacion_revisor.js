@@ -54,6 +54,12 @@ export const generarCartaDesignacionRevisor = (Carta_designacion) => {
         tutor = Carta_designacion.propuesta.tutor_academico.apellidos + ', ' + Carta_designacion.propuesta.tutor_academico.nombres
     }
     console.log(tutor);
+    let modalidadCartaDesignacion = null;
+    if(Carta_designacion.modalidad == 'E'){
+        modalidadCartaDesignacion = "Experimental"
+    }else{
+        modalidadCartaDesignacion = "Instrumental"
+    }
     const doc = new Document({
         creator: "Luis C. Somoza & Wladimir SanVicente ",
         title: "Carta de designación - Revisor de propuesta de trabajo de grado",
@@ -264,7 +270,7 @@ export const generarCartaDesignacionRevisor = (Carta_designacion) => {
                             font: "Trebuchet MS"
                         }),
                         new TextRun({
-                            text: Carta_designacion.modalidad,
+                            text: modalidadCartaDesignacion,
                             bold: true,
                             font: "Trebuchet MS"
                         }),

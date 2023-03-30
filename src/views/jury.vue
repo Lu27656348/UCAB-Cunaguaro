@@ -12,6 +12,11 @@ import { notificacion_designacion } from '../modules/generadorDOCX/notificacion_
 import { planilla_evaluacion_final_TEG } from '../modules/generadorDOCX/Planilla_evaluacion_final_TEG.js';
 import { planilla_evaluacion_presentacion_oral_TEG } from '../modules/generadorDOCX/planilla_evaluacion_presentacion_oral.js';
 
+/* Planillas para trabajo de grado instrumental */
+import { planilla_evaluacion_TIG_TA } from '../modules/generadorDOCX/planilla_evaluacion_TIG_TA.js';
+import { planilla_evaluacion_TIG_Jurado } from '../modules/generadorDOCX/planilla_evaluacion_TIG_Jurado.js';
+import { planilla_evaluacion_final_TIG } from '../modules/generadorDOCX/Planilla_evaluacion_final_TIG.js';
+
 let data = reactive([]);
 let dataConsejo = reactive([]);
 let dataEmpresas = reactive([]);
@@ -59,7 +64,7 @@ const designarJurado = async (profesores, id_tg) => {
 
   /* La función crearJurado designa todos los jurados del trabajo de grado */
   await api.crearJurados(profesoresDesignados, id_tg);
-  await api.designarCDEJurado(id_tg,cde.value);
+  await api.designarCDEJurado(id_tg,cde.value,planilla.value.observaciones);
 
   /* Si la planilla es experimental */
   if (planilla.value.modalidad == 'E'){
@@ -75,8 +80,8 @@ const designarJurado = async (profesores, id_tg) => {
 
   }
 
-  //notificacion_designacion_j(notificacion.value);
-  //notificacion_designacion(notificacion.value);
+  notificacion_designacion_j(notificacion.value);
+  notificacion_designacion(notificacion.value);
   data.value = await api.obtenerTGsinJurado();
 
 };

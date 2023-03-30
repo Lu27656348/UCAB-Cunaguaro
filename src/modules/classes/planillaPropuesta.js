@@ -8,8 +8,10 @@ export class PropuestaTg{
     this.id_tutor_empresarial = null;
     this.estatus = '';
     this.id_ctg = '';
+    this.id_cde = '';
     this.observaciones_revisor = '';
     this.observaciones_comite = '';
+    this.observaciones_consejo = '';
     this.id_profesor_revisor = '';
   };
   setPropuestaPendienteRevisor(){

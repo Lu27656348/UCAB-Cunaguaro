@@ -39,7 +39,7 @@ const rechazarPropuestaComite = async () => {
 
 const aprobarPropuestaComite = async () => {
   //await api.aprobarPropuestaComite(formularioPropuesta.value.id_tg);
-  await api.aprobarPropuestaCTG(formularioPropuesta.value.id_tg, formularioPropuesta.value.id_ctg,"A");
+  await api.aprobarPropuestaCTG(formularioPropuesta.value.id_tg, formularioPropuesta.value.id_ctg,"A",formularioPropuesta.value.observaciones_comite);
   dataPropuestas.value = await api.obtenerPropuestas("PC");
 };
 

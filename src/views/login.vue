@@ -19,7 +19,7 @@ const signIn = async () => {
   console.log("respuesta")
   console.log(respuesta)
   if(respuesta != null) {
-    router.push('/requets');
+    router.push('/requests');
   }
  
 };

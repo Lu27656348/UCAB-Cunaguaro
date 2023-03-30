@@ -54,7 +54,7 @@ const designarTutor = async () => {
       new Date(),
       {
         nombre: "Luz E. Medina",
-        correo_administrador: "lemedina@ucab.edu.ve",
+        correo_administrador: "lmedinac@ucab.edu.ve",
       },
       formularioPropuesta.value.modalidad,
       `${revisor.nombres} ${revisor.apellidos}`,

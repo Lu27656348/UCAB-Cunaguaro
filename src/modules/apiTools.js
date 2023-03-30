@@ -112,7 +112,7 @@ export const obtenerCTG = async ( ) => {
   return comites.obtenerCTG();
 };
 
-export const aprobarPropuestaCTG = async ( id_tg,id_ctg,decision_ctg) => {
+export const aprobarPropuestaCTG = async ( id_tg,id_ctg,decision_ctg,comentario) => {
   try {
     const peticion =  await fetch('http://localhost:3000/revisa_CTG',{
       method: 'POST',
@@ -124,7 +124,7 @@ export const aprobarPropuestaCTG = async ( id_tg,id_ctg,decision_ctg) => {
         id_ctg: id_ctg,
         id_tg: id_tg,
         decision_ctg: decision_ctg,
-        comentario: null
+        comentario: comentario
       })
   });
   const respuesta = await peticion.json();
@@ -136,7 +136,7 @@ export const aprobarPropuestaCTG = async ( id_tg,id_ctg,decision_ctg) => {
   }
 
 };
-export const rechazarPropuestaCTG = async ( id_tg,id_ctg,decision_ctg ) => {
+export const rechazarPropuestaCTG = async ( id_tg,id_ctg,decision_ctg,comentario ) => {
   fetch('http://localhost:3000/revisa_CTG',{
       method: 'POST',
       mode: 'cors',
@@ -147,7 +147,7 @@ export const rechazarPropuestaCTG = async ( id_tg,id_ctg,decision_ctg ) => {
         id_ctg: id_ctg,
         id_tg: id_tg,
         decision_ctg: decision_ctg,
-        comentario: null
+        comentario: comentario
       })
   })
   .then((response) =>{
@@ -181,12 +181,12 @@ export const rechazarPropuestaCDE = async ( id_tg ) => {
   return cde.rechazarPropuestaCDE(id_tg);
 };
 
-export const aprobarPropuestaCDE = async ( id_tg,id_cde ) => {
-  return cde.aprobarPropuestaCDE(id_tg,id_cde);
+export const aprobarPropuestaCDE = async ( id_tg,id_cde,comentario ) => {
+  return cde.aprobarPropuestaCDE(id_tg,id_cde,comentario);
 };
 
-export const asignarTutorAcademico = async ( id_tg, id_tutor_academico ) => {
-  return cde.asignarTutorAcademico(id_tg, id_tutor_academico);
+export const asignarTutorAcademico = async ( id_tg, id_tutor_academico,observaciones ) => {
+  return cde.asignarTutorAcademico(id_tg, id_tutor_academico,observaciones);
 };
 
 export const obtenerCDE = async ( ) => {

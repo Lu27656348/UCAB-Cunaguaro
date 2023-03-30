@@ -152,7 +152,7 @@ export const evaluacionRevisor = async (req, res) => {
 
 export const evaluacionCDE = async (req, res) => {
     const id = req.params.id;
-    const { desicion_cde,id_cde } = req.body;
+    const { desicion_cde,id_cde,observaciones_cde_t } = req.body;
 
     try {
         const buscar = await TG.findOne({
@@ -163,6 +163,7 @@ export const evaluacionCDE = async (req, res) => {
 
         buscar.estatus = desicion_cde;
         buscar.id_cde_tutor = id_cde;
+        buscar.observaciones_cde_t = observaciones_cde_t;
         buscar.evaluacion_cde = desicion_cde;
         buscar.fecha_cde = new Date()
         const actualizar = await buscar.save();
@@ -173,10 +174,11 @@ export const evaluacionCDE = async (req, res) => {
 }
 
 export const asignarTutorAcademico = async (req, res) => {
-    const id = req.params.id;
-    const { id_tutor_academico } = req.body;
 
     try {
+        console.log("asignarTutorAcademico desde api")
+        const id = req.params.id;
+        const { id_tutor_academico, observaciones_cde_t } = req.body;
         const buscar = await TG.findOne({
             where: {
                 id_tg: id
@@ -184,11 +186,12 @@ export const asignarTutorAcademico = async (req, res) => {
         });
 
         buscar.id_tutor_academico = id_tutor_academico;
+        buscar.observaciones_cde_t = observaciones_cde_t;
         buscar.tutor_asignado = true;
         const actualizar = await buscar.save();
         return res.json(buscar);
     } catch (error) {
-        return res.status(404).json("Error en asignacion de tutor academico");
+        return res.status(500).json({error: error});
     }
 }
 

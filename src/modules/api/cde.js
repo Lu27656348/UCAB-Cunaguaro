@@ -13,7 +13,7 @@ export const rechazarPropuestaCDE = async ( id_tg ) => {
   return tg_con_revisor
 };
 
-export const aprobarPropuestaCDE = async ( id_tg,id_cde ) => {
+export const aprobarPropuestaCDE = async ( id_tg,id_cde,comentario ) => {
   console.log("aprobarPropuestaCDE()")
   console.log(id_cde)
   const resTG = await fetch('http://localhost:3000/TG/evaluacionCDE/' + id_tg, {
@@ -24,26 +24,37 @@ export const aprobarPropuestaCDE = async ( id_tg,id_cde ) => {
     },
     body: JSON.stringify({
       desicion_cde: 'A',
-      id_cde: id_cde
+      id_cde: id_cde,
+      observaciones_cde_t: comentario
     })
   });
   const tg_con_revisor = await resTG.json();
   return tg_con_revisor
 };
 
-export const asignarTutorAcademico = async ( id_tg, id_tutor_academico ) => {
-  const resTG = await fetch('http://localhost:3000/TG/asignarTutorAcademico/' + id_tg, {
+export const asignarTutorAcademico = async ( id_tg, id_tutor_academico,observaciones ) => {
+  try {
+    console.log("asignarTutorAcademico")
+    const resTG = await fetch('http://localhost:3000/TG/asignarTutorAcademico/' + id_tg, {
     method: 'PUT',
     mode: 'cors',
     headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      id_tutor_academico: id_tutor_academico
+      id_tutor_academico: id_tutor_academico,
+      observaciones_cde_t: observaciones
     })
   });
   const tg_con_revisor = await resTG.json();
+  console.log("tg_con_revisor")
+  console.log(tg_con_revisor)
   return tg_con_revisor
+  } catch (error) {
+    console.error("error")
+    console.error(error)
+  }
+  
 };
 
 export const obtenerCDE = async ( ) => {

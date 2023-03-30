@@ -381,7 +381,7 @@ export const generarPE_revisor_tig = (Carta_designacion) => {
                                     new  Paragraph({
                                         children: [
                                             new  TextRun({
-                                                text: "Inserte organizacion aqui"
+                                                text: Carta_designacion.organizacion
                                             })
                                         ],
                                     })

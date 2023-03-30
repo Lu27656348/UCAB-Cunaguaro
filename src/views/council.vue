@@ -149,7 +149,7 @@ onMounted(async () => {
               </select>
               <textarea
                 maxlength="200"
-                v-model="cde.observaciones"
+                v-model="formularioPropuesta.observaciones_consejo"
                 class="request__container__preview__form__inputs--titulo-tg"
                 placeholder="Observaciones"
               ></textarea>
@@ -158,14 +158,14 @@ onMounted(async () => {
               <button
                 class="login__form__btn succes"
                 @click="aceptarTG(formularioPropuesta.id_tg)"
-                :disabled=" cde.id_cde=='' "
+                :disabled=" formularioPropuesta.id_cde=='' "
               >
                 Aceptar
               </button>
               <button
                 class="cancel"
                 @click="rechazarTG(formularioPropuesta.id_tg)"
-                :disabled=" cde.id_cde == '' || cde.observaciones == ''"
+                :disabled=" formularioPropuesta.id_cde == '' || formularioPropuesta.observaciones_consejo == '' || formularioPropuesta.observaciones_consejo == undefined"
               >
                 Rechazar
               </button>
