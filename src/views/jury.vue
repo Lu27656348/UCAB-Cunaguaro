@@ -26,6 +26,7 @@ let planilla = ref({
   estatus: "",
   id_tutor_academico: "",
   id_tutor_empresarial: "",
+  observaciones: ""
 });
 
 let consejoDeEscuela = reactive([]);
@@ -196,11 +197,23 @@ onMounted(async () => {
                 {{ p.id_cde_formateado }}
               </option>
             </select>
+            <textarea
+              maxlength="200"
+              v-model="planilla.observaciones"
+              class="request__container__preview__form__inputs--titulo-tg"
+              placeholder="Observaciones"
+            ></textarea>
           </div>
           <div class="actions">
             <button
               class="login__form__btn succes"
               @click="designarJurado(profesoresDesignados, planilla.id_tg)"
+              :disabled="
+                profesoresDesignados[0]=='' ||
+                profesoresDesignados[1]=='' ||
+                profesoresDesignados[2]=='' ||
+                profesoresDesignados[3]==''
+              "
             >
               Designar Jurado
             </button>

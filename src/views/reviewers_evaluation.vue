@@ -98,19 +98,25 @@ onMounted(async () => {
                 v-model="formularioPropuesta.observaciones_revisor"
                 class="request__container__preview__form__inputs--titulo-tg"
                 placeholder="Observaciones..."
+                :disabled="formularioPropuesta.titulo == ''"
               ></textarea>
             </div>
 
             <div class="actions">
-              <button class="cancel" @click="rechazarPropuesta()">
-                Rechazar
-              </button>
               <button
                 class="login__form__btn succes"
                 @click="aprobarPropuesta()"
+                :disabled="formularioPropuesta.titulo == '' || formularioPropuesta.revisor == ''"
               >
-                Aceptar
-              </button>
+              Aceptar
+            </button>
+            <button 
+              class="cancel" 
+              @click="rechazarPropuesta()"
+              :disabled="formularioPropuesta.titulo == '' || formularioPropuesta.observaciones_revisor == ''"
+              >
+              Rechazar
+            </button>
             </div>
           </div>
           <!-- aqui van los formularios necesarios para el proceso de crear una asignacion de revisor a la propuesta -->

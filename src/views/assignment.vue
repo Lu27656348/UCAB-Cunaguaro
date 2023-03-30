@@ -7,7 +7,8 @@ import { FormularioCartaDesigancion } from "../modules/classes/formularioCartaDe
 let data = reactive([]);
 let dataConsejo = reactive([]);
 let dataProfesores = reactive([]);
-let cdeRef = ref('')
+let cdeRef = ref('');
+let observaciones = ref('');
 let formularioPropuesta = ref(new PropuestaTg());
 
 const clickenComponente = async (id) => {
@@ -140,10 +141,17 @@ onMounted(async () => {
               </option>
             </select>
           </div>
+          <textarea
+              maxlength="200"
+              v-model="observaciones"
+              class="request__container__preview__form__inputs--titulo-tg"
+              placeholder="Observaciones"
+          ></textarea>
           <div class="actions">
             <button
               class="login__form__btn succes"
               @click="asignarTutorAcademico()"
+              :disabled="cdeRef == '' || formularioPropuesta.id_tutor_academico == '' || formularioPropuesta.id_tg==''"
             >
               Asignar Tutor Academico
             </button>

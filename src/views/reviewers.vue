@@ -12,6 +12,7 @@ let showDesignarTutor = ref(false);
 //Lista de comites en bdd
 let profesoresADesignar = ref([]);
 let formularioPropuesta = ref(new PropuestaTg());
+
 const onSubmit = async ()  => {
   console.log("submit")
 }
@@ -88,19 +89,6 @@ const designarTutor = async () => {
   }
 };
 
-const rechazarPropuesta = async () => {
-  await api.rechazarPropuesta(formularioPropuesta.value.id_propuesta);
-  alert("Rechazada por Revisor");
-};
-
-const aprobarPropuesta = async () => {
-  await api.aprobarPropuestaRevisor(
-    formularioPropuesta.value.comite_evaluador.id,
-    formularioPropuesta.value.id_propuesta
-  );
-  dataPropuestasPorRevisor.value = await api.obtenerPropuestaSinRevisor();
-  alert("Aprobada por Revisor");
-};
 onMounted(async () => {
   dataPropuestasPorRevisor.value = await api.obtenerPropuestaSinRevisor();
   profesoresADesignar.value = await api.obtenerProfesores();
@@ -166,10 +154,13 @@ onMounted(async () => {
                 </option>
               </select>
             </div>
-
             <div class="actions">
-              <button class="login__form__btn succes" @click="designarTutor()">
-                Designar Tutor ☻
+              <button 
+                class="login__form__btn succes" 
+                @click="designarTutor()"
+                :disabled=" formularioPropuesta.id_profesor_revisor == '' || formularioPropuesta.id_tg == '' "
+              >
+                Designar Tutor
               </button>
             </div>
           </div>

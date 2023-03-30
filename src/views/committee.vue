@@ -15,6 +15,7 @@ const clickenComponente = async (id) => {
   formularioPropuesta.value = await api.obtenerTGById(id);
   //console.log("formularioPropuesta.value");
   //console.log(formularioPropuesta.value);
+  console.log(formularioPropuesta.value.id_ctg);
 
   let datosProfesor;
 
@@ -116,16 +117,27 @@ onMounted(async () => {
                   :value="c.id_ctg"
                 >{{ c.id_ctg_formateado }}</option>
               </select>
+              <textarea
+                v-model="formularioPropuesta.observaciones_comite"
+                class="request__container__preview__form__inputs--titulo-tg"
+                placeholder="Observaciones..."
+                :disabled="formularioPropuesta.titulo == ''"
+              ></textarea>
             </div>
             <div class="actions">
-              <button class="cancel" @click="rechazarPropuestaComite()">
-                Rechazar
-              </button>
               <button
                 class="login__form__btn succes"
                 @click="aprobarPropuestaComite()"
+                :disabled=" formularioPropuesta.id_ctg == '' || formularioPropuesta.id_ctg == undefined "
               >
                 Aceptar
+              </button>
+              <button 
+                class="cancel" 
+                @click="rechazarPropuestaComite()"
+                :disabled="formularioPropuesta.id_ctg == undefined || formularioPropuesta.observaciones_comite == '' || formularioPropuesta.observaciones_comite == undefined "
+              >
+                Rechazar
               </button>
             </div>
             

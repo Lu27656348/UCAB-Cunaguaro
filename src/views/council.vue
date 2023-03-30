@@ -23,6 +23,7 @@ let tutor = reactive({
 let cde = reactive({
   id_cde: "",
   fecha_conformacion: "",
+  observaciones : ""
 });
 
 let formularioPropuesta = ref(new PropuestaTg());
@@ -146,19 +147,27 @@ onMounted(async () => {
                   {{ c.id_cde_formateado }}
                 </option>
               </select>
+              <textarea
+                maxlength="200"
+                v-model="cde.observaciones"
+                class="request__container__preview__form__inputs--titulo-tg"
+                placeholder="Observaciones"
+              ></textarea>
             </div>
             <div class="actions">
               <button
-                class="cancel"
-                @click="rechazarTG(formularioPropuesta.id_tg)"
-              >
-                Rechazar
-              </button>
-              <button
                 class="login__form__btn succes"
                 @click="aceptarTG(formularioPropuesta.id_tg)"
+                :disabled=" cde.id_cde=='' "
               >
                 Aceptar
+              </button>
+              <button
+                class="cancel"
+                @click="rechazarTG(formularioPropuesta.id_tg)"
+                :disabled=" cde.id_cde == '' || cde.observaciones == ''"
+              >
+                Rechazar
               </button>
             </div>
           </div>

@@ -1,14 +1,16 @@
 export class PropuestaTg{
   constructor(){
-    this.id_tg='';
-    this.titulo='';
-    this.modalidad='';
-    this.alumnos=[];
+    this.id_tg = '';
+    this.titulo = '';
+    this.modalidad = '';
+    this.alumnos = [];
     this.id_tutor_academico=null;
     this.id_tutor_empresarial = null;
-    this.estatus='';
-    this.id_ctg='';
+    this.estatus = '';
+    this.id_ctg = '';
     this.observaciones_revisor = '';
+    this.observaciones_comite = '';
+    this.id_profesor_revisor = '';
   };
   setPropuestaPendienteRevisor(){
     this.status = 'PR';
