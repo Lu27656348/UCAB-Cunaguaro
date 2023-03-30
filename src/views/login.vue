@@ -2,18 +2,26 @@
 import { ref, onMounted } from "vue";
 import {useRouter} from 'vue-router';
 
+import * as api from '../modules/apiTools.js'
 const email = ref('');
 const password = ref('');
 const router = useRouter();
 const errMsg = ref(''); //Mensaje de error
 
-const register = ()=>{
+const register = async () =>{
   console.log(`Usuario Registrado: ${email.value} \n ${password.value}`);
+  await api.encriptarContrasena(password.value);
 };
 
-const signIn = () =>{
+const signIn = async () => {
   console.log(`Usuario acedido: ${email.value} \n ${password.value}`);
-  router.push('/requets');
+  const respuesta = await api.buscarAdministradores(email.value.toString());
+  console.log("respuesta")
+  console.log(respuesta)
+  if(respuesta != null) {
+    router.push('/requets');
+  }
+ 
 };
 
 const limpiar = ()=>{
@@ -38,7 +46,7 @@ onMounted(() => {
         <h2 class="login__form--msg">Ingresar a la aplicación</h2>
         <div class="login__form__mail">
           <!--<h3>Cédula</h3>-->
-          <input type="email" placeholder="email" v-model="email"/>
+          <input type="number" placeholder="cédula" v-model="email"/>
         </div>
         <div class="login__form__password">
           <!--<h3>Contraseña</h3>-->

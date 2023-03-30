@@ -14,7 +14,7 @@ INSERT INTO Empresas (nombre,direccion,telefono) VALUES ('Empresa 4','direccion 
 INSERT INTO Empresas (nombre,direccion,telefono) VALUES ('Empresa 5','direccion 5','0412 2145979');
 INSERT INTO Empresas (nombre,direccion,telefono) VALUES ('Empresa 6','direccion 6','0412 2145979');
 
-INSERT INTO Externos (nombres,apellidos,cedula,id_empresa) VALUES ('Pedro', 'Perez','12345678',19);
+INSERT INTO Externos (nombres,apellidos,cedula,id_empresa) VALUES ('Pedro', 'Perez','12345678',1);
 
 INSERT INTO CDE (id_cde) VALUES (1);
 INSERT INTO CDE (id_cde) VALUES (2);

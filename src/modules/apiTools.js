@@ -10,8 +10,9 @@ import * as comites from './api/comite.js';
 import * as revisores from './api/revisor.js';
 import * as cde from './api/cde.js';
 
-const { saveAs } = file_saver;
-const { HeadingLevel,Packer } = docx;
+//const bcrypt = require("bcrypt")
+
+const ronda = 10;
 
 export const insertarEstudiantes = async (estudiante) =>{
   return estudiantes.insertarEstudiantes(estudiante);
@@ -245,3 +246,25 @@ export const designarCDEJurado = async (id_tg , id_cde,observaciones_cde_j) => {
     })
   return;
 };
+
+export const buscarAdministradores = async (cedula) => {
+  const respuesta = await fetch('http://localhost:3000/Administradores',{
+    method: 'PUT',
+    mode: 'cors',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      cedula: cedula
+    })
+  })
+  const resultado = await respuesta.json();
+  console.log(resultado);
+  return resultado
+}
+
+export const encriptarContrasena = async (contrasena) => {
+  const encriptado = (contrasena)
+  console.log(encriptado)
+  return encriptado
+}
