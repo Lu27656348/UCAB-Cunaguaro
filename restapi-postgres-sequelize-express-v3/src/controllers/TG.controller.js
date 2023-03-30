@@ -383,3 +383,23 @@ export const obtenerPropuestasSinTutorAcademicoAsignado = async (req, res) => {
         return res.status(404).json("Error en designación de jurado por parte del CDE");
     }
 }
+
+export const defensaTrabajoDeGrado = async (req, res) => {
+    try {
+        const {fecha_defensa, mencion, razon_mencion, fecha_entrega_informe,id_tg,nota_estudiante1, nota_estudiante2} = req.body
+        const tgs = await TG.findOne({
+            where: {
+                id_tg: id_tg,
+            }
+        });
+
+        tgs.fecha_defensa = fecha_defensa;
+        tgs.mencion = mencion;
+        tgs.razon_mencion = razon_mencion;
+        tgs.fecha_entrega_informe = fecha_entrega_informe;
+        const actualizar = await tgs.save();
+        return res.json(tgs);
+    } catch (error) {
+        return res.status(500).json("Error en defensa");
+    }
+}

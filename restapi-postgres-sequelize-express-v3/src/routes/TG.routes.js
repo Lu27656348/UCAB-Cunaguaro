@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { actualizarTG, anexarPlanilla, asignarRevisor, asignarTutorAcademico, asignarTutorEmpresarial, buscarTG, buscarTGByEstatus, buscarTGByModalidad, crearTG, descargarPlanilla, eliminarTG, evaluacionCDE, evaluacionComite, evaluacionRevisor, obtenerEstudiantesDeTG, obtenerTG, obtenerTGConRevisor, obtenerTGsinJurado, obtenerTGSinRevisor, obtenerTGconJurado, designarCDEJurado, obtenerPropuestasSinTutorAcademicoAsignado} 
+import { actualizarTG, anexarPlanilla, asignarRevisor, asignarTutorAcademico, asignarTutorEmpresarial, buscarTG, buscarTGByEstatus, buscarTGByModalidad, crearTG, descargarPlanilla, eliminarTG, evaluacionCDE, evaluacionComite, evaluacionRevisor, obtenerEstudiantesDeTG, obtenerTG, obtenerTGConRevisor, obtenerTGsinJurado, obtenerTGSinRevisor, obtenerTGconJurado, designarCDEJurado, obtenerPropuestasSinTutorAcademicoAsignado, defensaTrabajoDeGrado} 
 from '../controllers/TG.controller.js'
 const router = Router();
 router.get('/TG',obtenerTG);
@@ -30,5 +30,5 @@ router.get('/sinJurado',obtenerTGsinJurado);
 router.get('/conJurado',obtenerTGconJurado);
 router.put('/designarCDEJurado',designarCDEJurado);
 router.get('/SinTutorAcademicoAsignado',obtenerPropuestasSinTutorAcademicoAsignado);
-
+router.put('/defensaTrabajoDeGrado',defensaTrabajoDeGrado);
 export default router;

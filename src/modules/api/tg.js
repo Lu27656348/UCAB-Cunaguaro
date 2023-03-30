@@ -274,3 +274,23 @@ export const obtenerJuradosDeTG = async (id_tg) =>{
   const jurados = await resJurado.json()
   return jurados;
 };
+
+export const defensaTrabajoDeGrado = async (id_tg,fecha_entrega_informe,fecha_defensa,mencion,razon_mencion) =>{
+  console.log("defensaTrabajoDeGrado()");
+  const resJurado = await fetch('http://localhost:3000/defensaTrabajoDeGrado',{
+    method: 'PUT',
+    mode: 'cors',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      id_tg: id_tg,
+      fecha_entrega_informe: fecha_entrega_informe,
+      fecha_defensa: fecha_defensa,
+      mencion: mencion,
+      razon_mencion: razon_mencion
+    })
+  });
+  const jurados = await resJurado.json()
+  return jurados;
+};

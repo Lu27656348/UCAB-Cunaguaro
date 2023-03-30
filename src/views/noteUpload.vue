@@ -2,7 +2,6 @@
 import { ref, reactive, onMounted, computed } from "vue";
 import * as api from "../modules/apiTools.js";
 import * as jurados from "../modules/api/tg.js";
-import { planilla_evaluacion_final_TEG } from "../modules/generadorDOCX/Planilla_evaluacion_final_TEG.js";
 
 import { FormularioEmpresa } from "../modules/classes/formularioEmpresa.js";
 //import { platform } from "os";
@@ -17,6 +16,8 @@ let planilla = ref({
   id_tg: "",
   titulo: "",
   modalidad: "",
+  fecha_defensa: '',
+  fecha_entrega_informe: '',
   id_tutor_academico: "",
   id_tutor_empresarial: "",
   j1: "",
@@ -54,6 +55,7 @@ const clickenComponente = async (id) => {
 
 const descargarPlanillas = async () => {
   console.log("Descargando planillas");
+  await api.defensaTrabajoDeGrado(planilla.value.id_tg,planilla.value.fecha_entrega_informe,planilla.value.fecha_defensa,planilla.value.mencion,planilla.value.comentario_mencion)
 };
 
 onMounted(async () => {
@@ -103,14 +105,14 @@ onMounted(async () => {
               <p>Nota Final {{ planilla.j1 }}</p>
               <input type="range" min="0" max="20" :disabled="planilla.id_tg == ''" v-model="planilla.nota1" />
               <p>Fecha de entrega del Informe Final</p>
-              <input type="date" name="fechaEntrega" :disabled="planilla.id_tg == ''">
+              <input type="date" name="fechaEntrega" :disabled="planilla.id_tg == ''" v-model="planilla.fecha_entrega_informe" >
               <p>Fecha de defensa</p>
-              <input type="date" name="fechaDefenza" :disabled="planilla.id_tg == ''">
+              <input type="date" name="fechaDefenza" :disabled="planilla.id_tg == ''" v-model="planilla.fecha_defensa">
               <p>Mencion</p>
               <select name="mencion" id="" v-model="planilla.mencion" :disabled="planilla.id_tg == ''">
                 <option value="">Sin Mencion</option>
-                <option value="h">Honorifica</option>
-                <option value="p">Publicacion</option>
+                <option value="H">Honorifica</option>
+                <option value="P">Publicacion</option>
               </select>
               <textarea
                 v-if="!planilla.mencion == ''"
