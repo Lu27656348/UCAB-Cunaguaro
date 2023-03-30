@@ -29,14 +29,15 @@ let planilla = ref({
   nota_tutor: "0",
   showNotas: false,
   mencion: '',
-  comentario_mencion: ''
+  comentario_mencion: '',
+  alumnos: []
 });
 
 const clickenComponente = async (id) => {
   const respuesta = await api.obtenerTGById(id);
   const juradosTG = await jurados.obtenerJuradosDeTG(id);
-  console.log("clickenComponente()");
-  console.log("planilla");
+  // console.log("clickenComponente()");
+  // console.log("planilla");
   planilla.value.id_tg = respuesta.id_tg;
   planilla.value.titulo = respuesta.titulo;
   planilla.value.modalidad = respuesta.modalidad;
@@ -47,14 +48,16 @@ const clickenComponente = async (id) => {
   planilla.value.j2 = juradosTG[1];
   planilla.value.j2_suplente = juradosTG[3];
 
-  console.log(planilla.value);
-  console.log("Jurados");
+  planilla.value = await api.obtenerEstudianteDeTG(planilla.value.id_tg);
+
+  // console.log(planilla.value);
+  // console.log("Jurados");
 
   planilla.value.showNotas = true;
 };
 
 const descargarPlanillas = async () => {
-  console.log("Descargando planillas");
+  //console.log("Descargando planillas");
   await api.defensaTrabajoDeGrado(planilla.value.id_tg,planilla.value.fecha_entrega_informe,planilla.value.fecha_defensa,planilla.value.mencion,planilla.value.comentario_mencion)
 };
 
@@ -103,7 +106,19 @@ onMounted(async () => {
                 placeholder="Tutilo de Propuesta TG"
               ></textarea>
               <p>Nota Final {{ planilla.j1 }}</p>
-              <input type="range" min="0" max="20" :disabled="planilla.id_tg == ''" v-model="planilla.nota1" />
+              <div 
+                class="estudiantesTg"
+                v-for="e in planilla.alumnos"
+                :key="e.cedula"
+              >
+                <p>{{ e.nombres + ' ' + e.apellidos }}</p>
+                <input
+                  type="range" 
+                  min="0" 
+                  max="20" 
+                  :disabled="planilla.id_tg == ''" v-model="e.nota" 
+                />
+              </div>
               <p>Fecha de entrega del Informe Final</p>
               <input type="date" name="fechaEntrega" :disabled="planilla.id_tg == ''" v-model="planilla.fecha_entrega_informe" >
               <p>Fecha de defensa</p>
