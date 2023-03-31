@@ -87,6 +87,7 @@ const designarTutor = async () => {
     planillaDesignacionDeRevisor.imprimir();
     
   }
+  dataPropuestasPorRevisor.value = await api.obtenerPropuestaSinRevisor();
 };
 
 onMounted(async () => {

@@ -100,7 +100,7 @@ onMounted(async () => {
       <div class="committe__container__preview">
         <h2>Visualización del documento de solicitud</h2>
         <!-- Aquí empieza la cabecera de la web -->
-        <div>
+      
          <!--<form action="" class="committe__container__preview__form"> -->
           <h2>Visualización del documento de solicitud</h2>
           <div class="request__container__preview__form up-de">
@@ -158,7 +158,6 @@ onMounted(async () => {
           </div>
           <!-- aqui van los formularios necesarios para el proceso de crear una asignacion de revisor a la propuesta -->
         <!--</form> -->
-        </div>
         <!-- Aquí empieza la cabecera de la web -->
       </div>
     </div>

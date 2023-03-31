@@ -19,28 +19,23 @@ const clickenComponente = async (id) => {
   console.log(id);
   formularioPropuesta.value = await api.obtenerTGById(id);
   console.log(formularioPropuesta.value);
-  revisor.value = await api.obtenerProfesorByCedula(
-    formularioPropuesta.value.id_profesor_revisor
-  );
+  revisor.value = await api.obtenerProfesorByCedula(formularioPropuesta.value.id_profesor_revisor);
 };
 
 const rechazarPropuesta = async () => {
   await api.rechazarPropuestaRevisor(formularioPropuesta.value.id_tg, formularioPropuesta.value.observaciones_revisor);
   alert("Rechazada por Revisor");
-  dataPropuestasConRevisorAsignado.value =
-    await api.obtenerPropuestaConRevisorAsignado();
+  dataPropuestasConRevisorAsignado.value = await api.obtenerPropuestaConRevisorAsignado();
 };
 
 const aprobarPropuesta = async () => {
   await api.aprobarPropuestaRevisor(formularioPropuesta.value.id_tg, formularioPropuesta.value.observaciones_revisor);
   alert("Aprobada por Revisor");
-  dataPropuestasConRevisorAsignado.value =
-    await api.obtenerPropuestaConRevisorAsignado();
+  dataPropuestasConRevisorAsignado.value = await api.obtenerPropuestaConRevisorAsignado();
 };
 
 onMounted(async () => {
-  dataPropuestasConRevisorAsignado.value =
-    await api.obtenerPropuestaConRevisorAsignado();
+  dataPropuestasConRevisorAsignado.value = await api.obtenerPropuestaConRevisorAsignado();
 });
 </script>
 <template>

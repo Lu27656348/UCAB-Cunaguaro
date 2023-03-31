@@ -43,8 +43,11 @@ const mostarAlumno2 = () => {
 const añadirEmpresa = async () => {
   await api.crearEmpresa(crearEmpresa.value);
   console.log(crearEmpresa.value);
-  dataEmpresas.value = await api.obtenerEmpresas();
   crearSolicitudForm.value.ocultarAddEmpresa();
+  dataEmpresas.value = await api.obtenerEmpresas();
+  crearEmpresa.value.direccion = '';
+  crearEmpresa.value.nombre = '';
+  crearEmpresa.value.telefono = '';
 };
 
 async function buscarEstudiantes() {
@@ -117,7 +120,7 @@ async function buscarTutorEmpresarial() {
 
 crearSolicitudForm.value.empresa.idEmpresa = computed(() => {
   if (idEmpresaSeleccionada.value != null) {
-    let arregloEmpresa = dataEmpresas.filter(
+    let arregloEmpresa = dataEmpresas.value.filter(
       (t) => t.id_empresa == idEmpresaSeleccionada.value
     );
 
@@ -231,7 +234,7 @@ const mostrarTextArea = () => {
 };
 
 onMounted(async () => {
-  dataEmpresas = await api.obtenerEmpresas();
+  dataEmpresas.value = await api.obtenerEmpresas();
   crearSolicitudForm.value.crearSolicitud();
 });
 //------------------------------------------------------>
@@ -470,7 +473,7 @@ onMounted(async () => {
             >
               <select name="Empresa" id="" v-model="idEmpresaSeleccionada">
                 <option
-                  v-for="t in dataEmpresas"
+                  v-for="t in dataEmpresas.value"
                   :key="t.id_empresa"
                   :value="t.id_empresa"
                 >
