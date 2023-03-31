@@ -26,3 +26,5 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+
+restapi-postgres-sequelize-express-v3/src/database/database.js
