@@ -6,7 +6,7 @@ import { FormularioEmpresa } from "../modules/classes/formularioEmpresa.js";
 
 let data = reactive([]);
 let dataConsejo = reactive([]);
-let dataEmpresas = reactive([]);
+let dataEmpresas = ref([]);
 
 onMounted(async () => {
   data.value = await api.obtenerPropuestas("A");
@@ -14,11 +14,14 @@ onMounted(async () => {
   dataEmpresas.value = await api.obtenerEmpresas();
 });
 
-let crearEmpresa = new FormularioEmpresa();
+let crearEmpresa = ref(new FormularioEmpresa());
+
 const añadirEmpresa = async () => {
-  await api.crearEmpresa(crearEmpresa);
-  console.log(crearEmpresa);
+  await api.crearEmpresa(crearEmpresa.value);
   dataEmpresas.value = await api.obtenerEmpresas();
+  crearEmpresa.value.nombre = '';
+  crearEmpresa.value.direccion = '';
+  crearEmpresa.value.telefono = '';
 };
 </script>
 <template>
@@ -36,7 +39,7 @@ const añadirEmpresa = async () => {
           <!-- Aqui va el registro para las propuestas de trabajo de grado -->
           <div
             class="request__container__display__list__record"
-            v-for="e in dataEmpresas.value"
+            v-for="e in dataEmpresas"
             :key="e.id_empresa"
           >
             <p>{{ e.id_empresa }}</p>
@@ -69,7 +72,15 @@ const añadirEmpresa = async () => {
               v-model="crearEmpresa.telefono"
             />
             <div class="actions">
-              <button class="login__form__btn succes" @click="añadirEmpresa()">
+              <button 
+                class="login__form__btn succes" 
+                @click="añadirEmpresa()"
+                :disabled="
+                  crearEmpresa.nombre == '' ||
+                  crearEmpresa.direccion == '' ||
+                  crearEmpresa.telefono == ''
+                "
+              >
                 Añadir Empresa
               </button>
             </div>

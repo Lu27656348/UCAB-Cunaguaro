@@ -6,9 +6,6 @@ import { FormularioEmpresa } from "../modules/classes/formularioEmpresa.js";
 
 let data = reactive([]);
 let dataConsejo = reactive([]);
-let dataEmpresas = reactive([]);
-
-let crearEmpresa = new FormularioEmpresa();
 
 const añadirConsejo = async () => {
   console.log("Se creo el consejo, yeiii ^^");
@@ -17,7 +14,6 @@ const añadirConsejo = async () => {
 onMounted(async () => {
   data.value = await api.obtenerPropuestas("A");
   dataConsejo.value = await api.obtenerCDE();
-  dataEmpresas.value = await api.obtenerEmpresas();
 });
 </script>
 <template>
@@ -49,28 +45,18 @@ onMounted(async () => {
           <h2>Visualización del documento de solicitud</h2>
           <div class="request__container__preview__form up-de">
             <div class="request__container__preview__form__inputs">
-              <p>Nombre Empresa</p>
+              <p>Fecha del Consejo</p>
               <input
-                type="text"
-                placeholder="Nombre Empresa"
-                v-model="crearEmpresa.nombre"
-              />
-              <p>Direccion</p>
-              <input
-                type="text"
-                placeholder="Direccion"
-                v-model="crearEmpresa.direccion"
-              />
-              <p>Telefono</p>
-              <input
-                type="number"
+                type="date"
                 placeholder="Telefono"
-                v-model="crearEmpresa.telefono"
               />
             </div>
             <div class="actions">
-              <button class="login__form__btn succes" @click="añadirEmpresa()">
-                Añadir Empresa
+              <button 
+                class="login__form__btn succes"
+                @click="añadirConsejo()"
+              >
+                Consejo
               </button>
             </div>
           </div>
