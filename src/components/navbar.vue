@@ -48,16 +48,16 @@
         <router-link to="/assignment"><ion-icon name="person-add-outline"></ion-icon> Tutor</router-link>
       </li>
       <li class="navbar__list__element">
-        <router-link to="/crearEmpresa"><ion-icon name="business-outline"></ion-icon> Empresas</router-link>
-      </li>
-      <li class="navbar__list__element">
-        <router-link to="/crearConsejoEscuela">+<ion-icon name="people-outline"></ion-icon> Consejo</router-link>
-      </li>
-      <li class="navbar__list__element">
         <router-link to="/designarJurado"><ion-icon name="cafe-outline"></ion-icon> Jurados</router-link>
       </li>
       <li class="navbar__list__element">
         <router-link to="/evaluacionNotas"><ion-icon name="shield-checkmark-outline"></ion-icon> Defensa TG.</router-link>
+      </li>
+      <li class="navbar__list__element">
+        <router-link to="/crearEmpresa"><ion-icon name="business-outline"></ion-icon> Empresas</router-link>
+      </li>
+      <li class="navbar__list__element">
+        <router-link to="/crearConsejoEscuela">+<ion-icon name="people-outline"></ion-icon> Consejo</router-link>
       </li>
       <li class="navbar__list__element">
         <button @click="handleSignOut()" >Cerrar sesion</button>

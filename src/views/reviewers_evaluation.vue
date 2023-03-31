@@ -108,7 +108,7 @@ onMounted(async () => {
             <button 
               class="cancel" 
               @click="rechazarPropuesta()"
-              :disabled="formularioPropuesta.titulo == '' || formularioPropuesta.observaciones_revisor == ''"
+              :disabled="formularioPropuesta.titulo == '' || formularioPropuesta.observaciones_revisor == '' || formularioPropuesta.observaciones_revisor == undefined"
               >
               Rechazar
             </button>
