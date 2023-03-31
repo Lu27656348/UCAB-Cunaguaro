@@ -159,7 +159,7 @@ onMounted(async () => {
               <button 
                 class="login__form__btn succes" 
                 @click="designarTutor()"
-                :disabled=" formularioPropuesta.id_profesor_revisor == '' || formularioPropuesta.id_tg == '' "
+                :disabled=" formularioPropuesta.id_profesor_revisor == '' || formularioPropuesta.id_profesor_revisor == undefined || formularioPropuesta.id_tg == '' "
               >
                 Designar Tutor
               </button>

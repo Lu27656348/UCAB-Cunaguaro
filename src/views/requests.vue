@@ -145,7 +145,10 @@ onMounted(async () => {
             <button type="submit" @click="actualizarPlanilla(planilla.id_tg)">
               Actualizar planilla
             </button>
-            <button class="cancel" @click="eliminarPlanilla(planilla.id_tg)">
+            <button 
+              class="cancel" 
+              @click="eliminarPlanilla(planilla.id_tg)"
+            >
               Eliminar planilla
             </button>
           </div>
