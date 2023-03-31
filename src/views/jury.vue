@@ -18,8 +18,6 @@ import { planilla_evaluacion_TIG_Jurado } from '../modules/generadorDOCX/planill
 import { planilla_evaluacion_final_TIG } from '../modules/generadorDOCX/Planilla_evaluacion_final_TIG.js';
 
 let data = reactive([]);
-let dataConsejo = reactive([]);
-let dataEmpresas = reactive([]);
 let dataProfesores = reactive([]);
 
 let profesoresDesignados = reactive(["", "", "", ""]);
@@ -35,7 +33,7 @@ let planilla = ref({
 });
 
 let consejoDeEscuela = reactive([]);
-let cde = ref('')
+let cde = ref(null)
 
 
 let notificacion = ref({
@@ -46,12 +44,7 @@ let notificacion = ref({
         tutor_academico: '',
         tutor_empresarial: '',
         cde: ''
-})
-let crearEmpresa = new FormularioEmpresa();
-
-const añadirConsejo = async () => {
-  console.log("Se creo el consejo, yeiii ^^");
-};
+});
 
 const designarJurado = async (profesores, id_tg) => {
 
@@ -109,6 +102,10 @@ const clickenComponente = async (id) => {
   }
   notificacion.value.tg = planilla.value;
 };
+
+const pellisco = () =>{
+  console.log('AUCH!');
+}
 
 onMounted(async () => {
   data.value = await api.obtenerTGsinJurado();
@@ -217,7 +214,9 @@ onMounted(async () => {
                 profesoresDesignados[0]=='' ||
                 profesoresDesignados[1]=='' ||
                 profesoresDesignados[2]=='' ||
-                profesoresDesignados[3]==''
+                profesoresDesignados[3]=='' ||
+                planilla.id_tg == '' ||
+                cde == null
               "
             >
               Designar Jurado
