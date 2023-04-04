@@ -1,4 +1,5 @@
 <script setup>
+import Record from "../components/record.vue";
 import { ref, reactive, onMounted, computed } from "vue";
 import * as api from "../modules/apiTools.js";
 
@@ -126,15 +127,17 @@ onMounted(async () => {
         </div>
         <div class="committe__container__display__list">
           <!-- Aqui va el registro para las propuestas de trabajo de grado -->
-          <div
+          <Record
             class="request__container__display__list__record"
             v-for="e in data.value"
             :key="e.id_tg"
+            :id_tg="e.id_tg_formateado"
+            :titulo="e.titulo"
+            :fecha_solicitud="e.fecha_solicitud"
+            :modalidad="e.modalidad"
+            :estatus="e.estatus"
             @click="clickenComponente(e.id_tg)"
-          >
-            <p>{{ e.titulo }}</p>
-            <p>{{ e.estatus }}</p>
-          </div>
+          />
         </div>
       </div>
       <div class="committe__container__preview">

@@ -111,7 +111,7 @@ export const aprobarPropuestaComite = async ( id_tg ) => {
 export const obtenerCTG = async ( ) => {
   return comites.obtenerCTG();
 };
-
+//Aja
 export const aprobarPropuestaCTG = async ( id_tg,id_ctg,decision_ctg,comentario) => {
   try {
     const peticion =  await fetch('http://localhost:3000/revisa_CTG',{
@@ -136,6 +136,7 @@ export const aprobarPropuestaCTG = async ( id_tg,id_ctg,decision_ctg,comentario)
   }
 
 };
+//Aja
 export const rechazarPropuestaCTG = async ( id_tg,id_ctg,decision_ctg,comentario ) => {
   fetch('http://localhost:3000/revisa_CTG',{
       method: 'POST',
@@ -157,6 +158,7 @@ export const rechazarPropuestaCTG = async ( id_tg,id_ctg,decision_ctg,comentario
     console.log(data)
   })
 };
+
 export const designarRevisor = async ( id_tg, id_profesor_revisor) => {
   return comites.designarRevisor(id_tg, id_profesor_revisor);
 };
@@ -269,6 +271,6 @@ export const encriptarContrasena = async (contrasena) => {
   return encriptado
 }
 
-export const defensaTrabajoDeGrado = async (id_tg,fecha_entrega_informe,fecha_defensa,mencion,razon_mencion, alumnos) => {
-  return await tgs.defensaTrabajoDeGrado(id_tg,fecha_entrega_informe,fecha_defensa,mencion,razon_mencion,alumnos);
+export const defensaTrabajoDeGrado = async (id_tg, fecha_entrega_informe, fecha_defensa, mencion, razon_mencion, alumnos) => {
+  return await tgs.defensaTrabajoDeGrado(id_tg, fecha_entrega_informe, fecha_defensa, mencion, razon_mencion, alumnos);
 }

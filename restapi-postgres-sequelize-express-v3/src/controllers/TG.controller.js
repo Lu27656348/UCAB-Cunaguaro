@@ -386,22 +386,25 @@ export const obtenerPropuestasSinTutorAcademicoAsignado = async (req, res) => {
 
 export const defensaTrabajoDeGrado = async (req, res) => {
     try {
+        console.log('Estoy en defensa de tg');
         const {fecha_defensa, mencion, razon_mencion, fecha_entrega_informe,id_tg, alumnos} = req.body
+        console.log('Estoy en defensa de tg');
+        console.log({fecha_defensa, mencion, razon_mencion, fecha_entrega_informe,id_tg, alumnos});
         const tgs = await TG.findOne({
             where: {
                 id_tg: id_tg,
             }
         });
 
-        alumnos.forEach((alumno)=>{
-            const buscar = Realiza_tg.findOne({
+        alumnos.forEach(async (alumno)=>{
+            let buscar = await Realiza_tg.findOne({
                 where: {
                     cedula_estudiante: alumno.cedula,
                     id_tg: id_tg
                 }
             });
             buscar.nota = alumno.nota;
-            const actualizar = buscar.save();
+            let actualizar = await buscar.save();
         })
         tgs.fecha_defensa = fecha_defensa;
         tgs.mencion = mencion;
@@ -410,6 +413,6 @@ export const defensaTrabajoDeGrado = async (req, res) => {
         const actualizar = await tgs.save();
         return res.json(tgs);
     } catch (error) {
-        return res.status(500).json({error: error});
+        return res.status(500).json({error: error, mensaje: 'Error en defensa'});
     }
 }

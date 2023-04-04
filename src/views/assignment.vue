@@ -1,4 +1,5 @@
 <script setup>
+import Record from "../components/record.vue";
 import { PropuestaTg } from "../modules/classes/planillaPropuesta.js";
 import { ref, reactive, onMounted, computed } from "vue";
 import * as api from "../modules/apiTools.js";
@@ -74,16 +75,17 @@ onMounted(async () => {
         </div>
         <div class="committe__container__display__list">
           <!-- Aqui va el registro para las propuestas de trabajo de grado -->
-          <div
+          <Record
             class="request__container__display__list__record"
             v-for="p in data.value"
             :key="p.id_tg"
+            :id_tg="p.id_tg_formateado"
+            :titulo="p.titulo"
+            :fecha_solicitud="p.fecha_solicitud"
+            :modalidad="p.modalidad"
+            :estatus="p.estatus"
             @click="clickenComponente(p.id_tg)"
-          >
-            <p>{{ p.id_tg }}</p>
-            <p>{{ p.titulo }}</p>
-            <p>{{ p.modalidad }}</p>
-          </div>
+          />
         </div>
       </div>
       <div class="committe__container__preview">

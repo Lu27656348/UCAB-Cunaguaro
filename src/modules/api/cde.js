@@ -107,7 +107,9 @@ export const crearJuradosPorUno = async (jurado,id_tg,index) => {
       tipo: tipo
     })
   })
-  console.log(resJurado)
+  const resultado = await resJurado.json();
+  console.log(resultado);
+  //console.log(resJurado);
 };
 
 export const crearJurados = async (array,id_tg) => {

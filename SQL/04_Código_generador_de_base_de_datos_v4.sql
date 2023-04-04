@@ -14,6 +14,7 @@ DROP TABLE IF EXISTS CDE;
 DROP TABLE IF EXISTS Especialidades;
 DROP TABLE IF EXISTS Areas;
 DROP TABLE IF EXISTS Controladores;
+DROP TABLE IF EXISTS ctg;
 
 /* Entidades sin claves foraneas */
 CREATE TABLE IF NOT EXISTS Estudiantes (
@@ -112,7 +113,7 @@ CREATE TABLE IF NOT EXISTS TG (
 	id_cde_jurado INTEGER DEFAULT NULL,
 	observaciones_cde_j TEXT DEFAULT NULL,
 	id_empresa INTEGER DEFAULT NULL,
-	mencion CHAR DEFAULT NULL CHECK(mencion IN('P','H')),
+	mencion CHAR DEFAULT NULL CHECK((mencion IN('P','H')) OR (mencion IS NULL) ),
 	razon_mencion TEXT DEFAULT NULL,
 	fecha_entrega_informe DATE DEFAULT NULL,
 	FOREIGN KEY (id_profesor_revisor) REFERENCES Profesores(cedula)
