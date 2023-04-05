@@ -395,8 +395,7 @@ onMounted(async () => {
           </div>
         </form>
       </div>
-      <div
-        class="external-profesional"
+      <div class="external-profesional"
         v-show="
           crearSolicitudForm.showTutor &&
           crearSolicitudForm.trabajoDeGrado.modalidad == 'I'
@@ -541,7 +540,7 @@ onMounted(async () => {
           </div>
           <button 
           class="login__form__btn succes" 
-          :disabled="crearEmpresa.direccion == '' || crearEmpresa.direccion == '' || crearEmpresa.telefono == ''"
+          :disabled="crearEmpresa.nombre == '' || crearEmpresa.direccion == '' || crearEmpresa.telefono == ''"
           @click="añadirEmpresa()">
             Añadir Empresa
           </button>
