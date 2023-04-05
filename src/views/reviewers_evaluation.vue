@@ -84,12 +84,13 @@ onMounted(async () => {
               <input
                 disabled
                 type="text"
+                placeholder="modalidad"
                 v-model="formularioPropuesta.modalidad"
               />
               <p>Revisor</p>
-              <input disabled type="text" v-model="revisor.nombres" />
-              <input disabled type="text" v-model="revisor.apellidos" />
-              <input disabled type="text" v-model="revisor.cedula" />
+              <input disabled type="text" placeholder="Nombres" v-model="revisor.nombres"/>
+              <input disabled type="text" placeholder="Apellidos" v-model="revisor.apellidos"/>
+              <input disabled type="text" placeholder="Cedula" v-model="revisor.cedula"/>
               <strong>Observaciones</strong>
               <textarea
                 style="height: 50px;"
