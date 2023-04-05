@@ -15,7 +15,10 @@ const router = createRouter({
     { path: '/crearEmpresa', name: 'crearEmpresa', component: ()=> import('../views/z_CrearEmpresa.vue') },
     { path: '/crearConsejoEscuela', name: 'consejoEscuela', component: ()=> import('../views/z_CrearConsejoEscuela.vue') },
     { path: '/designarJurado', name: 'designarJurado', component: ()=> import('../views/jury.vue') },
-    { path: '/evaluacionNotas', name: 'evaluacionNotas', component: ()=> import('../views/noteUpload.vue') }
+    { path: '/evaluacionNotas', name: 'evaluacionNotas', component: ()=> import('../views/noteUpload.vue') },
+    { path: '/catalogs', name: 'catalogs', component: ()=> import('../views/catalogs.vue') },
+    { path: '/catalogs/profesores', name: 'catalogs-students', component: ()=> import('../views/catalogs-students.vue') },
+    { path: '/catalogs/estudiantes', name: 'catalogs-professor', component: ()=> import('../views/catalogs-professor.vue') }
   ]
 });
 

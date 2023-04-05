@@ -51,13 +51,10 @@
         <router-link to="/designarJurado"><ion-icon name="cafe-outline"></ion-icon> Jurados</router-link>
       </li>
       <li class="navbar__list__element">
-        <router-link to="/evaluacionNotas"><ion-icon name="shield-checkmark-outline"></ion-icon> Defensa TG.</router-link>
+        <router-link to="/evaluacionNotas"><ion-icon name="shield-checkmark-outline"></ion-icon> Defensa TG</router-link>
       </li>
       <li class="navbar__list__element">
-        <router-link to="/crearEmpresa"><ion-icon name="business-outline"></ion-icon> Empresas</router-link>
-      </li>
-      <li class="navbar__list__element">
-        <router-link to="/crearConsejoEscuela">+<ion-icon name="people-outline"></ion-icon> Consejo</router-link>
+        <router-link to="/catalogs"><ion-icon name="book-outline"></ion-icon> Catalogos</router-link>
       </li>
       <li class="navbar__list__element">
         <button @click="handleSignOut()" >Cerrar sesion</button>
