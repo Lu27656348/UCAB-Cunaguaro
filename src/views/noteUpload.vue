@@ -149,8 +149,20 @@ onMounted(async () => {
               <p>Mencion</p>
               <select name="mencion" id="" v-model="planilla.mencion" :disabled="planilla.id_tg == ''">
                 <option :value="null">Sin Mencion</option>
-                <option value="H">Honorifica</option>
-                <option value="P">Publicacion</option>
+                <option 
+                  value="H"
+                  :disabled = "
+                    planilla.alumnos.length > 0? planilla.alumnos[0].nota < 18 || planilla.alumnos[0].nota < 18 : true ||
+                    planilla.alumnos.length > 1? planilla.alumnos[1].nota < 18 || planilla.alumnos[1].nota < 18 : false
+                  "
+                  >Honorifica</option>
+                <option 
+                  value="P"
+                  :disabled = "
+                    planilla.alumnos.length > 0? planilla.alumnos[0].nota < 19 || planilla.alumnos[0].nota < 19 : true ||
+                    planilla.alumnos.length > 1? planilla.alumnos[1].nota < 19 || planilla.alumnos[1].nota < 19 : false
+                  "
+                  >Publicacion</option>
               </select>
               <textarea
                 v-if="!planilla.mencion == ''"
