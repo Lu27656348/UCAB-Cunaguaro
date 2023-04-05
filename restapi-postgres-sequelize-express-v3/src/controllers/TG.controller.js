@@ -345,7 +345,7 @@ export const obtenerTGsinJurado = async (req, res) => {
 export const obtenerTGconJurado = async (req, res) => {
     const{ id_tg, nombre_planilla } = req.body
     try {
-        const buscar =  await sequelize.query("SELECT T.* FROM TG AS T, Jurados AS J WHERE T.id_tg = J.id_tg GROUP BY T.id_tg", { type: QueryTypes.SELECT});
+        const buscar =  await sequelize.query("SELECT T.* FROM TG AS T, Jurados AS J, Realiza_tg AS RT WHERE T.id_tg = J.id_tg AND RT.id_tg = T.id_tg AND RT.nota IS NULL GROUP BY T.id_tg", { type: QueryTypes.SELECT});
         return res.json(buscar);
     } catch (error) {
         return res.status(404).json("Error en busqueda por estatus");
