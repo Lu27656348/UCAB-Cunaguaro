@@ -152,15 +152,15 @@ onMounted(async () => {
                 <option 
                   value="H"
                   :disabled = "
-                    planilla.alumnos.length > 0? planilla.alumnos[0].nota < 18 || planilla.alumnos[0].nota < 18 : true ||
-                    planilla.alumnos.length > 1? planilla.alumnos[1].nota < 18 || planilla.alumnos[1].nota < 18 : false
+                    planilla.alumnos.length == 0? true : planilla.alumnos[0].nota < 18 || planilla.alumnos[0].nota < 18 ||
+                    planilla.alumnos.length == 1? false : planilla.alumnos[1].nota < 18 || planilla.alumnos[1].nota < 18
                   "
                   >Honorifica</option>
                 <option 
                   value="P"
                   :disabled = "
-                    planilla.alumnos.length > 0? planilla.alumnos[0].nota < 19 || planilla.alumnos[0].nota < 19 : true ||
-                    planilla.alumnos.length > 1? planilla.alumnos[1].nota < 19 || planilla.alumnos[1].nota < 19 : false
+                    planilla.alumnos.length == 0? true : planilla.alumnos[0].nota < 19 || planilla.alumnos[0].nota < 19  ||
+                    planilla.alumnos.length == 1? false : planilla.alumnos[1].nota < 19 || planilla.alumnos[1].nota < 19
                   "
                   >Publicacion</option>
               </select>
