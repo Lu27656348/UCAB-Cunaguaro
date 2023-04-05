@@ -142,6 +142,7 @@ onMounted(async () => {
                 type="text"
                 v-model="formularioPropuesta.estatus"
               />
+              <p>Seleccione el Consejo de Escuela evaluador</p>
               <select name="CDE" id="" v-model="formularioPropuesta.id_cde">
                 <option
                   v-for="c in dataConsejo.value"
