@@ -89,6 +89,7 @@ const designarTutor = async () => {
     
   }
   dataPropuestasPorRevisor.value = await api.obtenerPropuestaSinRevisor();
+  formularioPropuesta.value = new PropuestaTg();
 };
 
 onMounted(async () => {

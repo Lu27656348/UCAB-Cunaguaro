@@ -11,8 +11,6 @@ let data = reactive([]);
 let dataConsejo = reactive([]);
 let dataEmpresas = reactive([]);
 
-let crearEmpresa = new FormularioEmpresa();
-
 let planilla = ref({
   id_tg: "",
   titulo: "",
@@ -51,20 +49,35 @@ const clickenComponente = async (id) => {
 
   planilla.value.alumnos = await api.obtenerEstudianteDeTG(planilla.value.id_tg);
 
-  console.log("planilla.value.alumnos")
-
-  // console.log(planilla.value);
-  // console.log("Jurados");
-
   planilla.value.showNotas = true;
 };
 
 const descargarPlanillas = async () => {
   //console.log("Descargando planillas");
   console.log(planilla.value.alumnos)
-  const respuesta = await api.defensaTrabajoDeGrado(planilla.value.id_tg,planilla.value.fecha_entrega_informe,planilla.value.fecha_defensa,planilla.value.mencion,planilla.value.comentario_mencion,planilla.value.alumnos);
+  const respuesta = await api.defensaTrabajoDeGrado(planilla.value.id_tg, planilla.value.fecha_entrega_informe, planilla.value.fecha_defensa, planilla.value.mencion, planilla.value.comentario_mencion, planilla.value.alumnos);
   console.log("Respuesta");
   console.log(respuesta);
+  planilla.value = {
+  id_tg: "",
+  titulo: "",
+  modalidad: "",
+  fecha_defensa: '',
+  fecha_entrega_informe: '',
+  id_tutor_academico: "",
+  id_tutor_empresarial: "",
+  j1: "",
+  j2: "",
+  j1_suplente: "",
+  j2_suplente: "",
+  nota1: "0",
+  nota2: "0",
+  nota_tutor: "0",
+  showNotas: false,
+  mencion: '',
+  comentario_mencion: '',
+  alumnos: []
+}
 };
 
 onMounted(async () => {

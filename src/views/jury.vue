@@ -36,7 +36,6 @@ let planilla = ref({
 let consejoDeEscuela = reactive([]);
 let cde = ref(null)
 
-
 let notificacion = ref({
         tg: '',
         alumnos: '',

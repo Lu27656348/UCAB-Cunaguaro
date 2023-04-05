@@ -36,12 +36,14 @@ const clickenComponente = async (id) => {
 const rechazarPropuestaComite = async () => {
   await api.rechazarPropuestaCTG(formularioPropuesta.value.id_tg, formularioPropuesta.value.id_ctg,"R");
   dataPropuestas.value = await api.obtenerPropuestas("PC");
+  formularioPropuesta.value = new PropuestaTg();
 };
 
 const aprobarPropuestaComite = async () => {
   //await api.aprobarPropuestaComite(formularioPropuesta.value.id_tg);
   await api.aprobarPropuestaCTG(formularioPropuesta.value.id_tg, formularioPropuesta.value.id_ctg,"A",formularioPropuesta.value.observaciones_comite);
   dataPropuestas.value = await api.obtenerPropuestas("PC");
+  formularioPropuesta.value = new PropuestaTg();
 };
 
 onMounted(async () => {

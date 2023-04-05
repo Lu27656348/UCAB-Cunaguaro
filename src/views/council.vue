@@ -38,6 +38,7 @@ const clickenComponente = async (id) => {
 const rechazarTG = async (id) => {
   await api.rechazarPropuestaCDE(id);
   data.value = await api.obtenerPropuestas("PE");
+  formularioPropuesta.value = new PropuestaTg();
 };
 
 const aceptarTG = async (id) => {
@@ -73,6 +74,7 @@ const aceptarTG = async (id) => {
   //cartaDesignacion.imprimirPlanilla(id);
 
   data.value = await api.obtenerPropuestas("PE");
+  formularioPropuesta.value = new PropuestaTg();
 };
 
 onMounted(async () => {

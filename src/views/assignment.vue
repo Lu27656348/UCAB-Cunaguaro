@@ -54,6 +54,7 @@ const asignarTutorAcademico = async () => {
 
   cartaDesignacion.imprimirPlanilla();
   data.value = await api.obtenerPropuestasSinTutorAcademicoAsignado();
+  formularioPropuesta.value = new PropuestaTg();
 };
 
 onMounted(async () => {

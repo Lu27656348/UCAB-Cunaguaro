@@ -27,12 +27,14 @@ const rechazarPropuesta = async () => {
   await api.rechazarPropuestaRevisor(formularioPropuesta.value.id_tg, formularioPropuesta.value.observaciones_revisor);
   alert("Rechazada por Revisor");
   dataPropuestasConRevisorAsignado.value = await api.obtenerPropuestaConRevisorAsignado();
+  formularioPropuesta.value = new PropuestaTg();
 };
 
 const aprobarPropuesta = async () => {
   await api.aprobarPropuestaRevisor(formularioPropuesta.value.id_tg, formularioPropuesta.value.observaciones_revisor);
   alert("Aprobada por Revisor");
   dataPropuestasConRevisorAsignado.value = await api.obtenerPropuestaConRevisorAsignado();
+  formularioPropuesta.value = new PropuestaTg();
 };
 
 onMounted(async () => {
