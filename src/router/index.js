@@ -17,8 +17,14 @@ const router = createRouter({
     { path: '/designarJurado', name: 'designarJurado', component: ()=> import('../views/jury.vue') },
     { path: '/evaluacionNotas', name: 'evaluacionNotas', component: ()=> import('../views/noteUpload.vue') },
     { path: '/catalogs', name: 'catalogs', component: ()=> import('../views/catalogs.vue') },
-    { path: '/catalogs/profesores', name: 'catalogs-students', component: ()=> import('../views/catalogs-students.vue') },
-    { path: '/catalogs/estudiantes', name: 'catalogs-professor', component: ()=> import('../views/catalogs-professor.vue') }
+    { path: '/catalogs/estudiantes', name: 'catalogs-students', component: ()=> import('../views/catalogs-students.vue') },
+    { path: '/catalogs/profesores', name: 'catalogs-professor', component: ()=> import('../views/catalogs-professor.vue') },
+    { path: '/catalogs/empresas', name: 'catalogs-empresas', component: ()=> import('../views/catalogs-empresas.vue') },
+    { path: '/catalogs/externos', name: 'catalogs-externos', component: ()=> import('../views/catalogs-externos.vue') },
+    { path: '/catalogs/consejo', name: 'catalogs-consejo', component: ()=> import('../views/catalogs-consejo.vue') },
+    { path: '/catalogs/comite', name: 'catalogs-comite', component: ()=> import('../views/catalogs-comite.vue') },
+    { path: '/catalogs/especialidades', name: 'catalogs-especialidades', component: ()=> import('../views/catalogs-especialidades.vue') },
+    { path: '/catalogs/areas-especialidades', name: 'catalogs-areas-especialidades', component: ()=> import('../views/catalogs-areas-especialidades.vue') },
   ]
 });
 

@@ -91,6 +91,3 @@ const añadirEmpresa = async () => {
     </div>
   </div>
 </template>
-<style>
-/*Esta etiqueta esta vacia*/
-</style>

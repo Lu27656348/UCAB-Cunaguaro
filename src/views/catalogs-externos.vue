@@ -1,10 +1,13 @@
 <script setup>
+import { EmailAuthCredential } from "firebase/auth";
 import { ref, reactive, onMounted, computed } from "vue";
 import * as api from "../modules/apiTools.js";
 
 let data = reactive([]);
+let dataConsejo = reactive([]);
+let dataEmpresas = ref([]);
 
-let profesor = ref({
+let externo = ref({
   cedula: '',
   nombres: '',
   apellidos: '',
@@ -18,14 +21,14 @@ let profesor = ref({
 });
 
 onMounted(async () => {
-  data.value = await api.obtenerProfesores();
+  data.value = await api.obtenerExternos();
   console.log(data.value);
 });
 
 </script>
 <template>
   <div class="request">
-    <h1>Catalogo de Profesores</h1>
+    <h1>Catalogo de Externos</h1>
     <div class="committe__container">
       <div class="committe__container__display">
         <div class="committe__container__display__controllers">
@@ -52,30 +55,30 @@ onMounted(async () => {
         <form action="" class="committe__container__preview__form">
           <div class="request__container__preview__form up-de">
             <p>Cedula</p>
-            <input type="text" v-model="profesor.cedula">
+            <input type="text" v-model="externo.cedula">
             <p>Apellidos</p>
-            <input type="text" v-model="profesor.apellidos">
+            <input type="text" v-model="externo.apellidos">
             <p>Nombres</p>
-            <input type="text" v-model="profesor.nombres">
+            <input type="text" v-model="externo.nombres">
             <p>Email</p>
-            <input type="text" v-model="profesor.email">
+            <input type="text" v-model="externo.email">
             <p>Telefono</p>
-            <input type="text" v-model="profesor.telefono">
+            <input type="text" v-model="externo.telefono">
             <p>Oficina</p>
-            <input type="text" v-model="profesor.oficina">
+            <input type="text" v-model="externo.oficina">
             <p>Habitacion</p>
-            <input type="text" v-model="profesor.habitacion">
+            <input type="text" v-model="externo.habitacion">
             <p>Experiencia</p>
-            <input type="text" v-model="profesor.experiencia">
+            <input type="text" v-model="externo.experiencia">
             <p>Fecha de Graduado</p>
-            <input type="date" v-model="profesor.fecha_graduado">
+            <input type="date" v-model="externo.fecha_graduado">
             <p>Cargo</p>
-            <input type="text" v-model="profesor.cargo">
+            <input type="text" v-model="externo.cargo">
             <div class="actions">
               <button 
                 class="login__form__btn succes" 
               >
-                Añadir Profesor
+                Añadir Externo
               </button>
             </div>
           </div>

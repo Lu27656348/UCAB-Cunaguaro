@@ -4,28 +4,19 @@ import * as api from "../modules/apiTools.js";
 
 let data = reactive([]);
 
-let profesor = ref({
-  cedula: '',
-  nombres: '',
-  apellidos: '',
-  email: '',
-  telefono: '',
-  oficina: '',
-  habitacion: '',
-  experiencia: '',
-  fecha_gradiado: '',
-  cargo: ''
+let area = ref({
+  nombre_area: ''
 });
 
 onMounted(async () => {
-  data.value = await api.obtenerProfesores();
+  data.value = await api.obtenerCTG();
   console.log(data.value);
 });
 
 </script>
 <template>
   <div class="request">
-    <h1>Catalogo de Profesores</h1>
+    <h1>Catalogo de Areas de Especialidades</h1>
     <div class="committe__container">
       <div class="committe__container__display">
         <div class="committe__container__display__controllers">
@@ -39,11 +30,11 @@ onMounted(async () => {
           <div
             class="request__container__display__list__record"
             v-for="e in data.value" 
-            :key="e.cedula"
+            :key="e.id_ctg"
           >
-            <p>Cedula: {{ e.cedula }}</p>
-            <p>Apellidos: {{ e.apellidos }}</p>
-            <p>Nombres: {{ e.nombres }}</p>
+            <p>ID: {{ e.id_ctg }}</p>
+            <p>ID Formateado: {{ e.id_ctg_formateado }}</p>
+            <p>Fecha de Conformacion: {{ e.fecha_conformacion }}</p>
           </div>
         </div>
       </div>
@@ -51,31 +42,13 @@ onMounted(async () => {
         <h2>Visualización del documento de solicitud</h2>
         <form action="" class="committe__container__preview__form">
           <div class="request__container__preview__form up-de">
-            <p>Cedula</p>
-            <input type="text" v-model="profesor.cedula">
-            <p>Apellidos</p>
-            <input type="text" v-model="profesor.apellidos">
-            <p>Nombres</p>
-            <input type="text" v-model="profesor.nombres">
-            <p>Email</p>
-            <input type="text" v-model="profesor.email">
-            <p>Telefono</p>
-            <input type="text" v-model="profesor.telefono">
-            <p>Oficina</p>
-            <input type="text" v-model="profesor.oficina">
-            <p>Habitacion</p>
-            <input type="text" v-model="profesor.habitacion">
-            <p>Experiencia</p>
-            <input type="text" v-model="profesor.experiencia">
-            <p>Fecha de Graduado</p>
-            <input type="date" v-model="profesor.fecha_graduado">
-            <p>Cargo</p>
-            <input type="text" v-model="profesor.cargo">
+            <p>Nombre de Area</p>
+            <input type="text" v-model="area.nombre_area">
             <div class="actions">
               <button 
                 class="login__form__btn succes" 
               >
-                Añadir Profesor
+                Añadir Area
               </button>
             </div>
           </div>
