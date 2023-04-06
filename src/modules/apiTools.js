@@ -308,3 +308,31 @@ export const actualizarProfesor = async (profesor) => {
   const respuesta = await profesores.actualizarProfesor(profesor);
   return;
 }
+
+/* Catálogo de funciones para el manejo de la entidad Empresas */
+
+export const eliminarEmpresa = async (id) => {
+  const respuesta = await empresas.eliminarEmpresa(id);
+  return;
+}
+
+export const actualizarEmpresa = async (empresa) => {
+  const respuesta = await empresas.actualizarEmpresa(empresa);
+  return;
+}
+
+/* Catálogo de funciones para el manejo de la entidad Externos */
+export const añadirExterno = async (externo) => {
+  const respuesta = await externos.añadirExterno(externo);
+  return;
+}
+
+export const eliminarExterno = async (id) => {
+  const respuesta = await externos.eliminarExterno(id);
+  return;
+}
+
+export const actualizarExterno = async (externo) => {
+  const respuesta = await externos.actualizarExterno(externo);
+  return;
+}

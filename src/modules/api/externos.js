@@ -18,6 +18,34 @@ export const obtenerExternoByCedula = async (cedulaExterno) => {
   const resExterno = await fetch('http://localhost:3000/Externos/cedula/' + cedulaExterno );
   const externo = await resExterno.json();
   console.log("obtenerExternoByCedula()");
-  console.log(externo);
   return externo;
 };
+
+export const añadirExterno = async (externo) => {
+    const resExterno = await fetch('http://localhost:3000/Externos/', {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(externo)
+    });
+}
+
+export const actualizarExterno = async (externo) => {
+  const resExterno = await fetch('http://localhost:3000/Externos/'+externo.id_externo, {
+    method: 'PUT',
+    mode: 'cors',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(externo)
+  });
+}
+
+export const eliminarExterno = async (id_externo) => {
+  const resExterno = await fetch('http://localhost:3000/Externos/'+id_externo, {
+    method: 'DELETE',
+    mode: 'cors',
+  });
+}

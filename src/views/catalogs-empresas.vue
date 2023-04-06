@@ -11,13 +11,32 @@ onMounted(async () => {
 });
 
 let crearEmpresa = ref(new FormularioEmpresa());
-
+const clickenComponente = async (id) => {
+ const empresaRequest =  await api.obtenerEmpresaById(id);
+ crearEmpresa.value.id_empresa = empresaRequest.id_empresa;
+ crearEmpresa.value.nombre = empresaRequest.nombre;
+ crearEmpresa.value.direccion = empresaRequest.direccion;
+ crearEmpresa.value.telefono = empresaRequest.telefono;
+ console.log(empresaRequest)
+};
 const añadirEmpresa = async () => {
+  console.log("AñadirEmpresa()")
   await api.crearEmpresa(crearEmpresa.value);
   dataEmpresas.value = await api.obtenerEmpresas();
   crearEmpresa.value.nombre = '';
   crearEmpresa.value.direccion = '';
   crearEmpresa.value.telefono = '';
+  dataEmpresas.value = await api.obtenerEmpresas();
+};
+const actualizarEmpresa = async () => {
+  console.log("actualizarEmpresa()");
+  await api.actualizarEmpresa(crearEmpresa.value);
+  dataEmpresas.value = await api.obtenerEmpresas();
+};
+const eliminarEmpresa = async () => {
+  console.log("eliminarEmpresa()");
+  await api.eliminarEmpresa(crearEmpresa.value.id_empresa)
+  dataEmpresas.value = await api.obtenerEmpresas();
 };
 </script>
 <template>
@@ -37,6 +56,7 @@ const añadirEmpresa = async () => {
             class="request__container__display__list__record"
             v-for="e in dataEmpresas"
             :key="e.id_empresa"
+            @click="clickenComponente(e.id_empresa)"
           >
             <p>ID: {{ e.id_empresa }}</p>
             <p>Nombre: {{ e.nombre }}</p>
@@ -47,7 +67,7 @@ const añadirEmpresa = async () => {
       </div>
       <div class="committe__container__preview">
         <h2>Visualización del documento de solicitud</h2>
-        <form action="" class="committe__container__preview__form">
+        <form action="" class="committe__container__preview__form" @submit.prevent="añadirEmpresa()">
           <div class="request__container__preview__form up-de">
             <p>Nombre Empresa</p>
             <input
@@ -63,14 +83,14 @@ const añadirEmpresa = async () => {
             />
             <p>Telefono</p>
             <input
-              type="number"
+              type="text"
               placeholder="Telefono"
               v-model="crearEmpresa.telefono"
             />
             <div class="actions">
               <button 
                 class="login__form__btn succes" 
-                @click="añadirEmpresa()"
+                type="submit"
                 :disabled="
                   crearEmpresa.nombre == '' ||
                   crearEmpresa.direccion == '' ||
@@ -78,6 +98,30 @@ const añadirEmpresa = async () => {
                 "
               >
                 Añadir Empresa
+              </button>
+              <button 
+                class="login__form__btn succes" 
+                type="button"
+                @click="eliminarEmpresa()"
+                :disabled="
+                  crearEmpresa.nombre == '' ||
+                  crearEmpresa.direccion == '' ||
+                  crearEmpresa.telefono == ''
+                "
+              >
+                Elininar Empresa
+              </button>
+              <button 
+                class="login__form__btn succes" 
+                @click="actualizarEmpresa()"
+                type="button"
+                :disabled="
+                  crearEmpresa.nombre == '' ||
+                  crearEmpresa.direccion == '' ||
+                  crearEmpresa.telefono == ''
+                "
+              >
+                Actualizar Empresa
               </button>
             </div>
           </div>

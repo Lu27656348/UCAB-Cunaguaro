@@ -24,3 +24,22 @@ export const crearEmpresa = async (empresa) => {
     body: JSON.stringify(empresa)
   });
 };
+
+export const actualizarEmpresa = async (empresa) => {
+    const resEmpresa = await fetch('http://localhost:3000/Empresas/'+empresa.id_empresa,{
+      method: 'PUT',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(empresa)
+    });
+}
+
+export const eliminarEmpresa = async (id) => {
+    const resEmpresa = await fetch('http://localhost:3000/Empresas/'+id,{
+      method: "DELETE",
+      mode: 'cors'
+    });
+    return;
+}

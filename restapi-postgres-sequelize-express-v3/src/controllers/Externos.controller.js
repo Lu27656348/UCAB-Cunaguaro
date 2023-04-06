@@ -5,7 +5,7 @@ export const obtenerExternos = async (req,res) => {
 };
 export const crearExternos = async (req,res) => {
     try {
-        const { cedula, nombres, apellidos,email,telefono,oficina,habitacion, experiencia, graduado,cargo} = req.body;
+        const { cedula, nombres, apellidos,email,telefono,oficina,habitacion, experiencia, fecha_graduado,cargo} = req.body;
         const nuevo = await Externos.create({
             cedula,
             nombres,
@@ -15,11 +15,11 @@ export const crearExternos = async (req,res) => {
             oficina,
             habitacion,
             experiencia,
-            graduado,
+            fecha_graduado,
             cargo
         },
         {
-            fields: ["cedula", "nombres", "apellidos","email","telefono","oficina","habitacion","experiencia", "graduado","cargo"]
+            fields: ["cedula", "nombres", "apellidos","email","telefono","oficina","habitacion","experiencia", "fecha_graduado","cargo"]
         });
         res.json(nuevo);
     } catch (error) {

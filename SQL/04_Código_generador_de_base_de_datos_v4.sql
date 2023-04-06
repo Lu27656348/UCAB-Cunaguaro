@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS Externos (
 	habitacion TEXT DEFAULT NULL,
 	fecha_graduado DATE DEFAULT NULL,
 	cargo TEXT DEFAULT NULL,
-	id_empresa INTEGER NOT NULL,
+	id_empresa INTEGER DEFAULT NULL,
 	PRIMARY KEY (id_externo),
 	FOREIGN KEY (id_empresa) REFERENCES Empresas( id_empresa )
 		ON DELETE SET NULL

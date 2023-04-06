@@ -8,6 +8,7 @@ let dataConsejo = reactive([]);
 let dataEmpresas = ref([]);
 
 let externo = ref({
+  id_externo: '',
   cedula: '',
   nombres: '',
   apellidos: '',
@@ -16,10 +17,40 @@ let externo = ref({
   oficina: '',
   habitacion: '',
   experiencia: '',
-  fecha_gradiado: '',
+  fecha_graduado: '',
   cargo: ''
 });
 
+const clickenComponente = async (id) => {
+ const externoRequest =  await api.obtenerExternoByCedula(id);
+ externo.value.id_externo = externoRequest.id_externo;
+ externo.value.cedula = externoRequest.cedula;
+ externo.value.nombres = externoRequest.nombres;
+ externo.value.apellidos = externoRequest.apellidos;
+ externo.value.email = externoRequest.email;
+ externo.value.oficina = externoRequest.oficina;
+ externo.value.habitacion = externoRequest.habitacion;
+ externo.value.experiencia = externoRequest.experiencia;
+ externo.value.fecha_graduado = externoRequest.fecha_graduado;
+ externo.value.cargo = externoRequest.cargo;
+ externo.value.telefono = externoRequest.telefono;
+ console.log(externoRequest)
+};
+
+const añadirExterno = async () => {
+    await api.añadirExterno(externo.value);
+    data.value = await api.obtenerExternos();
+}
+const actualizarExterno = async () => {
+  await api.actualizarExterno(externo.value)
+  data.value = await api.obtenerExternos();
+
+}
+const eliminarExterno = async () => {
+  await api.eliminarExterno(externo.value.id_externo)
+  data.value = await api.obtenerExternos();
+
+}
 onMounted(async () => {
   data.value = await api.obtenerExternos();
   console.log(data.value);
@@ -42,7 +73,8 @@ onMounted(async () => {
           <div
             class="request__container__display__list__record"
             v-for="e in data.value" 
-            :key="e.cedula"
+            :key="e.id_externo"
+            @click="clickenComponente(e.cedula)"
           >
             <p>Cedula: {{ e.cedula }}</p>
             <p>Apellidos: {{ e.apellidos }}</p>
@@ -52,7 +84,8 @@ onMounted(async () => {
       </div>
       <div class="committe__container__preview">
         <h2>Visualización del documento de solicitud</h2>
-        <form action="" class="committe__container__preview__form">
+        <div class="committe__container__preview__form">
+       <!-- <form action="" class="committe__container__preview__form"> -->
           <div class="request__container__preview__form up-de">
             <p>Cedula</p>
             <input type="text" v-model="externo.cedula">
@@ -61,7 +94,7 @@ onMounted(async () => {
             <p>Nombres</p>
             <input type="text" v-model="externo.nombres">
             <p>Email</p>
-            <input type="text" v-model="externo.email">
+            <input type="email" v-model="externo.email">
             <p>Telefono</p>
             <input type="text" v-model="externo.telefono">
             <p>Oficina</p>
@@ -69,21 +102,36 @@ onMounted(async () => {
             <p>Habitacion</p>
             <input type="text" v-model="externo.habitacion">
             <p>Experiencia</p>
-            <input type="text" v-model="externo.experiencia">
+            <input type="number" v-model="externo.experiencia">
             <p>Fecha de Graduado</p>
             <input type="date" v-model="externo.fecha_graduado">
             <p>Cargo</p>
             <input type="text" v-model="externo.cargo">
             <div class="actions">
               <button 
-                class="login__form__btn succes" 
+                class="login__form__btn succes"
+                @click="añadirExterno()"
               >
                 Añadir Externo
+              </button>
+              <button 
+                class="login__form__btn succes" 
+                @click="actualizarExterno()"
+              >
+                Actualizar Externo
+              </button>
+              <button 
+                class="login__form__btn succes" 
+                @click="eliminarExterno()"
+              >
+
+                Eliminar Externo
               </button>
             </div>
           </div>
           <!-- aqui van los formularios necesarios para el proceso de crear una asignacion de revisor a la propuesta -->
-        </form>
+        <!-- </form> -->
+      </div>
       </div>
     </div>
   </div>
