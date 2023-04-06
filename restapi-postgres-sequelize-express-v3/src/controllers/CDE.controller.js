@@ -31,6 +31,7 @@ export const actualizarCDE = async (req,res) => {
 
         const actualizar = await buscar.save();
         
+        console.log("Desde controlador ")
         res.json( { mensaje: "CDE actualizado correctamente", CDE: buscar });
     } catch (error) {
         res.status(500).json({ mensaje: "Error al actualizar CDE", error: error.message});

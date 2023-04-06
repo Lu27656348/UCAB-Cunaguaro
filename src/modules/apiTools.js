@@ -336,3 +336,19 @@ export const actualizarExterno = async (externo) => {
   const respuesta = await externos.actualizarExterno(externo);
   return;
 }
+
+/* Catálogo de funciones para el manejo de la entidad Consejo de Escuela */
+
+export const añadirCDE = async (consejo) => {
+    await cde.crearCDE(consejo);
+}
+
+export const actualizarCDE = async (consejo_escuela) => {
+    console.log("actualizarCDE()");
+    await cde.actualizarConsejo(consejo_escuela)
+    //const peticion = await cde.actualizarCDE(cde)
+}
+
+export const eliminarCDE = async (id_consejo) => {
+    await cde.eliminarCDE(id_consejo)
+}

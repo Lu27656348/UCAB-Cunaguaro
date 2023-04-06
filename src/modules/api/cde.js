@@ -69,7 +69,7 @@ export const obtenerCDEById = async ( id_cde ) => {
   return CDE;
 };
 
-export const crearCDE = async (id_cde) =>{
+export const crearCDE = async (cde) =>{
   const insertar = await fetch('http://localhost:3000/CDE',{
       method: 'POST',
       mode: 'cors',
@@ -77,7 +77,7 @@ export const crearCDE = async (id_cde) =>{
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        id_cde: id_cde
+        id_cde: cde.id_cde
       })
   });
   const respuesta = await insertar.json();
@@ -85,6 +85,27 @@ export const crearCDE = async (id_cde) =>{
   console.log(respuesta)
   return respuesta;
 };
+
+export const actualizarConsejo = async (cde) => {
+  console.log("actualizarCDE() - desde la api")
+  console.log(cde);
+  const actualizar = await fetch('http://localhost:3000/CDE/'+cde.id_cde,{
+    method: 'PUT',
+    mode: 'cors',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(cde)
+  })
+  return;
+}
+
+export const eliminarCDE = async (id_cde) =>{
+  const eliminar = await fetch('http://localhost:3000/CDE/'+id_cde,{
+    method: 'DELETE',
+    mode: 'cors'
+  })
+}
 
 export const crearJuradosPorUno = async (jurado,id_tg,index) => {
   console.log("jurado,",jurado)
