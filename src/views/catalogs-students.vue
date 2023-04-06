@@ -3,7 +3,6 @@ import { ref, reactive, onMounted, computed } from "vue";
 import * as api from "../modules/apiTools.js";
 
 let data = reactive([]);
-
 let estudiante = ref({
   cedula: '',
   nombres: '',
@@ -14,6 +13,34 @@ let estudiante = ref({
   habitacion: ''
 });
 
+const clickenComponente = async (id) => {
+ const estudianteRequest =  await api.obtenerEstudianteByCedula(id);
+ estudiante.value.cedula  = estudianteRequest.cedula
+ estudiante.value.nombres = estudianteRequest.nombres
+ estudiante.value.apellidos = estudianteRequest.apellidos
+ estudiante.value.email = estudianteRequest.email
+ estudiante.value.telefono = estudianteRequest.telefono
+ estudiante.value.oficina = estudianteRequest.oficina
+ estudiante.value.habitacion = estudianteRequest.habitacion
+
+ console.log(estudianteRequest)
+};
+
+const añadirEstudiante = async () => {
+
+  const estudianteAñadido = await api.añadirEstudiante(estudiante.value);
+  data.value = await api.obtenerEstudiantes();
+}
+
+const eliminarEstudiante = async () => {
+    await api.eliminarEstudiante(estudiante.value.cedula);
+    data.value = await api.obtenerEstudiantes();
+}
+
+const actualizarEstudiante = async () => {
+    await api.actualizarEstudiante(estudiante.value);
+    data.value = await api.obtenerEstudiantes();
+}
 onMounted(async () => {
   data.value = await api.obtenerEstudiantes();
   console.log(data.value);
@@ -37,6 +64,7 @@ onMounted(async () => {
             class="request__container__display__list__record"
             v-for="e in data.value" 
             :key="e.cedula"
+            @click="clickenComponente(e.cedula)"
           >
             <p>Cedula: {{ e.cedula }}</p>
             <p>Apellidos: {{ e.apellidos }}</p>
@@ -46,7 +74,8 @@ onMounted(async () => {
       </div>
       <div class="committe__container__preview">
         <h2>Visualización del documento de solicitud</h2>
-        <form action="" class="committe__container__preview__form">
+            <div class="committe__container__preview__form" >
+       <!--  <form action="" class="committe__container__preview__form"> -->
           <div class="request__container__preview__form up-de">
             <p>Cedula</p>
             <input type="text" v-model="estudiante.cedula">
@@ -65,13 +94,27 @@ onMounted(async () => {
             <div class="actions">
               <button 
                 class="login__form__btn succes" 
+                @click="añadirEstudiante()"
               >
                 Añadir Estudiante 
+              </button>
+              <button 
+                class="login__form__btn succes" 
+                @click="eliminarEstudiante()"
+              >
+                Eliminar Estudiante 
+              </button>
+              <button 
+                class="login__form__btn succes" 
+                @click="actualizarEstudiante()"
+              >
+                Actualizar Estudiante 
               </button>
             </div>
           </div>
           <!-- aqui van los formularios necesarios para el proceso de crear una asignacion de revisor a la propuesta -->
-        </form>
+       <!-- </form> -->
+       </div>
       </div>
     </div>
   </div>

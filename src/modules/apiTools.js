@@ -274,3 +274,37 @@ export const encriptarContrasena = async (contrasena) => {
 export const defensaTrabajoDeGrado = async (id_tg, fecha_entrega_informe, fecha_defensa, mencion, razon_mencion, alumnos) => {
   return await tgs.defensaTrabajoDeGrado(id_tg, fecha_entrega_informe, fecha_defensa, mencion, razon_mencion, alumnos);
 }
+
+/* Catálogo de funciones para el manejo de las entidades estudiantes  */
+export const añadirEstudiante = async (estudiante) => {
+  const respuesta = await estudiantes.insertarEstudiantes(estudiante);
+  console.log(respuesta)
+  return;
+}
+
+export const eliminarEstudiante = async (id) => {
+  const respuesta = await estudiantes.eliminarEstudiante(id);
+  return;
+}
+
+export const actualizarEstudiante = async (estudiante) => {
+  const respuesta = await estudiantes.actualizarEstudiante(estudiante);
+  return;
+}
+
+/* Catálogo de funciones para el manejo de las entidades profesores  */
+export const añadirProfesor = async (profesor) => {
+  const respuesta = await profesores.añadirProfesor(profesor);
+  console.log(respuesta)
+  return;
+}
+
+export const eliminarProfesor = async (id) => {
+  const respuesta = await profesores.eliminarProfesor(id);
+  return;
+}
+
+export const actualizarProfesor = async (profesor) => {
+  const respuesta = await profesores.actualizarProfesor(profesor);
+  return;
+}

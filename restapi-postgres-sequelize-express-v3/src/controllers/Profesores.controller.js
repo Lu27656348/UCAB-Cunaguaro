@@ -5,7 +5,7 @@ export const obtenerProfesores = async (req,res) => {
 };
 export const crearProfesores = async (req,res) => {
     try {
-        const { cedula, nombres, apellidos,email,telefono,oficina,habitacion, experiencia, graduado,cargo} = req.body;
+        const { cedula, nombres, apellidos,email,telefono,oficina,habitacion, experiencia, fecha_graduado,cargo} = req.body;
         const nuevo = await Profesores.create({
             cedula,
             nombres,
@@ -15,11 +15,11 @@ export const crearProfesores = async (req,res) => {
             oficina,
             habitacion,
             experiencia,
-            graduado,
+            fecha_graduado,
             cargo
         },
         {
-            fields: ["cedula", "nombres", "apellidos","email","telefono","oficina","habitacion","experiencia", "graduado","cargo"]
+            fields: ["cedula", "nombres", "apellidos","email","telefono","oficina","habitacion","experiencia", "fecha_graduado","cargo"]
         });
         res.json(nuevo);
     } catch (error) {
@@ -36,7 +36,7 @@ export const actualizarProfesores = async (req,res) => {
         oficina,
         habitacion,
         experiencia,
-        graduado,
+        fecha_graduado,
         cargo
     } = req.body;
     const id = req.params.id;
@@ -51,7 +51,7 @@ export const actualizarProfesores = async (req,res) => {
         buscar.oficina = oficina;
         buscar.habitacion = habitacion;
         buscar.experiencia = experiencia;
-        buscar.graduado = graduado;
+        buscar.fecha_graduado = fecha_graduado;
         buscar.cargo = cargo;
 
         const actualizar = await buscar.save();
@@ -72,7 +72,7 @@ export const eliminarProfesores = async (req,res) => {
         });
         res.status(204).json('El Profesor fue eliminado con exito ');
     } catch (error) {
-        return res.status(500).json( { mensaje: "Error en eliminación de Profesor", error: error.message })
+        res.status(500).json( { mensaje: "Error en eliminación de Profesor", error: error.message })
     }
 }
 

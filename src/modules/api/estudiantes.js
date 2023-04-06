@@ -8,9 +8,25 @@ export const insertarEstudiantes = async (estudiante) =>{
       body: JSON.stringify(estudiante)
   });
   const respuesta = await insertar.json();
-  console.log("insertarEstudiantes()");
-  console.log(respuesta)
   return respuesta;
+};
+
+export const eliminarEstudiante = async (id) =>{
+  const eliminar = await fetch('http://localhost:3000/Estudiantes/'+id,{
+      method: 'DELETE',
+      mode: 'cors'
+  });
+};
+
+export const actualizarEstudiante = async (estudiante) =>{
+  const eliminar = await fetch('http://localhost:3000/Estudiantes/'+estudiante.cedula,{
+      method: 'PUT',
+      mode: 'cors',
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify(estudiante)
+  });
 };
 
 export const obtenerEstudiantes = async () => {
