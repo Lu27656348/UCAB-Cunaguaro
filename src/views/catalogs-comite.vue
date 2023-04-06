@@ -1,6 +1,7 @@
 <script setup>
 import { ref, reactive, onMounted, computed } from "vue";
 import * as api from "../modules/apiTools.js";
+import { async } from "@firebase/util";
 
 let data = reactive([]);
 
@@ -11,6 +12,27 @@ let comite = ref({
   resumen_ctg: ''
 });
 
+const clickenComponente = async (id) => {
+  const comiteRequest = await api.obtenerComitesByID(id);
+  comite.value.id_ctg = comiteRequest.id_ctg;
+  comite.value.id_ctg_formateado = comiteRequest.id_ctg_formateado;
+  comite.value.fecha_conformacion = comiteRequest.fecha_conformacion;
+  comite.value.resumen_ctg = comiteRequest.resumen_ctg;
+  console.log(comiteRequest);
+}
+const añadirComite = async () => {
+    await api.añadirComite(comite.value);
+    data.value = await api.obtenerCTG();
+}
+const actualizarComite = async () => {
+    await api.actualizarComite(comite.value);
+    data.value = await api.obtenerCTG();
+}
+
+const eliminarComite = async () => {
+    await api.eliminarComite(comite.value.id_ctg)
+    data.value = await api.obtenerCTG();
+}
 onMounted(async () => {
   data.value = await api.obtenerCTG();
   console.log(data.value);
@@ -34,6 +56,7 @@ onMounted(async () => {
             class="request__container__display__list__record"
             v-for="e in data.value" 
             :key="e.id_ctg"
+            @click="clickenComponente(e.id_ctg)"
           >
             <p>ID: {{ e.id_ctg }}</p>
             <p>ID Formateado: {{ e.id_ctg_formateado }}</p>
@@ -43,26 +66,41 @@ onMounted(async () => {
       </div>
       <div class="committe__container__preview">
         <h2>Visualización del documento de solicitud</h2>
-        <form action="" class="committe__container__preview__form">
+          <div class="committe__container__preview__form">
+       <!--  <form action="" class="committe__container__preview__form"> -->
           <div class="request__container__preview__form up-de">
             <p>ID Comite</p>
             <input type="text" v-model="comite.id_ctg">
             <p>ID Formateado</p>
             <input type="text" v-model="comite.id_ctg_formateado" disabled>
             <p>Fecha de Conformacion</p>
-            <input type="text" v-model="comite.fecha_conformacion">
-            <p>Resumen de Comite</p>
             <input type="date" v-model="comite.fecha_conformacion">
+            <p>Resumen de Comite</p>
+            <input type="text" v-model="comite.resumen_ctg">
             <div class="actions">
               <button 
                 class="login__form__btn succes" 
+                @click="añadirComite()"
               >
                 Añadir Comite
+              </button>
+              <button 
+                class="login__form__btn succes" 
+                @click="actualizarComite()"
+              >
+                Actualizar Comite
+              </button>
+              <button 
+                class="login__form__btn succes" 
+                @click="eliminarComite()"
+              >
+                Eliminar Comite
               </button>
             </div>
           </div>
           <!-- aqui van los formularios necesarios para el proceso de crear una asignacion de revisor a la propuesta -->
-        </form>
+       <!-- </form> -->
+      </div>
       </div>
     </div>
   </div>

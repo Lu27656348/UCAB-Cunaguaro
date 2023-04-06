@@ -5,12 +5,14 @@ export const obtenerCTG = async (req,res) => {
 };
 export const crearCTG = async (req,res) => {
     try {
-        const { id_ctg } = req.body;
+        const { id_ctg,fecha_conformacion,resumen_ctg } = req.body;
         const nuevo = await CTG.create({
-            id_ctg
+            id_ctg,
+            fecha_conformacion,
+            resumen_ctg
         },
         {
-            fields: ["id_ctg"]
+            fields: ["id_ctg","fecha_conformacion","resumen_ctg"]
         });
         res.json(nuevo);
     } catch (error) {
@@ -20,14 +22,14 @@ export const crearCTG = async (req,res) => {
 export const actualizarCTG = async (req,res) => {
     const {
         fecha_conformacion, 
-        resumen_CTG,
+        resumen_ctg,
     } = req.body;
     const id = req.params.id;
     try {
         const buscar = await CTG.findByPk(id);
 
         buscar.fecha_conformacion = fecha_conformacion;
-        buscar.resumen_CTG = resumen_CTG;
+        buscar.resumen_ctg = resumen_ctg;
 
         const actualizar = await buscar.save();
         

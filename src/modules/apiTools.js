@@ -9,6 +9,7 @@ import * as tgs from './api/tg.js';
 import * as comites from './api/comite.js';
 import * as revisores from './api/revisor.js';
 import * as cde from './api/cde.js';
+import { async } from '@firebase/util';
 
 //const bcrypt = require("bcrypt")
 
@@ -351,4 +352,24 @@ export const actualizarCDE = async (consejo_escuela) => {
 
 export const eliminarCDE = async (id_consejo) => {
     await cde.eliminarCDE(id_consejo)
+}
+
+/* Catálogo de funciones para el manejo de la entidad Comite de trabajo de grado */
+
+export const obtenerComitesByID = async (id) => {
+    const comiteRequest = await comites.obtenerComitesByID(id);
+    //console.log(comiteRequest)
+    return comiteRequest;
+}
+
+export const eliminarComite = async (id) => {
+    const comiteRequest = await comites.eliminarComite(id);
+}
+
+export const actualizarComite = async (comite) => {
+    const comiteRequest = await comites.actualizarComite(comite);
+}
+
+export const añadirComite = async (comite) => {
+  const comiteRequest = await comites.añadirComite(comite);
 }

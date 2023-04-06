@@ -99,3 +99,40 @@ export const designarRevisor = async ( id_tg, id_profesor_revisor) => {
   const tg_revisor = await resTG.json();
   return tg_revisor
 };
+
+export const obtenerComitesByID = async (id_comite) => {
+  const comiteRequest = await fetch('http://localhost:3000/CTG/'+id_comite);
+  const respuesta = await comiteRequest.json();
+  return respuesta;
+}
+
+export const eliminarComite = async (id_comite) => {
+  const comiteRequest = await fetch('http://localhost:3000/CTG/'+id_comite,{
+    method: 'DELETE',
+    mode: 'cors'
+  });
+}
+
+export const añadirComite = async (comite) => {
+  const comiteRequest = await fetch('http://localhost:3000/CTG/',{
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(comite)
+  });
+}
+
+export const actualizarComite = async (comite) => {
+  const comiteRequest = await fetch('http://localhost:3000/CTG/'+comite.id_ctg,{
+    method: 'PUT',
+    mode: 'cors',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(comite)
+  });
+  const respuesta = await comiteRequest.json();
+  return respuesta;
+}
