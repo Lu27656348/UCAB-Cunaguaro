@@ -12,14 +12,27 @@ let comite = ref({
   resumen_ctg: ''
 });
 
+let crearComite = ref(false);
+
 const clickenComponente = async (id) => {
   const comiteRequest = await api.obtenerComitesByID(id);
   comite.value.id_ctg = comiteRequest.id_ctg;
   comite.value.id_ctg_formateado = comiteRequest.id_ctg_formateado;
   comite.value.fecha_conformacion = comiteRequest.fecha_conformacion;
   comite.value.resumen_ctg = comiteRequest.resumen_ctg;
-  console.log(comiteRequest);
+  
+  crearComite.value = false;
 }
+
+const clickCrear = () => {
+  comite.value.id_ctg = '';
+  comite.value.id_ctg_formateado = '';
+  comite.value.fecha_conformacion = '';
+  comite.value.resumen_ctg = '';
+
+  crearComite.value = true;
+};
+
 const añadirComite = async () => {
     await api.añadirComite(comite.value);
     data.value = await api.obtenerCTG();
@@ -48,6 +61,10 @@ onMounted(async () => {
           <button>
             <img src="../assets/imgs/search-circle-outline.svg" />Buscar
             Solicitud
+          </button>
+          <button @click="clickCrear()">
+            <img src="../assets/imgs/add-circle-outline.svg" alt="" />Crear
+            Comite
           </button>
         </div>
         <div class="committe__container__display__list">
@@ -81,18 +98,21 @@ onMounted(async () => {
               <button 
                 class="login__form__btn succes" 
                 @click="añadirComite()"
+                v-show="crearComite"
               >
                 Añadir Comite
               </button>
               <button 
                 class="login__form__btn succes" 
                 @click="actualizarComite()"
+                v-show="!crearComite"
               >
                 Actualizar Comite
               </button>
               <button 
-                class="login__form__btn succes" 
+                class="login__form__btn cancel" 
                 @click="eliminarComite()"
+                v-show="!crearComite"
               >
                 Eliminar Comite
               </button>

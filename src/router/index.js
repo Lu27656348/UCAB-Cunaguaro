@@ -12,8 +12,6 @@ const router = createRouter({
     { path: '/reviewers_evaluation', name: 'reviewers_evaluation', component: ()=> import('../views/reviewers_evaluation.vue') },
     { path: '/council', name: 'council', component: import('../views/council.vue') },
     { path: '/assignment', name: 'assignment', component: ()=> import('../views/assignment.vue') },
-    { path: '/crearEmpresa', name: 'crearEmpresa', component: ()=> import('../views/z_CrearEmpresa.vue') },
-    { path: '/crearConsejoEscuela', name: 'consejoEscuela', component: ()=> import('../views/z_CrearConsejoEscuela.vue') },
     { path: '/designarJurado', name: 'designarJurado', component: ()=> import('../views/jury.vue') },
     { path: '/evaluacionNotas', name: 'evaluacionNotas', component: ()=> import('../views/noteUpload.vue') },
     { path: '/catalogs', name: 'catalogs', component: ()=> import('../views/catalogs.vue') },

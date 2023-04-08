@@ -11,21 +11,37 @@ onMounted(async () => {
 });
 
 let crearEmpresa = ref(new FormularioEmpresa());
+
+let mostrarCrearEmpresa = ref(false);
+
 const clickenComponente = async (id) => {
- const empresaRequest =  await api.obtenerEmpresaById(id);
- crearEmpresa.value.id_empresa = empresaRequest.id_empresa;
- crearEmpresa.value.nombre = empresaRequest.nombre;
- crearEmpresa.value.direccion = empresaRequest.direccion;
- crearEmpresa.value.telefono = empresaRequest.telefono;
- console.log(empresaRequest)
+  const empresaRequest = await api.obtenerEmpresaById(id);
+  crearEmpresa.value.id_empresa = empresaRequest.id_empresa;
+  crearEmpresa.value.nombre = empresaRequest.nombre;
+  crearEmpresa.value.direccion = empresaRequest.direccion;
+  crearEmpresa.value.telefono = empresaRequest.telefono;
+
+  mostrarCrearEmpresa.value = false;
+
+  console.log(empresaRequest);
 };
+
+const clickCrear = () => {
+  crearEmpresa.value.id_empresa = "";
+  crearEmpresa.value.nombre = "";
+  crearEmpresa.value.direccion = "";
+  crearEmpresa.value.telefono = "";
+
+  mostrarCrearEmpresa.value = true;
+};
+
 const añadirEmpresa = async () => {
-  console.log("AñadirEmpresa()")
+  console.log("AñadirEmpresa()");
   await api.crearEmpresa(crearEmpresa.value);
   dataEmpresas.value = await api.obtenerEmpresas();
-  crearEmpresa.value.nombre = '';
-  crearEmpresa.value.direccion = '';
-  crearEmpresa.value.telefono = '';
+  crearEmpresa.value.nombre = "";
+  crearEmpresa.value.direccion = "";
+  crearEmpresa.value.telefono = "";
   dataEmpresas.value = await api.obtenerEmpresas();
 };
 const actualizarEmpresa = async () => {
@@ -35,7 +51,7 @@ const actualizarEmpresa = async () => {
 };
 const eliminarEmpresa = async () => {
   console.log("eliminarEmpresa()");
-  await api.eliminarEmpresa(crearEmpresa.value.id_empresa)
+  await api.eliminarEmpresa(crearEmpresa.value.id_empresa);
   dataEmpresas.value = await api.obtenerEmpresas();
 };
 </script>
@@ -48,6 +64,10 @@ const eliminarEmpresa = async () => {
           <button>
             <img src="../assets/imgs/search-circle-outline.svg" />Buscar
             Solicitud
+          </button>
+          <button @click="clickCrear()">
+            <img src="../assets/imgs/add-circle-outline.svg" alt="" />Crear
+            Empresa
           </button>
         </div>
         <div class="committe__container__display__list">
@@ -67,7 +87,11 @@ const eliminarEmpresa = async () => {
       </div>
       <div class="committe__container__preview">
         <h2>Visualización del documento de solicitud</h2>
-        <form action="" class="committe__container__preview__form" @submit.prevent="añadirEmpresa()">
+        <form
+          action=""
+          class="committe__container__preview__form"
+          @submit.prevent="añadirEmpresa()"
+        >
           <div class="request__container__preview__form up-de">
             <p>Nombre Empresa</p>
             <input
@@ -88,9 +112,10 @@ const eliminarEmpresa = async () => {
               v-model="crearEmpresa.telefono"
             />
             <div class="actions">
-              <button 
-                class="login__form__btn succes" 
+              <button
+                class="login__form__btn succes"
                 type="submit"
+                v-show="mostrarCrearEmpresa"
                 :disabled="
                   crearEmpresa.nombre == '' ||
                   crearEmpresa.direccion == '' ||
@@ -99,9 +124,10 @@ const eliminarEmpresa = async () => {
               >
                 Añadir Empresa
               </button>
-              <button 
-                class="login__form__btn succes" 
+              <button
+                class="login__form__btn succes"
                 type="button"
+                v-show="!mostrarCrearEmpresa"
                 @click="eliminarEmpresa()"
                 :disabled="
                   crearEmpresa.nombre == '' ||
@@ -111,10 +137,11 @@ const eliminarEmpresa = async () => {
               >
                 Elininar Empresa
               </button>
-              <button 
-                class="login__form__btn succes" 
+              <button
+                class="login__form__btn succes"
                 @click="actualizarEmpresa()"
                 type="button"
+                v-show="!mostrarCrearEmpresa"
                 :disabled="
                   crearEmpresa.nombre == '' ||
                   crearEmpresa.direccion == '' ||
