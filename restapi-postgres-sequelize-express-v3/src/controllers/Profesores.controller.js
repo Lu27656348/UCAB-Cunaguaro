@@ -5,7 +5,7 @@ export const obtenerProfesores = async (req,res) => {
 };
 export const crearProfesores = async (req,res) => {
     try {
-        const { cedula, nombres, apellidos,email,telefono,oficina,habitacion, experiencia, fecha_graduado,cargo} = req.body;
+        const { cedula, nombres, apellidos,email,telefono,oficina,habitacion, experiencia, fecha_graduado,cargo,profesion} = req.body;
         const nuevo = await Profesores.create({
             cedula,
             nombres,
@@ -16,10 +16,11 @@ export const crearProfesores = async (req,res) => {
             habitacion,
             experiencia,
             fecha_graduado,
-            cargo
+            cargo,
+            profesion
         },
         {
-            fields: ["cedula", "nombres", "apellidos","email","telefono","oficina","habitacion","experiencia", "fecha_graduado","cargo"]
+            fields: ["cedula", "nombres", "apellidos","email","telefono","oficina","habitacion","experiencia", "fecha_graduado","cargo","profesion"]
         });
         res.json(nuevo);
     } catch (error) {
@@ -37,7 +38,8 @@ export const actualizarProfesores = async (req,res) => {
         habitacion,
         experiencia,
         fecha_graduado,
-        cargo
+        cargo,
+        profesion
     } = req.body;
     const id = req.params.id;
     try {
@@ -53,7 +55,7 @@ export const actualizarProfesores = async (req,res) => {
         buscar.experiencia = experiencia;
         buscar.fecha_graduado = fecha_graduado;
         buscar.cargo = cargo;
-
+        buscar.profesion = profesion;
         const actualizar = await buscar.save();
         
         res.json( { mensaje: "Profesor actualizado correctamente", Profesor: buscar });

@@ -15,6 +15,7 @@ let profesor = ref({
   experiencia: "",
   fecha_graduado: "",
   cargo: "",
+  profesion: "",
 });
 
 let crearProfesor = ref(false);
@@ -31,13 +32,12 @@ const clickenComponente = async (id) => {
   profesor.value.experiencia = profesorRequest.experiencia;
   profesor.value.fecha_graduado = profesorRequest.fecha_graduado;
   profesor.value.cargo = profesorRequest.cargo;
-
+  profesor.value.profesion = profesorRequest.profesion;
   crearProfesor.value = false;
 
   console.log(profesorRequest);
 };
-
-const clickCrear = () => {
+const limpiarCampos = () => {
   profesor.value.cedula = "";
   profesor.value.nombres = "";
   profesor.value.apellidos = "";
@@ -48,22 +48,28 @@ const clickCrear = () => {
   profesor.value.experiencia = "";
   profesor.value.fecha_graduado = "";
   profesor.value.cargo = "";
-
+  profesor.value.profesion = "";
+}
+const clickCrear = () => {
+  limpiarCampos();
   crearProfesor.value = true;
 };
 
 const añadirProfesor = async () => {
   await api.añadirProfesor(profesor.value);
+  limpiarCampos();
   data.value = await api.obtenerProfesores();
 };
 
 const actualizarProfesor = async () => {
   await api.actualizarProfesor(profesor.value);
+  limpiarCampos();
   data.value = await api.obtenerProfesores();
 };
 
 const eliminarProfesor = async () => {
   await api.eliminarProfesor(profesor.value.cedula);
+  limpiarCampos();
   data.value = await api.obtenerProfesores();
 };
 onMounted(async () => {
@@ -125,6 +131,8 @@ onMounted(async () => {
             <input type="date" v-model="profesor.fecha_graduado" />
             <p>Cargo</p>
             <input type="text" v-model="profesor.cargo" />
+            <p>Profesión</p>
+            <input type="text" v-model="profesor.profesion" />
             <div class="actions">
               <button 
                 class="login__form__btn succes" 

@@ -143,6 +143,7 @@ onMounted(async () => {
                 type="text"
                 v-model="formularioPropuesta.modalidad"
               />
+              <p>Profesor revisor a designar: </p>
               <select
                 name="profesoresADesignar"
                 id=""

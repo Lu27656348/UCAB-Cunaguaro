@@ -110,7 +110,7 @@ onMounted(async () => {
             <input type="text" v-model="estudiante.habitacion" />
             <div class="actions">
               <button
-                v-show="!crearEstudiante"
+                v-show="crearEstudiante"
                 class="login__form__btn succes"
                 @click="añadirEstudiante()"
               >
@@ -124,7 +124,7 @@ onMounted(async () => {
                 Eliminar Estudiante
               </button>
               <button
-                v-show="crearEstudiante"
+                v-show="!crearEstudiante"
                 class="login__form__btn succes"
                 @click="actualizarEstudiante()"
               >

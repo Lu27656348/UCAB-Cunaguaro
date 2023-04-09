@@ -45,6 +45,10 @@ export const Profesores = sequelize.define('profesores', {
         type: DataTypes.TEXT,
         allowNull: true
     },
+    profesion: {
+        type: DataTypes.TEXT,
+        allowNull: true
+    },
 },{
     timestamps:false
 });

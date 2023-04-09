@@ -726,7 +726,7 @@ export const generarPE_revisor_teg = (PE_REVISOR_TEG) => {
                                             style: "aside",
                                             children: [
                                                 new TextRun({
-                                                    text: PE_REVISOR_TEG.propuesta.tutor_academico.apellidos + PE_REVISOR_TEG.propuesta.tutor_academico.nombres,
+                                                    text: PE_REVISOR_TEG.propuesta.tutor_academico.apellidos + ",   " + PE_REVISOR_TEG.propuesta.tutor_academico.nombres,
                                                 })
                                             ],
                                         })
@@ -835,7 +835,7 @@ export const generarPE_revisor_teg = (PE_REVISOR_TEG) => {
                                         new Paragraph({
                                             children: [
                                                 new TextRun({
-                                                    text: PE_REVISOR_TEG.propuesta.tutor_academico.experiencia,
+                                                    text: PE_REVISOR_TEG.propuesta.tutor_academico.experiencia.toString(),
                                                 })
                                             ],
 
@@ -916,7 +916,7 @@ export const generarPE_revisor_teg = (PE_REVISOR_TEG) => {
                                             style: "aside",
                                             children: [
                                                 new TextRun({
-                                                    text: PE_REVISOR_TEG.propuesta.tutor_academico.correo,
+                                                    text: PE_REVISOR_TEG.propuesta.tutor_academico.email,
                                                 })
                                             ],
                                         })

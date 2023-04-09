@@ -1853,7 +1853,7 @@ export const generarPlanillaPropuestaTEG = (planilla_propuesta_TEG) => {
                                             style: "aside",
                                             children: [
                                                 new TextRun({
-                                                    text: planilla_propuesta_TEG.tutor_academico.experiencia,
+                                                    text: "   " + planilla_propuesta_TEG.tutor_academico.experiencia.toString() + "Años",
                                                 })
                                             ],
                                             alignment: AlignmentType.LEFT
@@ -2216,7 +2216,7 @@ export const generarPlanillaPropuestaTEG = (planilla_propuesta_TEG) => {
                                             style: "aside",
                                             children: [
                                                 new TextRun({
-                                                    text: "Telefonos",
+                                                    text: "Telefonos   ",
                                                 })
                                             ],
                                             alignment: AlignmentType.CENTER
@@ -2404,7 +2404,7 @@ export const generarPlanillaPropuestaTEG = (planilla_propuesta_TEG) => {
                                             style: "aside",
                                             children: [
                                                 new TextRun({
-                                                    text: "Años de graduado",
+                                                    text: "Fecha de graduado",
                                                 })
                                             ],
                                             alignment: AlignmentType.CENTER
@@ -2418,7 +2418,7 @@ export const generarPlanillaPropuestaTEG = (planilla_propuesta_TEG) => {
                                         new Paragraph({
                                             children: [
                                                 new TextRun({
-                                                    text: planilla_propuesta_TEG.tutor_academico.fecha_graduado,
+                                                    text: planilla_propuesta_TEG.tutor_academico.fecha_graduado.toString(),
                                                 })
                                             ],
                                             style: "aside",

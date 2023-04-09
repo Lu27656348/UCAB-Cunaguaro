@@ -1,13 +1,63 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import {useRouter} from 'vue-router';
-
+import firebaseApp from "../../src/firebaseConfig.js";
+import { getAuth,signInWithPopup, GoogleAuthProvider, signOut } from "@firebase/auth";
 import * as api from '../modules/apiTools.js'
 const email = ref('');
 const password = ref('');
 const router = useRouter();
 const errMsg = ref(''); //Mensaje de error
+const sesion = ref({
+  user: '',
+  password: '',
+  access_token: '',
+  role: '',
+  isSigned: false
+});
+const auth = getAuth();
+const provider = new GoogleAuthProvider();
+const handleSignInGoogle = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        /*
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        */
+        sesion.value.user = result.user.displayName;
+        sesion.value.access_token = result.user.accessToken;
+        sesion.value.isSigned = true;
+        localStorage.setItem("usuario", JSON.stringify(sesion.value))
+        //Aquí buscamos el rol de usuario en el sistema
+        /*{
 
+        }*/
+        //
+        router.push('/requests');
+        console.log(result);
+      }).catch((error) => {
+        console.log("Error en la autenticación de google");
+        console.log(error)
+      });
+
+      console.log("sesion.value")
+      console.log(sesion.value)
+}
+
+const handleSignOut = () =>{
+  signOut(auth).then(() => {
+    console.log("Gracias por usar nuestra aplicación")
+    sesion.value.user = '';
+    sesion.value.isSigned = false;
+    sesion.value.access_token = '';
+    sesion.value.role = '';
+    localStorage.clear();
+}).catch((error) => {
+  console.log("No se pudo cerrar la sesión")
+});
+
+}
 const register = async () =>{
   console.log(`Usuario Registrado: ${email.value} \n ${password.value}`);
   await api.encriptarContrasena(password.value);
@@ -55,7 +105,7 @@ onMounted(() => {
         <p v-if="errMsg">{{ errMsg }}</p>
         <button class="login__form__btn succes" @click="signIn()">Iniciar Sesión</button>
         <button class="login__form__btn cancel" @click="limpiar()">Cancelar</button>
-        <button class="login__form__btn" @click="register()">Registrarse</button>
+        <button class="login__form__btn" @click="handleSignInGoogle()">Google</button>
         <a class="login__form--forget" ref="/council"
           >Se me olvidó la contraseña</a
         >

@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS Profesores (
 	habitacion TEXT DEFAULT NULL,
 	fecha_graduado DATE DEFAULT NULL,
 	cargo TEXT DEFAULT NULL,
+	profesion TEXT DEFAULT NULL,
 	PRIMARY KEY (cedula)
 );
 
@@ -183,14 +184,6 @@ CREATE TABLE IF NOT EXISTS Administradores (
 		ON UPDATE RESTRICT
 );
 
-CREATE TABLE IF NOT EXISTS Controladores (
-	id_controlador INTEGER NOT NULL,
-	fecha_inicio_entrega_solicitud DATE NOT NULL,
-	fecha_fin_entrega_solicitud DATE NOT NULL,
-	estatus CHAR(1) DEFAULT ('D'),
-	PRIMARY KEY (id_controlador)
-);
-
 CREATE TABLE IF NOT EXISTS realiza_TG (
 	cedula_estudiante TEXT,
 	id_tg INTEGER,
@@ -213,14 +206,4 @@ CREATE TABLE IF NOT EXISTS tiene_especialidades (
 	FOREIGN KEY (nombre_especialidad) REFERENCES Especialidades(nombre_especialidad)
 		ON UPDATE CASCADE
 		ON DELETE CASCADE
-);
-
-CREATE TABLE IF NOT EXISTS Planillas (
-	id_tg INTEGER NOT NULL,
-	nombre_planilla TEXT,
-	documento BYTEA DEFAULT NULL,
-	PRIMARY KEY(id_tg,nombre_planilla),
-	FOREIGN KEY (id_tg) REFERENCES TG(id_tg)
-		ON UPDATE RESTRICT
-		ON DELETE RESTRICT
 );

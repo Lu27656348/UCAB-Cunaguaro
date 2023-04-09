@@ -114,6 +114,7 @@ onMounted(async () => {
                 type="text"
                 v-model="formularioPropuesta.estatus"
               />
+              <p>Cómite encargado de la revisión: </p>
               <select v-model="formularioPropuesta.id_ctg" name="consejo" id="">
                 <option 
                   v-for="c in dataComites.value"

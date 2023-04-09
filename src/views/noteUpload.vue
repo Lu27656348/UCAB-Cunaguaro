@@ -78,6 +78,7 @@ const descargarPlanillas = async () => {
   comentario_mencion: '',
   alumnos: []
 }
+data.value = await api.obtenerTGconJurado();
 };
 
 onMounted(async () => {

@@ -104,7 +104,7 @@ async function buscarTutor() {
   crearSolicitudForm.value.tutor.habitacion = resTutor.habitacion;
   crearSolicitudForm.value.tutor.fecha_graduado = resTutor.fecha_graduado;
   crearSolicitudForm.value.tutor.cargo = resTutor.cargo;
-  crearSolicitudForm.value.tutor.profesion = "Recordar agregar profesion";
+  crearSolicitudForm.value.tutor.profesion = resTutor.profesion;
 }
 
 async function buscarTutorEmpresarial() {
@@ -138,10 +138,6 @@ crearSolicitudForm.value.empresa.idEmpresa = computed(() => {
 async function insertarPlanilla() {
   let planillaGenerada;
   if (crearSolicitudForm.value.trabajoDeGrado.modalidad == "E") {
-    console.log("InsertarPlanilla()");
-    console.log(crearSolicitudForm.value.alumnos);
-    console.log(crearSolicitudForm.value.tutor.cedula);
-    console.log(crearSolicitudForm.value.empresa)
     
     await api.crearTrabajoGradoExperimental(
       crearSolicitudForm.value.trabajoDeGrado,
@@ -158,8 +154,12 @@ async function insertarPlanilla() {
         apellidos: `${crearSolicitudForm.value.tutor.apellidos}`,
         cedula: crearSolicitudForm.value.tutor.cedula,
         email: crearSolicitudForm.value.tutor.email,
+        oficina: crearSolicitudForm.value.tutor.oficina,
         telefono: crearSolicitudForm.value.tutor.telefono,
         profesion: crearSolicitudForm.value.tutor.profesion,
+        experiencia: crearSolicitudForm.value.tutor.experiencia,
+        fecha_graduado: crearSolicitudForm.value.tutor.fecha_graduado,
+        cargo: crearSolicitudForm.value.tutor.cargo,
         fecha_entrega: new Date(),
       }
     );
@@ -197,7 +197,7 @@ async function insertarPlanilla() {
     cedula: crearSolicitudForm.value.alumnos[0].cedula,
     telefono: crearSolicitudForm.value.alumnos[0].telefono,
     email: crearSolicitudForm.value.alumnos[0].email,
-    oficina: "#####",
+    oficina: crearSolicitudForm.value.alumnos[0].oficina,
     habitacion: crearSolicitudForm.value.alumnos[0].habitacion,
     fecha_inicio: "#####",
     horario_propuesto: "#####",
@@ -209,7 +209,7 @@ async function insertarPlanilla() {
       cedula: crearSolicitudForm.value.alumnos[1].cedula,
       telefono: crearSolicitudForm.value.alumnos[1].telefono,
       email: crearSolicitudForm.value.alumnos[1].email,
-      oficina: "#####",
+      oficina: rearSolicitudForm.value.alumnos[1].oficina,
       habitacion: crearSolicitudForm.value.alumnos[1].habitacion,
       fecha_inicio: "#####",
       horario_propuesto: "#####",

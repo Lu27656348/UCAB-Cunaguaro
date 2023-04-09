@@ -28,7 +28,7 @@ END;
 $$
 ;
 
-DROP TRIGGER IF EXISTS verificar_jurado_trigger ON Jurados
+DROP TRIGGER IF EXISTS verificar_jurado_trigger ON Jurados;
 CREATE TRIGGER verificar_jurado_trigger 
     BEFORE INSERT OR UPDATE ON Jurados
     FOR EACH ROW EXECUTE PROCEDURE verificar_jurados();

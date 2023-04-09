@@ -7,5 +7,9 @@ export class PlantillaDatosPersonales {
     this.telefono = '';
     this.oficina = '';
     this.habitacion = '';
+    this.profesion = '';
+    this.experiencia = '';
+    this.cargo = '';
+    this.fecha_graduado = '';
   }
 }
