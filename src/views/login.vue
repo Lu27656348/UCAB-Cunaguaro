@@ -17,6 +17,7 @@ const sesion = ref({
 });
 const provider = new GoogleAuthProvider();
 const auth = getAuth(firebaseApp);
+const emit = defineEmits(['isLogged'])
 const handleSignInGoogle = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
@@ -34,6 +35,7 @@ const handleSignInGoogle = () => {
 
         }*/
         //
+        emit('isLogged',true)
         router.push('/requests');
         console.log(result);
       }).catch((error) => {
@@ -80,7 +82,9 @@ const limpiar = ()=>{
   email.value = '';
   password.value = '';
 }
-
+const isLogged = ()=> {
+  console.log("Usuario logeado")
+}
 onMounted(() => {
   let router = document.getElementById("router");
   router.classList.toggle("router");
