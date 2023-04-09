@@ -8,12 +8,15 @@ const firebaseConfig = {
     appId: "1:380837257350:web:bdfcf234e9c4ca9c55f107",
     measurementId: "G-3GG9QJVY1W"
   };
-let firebaseApp = null;
+
+/*
 if (getApps().length === 0 ) {
     firebaseApp = initializeApp(firebaseConfig);
 }else{
+    console.log("Ya hay una app iniciada")
     firebaseApp = getApp();
-}
 
-export default firebaseApp;
+}
+*/
+export const firebaseApp = (getApps().length === 0) ? initializeApp(firebaseConfig) : getApp();
 

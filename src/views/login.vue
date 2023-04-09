@@ -1,9 +1,9 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import {useRouter} from 'vue-router';
-import firebaseApp from "../../src/firebaseConfig.js";
-import { getAuth,signInWithPopup, GoogleAuthProvider, signOut } from "@firebase/auth";
+import { signInWithPopup, GoogleAuthProvider, signOut,getAuth } from "@firebase/auth";
 import * as api from '../modules/apiTools.js'
+import { firebaseApp } from "../firebaseConfig.js";
 const email = ref('');
 const password = ref('');
 const router = useRouter();
@@ -15,8 +15,8 @@ const sesion = ref({
   role: '',
   isSigned: false
 });
-const auth = getAuth();
 const provider = new GoogleAuthProvider();
+const auth = getAuth(firebaseApp);
 const handleSignInGoogle = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
@@ -53,6 +53,7 @@ const handleSignOut = () =>{
     sesion.value.access_token = '';
     sesion.value.role = '';
     localStorage.clear();
+    router.push('/');
 }).catch((error) => {
   console.log("No se pudo cerrar la sesión")
 });
@@ -106,6 +107,7 @@ onMounted(() => {
         <button class="login__form__btn succes" @click="signIn()">Iniciar Sesión</button>
         <button class="login__form__btn cancel" @click="limpiar()">Cancelar</button>
         <button class="login__form__btn" @click="handleSignInGoogle()">Google</button>
+        <button class="login__form__btn" @click="handleSignOut()">Cerrar Sesión</button>
         <a class="login__form--forget" ref="/council"
           >Se me olvidó la contraseña</a
         >

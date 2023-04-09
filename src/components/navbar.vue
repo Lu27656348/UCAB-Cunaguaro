@@ -1,18 +1,25 @@
 <script>
 
   import { onMounted, ref } from 'vue';
-  import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
-
   const isLoggedIn = ref(false);
-
-  let auth;
-  
   const handleSignOut = () =>{
+    localStorage.clear();
+    return;
+    /*
     signOut(auth).then(() => {
-      router.push('/');
+    console.log("Gracias por usar nuestra aplicación")
+    localStorage.clear();
+    }).catch((error) => {
+      console.log("No se pudo cerrar la sesión")
     });
-  };
-  onMounted(auth, (user)=>{
+    */
+}
+
+const hola = () => {
+    console.log("hola")
+    return;
+ }
+  onMounted((user)=>{
     if (user){
       isLoggedIn.value = true;
     } else{
@@ -57,7 +64,7 @@
         <router-link to="/catalogs"><ion-icon name="book-outline"></ion-icon> Catalogos</router-link>
       </li>
       <li class="navbar__list__element">
-        <button @click="handleSignOut()" >Cerrar sesion</button>
+        <button @click="hola()" >Cerrar sesion</button>
       </li>
     </ul>
   </div>
