@@ -29,12 +29,12 @@ let dataEmpresas = reactive([]);
 let idEmpresaSeleccionada = ref(null);
 
 const limpiarTodo = () => {
-   alumno1 = ref(new PlantillaDatosPersonales());
-   alumno2 = ref(new PlantillaDatosPersonales());
-   showAlumno2 = ref(false);
+   alumno1.value = new PlantillaDatosPersonales()
+   alumno2.value  = new PlantillaDatosPersonales()
+   showAlumno2.value = false
 
-   crearSolicitudForm = ref(new PlanillaCrearSolicitud());
-   crearEmpresa = ref(new FormularioEmpresa());
+   crearSolicitudForm.value  = new PlanillaCrearSolicitud()
+   crearEmpresa.value  = new FormularioEmpresa()
 
    dataEmpresas = reactive([]);
    idEmpresaSeleccionada = ref(null);
