@@ -9,7 +9,8 @@ const firebaseConfig = {
     measurementId: "G-3GG9QJVY1W"
   };
 
-/*
+  let firebaseApp;
+
 if (getApps().length === 0 ) {
     firebaseApp = initializeApp(firebaseConfig);
 }else{
@@ -17,6 +18,6 @@ if (getApps().length === 0 ) {
     firebaseApp = getApp();
 
 }
-*/
-export const firebaseApp = (getApps().length === 0) ? initializeApp(firebaseConfig) : getApp();
+
+export { firebaseApp };
 

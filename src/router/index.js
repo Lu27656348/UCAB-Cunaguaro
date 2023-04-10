@@ -26,4 +26,16 @@ const router = createRouter({
   ]
 });
 
-export default router
+router.beforeEach((to, from) => {
+  
+  const usuario = localStorage.getItem('usuario');
+
+  if ( usuario == null && to.name != 'login' ){
+    return {
+      name: 'login'
+    };
+  };
+  return true;
+});
+
+export default router;

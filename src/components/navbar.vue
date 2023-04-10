@@ -1,35 +1,11 @@
 <script setup>
 import { onMounted, ref } from "vue";
-import {
-  signInWithPopup,
-  GoogleAuthProvider,
-  signOut,
-  getAuth,
-} from "@firebase/auth";
-  
+
 const props = defineProps({
-  auth: Object
+  cerrarSesion: Function
 });
 
-const emit = defineEmits(['usuarioLoggeado']);
-
-const isLoggedIn = ref(false);
-const handleSignOut = () => {
-  signOut(props.auth)
-    .then(() => {
-      sesion.value.user = "";
-      sesion.value.isSigned = false;
-      sesion.value.access_token = "";
-      sesion.value.role = "";
-      localStorage.clear();
-      emit('usuarioLoggeado', false);
-      console.log("Gracias por usar nuestra aplicación");
-      router.push("/");
-    })
-    .catch((error) => {
-      console.log("No se pudo cerrar la sesión");
-    });
-};
+/*
 onMounted((user) => {
   if (user) {
     isLoggedIn.value = true;
@@ -37,6 +13,7 @@ onMounted((user) => {
     isLoggedIn.value = false;
   }
 });
+*/
 </script>
 <template>
   <div class="navbar">
@@ -96,7 +73,7 @@ onMounted((user) => {
         >
       </li>
       <li class="navbar__list__element">
-        <button @click="handleSignOut()">Cerrar sesion</button>
+        <button @click="props.cerrarSesion()">Cerrar sesion</button>
       </li>
     </ul>
   </div>

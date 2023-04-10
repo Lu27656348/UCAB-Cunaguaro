@@ -1,31 +1,54 @@
 <script setup>
-  import Navbar from './components/navbar.vue';
-  //import { firebaseApp } from "./firebaseConfig.js";
-  import { ref } from "vue";
+import Navbar from "./components/navbar.vue";
+import { ref } from "vue";
 
-  let logged = ref(false);
+import { useRouter } from "vue-router";
 
-  let funcionCerrar = ref(()=>{});
+import {
+  signInWithPopup,
+  GoogleAuthProvider,
+  signOut,
+  getAuth,
+} from "@firebase/auth";
 
-  let authLogin = ref({});
+const router = useRouter();
+//import { firebaseApp } from "./firebaseConfig.js";
 
-  const userExists = (isLogged) => {
-    console.log("El usuario se ha logeado")
-    logged = isLogged;
-    return localStorage.getItem('usuario') === null
-  }
+let logged = ref(false);
+
+const provider = new GoogleAuthProvider();
+//let auth = getAuth(firebaseApp);
+
+const sesion = ref({
+  user: "wladi1000",
+  password: "1234",
+  access_token: "dsfhysedfvsjdfgyseGFhESOIfhpo9iasEYiopdfauidsfyuirgh@@lkjhsdisaihdagd|||khsdjhasd@@",
+  role: "webon",
+  isSigned: true,
+});
+
+const moverRequest = ()=>{
+  localStorage.setItem('usuario', JSON.stringify(sesion.value));
+  router.push('/requests');
+  logged.value = true;
+}
+const moverLogin = ()=>{
+  localStorage.clear();
+  router.push('/');
+  logged.value = false;
+  
+}
+ 
 </script>
 
 <template>
-  <Navbar 
-    v-show="logged" 
-    @usuarioLoggeado = "(sesion) => logged = sesion"
-    :auth = "authLogin"
+  <Navbar
+    v-show="logged"
+    :cerrarSesion="moverLogin"
   />
-  <router-view 
-    id="router" 
+  <router-view
+    id="router"
     class="router"
-    @usuarioLoggeado = "(sesion) => logged = sesion"
-    @funcionCerrarSesion = "(funcion) => funcionCerrar = funcion"
+    :iniciarSesion="moverRequest"
   ></router-view>
 </template>
