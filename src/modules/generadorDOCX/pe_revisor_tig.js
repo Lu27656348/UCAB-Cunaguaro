@@ -186,7 +186,13 @@ const Carta_designacion = {
 export const generarPE_revisor_tig = (Carta_designacion) => {
     console.log("generarPE_revisor_tig");
     console.log(Carta_designacion);
-    console.log(Carta_designacion.propuesta.tutor_academico);
+    let experiencia;
+    let fecha_graduado;
+    if(Carta_designacion.propuesta.tutor_academico.experiencia == null || Carta_designacion.propuesta.tutor_academico.experiencia == undefined){
+        experiencia = "No tiene experiencia";
+    }else{
+        experiencia = Carta_designacion.propuesta.tutor_academico.experiencia 
+    }
     const doc = new  Document({
         creator: "Luis C. Somoza & Wladimir SanVicente",
         title: "Planilla de evaluaciòn de revisor de TIG",
@@ -753,7 +759,7 @@ export const generarPE_revisor_tig = (Carta_designacion) => {
                                     new  Paragraph({
                                         children: [
                                             new  TextRun({
-                                                text: Carta_designacion.propuesta.tutor_academico.experiencia,
+                                                text: experiencia.toString(),
                                             })
                                         ],
                                         

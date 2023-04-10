@@ -28,8 +28,16 @@ let dataEmpresas = reactive([]);
 //let dataProfesionalesExternos = reactive([]);
 let idEmpresaSeleccionada = ref(null);
 
-const limpiarTodo = (){
+const limpiarTodo = () => {
+   alumno1 = ref(new PlantillaDatosPersonales());
+   alumno2 = ref(new PlantillaDatosPersonales());
+   showAlumno2 = ref(false);
 
+   crearSolicitudForm = ref(new PlanillaCrearSolicitud());
+   crearEmpresa = ref(new FormularioEmpresa());
+
+   dataEmpresas = reactive([]);
+   idEmpresaSeleccionada = ref(null);
 };
 
 const mostarAlumno2 = () => {

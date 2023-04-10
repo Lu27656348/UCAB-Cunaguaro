@@ -269,6 +269,14 @@ const PE_REVISOR_TEG = {
 
 export const generarPE_revisor_teg = (PE_REVISOR_TEG) => {
     console.log(PE_REVISOR_TEG);
+    let experiencia;
+    let fecha_graduado;
+    if(PE_REVISOR_TEG.propuesta.tutor_academico.experiencia == null || PE_REVISOR_TEG.propuesta.tutor_academico.experiencia == undefined){
+        experiencia = "No tiene experiencia";
+    }else{
+        experiencia = PE_REVISOR_TEG.propuesta.tutor_academico.experiencia 
+    }
+    
     const doc = new Document({
         creator: "Luis C. Somoza",
         title: "Planilla de evaluaciòn de revisor de TEG",
@@ -835,7 +843,7 @@ export const generarPE_revisor_teg = (PE_REVISOR_TEG) => {
                                         new Paragraph({
                                             children: [
                                                 new TextRun({
-                                                    text: PE_REVISOR_TEG.propuesta.tutor_academico.experiencia.toString(),
+                                                    text: experiencia.toString(),
                                                 })
                                             ],
 
