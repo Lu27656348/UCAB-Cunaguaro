@@ -1,5 +1,4 @@
 <script setup>
-import Navbar from "./components/navbar.vue";
 import { ref } from "vue";
 
 import { useRouter } from "vue-router";
@@ -25,30 +24,86 @@ const provider = new GoogleAuthProvider();
 const sesion = ref({
   user: "wladi1000",
   password: "1234",
-  access_token: "dsfhysedfvsjdfgyseGFhESOIfhpo9iasEYiopdfauidsfyuirgh@@lkjhsdisaihdagd|||khsdjhasd@@",
+  access_token:
+    "dsfhysedfvsjdfgyseGFhESOIfhpo9iasEYiopdfauidsfyuirgh@@lkjhsdisaihdagd|||khsdjhasd@@",
   role: "webon",
   isSigned: true,
 });
 
-const moverRequest = ()=>{
-  localStorage.setItem('usuario', JSON.stringify(sesion.value));
-  router.push('/requests');
+const moverRequest = () => {
+  localStorage.setItem("usuario", JSON.stringify(sesion.value));
+  router.push("/requests");
   logged.value = true;
-}
-const moverLogin = ()=>{
+};
+const moverLogin = () => {
   localStorage.clear();
-  router.push('/');
+  router.push("/");
   logged.value = false;
-  
-}
- 
+};
 </script>
 
 <template>
-  <Navbar
-    v-show="logged"
-    :cerrarSesion="moverLogin"
-  />
+  <div  v-if="logged" class="navbar">
+    <img src="./assets/ucab - isotipo.png" alt="" />
+    <ul class="navbar__list">
+      <li class="navbar__list__element">
+        <router-link to="/"
+          ><ion-icon name="log-out-outline"></ion-icon> Login</router-link
+        >
+      </li>
+      <!--<li class="navbar__list__element"><router-link to="/upload-propouse">Upload<br>propuose</router-link></li>-->
+      <li class="navbar__list__element">
+        <router-link to="/requests"
+          ><ion-icon name="bulb-outline"></ion-icon> Propuesta</router-link
+        >
+      </li>
+      <li class="navbar__list__element">
+        <router-link to="/committee"
+          ><ion-icon name="layers-outline"></ion-icon> Comité</router-link
+        >
+      </li>
+      <li class="navbar__list__element">
+        <router-link to="/reviewers"
+          ><ion-icon name="person-outline"></ion-icon> Revisor</router-link
+        >
+      </li>
+      <li class="navbar__list__element">
+        <router-link to="/reviewers_evaluation"
+          ><ion-icon name="search-circle-outline"></ion-icon>
+          Revisión</router-link
+        >
+      </li>
+      <li class="navbar__list__element">
+        <router-link to="/council"
+          ><ion-icon name="people-outline"></ion-icon> Consejo</router-link
+        >
+      </li>
+      <li class="navbar__list__element">
+        <router-link to="/assignment"
+          ><ion-icon name="person-add-outline"></ion-icon> Tutor</router-link
+        >
+      </li>
+      <li class="navbar__list__element">
+        <router-link to="/designarJurado"
+          ><ion-icon name="cafe-outline"></ion-icon> Jurados</router-link
+        >
+      </li>
+      <li class="navbar__list__element">
+        <router-link to="/evaluacionNotas"
+          ><ion-icon name="shield-checkmark-outline"></ion-icon> Defensa
+          TG</router-link
+        >
+      </li>
+      <li class="navbar__list__element">
+        <router-link to="/catalogs"
+          ><ion-icon name="book-outline"></ion-icon> Catalogos</router-link
+        >
+      </li>
+      <li class="navbar__list__element">
+        <button @click="moverLogin()">Cerrar sesion</button>
+      </li>
+    </ul>
+  </div>
   <router-view
     id="router"
     class="router"

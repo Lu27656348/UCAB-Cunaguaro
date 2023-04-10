@@ -90,10 +90,22 @@ onMounted(() => {
     <div class="login-bc">
       <div class="login__form" action="">
         <h2 class="login__form--msg">Ingresar a la aplicación</h2>
+        <div class="login__form__mail">
+          <input type="number" placeholder="Cédula" v-model="email">
+        </div>
+        <div class="login__form__password">
+          <input type="password" placeholder="Contraseña" v-model="password">
+        </div>
         <p v-if="errMsg">{{ errMsg }}</p>
+<!--
         <button class="login__form__btn" @click="props.iniciarSesion()">
           Google
         </button>
+-->
+        <div class="login__form__action">
+          <button class="login__form__btn cancel">Limpiar</button>
+          <button class="login__form__btn succes" @click="iniciarSesion()">Iniciar Sesión</button>
+        </div>
       </div>
     </div>
   </div>

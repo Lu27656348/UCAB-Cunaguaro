@@ -15,12 +15,12 @@
 
   background-color: variables.$c-bc-lg;
 
-  .login__form--msg {
+  &--msg {
     color: variables.$c-h2;
   }
 
-  .login__form__mail,
-  .login__form__password {
+  &__mail,
+  &__password {
 
     margin-top: 10px;
 
@@ -46,7 +46,7 @@
     }
   }
 
-  .login__form__btn {
+  &__btn {
     appearance: none;
     margin: variables.$px-mrg-btn;
     padding: variables.$px-pdd-btn;
@@ -75,15 +75,23 @@
     transition: 0.2s;
   }
 
-  .login__form__btn.succes {
+  &__btn.succes {
     background-color: variables.$c-btn-sc;
   }
 
-  .login__form__btn.cancel {
+  &__btn.cancel {
     background-color: variables.$c-btn-cc;
   }
 
-  .login__form--forget {
+  &__action{
+    display: flex;
+    width: 100%;
+    button{
+      width: 100%;
+    }
+  }
+
+  &--forget {
     margin: 30px;
 
     text-decoration: underline;
