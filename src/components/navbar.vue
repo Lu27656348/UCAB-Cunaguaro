@@ -1,11 +1,29 @@
 <script setup>
 import { onMounted, ref } from "vue";
+<<<<<<< Updated upstream
 
+=======
+import { useRouter } from "vue-router";
+
+import { async } from "@firebase/util";
+import { signOut } from "@firebase/auth";
+const router = useRouter();
+>>>>>>> Stashed changes
 const props = defineProps({
   cerrarSesion: Function
 });
 
+<<<<<<< Updated upstream
 /*
+=======
+const emit = defineEmits(['usuarioLoggeado']);
+const isLoggedIn = ref(false);
+const handleSignOut = () => {
+  signOut(props.auth).then((result) => {
+    console.log("Adios")
+  })
+};
+>>>>>>> Stashed changes
 onMounted((user) => {
   if (user) {
     isLoggedIn.value = true;

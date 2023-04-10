@@ -209,7 +209,7 @@ async function insertarPlanilla() {
       cedula: crearSolicitudForm.value.alumnos[1].cedula,
       telefono: crearSolicitudForm.value.alumnos[1].telefono,
       email: crearSolicitudForm.value.alumnos[1].email,
-      oficina: rearSolicitudForm.value.alumnos[1].oficina,
+      oficina: crearSolicitudForm.value.alumnos[1].oficina,
       habitacion: crearSolicitudForm.value.alumnos[1].habitacion,
       fecha_inicio: "#####",
       horario_propuesto: "#####",

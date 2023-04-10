@@ -3,6 +3,10 @@ import Record from "../components/record.vue";
 import crearSolicitud from "../components/planillaSolicitudCrear.vue";
 import { ref, reactive, onMounted, computed } from "vue";
 import * as api from "../modules/apiTools.js";
+import { PlanillaPropuestaTEG } from "../modules/classes/planillaPropuestaTEG.js";
+import { async } from "@firebase/util";
+import { Alignment } from "docx";
+import { PlanillaPropuestaTIG } from "../modules/classes/planillaPropuestaTIG.js";
 
 let data = reactive([]);
 let dataFiltrada = reactive([]);
@@ -57,6 +61,36 @@ const clickenComponente = async (id) => {
   console.log(planilla.value);
 };
 
+const regenerarPlanilla = async () => {
+  console.log("regenerarPlanilla()")
+  const trabajo_de_grado = await api.obtenerTGById(planilla.value.id_tg);
+  const alumnos = await api.obtenerEstudianteDeTG(planilla.value.id_tg);
+  const empresa = await api.obtenerEmpresaById(trabajo_de_grado.id_empresa);
+  console.log(trabajo_de_grado);
+  console.log(alumnos);
+  console.log(empresa);
+  if(trabajo_de_grado.modalidad == 'E'){
+    const tutor_academico = await api.obtenerProfesorByCedula(trabajo_de_grado.id_tutor_academico)
+    console.log(tutor_academico)
+    let planillaGenerada = new PlanillaPropuestaTEG(trabajo_de_grado.titulo, empresa.nombre,empresa,tutor_academico);
+    planillaGenerada.añadirAlumno(alumnos[0]);
+    if(alumnos[1] != null && alumnos[1] != undefined){
+      planillaGenerada.añadirAlumno(alumnos[1]);
+    }
+    planillaGenerada.imprimir();
+  }else{
+    const tutor_empresarial = await api.obtenerExternosById(trabajo_de_grado.id_tutor_empresarial);
+    console.log(tutor_empresarial)
+    let planillaGenerada = new PlanillaPropuestaTIG(trabajo_de_grado.titulo, empresa.nombre,empresa,tutor_empresarial);
+    planillaGenerada.añadirAlumno(alumnos[0]);
+    if(alumnos[1] != null && alumnos[1] != undefined){
+      planillaGenerada.añadirAlumno(alumnos[1]);
+    }
+    planillaGenerada.imprimir();
+  }
+ 
+} 
+
 async function actualizarPlanilla() {
   await api.actualizarPlanilla(planilla.value);
   data.value = await api.obtenerPropuestas("PC");
@@ -85,6 +119,9 @@ onMounted(async () => {
       </button>
       <button @click="showFiltrado()" class="succes">
         <ion-icon name="bulb-outline"></ion-icon>Buscar Propuesta
+      </button>
+      <button @click="regenerarPlanilla()" class="succes">
+        RegenerarPlanilla
       </button>
       <button class="succes">
         <ion-icon name="cog-outline"></ion-icon>Buscar Modalidad

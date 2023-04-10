@@ -780,6 +780,20 @@ const generarTablaDatosAlumno = (object) => {
 }
 export const generarPlanillaPropuestaTEG = (planilla_propuesta_TEG) => {
     console.log("planilla_propuesta_TEG")
+    /* Validamos si la cantidad de experiencia del tutor es nula o '0' */
+    let tutor_experiencia;
+    let fecha_graduado;
+    if(planilla_propuesta_TEG.tutor_academico.experiencia == null || planilla_propuesta_TEG.tutor_academico.experiencia == 0){
+        tutor_experiencia = 'No tiene experiencia'
+    }else{
+        tutor_experiencia = planilla_propuesta_TEG.tutor_academico.experiencia
+    }
+
+    if(planilla_propuesta_TEG.tutor_academico.fecha_graduado == null ){
+        fecha_graduado = "No tiene fecha de graduado"
+    }else{
+        fecha_graduado = planilla_propuesta_TEG.tutor_academico.fecha_graduado
+    }
     console.log(planilla_propuesta_TEG)
     const doc = new Document({
         creator: "Luis C. Somoza & Wladimir SanVicente",
@@ -1853,7 +1867,7 @@ export const generarPlanillaPropuestaTEG = (planilla_propuesta_TEG) => {
                                             style: "aside",
                                             children: [
                                                 new TextRun({
-                                                    text: "   " + planilla_propuesta_TEG.tutor_academico.experiencia.toString() + "Años",
+                                                    text: "   " + tutor_experiencia.toString(),
                                                 })
                                             ],
                                             alignment: AlignmentType.LEFT
@@ -2418,7 +2432,7 @@ export const generarPlanillaPropuestaTEG = (planilla_propuesta_TEG) => {
                                         new Paragraph({
                                             children: [
                                                 new TextRun({
-                                                    text: planilla_propuesta_TEG.tutor_academico.fecha_graduado.toString(),
+                                                    text: fecha_graduado.toString(),
                                                 })
                                             ],
                                             style: "aside",

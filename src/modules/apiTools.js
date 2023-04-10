@@ -373,3 +373,46 @@ export const actualizarComite = async (comite) => {
 export const añadirComite = async (comite) => {
   const comiteRequest = await comites.añadirComite(comite);
 }
+
+/* En el siguiente comentario se anexa el esquema de la clase para regerar la planilla */
+/* 
+      PlanillaPropuestaTEG = {
+        titulo,
+        organizacion,
+        alumnos: [
+          {
+            nombres,
+            apellidos,
+            cedula,
+            telefono,
+            email,
+          }
+        ],
+        tutor_academico: {
+            nombres,
+            apellidos,
+            cedula,
+            email,
+            oficina,
+            telefono,
+            profesion,
+            experiencia,
+            fecha_graduado,
+            cargo,
+            fecha_entrega
+        },
+        empresa: {
+          nombre,
+          direccion,
+          telefono
+        }
+      }
+
+
+*/
+export const regenerarPlanillaPropuestaTEG = async (id_tg) => {
+      const trabajo_de_grado = await obtenerTGById(id_tg)
+      const alumnos = await obtenerEstudianteDeTG(id_tg);
+      //const empresa = await obtenerEmpresaById(trabajo_de_grado.id_empresa);
+      //const tutor = await obtenerProfesorByCedula(trabajo_de_grado.id_tutor_academico)
+} 
