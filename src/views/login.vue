@@ -10,16 +10,6 @@ const email = ref("");
 const password = ref("");
 const router = useRouter();
 const errMsg = ref(""); //Mensaje de error
-<<<<<<< Updated upstream
-
-
-const limpiar = () => {
-  console.log("Campos limpios");
-  email.value = "";
-  password.value = "";
-};
-
-=======
 const sesion = ref({
   user: "",
   password: "",
@@ -27,8 +17,6 @@ const sesion = ref({
   role: "",
   isSigned: false,
 });
-const provider = new GoogleAuthProvider();
-const auth = getAuth(firebaseApp);
 
 const handleSignInGoogle = () => {
   sesion.value.isSigned = true;
@@ -89,8 +77,6 @@ const signIn = async () => {
     router.push("/requests");
   }
 };
-
->>>>>>> Stashed changes
 onMounted(() => {
   let router = document.getElementById("router");
   router.classList.toggle("router");
