@@ -16,6 +16,9 @@ const router = useRouter();
 
 let logged = ref(false);
 
+if(localStorage.getItem("usuario") != null){
+  logged.value = true;
+}
 const provider = new GoogleAuthProvider();
 //let auth = getAuth(firebaseApp);
 
