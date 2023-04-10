@@ -21,6 +21,8 @@ let planilla = ref({
   id_tutor_empresarial: "",
 });
 
+let destruir = ref(false);
+
 let btnFiltrado = ref(false);
 
 const showPlanillaUpDe = ref(false);
@@ -101,6 +103,14 @@ async function eliminarPlanilla() {
   await api.eliminarPlanilla(planilla.value.id_tg);
   data.value = await api.obtenerPropuestas("PC");
 }
+
+async function pedirData(){
+  data.value = await api.obtenerPropuestas("PC");
+  dataFiltrada.value = data.value;
+  destruir.value = true;
+  destruir.value = false;
+}
+
 onMounted(async () => {
   data.value = await api.obtenerPropuestas("PC");
   console.log(data.value);
@@ -193,7 +203,8 @@ onMounted(async () => {
 
         <crearSolicitud
           :showPlanillaCreate="showPlanillaCreate"
-          @actualizarData="() => (actualizarLista = true)"
+          v-if="!destruir"
+          @refrescar="pedirData()"
         />
       </div>
     </div>

@@ -31,6 +31,7 @@ router.beforeEach((to, from) => {
   const usuario = localStorage.getItem('usuario');
 
   if ( usuario == null && to.name != 'login' ){
+    alert('Usted no tiene autorizacion para usar la aplicación.\nRedirigiendo a inicio de sesión.')
     return {
       name: 'login'
     };

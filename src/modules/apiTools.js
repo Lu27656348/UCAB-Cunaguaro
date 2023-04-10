@@ -76,6 +76,7 @@ export const crearTrabajoGradoInstrumental = async ( TG, cedulaEstudiante,cedula
 };
 
 export const obtenerPropuestas = async ( estatus ) => {
+  console.log('estoy en api');
   return tgs.obtenerPropuestas(estatus);
 };
 

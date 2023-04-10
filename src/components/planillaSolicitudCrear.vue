@@ -10,6 +10,10 @@ import { FormularioEmpresa } from "../modules/classes/formularioEmpresa.js";
 const props = defineProps({
   showPlanillaCreate: Boolean,
 });
+const emit = defineEmits(['refrescar']);
+
+// ---------------------------
+
 
 let alumno1 = ref(new PlantillaDatosPersonales());
 let alumno2 = ref(new PlantillaDatosPersonales());
@@ -23,6 +27,10 @@ let crearEmpresa = ref(new FormularioEmpresa());
 let dataEmpresas = reactive([]);
 //let dataProfesionalesExternos = reactive([]);
 let idEmpresaSeleccionada = ref(null);
+
+const limpiarTodo = (){
+
+};
 
 const mostarAlumno2 = () => {
   showAlumno2.value = !showAlumno2.value;
@@ -216,22 +224,10 @@ async function insertarPlanilla() {
     });
   }
 
+  emit('refrescar');
   planillaGenerada.imprimir();
   //crearSolicitudForm.value.progressbarState += crearSolicitudForm.value.progressValue;
 }
-
-let textarea = ref("");
-
-textarea.value = computed(() => {
-  if (textarea == undefined) {
-    console.log(textarea.value);
-    return "";
-  }
-});
-
-const mostrarTextArea = () => {
-  console.log(textarea.value);
-};
 
 onMounted(async () => {
   dataEmpresas.value = await api.obtenerEmpresas();
