@@ -10,34 +10,58 @@ import { FormularioEmpresa } from "../modules/classes/formularioEmpresa.js";
 const props = defineProps({
   showPlanillaCreate: Boolean,
 });
-const emit = defineEmits(['refrescar']);
+const emit = defineEmits(["refrescar"]);
 
 // ---------------------------
-
 
 let alumno1 = ref(new PlantillaDatosPersonales());
 let alumno2 = ref(new PlantillaDatosPersonales());
 let showAlumno2 = ref(false);
 
+let crearSolicitudForm = ref(new PlanillaCrearSolicitud());
 
-//const emit = defineEmits(["actualizarData"]);
-const crearSolicitudForm = ref(new PlanillaCrearSolicitud());
 let crearEmpresa = ref(new FormularioEmpresa());
 
 let dataEmpresas = reactive([]);
-//let dataProfesionalesExternos = reactive([]);
 let idEmpresaSeleccionada = ref(null);
 
-const limpiarTodo = () => {
-   alumno1.value = new PlantillaDatosPersonales()
-   alumno2.value  = new PlantillaDatosPersonales()
-   showAlumno2.value = false
+const limpiarTodo = async () => {
+  let clavesAlumno1 = Object.keys(alumno1.value);
+  clavesAlumno1.forEach(element => {
+    alumno1.value[element] = '';
+  });
 
-   crearSolicitudForm.value  = new PlanillaCrearSolicitud()
-   crearEmpresa.value  = new FormularioEmpresa()
+  let clavesAlumno2 = Object.keys(alumno2.value);
+  clavesAlumno2.forEach(element => {
+    alumno1.value[element] = '';
+  });
+  showAlumno2.value = false;
 
-   dataEmpresas = reactive([]);
-   idEmpresaSeleccionada = ref(null);
+  crearSolicitudForm.value.alumnos = [];
+  crearSolicitudForm.value.cedulaTutor = '';
+
+  // let clavesEmpresa = Object.keys(crearSolicitudForm.value.empresa);
+
+  // clavesEmpresa.forEach(element =>{
+  //   crearSolicitudForm.value.empresa[element] = '';
+  // });
+
+  let clavesTg = Object.keys(crearSolicitudForm.value.trabajoDeGrado);
+
+  clavesTg.forEach(element =>{
+    crearSolicitudForm.value.trabajoDeGrado[element] = '';
+  });
+
+  let clavesExterno = Object.keys(crearSolicitudForm.value.tutorEmpresarial);
+
+  clavesExterno.forEach(element =>{
+    crearSolicitudForm.value.tutorEmpresarial[element] = '';
+  });
+
+  crearSolicitudForm.value.volverAEmpresa()
+  crearSolicitudForm.value.volverATutor();
+  crearSolicitudForm.value.volverATituloAlumno();
+
 };
 
 const mostarAlumno2 = () => {
@@ -61,9 +85,9 @@ const añadirEmpresa = async () => {
   console.log(crearEmpresa.value);
   crearSolicitudForm.value.ocultarAddEmpresa();
   dataEmpresas.value = await api.obtenerEmpresas();
-  crearEmpresa.value.direccion = '';
-  crearEmpresa.value.nombre = '';
-  crearEmpresa.value.telefono = '';
+  crearEmpresa.value.direccion = "";
+  crearEmpresa.value.nombre = "";
+  crearEmpresa.value.telefono = "";
 };
 
 async function buscarEstudiantes() {
@@ -134,7 +158,7 @@ async function buscarTutorEmpresarial() {
   crearSolicitudForm.value.cedula = resTutorEmpresarial.cedula;
 }
 
-crearSolicitudForm.value.empresa.idEmpresa = computed(() => {
+crearSolicitudForm.value.empresa.id_empresa = computed(() => {
   if (idEmpresaSeleccionada.value != null) {
     let arregloEmpresa = dataEmpresas.value.filter(
       (t) => t.id_empresa == idEmpresaSeleccionada.value
@@ -144,7 +168,7 @@ crearSolicitudForm.value.empresa.idEmpresa = computed(() => {
     crearSolicitudForm.value.empresa.rif = arregloEmpresa[0].rif;
     crearSolicitudForm.value.empresa.direccion = arregloEmpresa[0].direccion;
     crearSolicitudForm.value.empresa.telefono = arregloEmpresa[0].telefono;
-    crearSolicitudForm.value.empresa.id_empresa = arregloEmpresa[0].id_empresa;
+    //crearSolicitudForm.value.empresa.id_empresa = arregloEmpresa[0].id_empresa;
     console.log(arregloEmpresa[0]);
     return arregloEmpresa[0].id_empresa;
   }
@@ -154,7 +178,6 @@ crearSolicitudForm.value.empresa.idEmpresa = computed(() => {
 async function insertarPlanilla() {
   let planillaGenerada;
   if (crearSolicitudForm.value.trabajoDeGrado.modalidad == "E") {
-    
     await api.crearTrabajoGradoExperimental(
       crearSolicitudForm.value.trabajoDeGrado,
       crearSolicitudForm.value.alumnos,
@@ -179,7 +202,6 @@ async function insertarPlanilla() {
         fecha_entrega: new Date(),
       }
     );
-    
   } else {
     const cedulatutorempresarial = await api.obtenerExternoByCedula(
       crearSolicitudForm.value.tutorEmpresarial.cedula
@@ -232,8 +254,10 @@ async function insertarPlanilla() {
     });
   }
 
-  emit('refrescar');
+  emit("refrescar");
   planillaGenerada.imprimir();
+  await limpiarTodo();
+  alert('Revisa consola');
   //crearSolicitudForm.value.progressbarState += crearSolicitudForm.value.progressValue;
 }
 
@@ -332,9 +356,9 @@ onMounted(async () => {
           <div class="actions">
             <button
               :disabled="
-                (crearSolicitudForm.trabajoDeGrado.modalidad == '' ||
+                crearSolicitudForm.trabajoDeGrado.modalidad == '' ||
                 crearSolicitudForm.trabajoDeGrado.titulo == '' ||
-                alumno1.apellidos == '') ||
+                alumno1.apellidos == '' ||
                 (showAlumno2 && alumno2.apellidos == '')
               "
               @click="crearSolicitudForm.tituloAlumnoCompletado()"
@@ -344,7 +368,8 @@ onMounted(async () => {
           </div>
         </form>
       </div>
-      <div class="tutor"
+      <div
+        class="tutor"
         v-show="
           crearSolicitudForm.showTutor &&
           crearSolicitudForm.trabajoDeGrado.modalidad == 'E'
@@ -390,16 +415,17 @@ onMounted(async () => {
               type="submit "
               @click="buscarTutor()"
             ></button>
-            <button 
-            @click="crearSolicitudForm.tutorCompletado()"
-            :disabled="crearSolicitudForm.tutor.apellidos==''"
+            <button
+              @click="crearSolicitudForm.tutorCompletado()"
+              :disabled="crearSolicitudForm.tutor.apellidos == ''"
             >
               Siguiente
             </button>
           </div>
         </form>
       </div>
-      <div class="external-profesional"
+      <div
+        class="external-profesional"
         v-show="
           crearSolicitudForm.showTutor &&
           crearSolicitudForm.trabajoDeGrado.modalidad == 'I'
@@ -445,9 +471,9 @@ onMounted(async () => {
               type="submit "
               @click="buscarTutorEmpresarial()"
             ></button>
-            <button 
-            @click="crearSolicitudForm.tutorCompletado()"
-            :disabled="crearSolicitudForm.tutorEmpresarial.apellidos==''"
+            <button
+              @click="crearSolicitudForm.tutorCompletado()"
+              :disabled="crearSolicitudForm.tutorEmpresarial.apellidos == ''"
             >
               Siguiente
             </button>
@@ -507,7 +533,7 @@ onMounted(async () => {
           <div class="actions">
             <button
               class="succes"
-              :disabled="crearSolicitudForm.empresa.idEmpresa == ''"
+              :disabled="crearSolicitudForm.empresa.id_empresa == ''"
               @click="insertarPlanilla()"
             >
               Completado!
@@ -542,10 +568,15 @@ onMounted(async () => {
               v-model="crearEmpresa.telefono"
             />
           </div>
-          <button 
-          class="login__form__btn succes" 
-          :disabled="crearEmpresa.nombre == '' || crearEmpresa.direccion == '' || crearEmpresa.telefono == ''"
-          @click="añadirEmpresa()">
+          <button
+            class="login__form__btn succes"
+            :disabled="
+              crearEmpresa.nombre == '' ||
+              crearEmpresa.direccion == '' ||
+              crearEmpresa.telefono == ''
+            "
+            @click="añadirEmpresa()"
+          >
             Añadir Empresa
           </button>
         </div>
