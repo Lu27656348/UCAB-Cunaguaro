@@ -20,7 +20,5 @@ export const verificarContrasena = async (req,res) => {
             cedula_administrador: cedula
         }
     });
-    const encriptar = await sequelize.query(`SELECT desencriptarClave('${administrador.contrasena}')`, { type: QueryTypes.SELECT});
-    res.json(encriptar)
 };
 

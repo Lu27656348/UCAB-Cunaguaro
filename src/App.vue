@@ -1,36 +1,25 @@
 <script setup>
+import { async } from "@firebase/util";
 import { ref } from "vue";
 
 import { useRouter } from "vue-router";
 
-import {
-  signInWithPopup,
-  GoogleAuthProvider,
-  signOut,
-  getAuth,
-} from "@firebase/auth";
-
 const router = useRouter();
-//import { firebaseApp } from "./firebaseConfig.js";
 
 let logged = ref(false);
 
 if(localStorage.getItem("usuario") != null){
   logged.value = true;
 }
-const provider = new GoogleAuthProvider();
-//let auth = getAuth(firebaseApp);
-
 const sesion = ref({
-  user: "wladi1000",
-  password: "1234",
-  access_token:
-    "dsfhysedfvsjdfgyseGFhESOIfhpo9iasEYiopdfauidsfyuirgh@@lkjhsdisaihdagd|||khsdjhasd@@",
-  role: "webon",
-  isSigned: true,
+  user: "",
+  password: "",
+  access_token:"",
+  role: "",
+  isSigned: false,
 });
 
-const moverRequest = () => {
+const moverRequest =async (usuario) => {
   localStorage.setItem("usuario", JSON.stringify(sesion.value));
   router.push("/requests");
   logged.value = true;

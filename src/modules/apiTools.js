@@ -252,19 +252,23 @@ export const designarCDEJurado = async (id_tg , id_cde,observaciones_cde_j) => {
 };
 
 export const buscarAdministradores = async (cedula) => {
-  const respuesta = await fetch('http://localhost:3000/Administradores',{
-    method: 'PUT',
-    mode: 'cors',
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      cedula: cedula
+  try {
+    const respuesta = await fetch('http://localhost:3000/Administradores',{
+      method: 'PUT',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        cedula: cedula
+      })
     })
-  })
-  const resultado = await respuesta.json();
-  console.log(resultado);
-  return resultado
+    const resultado = await respuesta.json();
+    return resultado
+  } catch (error) {
+    console.log(error)
+  }
+
 }
 
 export const encriptarContrasena = async (contrasena) => {

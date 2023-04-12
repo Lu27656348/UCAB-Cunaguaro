@@ -1,7 +1,8 @@
 import app from "./app.js";
 import { sequelize } from "./database/database.js";
 
-const port = 3000;
+import {PORT} from './config.js'
+const port = PORT;
 try {
     await sequelize.sync();
     app.listen(port);

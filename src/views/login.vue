@@ -1,12 +1,13 @@
 <script setup>
+import { async } from "@firebase/util";
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-
+import * as api from '../modules/apiTools.js'
 const props = defineProps({
   iniciarSesion: Function
 });
 
-const email = ref("");
+const cedula = ref("");
 const password = ref("");
 const router = useRouter();
 const errMsg = ref(""); //Mensaje de error
@@ -17,58 +18,23 @@ const sesion = ref({
   role: "",
   isSigned: false,
 });
-
-const handleSignInGoogle = () => {
-  sesion.value.isSigned = true;
-  localStorage.setItem("usuario", JSON.stringify(sesion.value));
-  emit('usuarioLoggeado', true);
-  emit('emitAuth', auth);
-  router.push("/requests");
-
+const extraerDatosLogin = async () => {
+  console.log("extraerDatosLogin()");
+  console.log("Cedula: ", cedula.value);
+  console.log("Contraseña: ", password.value);
+  const usuario = await api.buscarAdministradores(cedula.value.toString(),password.value.toString())
+  if(usuario != null && usuario != undefined){
+    props.iniciarSesion();
+  }
+  await limpiarCampos();
+  console.log(usuario);
+}
+const limpiarCampos = async () => {
+  cedula.value = "";
+  password.value = "";
+  console.log(cedula.value);
+  console.log(password.value);
   /*
-  signInWithPopup(auth, provider)
-    .then((result) => {
-
-      sesion.value.user = result.user.displayName;
-      sesion.value.access_token = result.user.accessToken;
-      sesion.value.isSigned = true;
-
-      console.log(result);
-    })
-    .catch((error) => {
-      console.log("Error en la autenticación de google");
-      console.log(error);
-    });
-  */
-
-  console.log("sesion.value");
-  console.log(sesion.value);
-  
-};
-/*
-const handleSignOut = () => {
-  signOut(auth)
-    .then(() => {
-      sesion.value.user = "";
-      sesion.value.isSigned = false;
-      sesion.value.access_token = "";
-      sesion.value.role = "";
-      localStorage.clear();
-      emit('usuarioLoggeado', false);
-      console.log("Gracias por usar nuestra aplicación");
-      router.push("/");
-    })
-    .catch((error) => {
-      console.log("No se pudo cerrar la sesión");
-    });
-};
-*/
-const register = async () => {
-  console.log(`Usuario Registrado: ${email.value} \n ${password.value}`);
-  await api.encriptarContrasena(password.value);
-};
-
-const signIn = async () => {
   console.log(`Usuario acedido: ${email.value} \n ${password.value}`);
   const respuesta = await api.buscarAdministradores(email.value.toString());
   console.log("respuesta");
@@ -76,6 +42,7 @@ const signIn = async () => {
   if (respuesta != null) {
     router.push("/requests");
   }
+  */
 };
 onMounted(() => {
   let router = document.getElementById("router");
@@ -91,7 +58,7 @@ onMounted(() => {
       <div class="login__form" action="">
         <h2 class="login__form--msg">Ingresar a la aplicación</h2>
         <div class="login__form__mail">
-          <input type="number" placeholder="Cédula" v-model="email">
+          <input type="text" placeholder="Cédula" v-model="cedula">
         </div>
         <div class="login__form__password">
           <input type="password" placeholder="Contraseña" v-model="password">
@@ -103,8 +70,8 @@ onMounted(() => {
         </button>
 -->
         <div class="login__form__action">
-          <button class="login__form__btn cancel">Limpiar</button>
-          <button class="login__form__btn succes" @click="iniciarSesion()">Iniciar Sesión</button>
+          <button class="login__form__btn cancel" @click="limpiarCampos()">Limpiar</button>
+          <button class="login__form__btn succes" @click="extraerDatosLogin()">Iniciar Sesión</button>
         </div>
       </div>
     </div>
