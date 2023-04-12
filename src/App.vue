@@ -47,12 +47,6 @@ const moverLogin = () => {
     <img src="./assets/ucab - isotipo.png" alt="" />
     <ul class="navbar__list">
       <li class="navbar__list__element">
-        <router-link to="/"
-          ><ion-icon name="log-out-outline"></ion-icon> Login</router-link
-        >
-      </li>
-      <!--<li class="navbar__list__element"><router-link to="/upload-propouse">Upload<br>propuose</router-link></li>-->
-      <li class="navbar__list__element">
         <router-link to="/requests"
           ><ion-icon name="bulb-outline"></ion-icon> Propuesta</router-link
         >

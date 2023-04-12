@@ -36,6 +36,14 @@ router.beforeEach((to, from) => {
       name: 'login'
     };
   };
+
+  if ( usuario != null && to.name == 'login' ){
+    alert('Usted ya está autorizado para usar la aplicación.\nRedirigiendo a Propuestas de Trabajo de grado.')
+    return {
+      name: 'requests'
+    };
+  };
+
   return true;
 });
 
