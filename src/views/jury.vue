@@ -21,7 +21,7 @@ import { planilla_evaluacion_final_TIG } from '../modules/generadorDOCX/Planilla
 let data = reactive([]);
 let dataProfesores = reactive([]);
 
-let profesoresDesignados = reactive(["", "", "", ""]);
+let profesoresDesignados = ref(["", "", "", ""]);
 
 let planilla = ref({
   id_tg: "",
@@ -48,15 +48,15 @@ let notificacion = ref({
 
 const designarJurado = async (profesores, id_tg) => {
 
-  const jurado1 = await api.obtenerProfesorByCedula(profesoresDesignados[0]);
-  const jurado2 = await api.obtenerProfesorByCedula(profesoresDesignados[1]);
+  const jurado1 = await api.obtenerProfesorByCedula(profesoresDesignados[0].value);
+  const jurado2 = await api.obtenerProfesorByCedula(profesoresDesignados[1].value);
 
   notificacion.value.jurado1 = jurado1;
   notificacion.value.jurado2 = jurado2;
   notificacion.value.cde = await api.obtenerCDEById(cde.value)
 
   /* La función crearJurado designa todos los jurados del trabajo de grado */
-  await api.crearJurados(profesoresDesignados, id_tg);
+  await api.crearJurados(profesoresDesignados.value, id_tg);
   await api.designarCDEJurado(id_tg,cde.value,planilla.value.observaciones);
 
   /* Si la planilla es experimental */
@@ -103,13 +103,15 @@ const clickenComponente = async (id) => {
   notificacion.value.tg = planilla.value;
 };
 
-const pellisco = () =>{
-  console.log('AUCH!');
+const pelliscar = ()=>{
+  // Usame como funcion de prueba
 }
 
 onMounted(async () => {
   data.value = await api.obtenerTGsinJurado();
   dataProfesores.value = await api.obtenerProfesores();
+  console.log(dataProfesores.value);
+  console.log(profesoresDesignados.value);
   consejoDeEscuela.value = await api.obtenerCDE();
 });
 </script>
@@ -157,6 +159,12 @@ onMounted(async () => {
                 v-for="p in dataProfesores.value"
                 :key="p.cedula"
                 :value="p.cedula"
+                :style="
+                  p.cedula != profesoresDesignados[0] &&
+                  p.cedula != profesoresDesignados[1] &&
+                  p.cedula != profesoresDesignados[2] &&
+                  p.cedula != profesoresDesignados[3]? 'display: inline' : 'display: none'
+                "
               >
                 {{ p.nombres + "" + p.apellidos }}
               </option>
@@ -167,6 +175,12 @@ onMounted(async () => {
                 v-for="p in dataProfesores.value"
                 :key="p.cedula"
                 :value="p.cedula"
+                :style="
+                  p.cedula != profesoresDesignados[0] &&
+                  p.cedula != profesoresDesignados[1] &&
+                  p.cedula != profesoresDesignados[2] &&
+                  p.cedula != profesoresDesignados[3]? 'display: inline' : 'display: none'
+                "
               >
                 {{ p.nombres + "" + p.apellidos }}
               </option>
@@ -177,6 +191,12 @@ onMounted(async () => {
                 v-for="p in dataProfesores.value"
                 :key="p.cedula"
                 :value="p.cedula"
+                :style="
+                  p.cedula == profesoresDesignados[0] ||
+                  p.cedula == profesoresDesignados[1] ||
+                  p.cedula == profesoresDesignados[2] ||
+                  p.cedula == profesoresDesignados[3]? 'display: none;' : 'display: inline;'
+                "
               >
                 {{ p.nombres + "" + p.apellidos }}
               </option>
@@ -187,6 +207,12 @@ onMounted(async () => {
                 v-for="p in dataProfesores.value"
                 :key="p.cedula"
                 :value="p.cedula"
+                :style="
+                  p.cedula != profesoresDesignados[0] &&
+                  p.cedula != profesoresDesignados[1] &&
+                  p.cedula != profesoresDesignados[2] &&
+                  p.cedula != profesoresDesignados[3]? 'display: inline' : 'display: none'
+                "
               >
                 {{ p.nombres + "" + p.apellidos }}
               </option>
