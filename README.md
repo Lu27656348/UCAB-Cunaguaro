@@ -1,6 +1,6 @@
 # UCAB-Cunaguaro
 
-This template should help get you started developing with Vue 3 in Vite.
+System for the automation of professional practice forms for the UCAB Extension Guayana.
 
 ## Recommended IDE Setup
 
